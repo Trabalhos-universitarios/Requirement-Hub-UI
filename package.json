@@ -2,19 +2,21 @@
   "name": "app",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "ng": "app/node_modules/.bin/ng",
+    "start": "app/node_modules/.bin/ng serve",
+    "build": "app/node_modules/.bin/ng build",
+    "watch": "app/node_modules/.bin/ng build --watch --configuration development",
+    "test": "app/node_modules/.bin/ng test"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.2.0",
+    "@angular/cdk": "^16.2.14",
     "@angular/common": "^16.2.0",
     "@angular/compiler": "^16.2.0",
     "@angular/core": "^16.2.0",
     "@angular/forms": "^16.2.0",
+    "@angular/material": "^16.2.14",
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
