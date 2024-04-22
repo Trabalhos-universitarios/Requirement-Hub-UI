@@ -16,3 +16,5 @@ E
 -src/app/core/side-bar/side-bar.component.html,f/4/f4bd294997ccc24ac3beefc9ef1c5d9777fa0a2b
 A
 package-lock.json,f/a/fa288d1472d29beccb489a676f68739ad365fc47
+Y
+)src/app/core/header/header.component.html,5/0/50014d0545fe6e008d257bde792412bef4c0d3c6
