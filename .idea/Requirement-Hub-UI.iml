@@ -6,4 +6,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="SonarLintModuleSettings">
+<<<<<<< Updated upstream
+    <option name="uniqueId" value="4e7b344a-f713-42d1-a54a-c3d294e84c84" />
+=======
+    <option name="uniqueId" value="2cfcdfcb-b769-4bf4-8e55-c3eb33f1b4f3" />
+>>>>>>> Stashed changes
+  </component>
 </module>

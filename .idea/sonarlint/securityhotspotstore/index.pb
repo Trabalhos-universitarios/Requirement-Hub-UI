@@ -18,3 +18,21 @@ A
 package-lock.json,f/a/fa288d1472d29beccb489a676f68739ad365fc47
 Y
 )src/app/core/header/header.component.html,5/0/50014d0545fe6e008d257bde792412bef4c0d3c6
+J
+<<<<<<< Updated upstream
+src/app/app.component.scss,3/2/32a53d37513cda56e54c64c42e8ba0abeaab7882
+?
+src/styles.scss,6/a/6a36a191b6d613ce902a6e1beb58b65e8a5136ab
+H
+src/app/app.component.ts,3/0/302be76b17ec3188653bea112207e65dde129e59
+=======
+src/app/app.component.html,0/6/06895b2dfff011115a8eded7e3fad29788965566
+J
+src/app/app.component.scss,3/2/32a53d37513cda56e54c64c42e8ba0abeaab7882
+H
+src/app/app.component.ts,3/0/302be76b17ec3188653bea112207e65dde129e59
+X
+(src/app/services/themes/theme.service.ts,8/5/859ec540d4090a84e940d77dbbbe743de8d8377a
+?
+src/styles.scss,6/a/6a36a191b6d613ce902a6e1beb58b65e8a5136ab
+>>>>>>> Stashed changes
