@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ThemeService} from "./services/themes/theme.service";
+import { ThemeService } from './services/theme/theme.service';
 
 export interface PeriodicElement {
   name: string;

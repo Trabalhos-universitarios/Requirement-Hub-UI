@@ -1,0 +1,73 @@
+@use '@angular/material' as mat;
+@import './theme-light-variables';
+@import './theme-dark-variables';
+
+@include mat.core();
+
+//LIGHT THEME
+@include mat.all-component-themes($app-light-theme);
+
+.mat-icon {
+  color: mat.get-color-from-palette($app-light-primary, 700);
+}
+
+mat-toolbar.mat-toolbar {
+  background-color: mat.get-color-from-palette($app-light-primary, 300);
+  //color: mat.get-color-from-palette($app-light-primary, 700);
+}
+
+.mat-cell {
+  background-color: mat.get-color-from-palette($app-light-primary, 300);
+  color: mat.get-color-from-palette($app-light-primary, 700);
+}
+
+.mat-header-cell {
+  background-color: mat.get-color-from-palette($app-light-primary, 300);
+  color: mat.get-color-from-palette($app-light-primary, 700);
+}
+
+table.mat-elevation-z8 {
+  background-color: mat.get-color-from-palette($app-light-primary, 300);
+  color: mat.get-color-from-palette($app-light-primary, 700);
+}
+
+.mat-drawer.sidenav {
+  background-color: mat.get-color-from-palette($app-light-primary, 300);
+  color: mat.get-color-from-palette($app-light-primary, 700);
+  border: none;
+}
+
+//DARK THEME
+.dark-theme {
+  @include mat.all-component-themes($app-dark-theme);
+
+  .mat-icon {
+    color: mat.get-color-from-palette($app-dark-primary, 300);
+  }
+
+  mat-toolbar.mat-toolbar {
+    background-color: mat.get-color-from-palette($app-dark-primary, 800);
+    color: mat.get-color-from-palette($app-dark-primary, 300);
+  }
+
+  .mat-cell {
+    background-color: mat.get-color-from-palette($app-dark-primary, 800);
+    color: mat.get-color-from-palette($app-dark-primary, 300);
+  }
+
+  .mat-header-cell {
+    background-color: mat.get-color-from-palette($app-dark-primary, 800);
+    color: mat.get-color-from-palette($app-dark-primary, 300);
+  }
+
+  table.mat-elevation-z8 {
+    background-color: mat.get-color-from-palette($app-dark-primary, 800);
+    color: mat.get-color-from-palette($app-dark-primary, 300);
+  }
+
+  .mat-drawer.sidenav {
+    background-color: mat.get-color-from-palette($app-dark-primary, 800);
+    color: mat.get-color-from-palette($app-dark-primary, 300);
+    border: none;
+  }
+}
