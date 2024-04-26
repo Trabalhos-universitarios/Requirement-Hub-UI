@@ -1,1 +1,82 @@
-<p>side-bar works!</p>
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="sidenav" mode="side">
+
+        <div class="buttons-icons">
+            <button mat-button>
+                <mat-icon class="icons">checklist</mat-icon>
+                <span class="description">Lista de Requisitos</span>
+            </button>
+
+            <button mat-button>
+                <mat-icon class="icons">folder_open</mat-icon>
+                <span class="description">Documentações</span>
+            </button>
+
+            <button mat-button>
+                <mat-icon class="icons">pending_actions</mat-icon>
+                <span class="description">Pendências de Aprovações</span>
+            </button>
+
+            <button mat-button>
+                <mat-icon class="icons">person_add</mat-icon>
+                <span>Cadastrar Membros</span>
+            </button>
+
+            <button mat-button>
+                <mat-icon class="icons">table_view</mat-icon>
+                <span>Matriz de Rastreabilidade</span>
+            </button>
+
+            <button mat-button>
+                <mat-icon class="icons">settings</mat-icon>
+                <span>Configurações</span>
+            </button>
+        </div>
+
+        <div class="logout-icon">
+            <button mat-button>
+                <mat-icon class="icons">logout</mat-icon>
+                <span>Sair</span>
+            </button>
+        </div>
+
+    </mat-drawer>
+
+    <div class="example-sidenav-content">
+
+        <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef> No.</th>
+                <td mat-cell *matCellDef="let element"> {{ element.position }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name</th>
+                <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef> Weight</th>
+                <td mat-cell *matCellDef="let element"> {{ element.weight }}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="symbol">
+                <th mat-header-cell *matHeaderCellDef> Symbol</th>
+                <td mat-cell *matCellDef="let element"> {{ element.symbol }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+    </div>
+
+</mat-drawer-container>
