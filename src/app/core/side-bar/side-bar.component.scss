@@ -1,4 +1,4 @@
-.example-container {
+.container {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -12,7 +12,7 @@
       width: 100%;
     }
 
-    .buttons-icons {
+    .container-buttons {
       display: flex;
       flex-direction: column;
       width: 280px;
@@ -24,19 +24,16 @@
         left: 10px;
       }
 
-      .description {
+      span {
+        display: flex;
         position: absolute;
-        left: 30px;
+        left: -90px;
+        top: -8px;
         font-size: 15px;
+        width: 250px;
 
       }
     }
-
-    .logout-icon {
-      transform: scaleX(-1);
-      margin-bottom: 50px;
-    }
-
   }
 
   .sidenav:hover {
