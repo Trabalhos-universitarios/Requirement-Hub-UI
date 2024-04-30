@@ -1,0 +1,20 @@
+<mat-toolbar>
+    <span class="logo">RH</span>
+    <button mat-icon-button (click)="openSidebar()">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="example-spacer"></span>
+    <button (click)="toggleTheme()" mat-icon-button matTooltip="Alter Theme">
+        <mat-icon *ngIf="themeService.isDarkMode(); else dark">light_mode</mat-icon>
+        <ng-template #dark>
+            <mat-icon >dark_mode</mat-icon>
+        </ng-template>
+    </button>
+    <button mat-icon-button>
+        <mat-icon>notifications</mat-icon>
+    </button>
+    <button class="person">
+        <mat-icon class="icon">account_circle</mat-icon>
+    </button>
+</mat-toolbar>
