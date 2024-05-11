@@ -1,12 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden !important;
+}
+
 .elements {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 28%;
-  height: 40%;
+  width: 400px;
+  height: 300px;
   border-radius: 5px;
-  background-image: url("../../../assets/light-theme/no-content-project.png");
+  background-repeat: no-repeat;
   background-size: contain;
 
   button {
