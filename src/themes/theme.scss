@@ -62,6 +62,7 @@ span {
 }
 
 .elements {
+  background-color: mat.get-color-from-palette($app-light-primary, 300);
   background-image: url("../assets/light-theme/no-content-project.svg");
 }
 
@@ -70,23 +71,32 @@ span {
   @include mat.all-component-themes($app-dark-theme);
 
   html, body {
-
     background-color: mat.get-color-from-palette($app-dark-primary, 800);
     color: mat.get-color-from-palette($app-dark-primary, 300);
+  }
+
+  span {
+    color: mat.get-color-from-palette($app-dark-primary, 300);
+  }
+
+  .mat-drawer.sidenav {
+    background-color: mat.get-color-from-palette($app-dark-primary, 900);
+    color: mat.get-color-from-palette($app-dark-primary, 300);
+    border: none;
   }
 
   .sidenav-content {
     background-color: mat.get-color-from-palette($app-dark-primary, 700);
     color: mat.get-color-from-palette($app-dark-primary, 300);
-
-    .elements {
-      background-color: mat.get-color-from-palette($app-dark-primary, 800);
-      color: mat.get-color-from-palette($app-dark-primary, 300);
-    }
   }
 
   .mat-icon {
     color: mat.get-color-from-palette($app-dark-primary, 300);
+  }
+
+  .elements {
+    background-color: mat.get-color-from-palette($app-dark-primary, 800);
+    background-image: url("../assets/dark-theme/no-content-project.svg");
   }
 
   mat-toolbar.mat-toolbar {
@@ -104,17 +114,11 @@ span {
     color: mat.get-color-from-palette($app-dark-primary, 300);
   }
 
-  .mat-drawer.sidenav {
-    background-color: mat.get-color-from-palette($app-dark-primary, 900);
+  mat-tab-group {
     color: mat.get-color-from-palette($app-dark-primary, 300);
-    border: none;
+    span {
+      color: mat.get-color-from-palette($app-dark-primary, 300);
+    }
   }
 
-  span {
-    color: mat.get-color-from-palette($app-dark-primary, 300);
-  }
-
-  .elements {
-    background-image: url("../assets/dark-theme/no-content-project.svg");
-  }
 }

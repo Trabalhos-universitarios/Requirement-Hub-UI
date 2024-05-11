@@ -13,12 +13,16 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {HeaderComponent} from "./shared/header/header.component";
 import {SideBarComponent} from "./shared/side-bar/side-bar.component";
-import { HomeComponent } from './features/home/home.component';
+import { HomeComponent } from './core/home/home.component';
 import {MatRippleModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {NgOptimizedImage} from "@angular/common";
 import {MatCardModule} from "@angular/material/card";
 import { NoContentComponent } from './components/no-content/no-content.component';
+import { CreateProjectComponent } from './components/tabs/create-project/create-project.component';
+import { ModalDialogComponent } from './components/modal-dialog/modal-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
     declarations: [
@@ -26,7 +30,9 @@ import { NoContentComponent } from './components/no-content/no-content.component
         HeaderComponent,
         SideBarComponent,
         HomeComponent,
-        NoContentComponent
+        NoContentComponent,
+        CreateProjectComponent,
+        ModalDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -42,7 +48,9 @@ import { NoContentComponent } from './components/no-content/no-content.component
         MatRippleModule,
         MatTooltipModule,
         NgOptimizedImage,
-        MatCardModule
+        MatCardModule,
+        MatDialogModule,
+        MatTabsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
