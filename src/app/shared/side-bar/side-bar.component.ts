@@ -34,6 +34,7 @@ export class SideBarComponent {
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
+  image: String = "../src/assets/no-content-project.svg";
 
   constructor(private themeService: ThemeService, private sidebarService: SidebarService) {
     this.themeService.initTheme();

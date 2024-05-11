@@ -11,18 +11,22 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
-import {HeaderComponent} from "./core/header/header.component";
-import {SideBarComponent} from "./core/side-bar/side-bar.component";
+import {HeaderComponent} from "./shared/header/header.component";
+import {SideBarComponent} from "./shared/side-bar/side-bar.component";
 import { HomeComponent } from './features/home/home.component';
 import {MatRippleModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {NgOptimizedImage} from "@angular/common";
+import {MatCardModule} from "@angular/material/card";
+import { NoContentComponent } from './components/no-content/no-content.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
         SideBarComponent,
-        HomeComponent
+        HomeComponent,
+        NoContentComponent
     ],
     imports: [
         BrowserModule,
@@ -36,7 +40,9 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatInputModule,
         MatSelectModule,
         MatRippleModule,
-        MatTooltipModule
+        MatTooltipModule,
+        NgOptimizedImage,
+        MatCardModule
     ],
     providers: [],
     bootstrap: [AppComponent]
