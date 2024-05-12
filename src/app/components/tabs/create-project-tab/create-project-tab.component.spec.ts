@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateProjectComponent } from './create-project.component';
+import { CreateProjectTabComponent } from './create-project-tab.component';
 
 describe('CreateProjectComponent', () => {
-  let component: CreateProjectComponent;
-  let fixture: ComponentFixture<CreateProjectComponent>;
+  let component: CreateProjectTabComponent;
+  let fixture: ComponentFixture<CreateProjectTabComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateProjectComponent]
+      declarations: [CreateProjectTabComponent]
     });
-    fixture = TestBed.createComponent(CreateProjectComponent);
+    fixture = TestBed.createComponent(CreateProjectTabComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
