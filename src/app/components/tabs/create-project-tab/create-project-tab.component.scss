@@ -1,4 +1,7 @@
 mat-tab-group {
-  overflow-y: auto; // Permite rolagem vertical
-  max-height: 600px; // Ajuste conforme necessário para se ajustar ao seu layout
+  overflow-y: auto;
+  max-height: 600px;
+
+  width: 100%;
+  height: 400px;
 }

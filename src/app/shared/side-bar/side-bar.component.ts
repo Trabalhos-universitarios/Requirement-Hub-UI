@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {ThemeService} from "../../services/theme/theme.service";
 import {MatDrawer} from "@angular/material/sidenav";
-import {SidebarService} from "../../services/core/sidebar/sidebar.service";
+import {SidebarService} from "../../services/shared/sidebar/sidebar.service";
 
 @Component({
   selector: 'app-side-bar',

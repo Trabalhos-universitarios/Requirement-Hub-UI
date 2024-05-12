@@ -1,9 +1,18 @@
 <mat-dialog-content>
 
-<app-create-project></app-create-project>
+<!--    TODO PAREI AQUI, AGORA DESENVOLVER CÓDIGO PARA TRAZER OS DADOS PREENCHIDOS PARA CÁ-->
+<!--    E EM SEGUIDA SALVAR NO BANCO.-->
+
+<app-create-project-tab></app-create-project-tab>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+    <button mat-button mat-dialog-close>
+        Salvar rascunho
+        <mat-icon>edit_document</mat-icon>
+    </button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
+        Criar projeto
+        <mat-icon>add</mat-icon>
+    </button>
 </mat-dialog-actions>
