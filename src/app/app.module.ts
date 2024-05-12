@@ -26,6 +26,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CreateProjectFormComponent} from "./components/forms/create-project-form/create-project-form.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -62,7 +63,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
         FormsModule,
         ReactiveFormsModule,
         NgIf,
-        NgFor
+        NgFor,
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent]

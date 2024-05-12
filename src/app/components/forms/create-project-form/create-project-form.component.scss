@@ -1,27 +1,20 @@
-.mat-select-for-project {
-  opacity: 0.75;
-  font-size: 0.75em;
-  color: red;
-}
 
 .container-form-create-project {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
 
-mat-form-field {
-  margin-left: 100px;
-  margin-top: 25px;
-  width: 200px;
-}
+  .mat-select-for-project {
+    opacity: 0.75;
+    font-size: 0.75em;
+  }
 
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
+  .mat-forms-fro-project {
+    padding: 20px;
+    width: 250px;
+  }
 
-.example-full-width {
-  width: 100%;
+  .description-project-form {
+    width: 70%;
+  }
 }

@@ -12,6 +12,16 @@ html, body {
   color: mat.get-color-from-palette($app-light-primary, 700);
 }
 
+span {
+  color: mat.get-color-from-palette($app-light-primary, 700);
+}
+
+.mat-drawer.sidenav {
+  background-color: mat.get-color-from-palette($app-light-primary, 300);
+  color: mat.get-color-from-palette($app-light-primary, 700);
+  border: none;
+}
+
 .sidenav-content {
   background-color: mat.get-color-from-palette($app-light-primary, 100);
   color: mat.get-color-from-palette($app-light-primary, 700);
@@ -26,6 +36,11 @@ html, body {
   color: mat.get-color-from-palette($app-light-primary, 700);
 }
 
+.elements {
+  background-color: mat.get-color-from-palette($app-light-primary, 300);
+  background-image: url("../assets/light-theme/no-content-project.svg");
+}
+
 mat-toolbar.mat-toolbar {
   background-color: mat.get-color-from-palette($app-light-primary, 300);
   color: mat.get-color-from-palette($app-light-primary, 700);
@@ -36,34 +51,20 @@ mat-toolbar.title-toolbar {
   color: mat.get-color-from-palette($app-light-primary, 700);
 }
 
-.mat-cell {
-  background-color: mat.get-color-from-palette($app-light-primary, 300);
-  color: mat.get-color-from-palette($app-light-primary, 700);
-}
-
-.mat-header-cell {
-  background-color: mat.get-color-from-palette($app-light-primary, 300);
-  color: mat.get-color-from-palette($app-light-primary, 700);
-}
-
 table.mat-elevation-z8 {
   background-color: mat.get-color-from-palette($app-light-primary, 300);
   color: mat.get-color-from-palette($app-light-primary, 700);
 }
 
-.mat-drawer.sidenav {
-  background-color: mat.get-color-from-palette($app-light-primary, 300);
+mat-tab-group {
   color: mat.get-color-from-palette($app-light-primary, 700);
-  border: none;
+  span {
+    color: mat.get-color-from-palette($app-light-primary, 700);
+  }
 }
 
-span {
-  color: mat.get-color-from-palette($app-light-primary, 700);
-}
-
-.elements {
-  background-color: mat.get-color-from-palette($app-light-primary, 300);
-  background-image: url("../assets/light-theme/no-content-project.svg");
+.mat-select-for-project {
+  color: mat.get-color-from-palette($app-light-warn);
 }
 
 //DARK THEME
@@ -121,4 +122,7 @@ span {
     }
   }
 
+  .mat-select-for-project {
+    color: mat.get-color-from-palette($app-dark-warn);
+  }
 }
