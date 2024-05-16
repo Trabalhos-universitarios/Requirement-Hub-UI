@@ -4,7 +4,7 @@
         <mat-icon>menu</mat-icon>
     </button>
 
-    <span class="example-spacer"></span>
+    <span class="span-spacer"></span>
     <button (click)="toggleTheme()" mat-icon-button matTooltip="Alter Theme">
         <mat-icon *ngIf="themeService.isDarkMode(); else dark">light_mode</mat-icon>
         <ng-template #dark>

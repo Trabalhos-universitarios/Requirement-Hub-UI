@@ -27,6 +27,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CreateProjectFormComponent} from "./components/forms/create-project-form/create-project-form.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {HttpClientModule} from "@angular/common/http";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
     declarations: [
@@ -37,8 +38,7 @@ import {HttpClientModule} from "@angular/common/http";
         NoContentComponent,
         CreateProjectTabComponent,
         ModalDialogComponent,
-        CreateProjectFormComponent
-
+        CreateProjectFormComponent,
     ],
     imports: [
         BrowserModule,
@@ -64,7 +64,8 @@ import {HttpClientModule} from "@angular/common/http";
         ReactiveFormsModule,
         NgIf,
         NgFor,
-        HttpClientModule
+        HttpClientModule,
+        MatProgressSpinnerModule
     ],
     providers: [],
     bootstrap: [AppComponent]

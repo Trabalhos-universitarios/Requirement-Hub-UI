@@ -25,11 +25,6 @@ span {
 .sidenav-content {
   background-color: mat.get-color-from-palette($app-light-primary, 100);
   color: mat.get-color-from-palette($app-light-primary, 700);
-
-  .elements {
-    background-color: mat.get-color-from-palette($app-light-primary, 200);
-    color: mat.get-color-from-palette($app-light-primary, 700);
-  }
 }
 
 .mat-icon {
@@ -48,11 +43,6 @@ mat-toolbar.mat-toolbar {
 
 mat-toolbar.title-toolbar {
   background-color: mat.get-color-from-palette($app-light-primary, 200);
-  color: mat.get-color-from-palette($app-light-primary, 700);
-}
-
-table.mat-elevation-z8 {
-  background-color: mat.get-color-from-palette($app-light-primary, 300);
   color: mat.get-color-from-palette($app-light-primary, 700);
 }
 
