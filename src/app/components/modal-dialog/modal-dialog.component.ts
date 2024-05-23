@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {CreateProjectService} from "../../services/components/forms/create-project.service";
 import {AlertService} from "../../services/shared/sweetalert/alert.service";
 import {MatDialog} from "@angular/material/dialog";
+import {CreateProjectTabComponent} from "../tabs/create-project-tab/create-project-tab.component";
 
 @Component({
     selector: 'app-modal-dialog',
@@ -11,7 +12,10 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class ModalDialogComponent implements OnInit {
 
+    @ViewChild(CreateProjectTabComponent) tabComponent!: CreateProjectTabComponent;
+
     formGroup?: FormGroup | null;
+    buttonDisabled: boolean = true;
 
     constructor(
         private createProjectService: CreateProjectService,
@@ -23,6 +27,8 @@ export class ModalDialogComponent implements OnInit {
     ngOnInit() {
         this.createProjectService.currentForm.subscribe(form => {
             this.formGroup = form;
+            console.log("this.tabComponent.indexTab: ", this.tabComponent.indexTab)
+            this.buttonDisabled = !(form?.valid);
         });
     }
 
@@ -42,12 +48,10 @@ export class ModalDialogComponent implements OnInit {
         if (this.formGroup && this.formGroup.valid) {
 
             this.createProjectService.addPost(this.formGroup.value).subscribe(resp => {
-                console.log("RESP: ", resp.message)
 
                 if (resp) {
                     this.alertService.toSuccessAlert("Projeto Salvo com sucesso!");
                     this.dialog.closeAll();
-                    console.log("RESP: ", resp.message);
                     //window.location.reload();
                 } else {
                     //this.alertService.toErrorAlert("ERRO!", "O projeto já existe!");

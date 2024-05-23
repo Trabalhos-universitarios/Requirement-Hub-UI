@@ -28,6 +28,7 @@ import {CreateProjectFormComponent} from "./components/forms/create-project-form
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { CreateProjectTableComponent } from './components/tables/create-project-table/create-project-table.component';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         CreateProjectTabComponent,
         ModalDialogComponent,
         CreateProjectFormComponent,
+        CreateProjectTableComponent,
     ],
     imports: [
         BrowserModule,

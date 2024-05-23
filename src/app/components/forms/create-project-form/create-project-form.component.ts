@@ -24,12 +24,17 @@ export class CreateProjectFormComponent {
     }
 
     createForm() {
+        console.log(this.formGroup.value)
         this.formGroup.valueChanges.subscribe(val => {
             this.createProjectService.updateForm(this.formGroup);
         });
     }
 
+    getFormData(indexTab: number | undefined) {
+        return this.formGroup.value;
+    }
 
+    //Esses dadoa virão do back-end  o futuro
     toppingList: string[] = ['Johnny Carvalho', 'Lucas Lemes', 'Elias Coutinho', 'Bruna Carvalho', 'Rebeca Carvalho', 'João Victor'];
 
 }
