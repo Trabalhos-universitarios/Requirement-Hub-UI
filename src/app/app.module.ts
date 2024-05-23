@@ -11,18 +11,36 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
-import {HeaderComponent} from "./core/header/header.component";
-import {SideBarComponent} from "./core/side-bar/side-bar.component";
-import { HomeComponent } from './features/home/home.component';
+import {HeaderComponent} from "./shared/header/header.component";
+import {SideBarComponent} from "./shared/side-bar/side-bar.component";
+import {HomeComponent} from './core/home/home.component';
 import {MatRippleModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {NgFor, NgIf, NgOptimizedImage} from "@angular/common";
+import {MatCardModule} from "@angular/material/card";
+import {NoContentComponent} from './components/no-content/no-content.component';
+import {CreateProjectTabComponent} from './components/tabs/create-project-tab/create-project-tab.component';
+import {ModalDialogComponent} from './components/modal-dialog/modal-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatTabsModule} from "@angular/material/tabs";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CreateProjectFormComponent} from "./components/forms/create-project-form/create-project-form.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {HttpClientModule} from "@angular/common/http";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { CreateProjectTableComponent } from './components/tables/create-project-table/create-project-table.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
         SideBarComponent,
-        HomeComponent
+        HomeComponent,
+        NoContentComponent,
+        CreateProjectTabComponent,
+        ModalDialogComponent,
+        CreateProjectFormComponent,
+        CreateProjectTableComponent,
     ],
     imports: [
         BrowserModule,
@@ -36,7 +54,20 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatInputModule,
         MatSelectModule,
         MatRippleModule,
-        MatTooltipModule
+        MatTooltipModule,
+        NgOptimizedImage,
+        MatCardModule,
+        MatDialogModule,
+        MatTabsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgIf,
+        NgFor,
+        HttpClientModule,
+        MatProgressSpinnerModule
     ],
     providers: [],
     bootstrap: [AppComponent]

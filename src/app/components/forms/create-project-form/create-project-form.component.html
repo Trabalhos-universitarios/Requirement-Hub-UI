@@ -1,0 +1,81 @@
+<form [formGroup]="formGroup" novalidate>
+
+    <div class="container-form-create-project">
+
+         <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Nome do projeto</mat-label>
+            <input matInput placeholder="Ex: Requirement Hub" formControlName="nameProject">
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+         <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Gerente do projeto</mat-label>
+            <mat-select multiple formControlName="nameProjectManager">
+                <mat-select-trigger>
+                    {{ formGroup.get('nameProjectManager')?.value?.[0] || '' }}
+                    <span *ngIf="(formGroup.get('nameProjectManager')?.value?.length || 0) > 1"
+                          class="mat-select-for-project">
+                    (+{{ (formGroup.get('nameProjectManager')?.value?.length || 0) - 1 }}
+                        {{ formGroup.get('nameProjectManager')?.value?.length === 2 ? 'other' : 'others' }})
+                </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+            </mat-select>
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+         <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Analista de requisitos</mat-label>
+            <mat-select multiple formControlName="nameRequirementAnalyst">
+                <mat-select-trigger>
+                    {{ formGroup.get('nameRequirementAnalyst')?.value?.[0] || '' }}
+                    <span *ngIf="(formGroup.get('nameRequirementAnalyst')?.value?.length || 0) > 1"
+                          class="mat-select-for-project">
+                (+{{ (formGroup.get('nameRequirementAnalyst')?.value?.length || 0) - 1 }}
+                        {{ formGroup.get('nameRequirementAnalyst')?.value?.length === 2 ? 'other' : 'others' }})
+            </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+            </mat-select>
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+         <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Analista de negócios</mat-label>
+            <mat-select multiple formControlName="nameBusinessAnalyst">
+                <mat-select-trigger>
+                    {{ formGroup.get('nameBusinessAnalyst')?.value?.[0] || '' }}
+                    <span *ngIf="(formGroup.get('nameBusinessAnalyst')?.value?.length || 0) > 1"
+                          class="mat-select-for-project">
+                (+{{ (formGroup.get('nameBusinessAnalyst')?.value?.length || 0) - 1 }}
+                        {{ formGroup.get('nameBusinessAnalyst')?.value?.length === 2 ? 'other' : 'others' }})
+            </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+         <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Usuário comum</mat-label>
+            <mat-select multiple formControlName="nameCommonUser">
+                <mat-select-trigger>
+                    {{ formGroup.get('nameCommonUser')?.value?.[0] || '' }}
+                    <span *ngIf="(formGroup.get('nameCommonUser')?.value?.length || 0) > 1"
+                          class="mat-select-for-project">
+                (+{{ (formGroup.get('nameCommonUser')?.value?.length || 0) - 1 }}
+                        {{ formGroup.get('nameCommonUser')?.value?.length === 2 ? 'other' : 'others' }})
+            </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+            </mat-select>
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+         <mat-form-field class="mat-forms-fro-project description-project-form">
+            <mat-label>Descrição do projeto</mat-label>
+            <textarea matInput placeholder="Ex: Esse projeto tem como objetivo..." formControlName="projectDescription"></textarea>
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+    </div>
+</form>
