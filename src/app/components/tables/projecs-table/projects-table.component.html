@@ -1,0 +1,63 @@
+<div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="nameProject">
+            <th mat-header-cell *matHeaderCellDef> Nome do projeto</th>
+            <td mat-cell *matCellDef="let element"> {{ element.nameProject }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="dateCreationProject">
+            <th mat-header-cell *matHeaderCellDef> Data de criação</th>
+            <td mat-cell *matCellDef="let element"> {{ element.creationDate }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="nameProjectManager">
+            <th mat-header-cell *matHeaderCellDef> Gerente do projeto</th>
+            <td mat-cell *matCellDef="let element"> {{ element.nameProjectManager }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status</th>
+            <td class="column-status" mat-cell *matCellDef="let element">
+                <ng-container *ngIf="getStatusIcon(element.status) as statusInfo">
+                    <mat-icon [ngStyle]="stylesStatusIcon(element.status)">
+                        {{ statusInfo.icon }}
+                    </mat-icon>
+                    {{ statusInfo.name }}
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Ações</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>
+                        Editar
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>
+                        Deletar
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>
+                        Detalhes
+                    </button>
+                </mat-menu>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+

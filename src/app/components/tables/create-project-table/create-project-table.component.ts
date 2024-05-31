@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {CreateProjectService} from "../../../services/components/forms/create-project.service";
+import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
+import {CreateProjectFormService} from "../../../services/components/forms/create-project-form.service";
 import {DataModel} from "./data-model";
 import {CreateProjectFormComponent} from "../../forms/create-project-form/create-project-form.component";
 import {TableRowModel} from "./TableRowModel";
@@ -16,7 +16,7 @@ export class CreateProjectTableComponent implements AfterViewInit{
 
     @Input() data: any;
 
-    constructor(private createProjectService: CreateProjectService) {}
+    constructor(private createProjectService: CreateProjectFormService) {}
     displayedColumns: string[] =
         [
             'nameProject',
@@ -59,7 +59,6 @@ export class CreateProjectTableComponent implements AfterViewInit{
                 nameCommonUser: data.nameCommonUser[i] || '-'
             });
         }
-
         return transformedData;
     }
 }

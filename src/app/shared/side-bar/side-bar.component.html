@@ -2,7 +2,7 @@
     <mat-drawer #drawer class="sidenav mat-elevation-z8" mode="side">
 
         <div class="container-buttons">
-            <button mat-button>
+            <button mat-button (click)="openModalDialogComponent()">
                 <mat-icon class="icons">format_list_bulleted_add</mat-icon>
                 <span class="description">Criar Projeto</span>
             </button>
@@ -49,6 +49,12 @@
         <span class="title">Projetos</span>
     </mat-toolbar>
 
-    <app-no-content></app-no-content>
+    <div *ngIf="hasProjects; else viewTableProjects">
+        <app-projects-table></app-projects-table>
+    </div>
+
+    <ng-template #viewTableProjects>
+        <app-no-content></app-no-content>
+    </ng-template>
 
 </mat-drawer-container>
