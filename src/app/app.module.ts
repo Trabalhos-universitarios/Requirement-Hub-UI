@@ -29,6 +29,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { CreateProjectTableComponent } from './components/tables/create-project-table/create-project-table.component';
+import { ProjectsTableComponent } from './components/tables/projecs-table/projects-table.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
     declarations: [
@@ -41,6 +43,7 @@ import { CreateProjectTableComponent } from './components/tables/create-project-
         ModalDialogComponent,
         CreateProjectFormComponent,
         CreateProjectTableComponent,
+        ProjectsTableComponent,
     ],
     imports: [
         BrowserModule,
@@ -67,7 +70,8 @@ import { CreateProjectTableComponent } from './components/tables/create-project-
         NgIf,
         NgFor,
         HttpClientModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatMenuModule
     ],
     providers: [],
     bootstrap: [AppComponent]

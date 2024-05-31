@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {CreateProjectService} from "../../../services/components/forms/create-project.service";
+import {CreateProjectFormService} from "../../../services/components/forms/create-project-form.service";
 
 @Component({
     selector: 'app-create-project-form',
@@ -16,15 +16,13 @@ export class CreateProjectFormComponent {
         nameBusinessAnalyst: new FormControl(''),
         nameCommonUser: new FormControl(''),
         projectDescription: new FormControl('', Validators.required),
-
     })
 
-    constructor(private formBuilder: FormBuilder, private createProjectService: CreateProjectService) {
+    constructor(private formBuilder: FormBuilder, private createProjectService: CreateProjectFormService) {
         this.createForm()
     }
 
     createForm() {
-        console.log(this.formGroup.value)
         this.formGroup.valueChanges.subscribe(val => {
             this.createProjectService.updateForm(this.formGroup);
         });
@@ -34,7 +32,7 @@ export class CreateProjectFormComponent {
         return this.formGroup.value;
     }
 
-    //Esses dadoa virão do back-end  o futuro
+    //todo Esses dados virão do back-end  o futuro
     toppingList: string[] = ['Johnny Carvalho', 'Lucas Lemes', 'Elias Coutinho', 'Bruna Carvalho', 'Rebeca Carvalho', 'João Victor'];
 
 }

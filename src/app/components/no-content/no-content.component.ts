@@ -9,7 +9,7 @@ import {ModalDialogComponent} from "../modal-dialog/modal-dialog.component";
 })
 export class NoContentComponent {
 
-  constructor(public dialog: MatDialog) {
+  constructor(private dialog: MatDialog) {
   }
 
   openCreateProjectComponent() {

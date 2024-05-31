@@ -46,6 +46,15 @@ mat-toolbar.title-toolbar {
   color: mat.get-color-from-palette($app-light-primary, 700);
 }
 
+table.mat-elevation-z8 {
+  background-color: mat.get-color-from-palette($app-light-primary, 200);
+  color: mat.get-color-from-palette($app-light-primary, 700);
+
+  th, td {
+    color: mat.get-color-from-palette($app-light-primary, 700);
+  }
+}
+
 mat-tab-group {
   color: mat.get-color-from-palette($app-light-primary, 700);
   span {
@@ -103,6 +112,10 @@ mat-tab-group {
   table.mat-elevation-z8 {
     background-color: mat.get-color-from-palette($app-dark-primary, 800);
     color: mat.get-color-from-palette($app-dark-primary, 300);
+
+    th, td {
+      color: mat.get-color-from-palette($app-dark-primary, 300);
+    }
   }
 
   mat-tab-group {
