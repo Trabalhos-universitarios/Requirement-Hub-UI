@@ -2,7 +2,8 @@ import {Component} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {DataModel} from "../create-project-table/data-model";
 import {ProjectsService} from "../../../services/shared/projects/projects.service";
-import {Status} from "./status";
+import {Status} from "./utils/status";
+import {ThemeService} from "../../../services/theme/theme.service";
 
 @Component({
     selector: 'app-projects-table',
@@ -22,22 +23,27 @@ export class ProjectsTableComponent {
 
     dataSource = new MatTableDataSource<DataModel>([]);
 
-    constructor(private projectsService: ProjectsService) {
+    constructor(private projectsService: ProjectsService, protected themeService: ThemeService) {
         this.getData();
     }
 
     getData() {
         this.projectsService.getProjects().subscribe((projects: DataModel[]) => {
-            this.dataSource.data = projects
+            this.dataSource.data = projects;
         });
     }
 
     stylesStatusIcon(status: string) {
+        let colorIcon: string = '#616161';
+        if (this.themeService.isDarkMode()) {
+            colorIcon = '#e0e0e0';
+        }
+
         switch (status) {
             case Status.ACTIVE:
                 return { color: '#4CAF50' };
             case Status.DRAFT:
-                return { color: 'primary' };
+                return { color: colorIcon };
             default:
                 return { color: '#f44336' };
         }
@@ -55,15 +61,26 @@ export class ProjectsTableComponent {
     }
 
     stylesIconColor(iconName: string) {
+
+        let colorIcon: string = '#616161';
+        if (this.themeService.isDarkMode()) {
+            colorIcon = '#e0e0e0';
+        }
         switch (iconName) {
             case "border_color":
-                return { color: 'primary' };
+                return { color: colorIcon };
             case "delete_forever":
-                return { color: '#f44336' };
+                return { color: colorIcon };
             case "info":
-                return { color: 'primary' };
+                return { color: colorIcon };
+            case "add_circle":
+                return { color: colorIcon };
             default:
                 return { color: '#f44336' };
         }
+    }
+
+    openDialog() {
+        console.log("Create requirement")
     }
 }

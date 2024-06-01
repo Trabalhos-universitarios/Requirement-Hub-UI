@@ -6,7 +6,7 @@ import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 export class ThemeService {
 
   private renderer: Renderer2;
-  private colorTheme: string = 'light-theme'; // Valor padrão
+  private colorTheme: string = 'light-theme';
 
   constructor(rendererFactory: RendererFactory2) {
     this.renderer = rendererFactory.createRenderer(null, null);

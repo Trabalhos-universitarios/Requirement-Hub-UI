@@ -1,16 +1,16 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {CreateProjectFormService} from "../../services/components/forms/create-project-form.service";
-import {AlertService} from "../../services/shared/sweetalert/alert.service";
+import {CreateProjectFormService} from "../../../services/components/forms/create-project-form.service";
+import {AlertService} from "../../../services/shared/sweetalert/alert.service";
 import {MatDialog} from "@angular/material/dialog";
-import {CreateProjectTabComponent} from "../tabs/create-project-tab/create-project-tab.component";
-import {ProjectsService} from "../../services/shared/projects/projects.service";
-import {Status} from "../tables/projecs-table/status";
+import {CreateProjectTabComponent} from "../../tabs/create-project-tab/create-project-tab.component";
+import {ProjectsService} from "../../../services/shared/projects/projects.service";
+import {Status} from "../../tables/projecs-table/utils/status";
 
 @Component({
-    selector: 'app-modal-dialog',
-    templateUrl: './modal-dialog.component.html',
-    styleUrls: ['./modal-dialog.component.scss']
+    selector: 'app-modal-dialog-create-project',
+    templateUrl: './modal-dialog-create-project.html',
+    styleUrls: ['./modal-dialog-create-project.scss']
 })
 export class ModalDialogComponent implements OnInit {
 

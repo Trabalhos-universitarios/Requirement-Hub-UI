@@ -4,4 +4,7 @@ export interface DataModel {
     nameRequirementAnalyst: string[],
     nameBusinessAnalyst: string[],
     nameCommonUser: string[]
+    creationDate: Date;
+    status: string;
+    actions: string;
 }

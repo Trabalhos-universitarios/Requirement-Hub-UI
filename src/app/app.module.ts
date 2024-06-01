@@ -20,7 +20,7 @@ import {NgFor, NgIf, NgOptimizedImage} from "@angular/common";
 import {MatCardModule} from "@angular/material/card";
 import {NoContentComponent} from './components/no-content/no-content.component';
 import {CreateProjectTabComponent} from './components/tabs/create-project-tab/create-project-tab.component';
-import {ModalDialogComponent} from './components/modal-dialog/modal-dialog.component';
+import {ModalDialogComponent} from './components/modals/modal-dialog-create-project/modal-dialog-create-project';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTabsModule} from "@angular/material/tabs";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -31,6 +31,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { CreateProjectTableComponent } from './components/tables/create-project-table/create-project-table.component';
 import { ProjectsTableComponent } from './components/tables/projecs-table/projects-table.component';
 import {MatMenuModule} from "@angular/material/menu";
+import { DateFormatPipe } from './pipes/date-format.pipe';
+import { ModalDialogCreateRequisitosComponent } from './components/modals/modal-dialog-create-requisitos/modal-dialog-create-requisitos.component';
 
 @NgModule({
     declarations: [
@@ -44,6 +46,8 @@ import {MatMenuModule} from "@angular/material/menu";
         CreateProjectFormComponent,
         CreateProjectTableComponent,
         ProjectsTableComponent,
+        DateFormatPipe,
+        ModalDialogCreateRequisitosComponent,
     ],
     imports: [
         BrowserModule,

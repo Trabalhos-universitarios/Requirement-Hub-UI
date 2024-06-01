@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {ModalDialogComponent} from "../modal-dialog/modal-dialog.component";
+import {ModalDialogComponent} from "../modals/modal-dialog-create-project/modal-dialog-create-project";
 
 @Component({
   selector: 'app-no-content',

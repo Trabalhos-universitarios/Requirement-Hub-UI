@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalDialogComponent } from './modal-dialog.component';
+import { ModalDialogComponent } from './modal-dialog-create-project';
 
 describe('ModalDialogComponent', () => {
   let component: ModalDialogComponent;
