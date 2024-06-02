@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
-import {CreateProjectFormService} from "../../../services/components/forms/create-project-form.service";
+import {CreateProjectFormService} from "../../../../services/components/forms/create-project-form.service";
 import {DataModel} from "./data-model";
-import {CreateProjectFormComponent} from "../../forms/create-project-form/create-project-form.component";
+import {CreateProjectFormComponent} from "../../../forms/create-project-form/create-project-form.component";
 import {TableRowModel} from "./TableRowModel";
 import {MatTableDataSource} from "@angular/material/table";
 

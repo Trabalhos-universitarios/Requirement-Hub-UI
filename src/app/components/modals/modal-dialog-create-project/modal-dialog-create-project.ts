@@ -5,14 +5,14 @@ import {AlertService} from "../../../services/shared/sweetalert/alert.service";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateProjectTabComponent} from "../../tabs/create-project-tab/create-project-tab.component";
 import {ProjectsService} from "../../../services/shared/projects/projects.service";
-import {Status} from "../../tables/projecs-table/utils/status";
+import {Status} from "../../tables/projects/projecs-table/utils/status";
 
 @Component({
     selector: 'app-modal-dialog-create-project',
     templateUrl: './modal-dialog-create-project.html',
     styleUrls: ['./modal-dialog-create-project.scss']
 })
-export class ModalDialogComponent implements OnInit {
+export class ModalDialogCreateProjectComponent implements OnInit {
 
     @ViewChild(CreateProjectTabComponent) tabComponent!: CreateProjectTabComponent;
 

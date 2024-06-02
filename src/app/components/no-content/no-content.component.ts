@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {ModalDialogComponent} from "../modals/modal-dialog-create-project/modal-dialog-create-project";
+import {ModalDialogCreateProjectComponent} from "../modals/modal-dialog-create-project/modal-dialog-create-project";
 
 @Component({
   selector: 'app-no-content',
@@ -13,6 +13,6 @@ export class NoContentComponent {
   }
 
   openCreateProjectComponent() {
-    this.dialog.open(ModalDialogComponent);
+    this.dialog.open(ModalDialogCreateProjectComponent);
   }
 }

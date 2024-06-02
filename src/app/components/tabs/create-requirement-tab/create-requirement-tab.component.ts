@@ -1,13 +1,13 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {CreateProjectFormComponent} from "../../forms/create-project-form/create-project-form.component";
 import {CreateProjectTableComponent} from "../../tables/projects/create-project-table/create-project-table.component";
 
 @Component({
-  selector: 'app-create-project-tab',
-  templateUrl: './create-project-tab.component.html',
-  styleUrls: ['./create-project-tab.component.scss']
+  selector: 'app-create-requirement-tab',
+  templateUrl: './create-requirement-tab.component.html',
+  styleUrls: ['./create-requirement-tab.component.scss']
 })
-export class CreateProjectTabComponent implements AfterViewInit{
+export class CreateRequirementTabComponent {
   @ViewChild(CreateProjectFormComponent) formComponent!: CreateProjectFormComponent;
   @ViewChild(CreateProjectTableComponent) tableComponent!: CreateProjectTableComponent;
 
@@ -34,4 +34,5 @@ export class CreateProjectTabComponent implements AfterViewInit{
       this.tableComponent.updateDataTable(formData);
     }
   }
+
 }

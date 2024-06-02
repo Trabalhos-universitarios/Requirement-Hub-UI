@@ -1,9 +1,14 @@
 import {Component} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {DataModel} from "../create-project-table/data-model";
-import {ProjectsService} from "../../../services/shared/projects/projects.service";
+import {ProjectsService} from "../../../../services/shared/projects/projects.service";
 import {Status} from "./utils/status";
-import {ThemeService} from "../../../services/theme/theme.service";
+import {ThemeService} from "../../../../services/theme/theme.service";
+import {ModalDialogCreateProjectComponent} from "../../../modals/modal-dialog-create-project/modal-dialog-create-project";
+import {MatDialog} from "@angular/material/dialog";
+import {
+    ModalDialogCreateRequirementComponent
+} from "../../../modals/modal-dialog-create-requirement/modal-dialog-create-requirement.component";
 
 @Component({
     selector: 'app-projects-table',
@@ -23,7 +28,10 @@ export class ProjectsTableComponent {
 
     dataSource = new MatTableDataSource<DataModel>([]);
 
-    constructor(private projectsService: ProjectsService, protected themeService: ThemeService) {
+    constructor(
+        private projectsService: ProjectsService,
+        protected themeService: ThemeService,
+        private dialog: MatDialog) {
         this.getData();
     }
 
@@ -82,5 +90,7 @@ export class ProjectsTableComponent {
 
     openDialog() {
         console.log("Create requirement")
+        this.dialog.open(ModalDialogCreateRequirementComponent);
+
     }
 }

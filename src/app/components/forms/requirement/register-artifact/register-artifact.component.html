@@ -1,0 +1,62 @@
+<form [formGroup]="formGroup" novalidate>
+
+    <div class="container-form-create-project">
+
+        <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Identificador</mat-label>
+            <input matInput placeholder="Ex: RF1" formControlName="identifierArtifact">
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Autor</mat-label>
+            <input matInput placeholder="Ex: RF1" formControlName="authorArtifact">
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Tipo</mat-label>
+            <input matInput placeholder="Ex: Fazer login" formControlName="typeArtifact">
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="mat-forms-fro-project description-project-form">
+            <mat-label>Descrição do requisito</mat-label>
+            <textarea matInput placeholder="Ex: Esse requisito faz parte do login ..."
+                      formControlName="artifactDescription"></textarea>
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+        <div class="file-upload-container" [ngStyle]="getStyles()">
+            <div ng2FileDrop
+                 [uploader]="uploader"
+                 class="file-drop-zone"
+                 (fileOver)="fileOverBase($event)">
+
+                <span>Arraste e solte quantos arquivos quiser</span>
+
+                <span>Ou</span>
+
+                <button class="button-update-file" mat-raised-button (click)="selectFile()">
+                    <mat-icon>upload_file</mat-icon>
+                    Upload de arquivos
+                </button>
+
+                <input type="file" #fileInput ng2FileSelect [uploader]="uploader" multiple hidden/>
+            </div>
+
+            <ul>
+                <li *ngFor="let item of uploader.queue">
+                    <div class="file-item">
+                        <strong>{{ item?.file?.name }}</strong>
+                        <mat-progress-bar mode="determinate" [value]="item.progress"></mat-progress-bar>
+                        <button mat-button (click)="item.upload()">Upload</button>
+                        <button mat-button (click)="item.remove()">Remover</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+</form>
