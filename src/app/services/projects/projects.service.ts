@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {DataModel} from "../../../components/tables/projects/create-project-table/data-model";
+import {DataModel} from "../../components/tables/projects/create-project-table/data-model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectsService {
-
 
   private baseUrl = 'http://localhost:3000';
 

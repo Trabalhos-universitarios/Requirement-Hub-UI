@@ -1,9 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
 import {ThemeService} from "../../services/theme/theme.service";
 import {MatDrawer} from "@angular/material/sidenav";
-import {ProjectsService} from "../../services/shared/projects/projects.service";
+import {ProjectsService} from "../../services/projects/projects.service";
 import {DataModel} from "../../components/tables/projects/create-project-table/data-model";
-import {SidebarService} from "../../services/shared/sidebar/sidebar.service";
+import {SidebarService} from "../../services/sidebar/sidebar.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalDialogCreateProjectComponent} from "../../components/modals/modal-dialog-create-project/modal-dialog-create-project";
 

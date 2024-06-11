@@ -35,10 +35,12 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
 import { ModalDialogCreateRequirementComponent } from './components/modals/modal-dialog-create-requirement/modal-dialog-create-requirement.component';
 import { CreateRequirementTabComponent } from './components/tabs/create-requirement-tab/create-requirement-tab.component';
 import { CreateRequirementFormComponent } from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
-import { RegisterArtifactComponent } from './components/forms/requirement/register-artifact/register-artifact.component';
+import { CreateArtifactFormComponent } from './components/forms/requirement/create-artifact-form/create-artifact-form.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {NgxFileDropModule} from "ngx-file-drop";
 import {FileUploadModule} from "ng2-file-upload";
+import { QuillModule } from 'ngx-quill';
+import {RichTextEditorComponent} from "./components/richTextEditor/richTextEditor.component";
 
 @NgModule({
     declarations: [
@@ -56,7 +58,8 @@ import {FileUploadModule} from "ng2-file-upload";
         ModalDialogCreateRequirementComponent,
         CreateRequirementTabComponent,
         CreateRequirementFormComponent,
-        RegisterArtifactComponent,
+        CreateArtifactFormComponent,
+        RichTextEditorComponent
     ],
     imports: [
         BrowserModule,
@@ -88,7 +91,8 @@ import {FileUploadModule} from "ng2-file-upload";
         MatProgressBarModule,
         MatButtonModule,
         NgxFileDropModule,
-        FileUploadModule
+        FileUploadModule,
+        QuillModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]

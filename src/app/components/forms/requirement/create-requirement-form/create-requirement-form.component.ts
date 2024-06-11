@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {CreateProjectFormService} from "../../../../services/components/forms/create-project-form.service";
+import {RequirementsService} from "../../../../services/requirements/requirements.service";
 
 @Component({
   selector: 'app-create-requirement-form',
@@ -10,6 +10,7 @@ import {CreateProjectFormService} from "../../../../services/components/forms/cr
 export class CreateRequirementFormComponent {
 
   public formGroup: FormGroup = this.formBuilder.group( {
+    projectRelated: new FormControl({ value: 'Requirement Hub', disabled: true }), //TODO NÃO ESQUECER DE FAZER LÓGICA PARA BUSCAR NOME DO PROJETO
     identifierRequirement: new FormControl('', Validators.required),
     nameRequirement: new FormControl('', Validators.required),
     versionRequirement: new FormControl('', Validators.required),
@@ -20,28 +21,26 @@ export class CreateRequirementFormComponent {
     responsibleRequirement: new FormControl('', Validators.required),
     typeRequirement: new FormControl('', Validators.required),
     effortRequirement: new FormControl('', Validators.required),
-    releaseRequirement: new FormControl('', Validators.required),
-    dependencyRequirement: new FormControl('', Validators.required),
+    dependencyRequirement: new FormControl(''),
     requirementDescription: new FormControl('', Validators.required),
   })
 
-  constructor(private formBuilder: FormBuilder, private createProjectService: CreateProjectFormService) {
+  constructor(private formBuilder: FormBuilder, private requirementService: RequirementsService) {
     this.createForm()
   }
 
   createForm() {
     this.formGroup.valueChanges.subscribe(val => {
-      this.createProjectService.updateForm(this.formGroup);
+      this.requirementService.updateForm(this.formGroup);
     });
   }
 
-  getFormData(indexTab: number | undefined) {
-    return this.formGroup.value;
-  }
-
   //todo Esses dados virão do back-end  o futuro
-  toppingList: string[] = ['Johnny Carvalho', 'Lucas Lemes', 'Elias Coutinho', 'Bruna Carvalho', 'Rebeca Carvalho', 'João Victor'];
-
-
-
+  employeeList: string[] = ['Johnny Carvalho', 'Lucas Lemes', 'Elias Coutinho', 'Bruna Carvalho', 'Rebeca Carvalho', 'João Victor'];
+  fontList: string[] = ['Negócios', 'Produtos', 'Engenharia', 'Cliente', 'Design', 'Desenvolvimento'];
+  riskList: string[] = ['Pequeno', 'Médio', 'Alto'];
+  priorityList: string[] = ['Alta', 'Média', 'Baixa'];
+  typeList: string[] = ['Funcional', 'Nào Funcional']
+  esforcoList: string[] = ['Alta', 'Média', 'Baixa'];
+  requirementsIdsList: string[] = ['RF1', 'RF2', 'RF3', 'RF4', 'RF5', 'RF6', 'RF7', 'RF8', 'RF9', 'RF10', ]
 }

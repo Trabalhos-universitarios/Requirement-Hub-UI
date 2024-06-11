@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
-import {CreateProjectFormService} from "../../../../services/components/forms/create-project-form.service";
+import {ReactiveFormServices} from "../../../../services/forms/reactive-form-services.service";
 import {DataModel} from "./data-model";
 import {CreateProjectFormComponent} from "../../../forms/create-project-form/create-project-form.component";
 import {TableRowModel} from "./TableRowModel";
@@ -16,7 +16,7 @@ export class CreateProjectTableComponent implements AfterViewInit{
 
     @Input() data: any;
 
-    constructor(private createProjectService: CreateProjectFormService) {}
+    constructor(private createProjectService: ReactiveFormServices) {}
     displayedColumns: string[] =
         [
             'nameProject',

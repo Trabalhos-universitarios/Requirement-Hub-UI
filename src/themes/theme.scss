@@ -128,4 +128,8 @@ mat-tab-group {
   .mat-select-for-project {
     color: mat.get-color-from-palette($app-dark-warn);
   }
+
+  .remove-artifact-button:hover {
+    color: mat.get-color-from-palette($app-dark-warn) !important;
+  }
 }

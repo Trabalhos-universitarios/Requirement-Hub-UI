@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {CreateProjectFormService} from "../../../services/components/forms/create-project-form.service";
+import {ReactiveFormServices} from "../../../services/forms/reactive-form-services.service";
 
 @Component({
     selector: 'app-create-project-form',
@@ -18,7 +18,7 @@ export class CreateProjectFormComponent {
         projectDescription: new FormControl('', Validators.required),
     })
 
-    constructor(private formBuilder: FormBuilder, private createProjectService: CreateProjectFormService) {
+    constructor(private formBuilder: FormBuilder, private createProjectService: ReactiveFormServices) {
         this.createForm()
     }
 

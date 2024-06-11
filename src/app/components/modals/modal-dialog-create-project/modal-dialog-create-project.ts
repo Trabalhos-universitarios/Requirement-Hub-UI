@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {CreateProjectFormService} from "../../../services/components/forms/create-project-form.service";
-import {AlertService} from "../../../services/shared/sweetalert/alert.service";
+import {ReactiveFormServices} from "../../../services/forms/reactive-form-services.service";
+import {AlertService} from "../../../services/sweetalert/alert.service";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateProjectTabComponent} from "../../tabs/create-project-tab/create-project-tab.component";
-import {ProjectsService} from "../../../services/shared/projects/projects.service";
+import {ProjectsService} from "../../../services/projects/projects.service";
 import {Status} from "../../tables/projects/projecs-table/utils/status";
 
 @Component({
@@ -20,7 +20,7 @@ export class ModalDialogCreateProjectComponent implements OnInit {
     buttonDisabled: boolean = true;
 
     constructor(
-        private createProjectService: CreateProjectFormService,
+        private reactiveFormService: ReactiveFormServices,
         private projectService: ProjectsService,
         private alertService: AlertService,
         private dialog: MatDialog) {
@@ -28,7 +28,7 @@ export class ModalDialogCreateProjectComponent implements OnInit {
 
 
     ngOnInit() {
-        this.createProjectService.currentForm.subscribe(form => {
+        this.reactiveFormService.currentForm.subscribe(form => {
             this.formGroup = form;
             this.buttonDisabled = !(form?.valid);
         });
@@ -42,7 +42,6 @@ export class ModalDialogCreateProjectComponent implements OnInit {
             // TODO AQUI TERÁ A LÓGICA PARA TRATAR SE O PROJETO JÁ EXISTIR NO BACK END
         });
     }
-
 
     async saveData() {
         this.getData();

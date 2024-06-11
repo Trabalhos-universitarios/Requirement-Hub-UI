@@ -3,6 +3,11 @@
     <div class="container-form-create-project">
 
         <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Projeto relacionado</mat-label>
+            <input matInput formControlName="projectRelated">
+        </mat-form-field>
+
+        <mat-form-field class="mat-forms-fro-project">
             <mat-label>Identificador</mat-label>
             <input matInput placeholder="Ex: RF1" formControlName="identifierRequirement">
             <mat-error>Campo obrigatório!</mat-error>
@@ -26,6 +31,7 @@
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
+<!--        TODO CONFIRMAR SE FAZ SENTIDO SELECIONAR MAIS DE UMA FONTE-->
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Fonte</mat-label>
             <mat-select multiple formControlName="fontRequirement">
@@ -37,40 +43,29 @@
                         {{ formGroup.get('fontRequirement')?.value?.length === 2 ? 'other' : 'others' }})
                 </span>
                 </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+                <mat-option *ngFor="let font of fontList" [value]="font">{{ font }}</mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Risco</mat-label>
-            <mat-select multiple formControlName="dangerRequirement">
-                <mat-select-trigger>
-                    {{ formGroup.get('dangerRequirement')?.value?.[0] || '' }}
-                    <span *ngIf="(formGroup.get('dangerRequirement')?.value?.length || 0) > 1"
-                          class="mat-select-for-project">
-                (+{{ (formGroup.get('dangerRequirement')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('dangerRequirement')?.value?.length === 2 ? 'other' : 'others' }})
-            </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+            <mat-select formControlName="dangerRequirement">
+                <mat-option *ngFor="let RISK of riskList" [value]="RISK">
+                    {{RISK}}
+                </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Prioridade</mat-label>
-            <mat-select multiple formControlName="priorityRequirement">
-                <mat-select-trigger>
-                    {{ formGroup.get('priorityRequirement')?.value?.[0] || '' }}
-                    <span *ngIf="(formGroup.get('priorityRequirement')?.value?.length || 0) > 1"
-                          class="mat-select-for-project">
-                (+{{ (formGroup.get('priorityRequirement')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('priorityRequirement')?.value?.length === 2 ? 'other' : 'others' }})
-            </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+            <mat-select formControlName="priorityRequirement">
+                <mat-option *ngFor="let PRIORITY of priorityList" [value]="PRIORITY">
+                    {{PRIORITY}}
+                </mat-option>
             </mat-select>
+            <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
@@ -84,55 +79,27 @@
                         {{ formGroup.get('responsibleRequirement')?.value?.length === 2 ? 'other' : 'others' }})
             </span>
                 </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+                <mat-option *ngFor="let manager of employeeList" [value]="manager">{{ manager }}</mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
-            <mat-label>Type</mat-label>
-            <mat-select multiple formControlName="typeRequirement">
-                <mat-select-trigger>
-                    {{ formGroup.get('typeRequirement')?.value?.[0] || '' }}
-                    <span *ngIf="(formGroup.get('typeRequirement')?.value?.length || 0) > 1"
-                          class="mat-select-for-project">
-                (+{{ (formGroup.get('typeRequirement')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('typeRequirement')?.value?.length === 2 ? 'other' : 'others' }})
-            </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="typeRequirement">
+                <mat-option *ngFor="let TIPO of typeList" [value]="TIPO">
+                    {{TIPO}}
+                </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Esforço</mat-label>
-            <mat-select multiple formControlName="effortRequirement">
-                <mat-select-trigger>
-                    {{ formGroup.get('effortRequirement')?.value?.[0] || '' }}
-                    <span *ngIf="(formGroup.get('effortRequirement')?.value?.length || 0) > 1"
-                          class="mat-select-for-project">
-                (+{{ (formGroup.get('effortRequirement')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('effortRequirement')?.value?.length === 2 ? 'other' : 'others' }})
-            </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
-            </mat-select>
-            <mat-error>Campo obrigatório!</mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="mat-forms-fro-project">
-            <mat-label>Release</mat-label>
-            <mat-select multiple formControlName="releaseRequirement">
-                <mat-select-trigger>
-                    {{ formGroup.get('releaseRequirement')?.value?.[0] || '' }}
-                    <span *ngIf="(formGroup.get('releaseRequirement')?.value?.length || 0) > 1"
-                          class="mat-select-for-project">
-                (+{{ (formGroup.get('releaseRequirement')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('releaseRequirement')?.value?.length === 2 ? 'other' : 'others' }})
-            </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+            <mat-select formControlName="effortRequirement">
+                <mat-option *ngFor="let ESFORCO of esforcoList" [value]="ESFORCO">
+                    {{ESFORCO}}
+                </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
@@ -148,7 +115,7 @@
                         {{ formGroup.get('dependencyRequirement')?.value?.length === 2 ? 'other' : 'others' }})
             </span>
                 </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+                <mat-option *ngFor="let dependency of requirementsIdsList" [value]="dependency">{{ dependency }}</mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
