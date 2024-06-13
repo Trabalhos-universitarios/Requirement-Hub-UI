@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {CreateProjectFormComponent} from "../../forms/create-project-form/create-project-form.component";
-import {CreateProjectTableComponent} from "../../tables/create-project-table/create-project-table.component";
+import {CreateProjectTableComponent} from "../../tables/projects/create-project-table/create-project-table.component";
 
 @Component({
   selector: 'app-create-project-tab',
@@ -16,7 +16,6 @@ export class CreateProjectTabComponent implements AfterViewInit{
   constructor() {}
 
   ngAfterViewInit() {
-    // Garantir que os componentes filhos estão inicializados
     this.updateTableData();
   }
 
@@ -31,7 +30,6 @@ export class CreateProjectTabComponent implements AfterViewInit{
     if (this.formComponent && this.tableComponent) {
       const formData = this.formComponent.getFormData(indexTab);
 
-      //TODO Parei aqui, tantando enviar os dados para o dataSource
       this.tableComponent.updateDataTable(formData);
     }
   }

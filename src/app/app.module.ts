@@ -20,7 +20,7 @@ import {NgFor, NgIf, NgOptimizedImage} from "@angular/common";
 import {MatCardModule} from "@angular/material/card";
 import {NoContentComponent} from './components/no-content/no-content.component';
 import {CreateProjectTabComponent} from './components/tabs/create-project-tab/create-project-tab.component';
-import {ModalDialogComponent} from './components/modal-dialog/modal-dialog.component';
+import {ModalDialogCreateProjectComponent} from './components/modals/modal-dialog-create-project/modal-dialog-create-project';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTabsModule} from "@angular/material/tabs";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -28,9 +28,20 @@ import {CreateProjectFormComponent} from "./components/forms/create-project-form
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { CreateProjectTableComponent } from './components/tables/create-project-table/create-project-table.component';
-import { ProjectsTableComponent } from './components/tables/projecs-table/projects-table.component';
+import { CreateProjectTableComponent } from './components/tables/projects/create-project-table/create-project-table.component';
+import { ProjectsTableComponent } from './components/tables/projects/projecs-table/projects-table.component';
 import {MatMenuModule} from "@angular/material/menu";
+import { DateFormatPipe } from './pipes/date-format.pipe';
+import { ModalDialogCreateRequirementComponent } from './components/modals/modal-dialog-create-requirement/modal-dialog-create-requirement.component';
+import { CreateRequirementTabComponent } from './components/tabs/create-requirement-tab/create-requirement-tab.component';
+import { CreateRequirementFormComponent } from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
+import { CreateArtifactFormComponent } from './components/forms/requirement/create-artifact-form/create-artifact-form.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {NgxFileDropModule} from "ngx-file-drop";
+import {FileUploadModule} from "ng2-file-upload";
+import { QuillModule } from 'ngx-quill';
+import {RichTextEditorComponent} from "./components/richTextEditor/richTextEditor.component";
+import {RichTextEditorModule} from "@syncfusion/ej2-angular-richtexteditor";
 
 @NgModule({
     declarations: [
@@ -40,10 +51,16 @@ import {MatMenuModule} from "@angular/material/menu";
         HomeComponent,
         NoContentComponent,
         CreateProjectTabComponent,
-        ModalDialogComponent,
+        ModalDialogCreateProjectComponent,
         CreateProjectFormComponent,
         CreateProjectTableComponent,
         ProjectsTableComponent,
+        DateFormatPipe,
+        ModalDialogCreateRequirementComponent,
+        CreateRequirementTabComponent,
+        CreateRequirementFormComponent,
+        CreateArtifactFormComponent,
+        RichTextEditorComponent
     ],
     imports: [
         BrowserModule,
@@ -71,7 +88,13 @@ import {MatMenuModule} from "@angular/material/menu";
         NgFor,
         HttpClientModule,
         MatProgressSpinnerModule,
-        MatMenuModule
+        MatMenuModule,
+        MatProgressBarModule,
+        MatButtonModule,
+        NgxFileDropModule,
+        FileUploadModule,
+        QuillModule.forRoot(),
+        RichTextEditorModule
     ],
     providers: [],
     bootstrap: [AppComponent]

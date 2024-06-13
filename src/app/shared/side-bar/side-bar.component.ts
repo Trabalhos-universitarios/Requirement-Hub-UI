@@ -1,11 +1,11 @@
 import {Component, ViewChild} from '@angular/core';
 import {ThemeService} from "../../services/theme/theme.service";
 import {MatDrawer} from "@angular/material/sidenav";
-import {ProjectsService} from "../../services/shared/projects/projects.service";
-import {DataModel} from "../../components/tables/create-project-table/data-model";
-import {SidebarService} from "../../services/shared/sidebar/sidebar.service";
+import {ProjectsService} from "../../services/projects/projects.service";
+import {DataModel} from "../../components/tables/projects/create-project-table/data-model";
+import {SidebarService} from "../../services/sidebar/sidebar.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ModalDialogComponent} from "../../components/modal-dialog/modal-dialog.component";
+import {ModalDialogCreateProjectComponent} from "../../components/modals/modal-dialog-create-project/modal-dialog-create-project";
 
 @Component({
     selector: 'app-side-bar',
@@ -39,6 +39,6 @@ export class SideBarComponent {
     }
 
     openModalDialogComponent() {
-        this.dialog.open(ModalDialogComponent);
+        this.dialog.open(ModalDialogCreateProjectComponent);
     }
 }

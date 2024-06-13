@@ -8,18 +8,12 @@
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
-         <mat-form-field class="mat-forms-fro-project">
+        <mat-form-field class="mat-forms-fro-project">
             <mat-label>Gerente do projeto</mat-label>
-            <mat-select multiple formControlName="nameProjectManager">
-                <mat-select-trigger>
-                    {{ formGroup.get('nameProjectManager')?.value?.[0] || '' }}
-                    <span *ngIf="(formGroup.get('nameProjectManager')?.value?.length || 0) > 1"
-                          class="mat-select-for-project">
-                    (+{{ (formGroup.get('nameProjectManager')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('nameProjectManager')?.value?.length === 2 ? 'other' : 'others' }})
-                </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+            <mat-select formControlName="nameProjectManager">
+                <mat-option *ngFor="let manager of toppingList" [value]="manager">
+                    {{manager}}
+                </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
@@ -71,11 +65,14 @@
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
-         <mat-form-field class="mat-forms-fro-project description-project-form">
-            <mat-label>Descrição do projeto</mat-label>
-            <textarea matInput placeholder="Ex: Esse projeto tem como objetivo..." formControlName="projectDescription"></textarea>
+        <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Versão</mat-label>
+            <input matInput placeholder="Ex: 1.0.0" formControlName="version">
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
+
+        <app-richTextEditor formControlName="projectDescription"></app-richTextEditor>
+
 
     </div>
 </form>
