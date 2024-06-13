@@ -15,7 +15,8 @@ export class CreateProjectFormComponent {
         nameRequirementAnalyst: new FormControl('', Validators.required),
         nameBusinessAnalyst: new FormControl(''),
         nameCommonUser: new FormControl(''),
-        projectDescription: new FormControl('', Validators.required),
+        version: new FormControl('', Validators.required),
+        projectDescription: new FormControl('')
     })
 
     constructor(private formBuilder: FormBuilder, private createProjectService: ReactiveFormServices) {
@@ -36,3 +37,27 @@ export class CreateProjectFormComponent {
     toppingList: string[] = ['Johnny Carvalho', 'Lucas Lemes', 'Elias Coutinho', 'Bruna Carvalho', 'Rebeca Carvalho', 'João Victor'];
 
 }
+
+
+
+
+//{
+//  "id": "cad3",
+//  "nameProject": "Nome ainda não definido",
+//  "nameProjectManager": [
+//    "Johnny Carvalho",
+//    "Lucas Lemes"
+//  ],
+//  "nameRequirementAnalyst": [
+//    "Johnny Carvalho"
+//  ],
+//  "nameBusinessAnalyst": [
+//    "Johnny Carvalho"
+//  ],
+//  "nameCommonUser": [
+//    "Johnny Carvalho"
+//  ],
+//  "projectDescription": "Testando",
+//  "creationDate": "2024-05-30T19:04:22.156Z",
+//  "status": "DRAFT"
+//}

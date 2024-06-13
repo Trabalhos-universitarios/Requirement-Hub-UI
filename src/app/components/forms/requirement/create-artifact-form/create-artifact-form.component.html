@@ -3,30 +3,23 @@
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Identificador</mat-label>
-            <input matInput placeholder="Ex: RF1" formControlName="identifierArtifact">
+            <input matInput placeholder="Ex: UC1" formControlName="identifierArtifact">
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Autor</mat-label>
-            <input matInput placeholder="Ex: RF1" formControlName="authorArtifact">
+            <input matInput placeholder="Ex: João Silva" formControlName="authorArtifact">
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Tipo</mat-label>
-            <input matInput placeholder="Ex: Fazer login" formControlName="typeArtifact">
+            <input matInput placeholder="Ex: Use case" formControlName="typeArtifact">
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="mat-forms-fro-project description-project-form">
-            <mat-label>Descrição do requisito</mat-label>
-            <textarea matInput placeholder="Ex: Esse requisito faz parte do login ..."
-                      formControlName="artifactDescription"></textarea>
-            <mat-error>Campo obrigatório!</mat-error>
-        </mat-form-field>
-
-        <app-richTextEditor></app-richTextEditor>
+        <app-richTextEditor formControlName="artifactDescription"></app-richTextEditor>
 
         <div class="file-upload-container" [ngStyle]="getStyles()">
             <div ng2FileDrop

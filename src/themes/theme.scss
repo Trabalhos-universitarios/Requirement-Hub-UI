@@ -2,9 +2,13 @@
 @import './theme-light-variables';
 @import './theme-dark-variables';
 
+@import "quill/dist/quill.core.css";
+@import "quill/dist/quill.bubble.css";
+@import "quill/dist/quill.snow.css";
+
 @include mat.core();
 
-//LIGHT THEME
+// LIGHT THEME
 @include mat.all-component-themes($app-light-theme);
 
 html, body {
@@ -66,7 +70,30 @@ mat-tab-group {
   color: mat.get-color-from-palette($app-light-warn);
 }
 
-//DARK THEME
+// CONFIG RICH TEXT
+.ql-snow .ql-picker.ql-header .ql-picker-label::before,
+.ql-snow .ql-picker.ql-size .ql-picker-label::before,
+.ql-snow .ql-picker.ql-font .ql-picker-label::before {
+  color: #616161;
+}
+
+.ql-toolbar {
+  background-color: #E0E0E0 !important; /* Cor de fundo do toolbar no tema escuro */
+  color: #616161 !important;
+}
+
+.ql-editor {
+  background-color: #F5F5F5 !important; /* Cor de fundo do editor no tema escuro */
+  color: #616161 !important; /* Cor do texto no editor no tema escuro */
+  font-size: 15px;
+}
+
+.ql-editor.ql-blank::before {
+  font-size: 15px;
+  color: #616161 !important; /* Cor do placeholder no tema escuro */
+}
+
+// DARK THEME
 .dark-theme {
   @include mat.all-component-themes($app-dark-theme);
 
@@ -131,5 +158,28 @@ mat-tab-group {
 
   .remove-artifact-button:hover {
     color: mat.get-color-from-palette($app-dark-warn) !important;
+  }
+
+  // CONFIG RICH TEXT
+  .ql-snow .ql-picker.ql-header .ql-picker-label::before,
+  .ql-snow .ql-picker.ql-size .ql-picker-label::before,
+  .ql-snow .ql-picker.ql-font .ql-picker-label::before {
+    color: #e0e0e0;
+  }
+
+  .ql-toolbar {
+    background-color: #757575 !important; /* Cor de fundo do toolbar no tema escuro */
+    color: #616161 !important;
+  }
+
+  .ql-editor {
+    background-color: #4a4a4a !important; /* Cor de fundo do editor no tema escuro */
+    color: #e0e0e0 !important; /* Cor do texto no editor no tema escuro */
+    font-size: 15px;
+  }
+
+  .ql-editor.ql-blank::before {
+    font-size: 15px;
+    color: #e0e0e0 !important; /* Cor do placeholder no tema escuro */
   }
 }

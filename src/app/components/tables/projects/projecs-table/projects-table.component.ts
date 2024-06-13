@@ -23,6 +23,7 @@ export class ProjectsTableComponent {
             'dateCreationProject',
             'nameProjectManager',
             'status',
+            'version',
             'actions'
         ];
 

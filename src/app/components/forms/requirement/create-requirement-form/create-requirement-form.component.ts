@@ -22,7 +22,7 @@ export class CreateRequirementFormComponent {
     typeRequirement: new FormControl('', Validators.required),
     effortRequirement: new FormControl('', Validators.required),
     dependencyRequirement: new FormControl(''),
-    requirementDescription: new FormControl('', Validators.required),
+    requirementDescription: new FormControl(''),
   })
 
   constructor(private formBuilder: FormBuilder, private requirementService: RequirementsService) {

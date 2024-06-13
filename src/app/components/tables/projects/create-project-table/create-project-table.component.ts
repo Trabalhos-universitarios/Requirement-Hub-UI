@@ -20,6 +20,7 @@ export class CreateProjectTableComponent implements AfterViewInit{
     displayedColumns: string[] =
         [
             'nameProject',
+            'version',
             'nameProjectManager',
             'nameRequirementAnalyst',
             'nameBusinessAnalyst',
@@ -37,23 +38,22 @@ export class CreateProjectTableComponent implements AfterViewInit{
 
     updateDataTable(data: DataModel) {
         this.dataSource.data = this.formatDataToTable(data);
-
     }
 
     formatDataToTable(data: DataModel): TableRowModel[] {
         const transformedData: TableRowModel[] = [];
 
         const maxLength = Math.max(
-            data.nameProjectManager.length,
             data.nameRequirementAnalyst.length,
             data.nameBusinessAnalyst.length,
-            data.nameCommonUser.length
+            data.nameCommonUser.length,
         );
 
         for (let i = 0; i < maxLength; i++) {
             transformedData.push({
                 nameProject: data.nameProject,
-                nameProjectManager: data.nameProjectManager[i] || '-',
+                version: data.version || '-',
+                nameProjectManager: data.nameProjectManager || '-',
                 nameRequirementAnalyst: data.nameRequirementAnalyst[i] || '-',
                 nameBusinessAnalyst: data.nameBusinessAnalyst[i] || '-',
                 nameCommonUser: data.nameCommonUser[i] || '-'

@@ -4,4 +4,5 @@ export interface TableRowModel {
     nameRequirementAnalyst: string;
     nameBusinessAnalyst: string;
     nameCommonUser: string;
+    version: string;
 }

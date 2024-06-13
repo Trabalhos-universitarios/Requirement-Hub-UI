@@ -6,6 +6,12 @@
         <td mat-cell *matCellDef="let element"> {{element.nameProject}} </td>
     </ng-container>
 
+    <!-- Weight Column -->
+    <ng-container matColumnDef="version">
+        <th mat-header-cell *matHeaderCellDef> Versão </th>
+        <td mat-cell *matCellDef="let element"> {{element.version}} </td>
+    </ng-container>
+
     <!-- Name Column -->
     <ng-container matColumnDef="nameProjectManager">
         <th mat-header-cell *matHeaderCellDef> Gerente do projeto </th>

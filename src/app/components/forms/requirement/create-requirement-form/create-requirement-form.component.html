@@ -120,11 +120,7 @@
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="mat-forms-fro-project description-project-form">
-            <mat-label>Descrição do requisito</mat-label>
-            <textarea matInput placeholder="Ex: Esse requisito faz parte do login ..." formControlName="requirementDescription"></textarea>
-            <mat-error>Campo obrigatório!</mat-error>
-        </mat-form-field>
+        <app-richTextEditor formControlName="requirementDescription"></app-richTextEditor>
 
     </div>
 </form>

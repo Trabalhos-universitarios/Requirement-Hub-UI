@@ -30,7 +30,6 @@ export class CreateProjectTabComponent implements AfterViewInit{
     if (this.formComponent && this.tableComponent) {
       const formData = this.formComponent.getFormData(indexTab);
 
-      //TODO Parei aqui, tantando enviar os dados para o dataSource
       this.tableComponent.updateDataTable(formData);
     }
   }

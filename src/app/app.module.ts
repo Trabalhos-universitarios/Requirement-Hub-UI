@@ -41,6 +41,7 @@ import {NgxFileDropModule} from "ngx-file-drop";
 import {FileUploadModule} from "ng2-file-upload";
 import { QuillModule } from 'ngx-quill';
 import {RichTextEditorComponent} from "./components/richTextEditor/richTextEditor.component";
+import {RichTextEditorModule} from "@syncfusion/ej2-angular-richtexteditor";
 
 @NgModule({
     declarations: [
@@ -92,7 +93,8 @@ import {RichTextEditorComponent} from "./components/richTextEditor/richTextEdito
         MatButtonModule,
         NgxFileDropModule,
         FileUploadModule,
-        QuillModule.forRoot()
+        QuillModule.forRoot(),
+        RichTextEditorModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -3,5 +3,6 @@ export interface DataModel {
     nameProjectManager: string[];
     dateCreationProject: string;
     status: string;
+    version: string;
     actions: string;
 }
