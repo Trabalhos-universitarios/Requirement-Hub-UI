@@ -37,27 +37,3 @@ export class CreateProjectFormComponent {
     toppingList: string[] = ['Johnny Carvalho', 'Lucas Lemes', 'Elias Coutinho', 'Bruna Carvalho', 'Rebeca Carvalho', 'João Victor'];
 
 }
-
-
-
-
-//{
-//  "id": "cad3",
-//  "nameProject": "Nome ainda não definido",
-//  "nameProjectManager": [
-//    "Johnny Carvalho",
-//    "Lucas Lemes"
-//  ],
-//  "nameRequirementAnalyst": [
-//    "Johnny Carvalho"
-//  ],
-//  "nameBusinessAnalyst": [
-//    "Johnny Carvalho"
-//  ],
-//  "nameCommonUser": [
-//    "Johnny Carvalho"
-//  ],
-//  "projectDescription": "Testando",
-//  "creationDate": "2024-05-30T19:04:22.156Z",
-//  "status": "DRAFT"
-//}
