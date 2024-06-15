@@ -42,5 +42,5 @@ export class CreateRequirementFormComponent {
   priorityList: string[] = ['Alta', 'Média', 'Baixa'];
   typeList: string[] = ['Funcional', 'Nào Funcional']
   esforcoList: string[] = ['Alta', 'Média', 'Baixa'];
-  requirementsIdsList: string[] = ['RF1', 'RF2', 'RF3', 'RF4', 'RF5', 'RF6', 'RF7', 'RF8', 'RF9', 'RF10', ]
+  requirementsIdsList: string[] = ['RF001', 'RF002', 'RF003', 'RF004', 'RF005', 'RF006', 'RF007', 'RF008', 'RF009', 'RF010', ]
 }

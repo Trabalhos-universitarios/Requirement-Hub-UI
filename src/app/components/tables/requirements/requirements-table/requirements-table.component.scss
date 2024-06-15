@@ -1,0 +1,83 @@
+.title-toolbar {
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    font-size: 40px;
+  }
+}
+
+
+table {
+  width: 100%;
+
+  th {
+    text-align: center;
+    width: 300px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  td {
+    text-align: center;
+    //width: 300px;
+    //height: 55px;
+  }
+}
+
+.column-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    margin-right: 8px; // Ajuste a margem conforme necessário
+  }
+
+  .status-text {
+    display: inline-block;
+  }
+}
+
+
+
+tr.example-detail-row {
+  height: 0;
+}
+
+.example-element-row td {
+  cursor: pointer;
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+  text-align: left;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+

@@ -1,14 +1,16 @@
 import {Component} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {DataModel} from "../create-project-table/data-model";
 import {ProjectsService} from "../../../../services/projects/projects.service";
-import {Status} from "./utils/status";
 import {ThemeService} from "../../../../services/theme/theme.service";
-import {ModalDialogCreateProjectComponent} from "../../../modals/modal-dialog-create-project/modal-dialog-create-project";
 import {MatDialog} from "@angular/material/dialog";
 import {
     ModalDialogCreateRequirementComponent
 } from "../../../modals/modal-dialog-create-requirement/modal-dialog-create-requirement.component";
+import {
+    ModalDialogInformationProjectComponent
+} from "../../../modals/modal-dialog-information-project/modal-dialog-information-project.component";
+import {DataModel} from "./model/data-model";
+import {Status} from "../../../../utils/util.status";
 
 @Component({
     selector: 'app-projects-table',
@@ -50,22 +52,22 @@ export class ProjectsTableComponent {
 
         switch (status) {
             case Status.ACTIVE:
-                return { color: '#4CAF50' };
+                return {color: '#4CAF50'};
             case Status.DRAFT:
-                return { color: colorIcon };
+                return {color: colorIcon};
             default:
-                return { color: '#f44336' };
+                return {color: '#f44336'};
         }
     }
 
     getStatusIcon(status: string) {
         switch (status) {
             case Status.ACTIVE:
-                return { icon: 'verified', name: 'Ativo' };
+                return {icon: 'verified', name: 'Ativo'};
             case Status.DRAFT:
-                return { icon: 'pending_actions', name: 'Rascunho' };
+                return {icon: 'pending_actions', name: 'Rascunho'};
             default:
-                return { icon: 'help_outline', name: 'Desconhecido' };
+                return {icon: 'help_outline', name: 'Desconhecido'};
         }
     }
 
@@ -77,21 +79,26 @@ export class ProjectsTableComponent {
         }
         switch (iconName) {
             case "border_color":
-                return { color: colorIcon };
+                return {color: colorIcon};
             case "delete_forever":
-                return { color: colorIcon };
+                return {color: colorIcon};
             case "info":
-                return { color: colorIcon };
+                return {color: colorIcon};
             case "add_circle":
-                return { color: colorIcon };
+                return {color: colorIcon};
             default:
-                return { color: '#f44336' };
+                return {color: '#f44336'};
         }
     }
 
-    openDialog() {
-        console.log("Create requirement")
-        this.dialog.open(ModalDialogCreateRequirementComponent);
+    openDialog(action?: string) {
+        switch (action) {
+            case 'Criar reqsuisitos':
+                this.dialog.open(ModalDialogCreateRequirementComponent);
+                break;
+            case 'Informações':
+                this.dialog.open(ModalDialogInformationProjectComponent);
+        }
 
     }
 }

@@ -73,6 +73,12 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, On
     // Handle disabled state if necessary
   }
 
+  onEditorContentChange(event: any): void {
+    const content = event.html; // assuming you want the HTML content
+    this.editorContent = content;
+    this.onChange(content);
+  }
+
   private updateEditorTheme(theme: string) {
     const quillEditor = document.querySelector('quill-editor');
     if (theme === 'dark-theme') {

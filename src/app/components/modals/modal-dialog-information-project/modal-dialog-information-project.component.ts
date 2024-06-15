@@ -1,19 +1,15 @@
 import {Component} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {
-  CreateRequirementFormComponent
-} from "../../forms/requirement/create-requirement-form/create-requirement-form.component";
-import {
   ModalDialogCreateRequirementComponent
 } from "../modal-dialog-create-requirement/modal-dialog-create-requirement.component";
 
 @Component({
-  selector: 'app-modal-dialog-informacoes-project',
-  templateUrl: './modal-dialog-informacoes-project.component.html',
-  styleUrls: ['./modal-dialog-informacoes-project.component.scss']
+  selector: 'app-modal-dialog-information-project',
+  templateUrl: './modal-dialog-information-project.component.html',
+  styleUrls: ['./modal-dialog-information-project.component.scss']
 })
-export class ModalDialogInformacoesProjectComponent {
-  buttonDisabled: boolean = true;
+export class ModalDialogInformationProjectComponent {
 
   constructor(private dialog: MatDialog) {
   }

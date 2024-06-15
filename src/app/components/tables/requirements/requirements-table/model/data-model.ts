@@ -1,8 +1,11 @@
 export interface DataModel {
-    nameProject: string;
-    nameProjectManager: string[];
-    dateCreationProject: string;
+    identifierRequirement: string;
+    nameRequirement: string;
+    authorRequirement: string;
+    creationDate: string;
+    priorityRequirement: string;
+    typeRequirement: string;
+    versionRequirement: string;
     status: string;
-    version: string;
-    actions: string;
+    requirementDescription: string;
 }

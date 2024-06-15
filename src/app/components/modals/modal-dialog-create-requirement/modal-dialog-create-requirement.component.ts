@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Status} from "../../tables/projects/projecs-table/utils/status";
 import {FormGroup} from "@angular/forms";
 import {RequirementsService} from "../../../services/requirements/requirements.service";
 import {AlertService} from "../../../services/sweetalert/alert.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ArtifactService} from "../../../services/requirements/artifacts/artifact.service";
-import {LocalStorageService} from "../../../services/local-storage.service";
+import {LocalStorageService} from "../../../services/localstorage/local-storage.service";
+import {Status} from "../../../utils/util.status";
 
 @Component({
     selector: 'app-modal-dialog-create-requirement',
@@ -29,12 +29,12 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
     ngOnInit() {
         this.requirementService.currentForm.subscribe(form => {
             this.requirementForm = form;
-            this.buttonDisabled = !(form?.valid);
+            this.buttonDisabled = !(form?.valid && form?.value);
         });
 
         this.artifactService.currentForm.subscribe(form => {
             this.artifactForm = form;
-            this.buttonDisabled = !(form?.valid);
+            this.buttonDisabled = !(form?.valid && form?.value);
         });
     }
 
@@ -46,34 +46,27 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
         });
     }
 
-    prepareData() {
-        return {
-            requirements: {},
-            artifacts: {}
-        }
-    }
-
     async saveData(): Promise<void> {
         this.getData();
 
         this.prepareDataRequirement();
 
         this.requirementService.createRequirements(this.prepareDataRequirement()).subscribe(respReq => {
+
             if (respReq && respReq.id) {
                 this.artifactService.createArtifact(this.prepareDataArtifact(respReq.id)).subscribe(respArt => {
 
                     console.log('respReq: ' + respReq);
                     console.log('respArt: ' + respArt);
                     
-                    if (respReq && respArt) {
+                    if (respReq) {
                         this.alertService.toSuccessAlert("Requisito Cadastrado com sucesso!");
                         this.localStorageService.clearAll();
-                        // this.dialog.closeAll();
-                        // setTimeout(() => {
-                        //   window.location.reload();
-                        // }, 3000);
+                        this.dialog.closeAll();
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 3000);
                     }
-
                 });
             }
         });
@@ -81,6 +74,8 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
 
     prepareDataRequirement() {
         if (this.requirementForm && this.requirementForm.valid) {
+
+            console.log('TESTANDO DESCRICAO: ', this.requirementForm.value);
 
             return {
                 ...this.requirementForm.value,
@@ -91,29 +86,17 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
     }
 
     prepareDataArtifact(requirementId?: string) {
-        const fileData = JSON.parse(this.localStorageService.getItem('file'));
+        const fileData = this.localStorageService.getItem('file');
         if (this.artifactForm && this.artifactForm.valid) {
-          return {
+          let data = {
             ...this.artifactForm.value,
             creationDate: new Date().toISOString(),
             status: Status.CREATED,
             files: fileData,
             requirementId: requirementId // Inclui o ID do requisito
           };
+            console.log('ARTIFACT INDO PARA O BACK: ' + data)
+          return data;
         }
-      } 
-
-    async getIdRequirement(nameRequirement: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this.requirementService.getRequirementsByName(nameRequirement).subscribe(
-                resp => {
-                    console.log("ID REQUIREMENT: " + resp.id);
-                    resolve(resp);
-                },
-                err => {
-                    reject(err);
-                }
-            );
-        });
     }
 }

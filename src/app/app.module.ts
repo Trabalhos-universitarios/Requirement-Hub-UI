@@ -42,6 +42,10 @@ import {FileUploadModule} from "ng2-file-upload";
 import { QuillModule } from 'ngx-quill';
 import {RichTextEditorComponent} from "./components/richTextEditor/richTextEditor.component";
 import {RichTextEditorModule} from "@syncfusion/ej2-angular-richtexteditor";
+import { RequirementsTableComponent } from './components/tables/requirements/requirements-table/requirements-table.component';
+import { ModalDialogInformationProjectComponent } from './components/modals/modal-dialog-information-project/modal-dialog-information-project.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { DisplayColumnFormatPipePipe } from './pipes/display-column-format-pipe.pipe';
 
 @NgModule({
     declarations: [
@@ -60,7 +64,10 @@ import {RichTextEditorModule} from "@syncfusion/ej2-angular-richtexteditor";
         CreateRequirementTabComponent,
         CreateRequirementFormComponent,
         CreateArtifactFormComponent,
-        RichTextEditorComponent
+        RichTextEditorComponent,
+        RequirementsTableComponent,
+        ModalDialogInformationProjectComponent,
+        DisplayColumnFormatPipePipe
     ],
     imports: [
         BrowserModule,
@@ -94,7 +101,9 @@ import {RichTextEditorModule} from "@syncfusion/ej2-angular-richtexteditor";
         NgxFileDropModule,
         FileUploadModule,
         QuillModule.forRoot(),
-        RichTextEditorModule
+        RichTextEditorModule,
+        MatPaginatorModule,
+        MatTableModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

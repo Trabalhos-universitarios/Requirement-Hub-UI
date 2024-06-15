@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalDialogInformacoesProjectComponent } from './modal-dialog-informacoes-project.component';
+import { ModalDialogInformationProjectComponent } from './modal-dialog-information-project.component';
 
-describe('ModalDialogInformacoesProjectComponent', () => {
-  let component: ModalDialogInformacoesProjectComponent;
-  let fixture: ComponentFixture<ModalDialogInformacoesProjectComponent>;
+describe('ModalDialogInformationProjectComponent', () => {
+  let component: ModalDialogInformationProjectComponent;
+  let fixture: ComponentFixture<ModalDialogInformationProjectComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ModalDialogInformacoesProjectComponent]
+      declarations: [ModalDialogInformationProjectComponent]
     });
-    fixture = TestBed.createComponent(ModalDialogInformacoesProjectComponent);
+    fixture = TestBed.createComponent(ModalDialogInformationProjectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
