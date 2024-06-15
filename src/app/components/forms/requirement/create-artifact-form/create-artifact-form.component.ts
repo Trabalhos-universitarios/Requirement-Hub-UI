@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ReactiveFormServices} from "../../../../services/forms/reactive-form-services.service";
 import {FileItem, FileUploader} from "ng2-file-upload";
 import {ThemeService} from "../../../../services/theme/theme.service";
-import {LocalStorageService} from "../../../../services/local-storage.service";
+import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
 import {ArtifactService} from "../../../../services/requirements/artifacts/artifact.service";
 
 @Component({

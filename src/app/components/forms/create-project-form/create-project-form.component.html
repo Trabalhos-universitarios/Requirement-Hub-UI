@@ -54,7 +54,7 @@
             <mat-select multiple formControlName="nameCommonUser">
                 <mat-select-trigger>
                     {{ formGroup.get('nameCommonUser')?.value?.[0] || '' }}
-                    <span *ngIf="(formGroup.get('nameCommonUser')?.value?.length || 0) > 1"
+                     <span *ngIf="(formGroup.get('nameCommonUser')?.value?.length || 0) > 1"
                           class="mat-select-for-project">
                 (+{{ (formGroup.get('nameCommonUser')?.value?.length || 0) - 1 }}
                         {{ formGroup.get('nameCommonUser')?.value?.length === 2 ? 'other' : 'others' }})

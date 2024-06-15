@@ -59,6 +59,15 @@ table.mat-elevation-z8 {
   }
 }
 
+//Efeito ao passar o mouse na tabela de requisitos
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: mat.get-color-from-palette($app-dark-primary, 300);
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: mat.get-color-from-palette($app-dark-primary, 200);
+}
+
 mat-tab-group {
   color: mat.get-color-from-palette($app-light-primary, 700);
   span {
@@ -143,6 +152,15 @@ mat-tab-group {
     th, td {
       color: mat.get-color-from-palette($app-dark-primary, 300);
     }
+  }
+
+  //Efeito ao passar o mouse na tabela de requisitos
+  tr.example-element-row:not(.example-expanded-row):hover {
+    background: mat.get-color-from-palette($app-dark-primary, 700);
+  }
+
+  tr.example-element-row:not(.example-expanded-row):active {
+    background: mat.get-color-from-palette($app-dark-primary, 800);
   }
 
   mat-tab-group {

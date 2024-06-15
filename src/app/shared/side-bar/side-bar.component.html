@@ -1,4 +1,17 @@
 <mat-drawer-container class="container" autosize>
+
+    <mat-toolbar class="title-toolbar">
+        <span class="title">Projetos</span>
+    </mat-toolbar>
+
+    <div *ngIf="hasProjects; else viewTableProjects">
+        <app-projects-table></app-projects-table>
+    </div>
+
+    <ng-template #viewTableProjects>
+        <app-no-content></app-no-content>
+    </ng-template>
+
     <mat-drawer #drawer class="sidenav mat-elevation-z8" mode="side">
 
         <div class="container-buttons">
@@ -44,17 +57,5 @@
         </div>
 
     </mat-drawer>
-
-    <mat-toolbar class="title-toolbar">
-        <span class="title">Projetos</span>
-    </mat-toolbar>
-
-    <div *ngIf="hasProjects; else viewTableProjects">
-        <app-projects-table></app-projects-table>
-    </div>
-
-    <ng-template #viewTableProjects>
-        <app-no-content></app-no-content>
-    </ng-template>
 
 </mat-drawer-container>

@@ -5,7 +5,7 @@ import {AlertService} from "../../../services/sweetalert/alert.service";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateProjectTabComponent} from "../../tabs/create-project-tab/create-project-tab.component";
 import {ProjectsService} from "../../../services/projects/projects.service";
-import {Status} from "../../tables/projects/projecs-table/utils/status";
+import {Status} from "../../../utils/util.status";
 
 @Component({
     selector: 'app-modal-dialog-create-project',

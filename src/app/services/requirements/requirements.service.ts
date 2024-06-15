@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
-import {DataModel} from "../../components/tables/projects/create-project-table/data-model";
 import {FormGroup} from "@angular/forms";
 
 @Injectable({
@@ -21,8 +20,8 @@ export class RequirementsService {
   }
 
   //SERVIÇOS DE DB
-  getRequirements(): Observable<DataModel[]> {
-    return this.http.get<DataModel[]>(`${this.baseUrl}/requirements`);
+  getRequirements(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/requirements/search`);
   }
 
   getRequirementsByName(nameRequirement: string): Observable<any> {
