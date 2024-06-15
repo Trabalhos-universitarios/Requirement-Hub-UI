@@ -1,0 +1,8 @@
+<quill-editor
+        [(ngModel)]="editorContent"
+        [modules]="editorConfig"
+        [ngClass]="{ 'dark-theme': themeService.isDarkMode(), 'light-theme': !themeService.isDarkMode() }"
+        style="height: 150px; width: 830px"
+        placeholder="Descrição..."
+        (onContentChanged)="onEditorContentChange($event)">>
+</quill-editor>

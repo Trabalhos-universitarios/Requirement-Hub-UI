@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 100px;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden !important;
+}
+
+.element-no-content {
+  width: 400px;
+  height: 300px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  button {
+    width: 100%;
+    height: 100%;
+  }
+
+  span {
+    font-size: 50px;
+  }
+}

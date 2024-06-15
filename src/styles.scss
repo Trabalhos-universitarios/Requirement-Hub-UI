@@ -1,0 +1,16 @@
+@import 'themes/theme';
+@import "quill/dist/quill.bubble.css";
+@import "quill/dist/quill.bubble.css";
+@import "quill/dist/quill.bubble.css";
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; // Evita overflow extra no nível do body
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+table {
+  margin-top: 20px;
+}

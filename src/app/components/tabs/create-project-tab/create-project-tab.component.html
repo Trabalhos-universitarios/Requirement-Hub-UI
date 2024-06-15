@@ -1,0 +1,14 @@
+<mat-tab-group (selectedIndexChange)="onTabChange($event)" >
+    <mat-tab label="Preencher dados do projeto">
+
+        <app-create-project-form></app-create-project-form>
+
+    </mat-tab>
+    <mat-tab label="Resumo do projeto">
+
+        <app-create-project-table></app-create-project-table>
+
+    </mat-tab>
+
+</mat-tab-group>
+
