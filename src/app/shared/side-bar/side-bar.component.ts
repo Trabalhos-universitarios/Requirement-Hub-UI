@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {ThemeService} from "../../services/theme/theme.service";
 import {MatDrawer} from "@angular/material/sidenav";
 import {ProjectsService} from "../../services/projects/projects.service";
@@ -6,13 +6,18 @@ import {DataModel} from "../../components/tables/projects/create-project-table/d
 import {SidebarService} from "../../services/sidebar/sidebar.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalDialogCreateProjectComponent} from "../../components/modals/modal-dialog-create-project/modal-dialog-create-project";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-side-bar',
     templateUrl: './side-bar.component.html',
     styleUrls: ['./side-bar.component.scss']
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit{
+
+    #route = inject(ActivatedRoute);
+    currentRoute = '';
+
 
     @ViewChild('drawer') drawer!: MatDrawer;
     hasProjects: boolean = false;
@@ -25,6 +30,10 @@ export class SideBarComponent {
         this.themeService.initTheme();
 
         this.getData();
+    }
+    ngOnInit(): void {
+        console.log(this.#route.snapshot.url[0].path);
+        this.currentRoute = this.#route.snapshot.url[0].path;
     }
 
     ngAfterViewInit() {
