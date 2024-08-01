@@ -1,0 +1,28 @@
+  .example-container {
+    height: 700px;
+    width: 800px;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    margin:  auto;  
+    border-radius: 10px;
+  }
+  
+  td {
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 5px;
+    width: 50px;
+    height: 30px;
+    text-align: center;
+  }
+
+  tr {
+    border: 2px solid black;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+    background-color: gray;
+  }
+
+  

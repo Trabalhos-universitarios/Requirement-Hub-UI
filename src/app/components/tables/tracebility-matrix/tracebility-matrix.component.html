@@ -1,1 +1,12 @@
-<p>Matriz</p>
+
+<section class="example-container">
+
+  <table>
+    <tr *ngFor="let row of dataSource">
+      <td *ngFor="let cell of row"  [ngStyle]="getCellStyles(cell)">
+        {{ cell }}
+      </td>
+    </tr>
+  </table>
+ 
+</section>
