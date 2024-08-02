@@ -5,7 +5,7 @@ import {ProjectsService} from "../../services/projects/projects.service";
 import {DataModel} from "../../components/tables/projects/create-project-table/data-model";
 import {SidebarService} from "../../services/sidebar/sidebar.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ModalDialogCreateProjectComponent} from "../../components/modals/modal-dialog-create-project/modal-dialog-create-project";
+import {ModalDialogCreateProjectComponent} from "../../components/modals/projects/modal-dialog-create-project/modal-dialog-create-project";
 
 @Component({
     selector: 'app-side-bar',

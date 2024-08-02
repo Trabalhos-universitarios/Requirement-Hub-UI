@@ -18,9 +18,11 @@ import {MatRippleModule} from "@angular/material/core";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {NgFor, NgIf, NgOptimizedImage} from "@angular/common";
 import {MatCardModule} from "@angular/material/card";
-import {NoContentComponent} from './components/no-content/no-content.component';
+import {NoContentComponent} from './shared/no-content/no-content.component';
 import {CreateProjectTabComponent} from './components/tabs/create-project-tab/create-project-tab.component';
-import {ModalDialogCreateProjectComponent} from './components/modals/modal-dialog-create-project/modal-dialog-create-project';
+import {
+    ModalDialogCreateProjectComponent
+} from './components/modals/projects/modal-dialog-create-project/modal-dialog-create-project';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTabsModule} from "@angular/material/tabs";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -28,24 +30,37 @@ import {CreateProjectFormComponent} from "./components/forms/create-project-form
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { CreateProjectTableComponent } from './components/tables/projects/create-project-table/create-project-table.component';
-import { ProjectsTableComponent } from './components/tables/projects/projecs-table/projects-table.component';
+import {
+    CreateProjectTableComponent
+} from './components/tables/projects/create-project-table/create-project-table.component';
+import {ProjectsTableComponent} from './components/tables/projects/projecs-table/projects-table.component';
 import {MatMenuModule} from "@angular/material/menu";
-import { DateFormatPipe } from './pipes/date-format.pipe';
-import { ModalDialogCreateRequirementComponent } from './components/modals/modal-dialog-create-requirement/modal-dialog-create-requirement.component';
-import { CreateRequirementTabComponent } from './components/tabs/create-requirement-tab/create-requirement-tab.component';
-import { CreateRequirementFormComponent } from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
-import { CreateArtifactFormComponent } from './components/forms/requirement/create-artifact-form/create-artifact-form.component';
+import {DateFormatPipe} from './pipes/date-format.pipe';
+import {
+    ModalDialogCreateRequirementComponent
+} from './components/modals/requirements/modal-dialog-create-requirement/modal-dialog-create-requirement.component';
+import {CreateRequirementTabComponent} from './components/tabs/create-requirement-tab/create-requirement-tab.component';
+import {
+    CreateRequirementFormComponent
+} from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
+import {
+    CreateArtifactFormComponent
+} from './components/forms/requirement/create-artifact-form/create-artifact-form.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {NgxFileDropModule} from "ngx-file-drop";
 import {FileUploadModule} from "ng2-file-upload";
-import { QuillModule } from 'ngx-quill';
+import {QuillModule} from 'ngx-quill';
 import {RichTextEditorComponent} from "./components/richTextEditor/richTextEditor.component";
 import {RichTextEditorModule} from "@syncfusion/ej2-angular-richtexteditor";
-import { RequirementsTableComponent } from './components/tables/requirements/requirements-table/requirements-table.component';
-import { ModalDialogInformationProjectComponent } from './components/modals/modal-dialog-information-project/modal-dialog-information-project.component';
+import {
+    RequirementsTableComponent
+} from './components/tables/requirements/requirements-table/requirements-table.component';
+import {
+    ModalDialogInformationProjectComponent
+} from './components/modals/projects/modal-dialog-information-project/modal-dialog-information-project.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import { DisplayColumnFormatPipePipe } from './pipes/display-column-format-pipe.pipe';
+import {DisplayColumnFormatPipePipe} from './pipes/display-column-format-pipe.pipe';
+import {AddArtifactsComponent} from './components/modals/artifacts/add-artifacts/add-artifacts.component';
 
 @NgModule({
     declarations: [
@@ -67,7 +82,8 @@ import { DisplayColumnFormatPipePipe } from './pipes/display-column-format-pipe.
         RichTextEditorComponent,
         RequirementsTableComponent,
         ModalDialogInformationProjectComponent,
-        DisplayColumnFormatPipePipe
+        DisplayColumnFormatPipePipe,
+        AddArtifactsComponent,
     ],
     imports: [
         BrowserModule,

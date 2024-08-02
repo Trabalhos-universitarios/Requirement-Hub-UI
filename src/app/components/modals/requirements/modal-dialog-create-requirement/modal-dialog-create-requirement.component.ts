@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {RequirementsService} from "../../../services/requirements/requirements.service";
-import {AlertService} from "../../../services/sweetalert/alert.service";
+import {RequirementsService} from "../../../../services/requirements/requirements.service";
+import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ArtifactService} from "../../../services/requirements/artifacts/artifact.service";
-import {LocalStorageService} from "../../../services/localstorage/local-storage.service";
-import {Status} from "../../../utils/util.status";
+import {ArtifactService} from "../../../../services/requirements/artifacts/artifact.service";
+import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
+import {Status} from "../../../../utils/util.status";
 
 @Component({
     selector: 'app-modal-dialog-create-requirement',
@@ -38,14 +38,6 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
         });
     }
 
-    getData() {
-        this.requirementService.getRequirements().subscribe(posts => {
-            for (let data of posts) {
-            }
-            // TODO AQUI TERÁ A LÓGICA PARA TRATAR SE O PROJETO JÁ EXISTIR NO BACK END
-        });
-    }
-
     async saveData(): Promise<void> {
         this.getData();
 
@@ -69,6 +61,14 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
                     }
                 });
             }
+        });
+    }
+
+    getData() {
+        this.requirementService.getRequirements().subscribe(posts => {
+            for (let data of posts) {
+            }
+            // TODO AQUI TERÁ A LÓGICA PARA TRATAR SE O PROJETO JÁ EXISTIR NO BACK END
         });
     }
 

@@ -7,6 +7,9 @@ import {DataModel} from "./model/data-model";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";
+import {MatDialog} from "@angular/material/dialog";
+import {AddArtifactsComponent} from "../../../modals/artifacts/add-artifacts/add-artifacts.component";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
     selector: 'app-requirements-table',
@@ -39,7 +42,10 @@ export class RequirementsTableComponent implements AfterViewInit {
 
     @ViewChild(MatPaginator) paginator?: MatPaginator;
 
-    constructor(private requirementsService: RequirementsService, private sanitizer: DomSanitizer, private themeService: ThemeService) {
+    constructor(private requirementsService: RequirementsService,
+                private sanitizer: DomSanitizer,
+                private themeService: ThemeService,
+                private matDialog: MatDialog) {
         this.getData();
     }
 
@@ -85,7 +91,7 @@ export class RequirementsTableComponent implements AfterViewInit {
             case 'verified':
                 return { color: '#4CAF50' };
             case 'pending_actions':
-                return { color: colorIcon };
+                return { color: `${colorIcon}` };
             case 'schedule':
                 return { color: '#FFD54F' };
             case 'preliminary':
@@ -93,9 +99,19 @@ export class RequirementsTableComponent implements AfterViewInit {
             case 'pending':
                 return { color: '#A5D6A7' };
             case 'brightness_alert':
-                return { color: colorIcon };
+                return { color: `${colorIcon}` };
             default:
-                return { color: '#f44336' };
+                return { color: `${colorIcon}` };
+        }
+    }
+
+    openDialog(value: String) {
+        switch (value) {
+            case "add":
+                this.matDialog.open(AddArtifactsComponent)
+                break
+            default:
+                console.error("This dialog non exists!")
         }
     }
 }

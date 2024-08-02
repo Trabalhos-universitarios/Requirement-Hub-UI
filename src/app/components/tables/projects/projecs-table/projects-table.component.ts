@@ -3,14 +3,14 @@ import {MatTableDataSource} from "@angular/material/table";
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {MatDialog} from "@angular/material/dialog";
-import {
-    ModalDialogCreateRequirementComponent
-} from "../../../modals/modal-dialog-create-requirement/modal-dialog-create-requirement.component";
-import {
-    ModalDialogInformationProjectComponent
-} from "../../../modals/modal-dialog-information-project/modal-dialog-information-project.component";
 import {DataModel} from "./model/data-model";
 import {Status} from "../../../../utils/util.status";
+import {
+    ModalDialogCreateRequirementComponent
+} from "../../../modals/requirements/modal-dialog-create-requirement/modal-dialog-create-requirement.component";
+import {
+    ModalDialogInformationProjectComponent
+} from "../../../modals/projects/modal-dialog-information-project/modal-dialog-information-project.component";
 
 @Component({
     selector: 'app-projects-table',
@@ -98,7 +98,9 @@ export class ProjectsTableComponent {
                 break;
             case 'Informações':
                 this.dialog.open(ModalDialogInformationProjectComponent);
+                break
+            default:
+                console.error("This dialog non exists!")
         }
-
     }
 }
