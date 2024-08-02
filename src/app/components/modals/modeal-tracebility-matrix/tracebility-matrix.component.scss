@@ -1,0 +1,41 @@
+@use '@angular/material' as mat;
+  
+  .example-container {
+    height: 700px;
+    width: 1000px;
+    max-width: 100%;
+    max-height: 100%;
+    margin:  auto;  
+    border-radius: 10px;
+    padding: 30px;
+  }
+
+  .example-container div {
+    text-align: center;
+  }
+
+  table{
+    overflow: auto;
+  }
+
+  h1 {
+    text-align: center;
+  }
+  
+  td {
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 5px;
+    width: 50px;
+    height: 30px;
+    text-align: center;
+  }
+
+  tr {
+    border: 2px solid black;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  

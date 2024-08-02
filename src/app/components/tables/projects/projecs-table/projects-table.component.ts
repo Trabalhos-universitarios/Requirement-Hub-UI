@@ -11,6 +11,8 @@ import {
 } from "../../../modals/modal-dialog-information-project/modal-dialog-information-project.component";
 import {DataModel} from "./model/data-model";
 import {Status} from "../../../../utils/util.status";
+import { TracebilityMatrixComponent } from '../../../modals/modeal-tracebility-matrix/tracebility-matrix.component';
+import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 
 @Component({
     selector: 'app-projects-table',
@@ -33,6 +35,7 @@ export class ProjectsTableComponent {
 
     constructor(
         private projectsService: ProjectsService,
+        private projectsTableService: ProjectsTableService,
         protected themeService: ThemeService,
         private dialog: MatDialog) {
         this.getData();
@@ -41,8 +44,14 @@ export class ProjectsTableComponent {
     getData() {
         this.projectsService.getProjects().subscribe((projects: DataModel[]) => {
             this.dataSource.data = projects;
+            console.log(this.dataSource.data)
         });
     }
+
+    setDataProjectTable(currentProject : string) {
+        this.projectsTableService.setCurrentProject(currentProject);
+        console.log(currentProject)
+        }
 
     stylesStatusIcon(status: string) {
         let colorIcon: string = '#616161';
@@ -93,11 +102,14 @@ export class ProjectsTableComponent {
 
     openDialog(action?: string) {
         switch (action) {
-            case 'Criar reqsuisitos':
+            case 'Criar requisitos':
                 this.dialog.open(ModalDialogCreateRequirementComponent);
                 break;
             case 'Informações':
                 this.dialog.open(ModalDialogInformationProjectComponent);
+                break;
+            case 'Matriz de Rastreabilidade':
+                this.dialog.open(TracebilityMatrixComponent);
         }
 
     }
