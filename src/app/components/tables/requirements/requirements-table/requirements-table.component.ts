@@ -50,6 +50,7 @@ export class RequirementsTableComponent implements AfterViewInit {
     getData() {
         this.requirementsService.getRequirements().subscribe(requirements => {
             this.dataSource.data = requirements;
+            console.log(this.dataSource.data)
         })
     }
 

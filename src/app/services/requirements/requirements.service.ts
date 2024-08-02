@@ -10,7 +10,8 @@ export class RequirementsService {
 
   private formGroupSource = new BehaviorSubject<FormGroup | null>(null);
   currentForm = this.formGroupSource.asObservable();
-  private baseUrl = 'http://localhost:8180';
+  //private baseUrl = 'http://localhost:8180';
+  private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
@@ -21,7 +22,7 @@ export class RequirementsService {
 
   //SERVIÇOS DE DB
   getRequirements(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/requirements/search`);
+    return this.http.get<any[]>(`${this.baseUrl}/requirements`);
   }
 
   getRequirementsByName(nameRequirement: string): Observable<any> {

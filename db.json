@@ -138,17 +138,17 @@
     [
       null,
       "RF1",
-      "RF55",
-      "RFN1",
-      "RFN5",
+      "RF2",
+      "RNF1",
+      "RNF2",
       "UC1",
       "UC2",
-      "UC22",
+      "UC3",
       "UH1",
-      "UH33",
+      "UH2",
       "CT1",
-      "CT20",
-      "M33"
+      "CT2",
+      "M1"
     ],
     [
       "Gerente de vendas",
@@ -211,7 +211,7 @@
       ""
     ],
     [
-      "RF55",
+      "RF2",
       null,
       null,
       "",
@@ -256,7 +256,7 @@
       ""
     ],
     [
-      "RNF5",
+      "RNF3",
       null,
       null,
       null,
@@ -301,7 +301,7 @@
       ""
     ],
     [
-      "UC22",
+      "UC3",
       null,
       null,
       null,
@@ -331,7 +331,7 @@
       ""
     ],
     [
-      "UH33",
+      "UH2",
       null,
       null,
       null,
@@ -361,7 +361,7 @@
       ""
     ],
     [
-      "CT20",
+      "CT2",
       null,
       null,
       null,
@@ -376,7 +376,7 @@
       ""
     ],
     [
-      "M33",
+      "M1",
       null,
       null,
       null,
@@ -391,247 +391,99 @@
       null
     ]
   ],
-  "matriz_de_rastreabilidade_objeto": [
+  "requirements": [
     {
-      "name": "Gerente de vendas",
-      "RF1": "",
-      "RF55": "X",
-      "RFN1": "",
-      "RFN5": "X",
-      "UC1": null,
-      "UC2": null,
-      "UC22": null,
-      "UH1": null,
-      "UH33": null,
-      "CT1": null,
-      "CT20": null,
-      "M33": null,
-      "id": "af71"
+      "id": "f952",
+      "identifierRequirement": "RF001",
+      "nameRequirement": "Login",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Lucas Lemes",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Medio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Elias"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [
+        "RF002"
+      ],
+      "requirementDescription": "<p>Teste de cadastro de requisitos</p>",
+      "creationDate": "2024-08-02T18:14:44.241Z",
+      "status": "CREATED"
     },
     {
-      "name": "Diretor de marketing",
-      "RF1": "X",
-      "RF55": "",
-      "RNF1": "",
-      "UC1": "",
-      "UC2": null,
-      "UC22": null,
-      "UH1": null,
-      "UH33": null,
-      "CT1": null,
-      "CT20": null,
-      "M33": null,
-      "id": "aad3"
+      "id": "f7c3",
+      "identifierRequirement": "RF002",
+      "nameRequirement": "Teste",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Lucas Lemes",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Alto",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Johnny Carvalho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [
+        "RF003"
+      ],
+      "requirementDescription": "<p>Teste de cadastro de requisitos</p>",
+      "creationDate": "2024-08-02T18:14:44.241Z",
+      "status": "CREATED"
     },
     {
-      "name": "Vendedor",
-      "RF1": "",
-      "RF55": "",
-      "RNF1": "",
-      "UC1": "",
-      "UC2": null,
-      "UC22": null,
-      "UH1": null,
-      "UH33": null,
-      "CT1": null,
-      "CT20": null,
-      "M33": null,
-      "id": "574c"
+      "id": "d3e3",
+      "identifierRequirement": "RNF003",
+      "nameRequirement": "Upgrade",
+      "versionRequirement": "1.1",
+      "authorRequirement": "Teste",
+      "fontRequirement": [
+        "Design"
+      ],
+      "dangerRequirement": "Pequeno",
+      "priorityRequirement": "Baixa",
+      "responsibleRequirement": [
+        "Rebeca Carvalho"
+      ],
+      "typeRequirement": "Nào Funcional",
+      "effortRequirement": "Baixa",
+      "dependencyRequirement": [
+        "RF009"
+      ],
+      "requirementDescription": "<p>Teste 3</p>",
+      "creationDate": "2024-08-02T18:20:43.281Z",
+      "status": "CREATED"
     },
     {
-      "name": "RF1",
-      "RF1": null,
-      "RF55": "",
-      "RNF1": "X",
-      "UC1": "",
-      "UC2": "X",
-      "UC22": "X",
-      "UH1": "",
-      "UH33": "",
-      "CT1": "",
-      "CT20": "X",
-      "M33": "",
-      "id": "7501"
-    },
-    {
-      "name": "RF55",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": "",
-      "UC1": "X",
-      "UC2": "",
-      "UC22": "",
-      "UH1": "X",
-      "UH33": "X",
-      "CT1": "",
-      "CT20": "",
-      "M33": "X",
-      "id": "09a7"
-    },
-    {
-      "name": "RNF1",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": "",
-      "UC2": "",
-      "UC22": "",
-      "UH1": "",
-      "UH33": "X",
-      "CT1": "",
-      "CT20": "",
-      "M33": "",
-      "id": "1371"
-    },
-    {
-      "name": "RNF2",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": null,
-      "UC2": "",
-      "UC22": "",
-      "UH1": "",
-      "UH33": "X",
-      "CT1": "",
-      "CT20": "",
-      "M33": "",
-      "id": "442d"
-    },
-    {
-      "name": "RNF5",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": null,
-      "UC2": "",
-      "UC22": "",
-      "UH1": "",
-      "UH33": "X",
-      "CT1": "",
-      "CT22": "",
-      "M33": "",
-      "id": "e949"
-    },
-    {
-      "name": "UC1",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": null,
-      "UC2": null,
-      "UC22": "",
-      "UH1": "",
-      "UH33": "",
-      "CT1": "X",
-      "CT22": "",
-      "M33": "",
-      "id": "5ee9"
-    },
-    {
-      "name": "UC2",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": null,
-      "UC2": null,
-      "UC22": null,
-      "UH1": "",
-      "UH33": "",
-      "CT1": "",
-      "CT22": "",
-      "M33": "",
-      "id": "14dc"
-    },
-    {
-      "name": "UC22",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": null,
-      "UC2": null,
-      "UC22": null,
-      "UH1": null,
-      "UH33": "",
-      "CT1": "",
-      "CT22": "",
-      "M33": "X",
-      "id": "316a"
-    },
-    {
-      "name": "UH1",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": null,
-      "UC2": null,
-      "UC22": null,
-      "UH1": null,
-      "UH33": null,
-      "CT1": "",
-      "CT22": "",
-      "M33": "",
-      "id": "ba6d"
-    },
-    {
-      "name": "UH33",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": null,
-      "UC2": null,
-      "UC22": null,
-      "UH1": null,
-      "UH33": null,
-      "CT1": "",
-      "CT22": "",
-      "M33": "",
-      "id": "1883"
-    },
-    {
-      "name": "CT1",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": null,
-      "UC2": null,
-      "UC22": null,
-      "UH1": null,
-      "UH33": null,
-      "CT1": null,
-      "CT22": "",
-      "M33": "",
-      "id": "332e"
-    },
-    {
-      "name": "CT20",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": null,
-      "UC2": null,
-      "UC22": null,
-      "UH1": null,
-      "UH33": null,
-      "CT1": null,
-      "CT22": null,
-      "M33": "",
-      "id": "42f9"
-    },
-    {
-      "name": "M33",
-      "RF1": null,
-      "RF55": null,
-      "RNF1": null,
-      "UC1": null,
-      "UC2": null,
-      "UC22": null,
-      "UH1": null,
-      "UH33": null,
-      "CT1": null,
-      "CT22": null,
-      "M33": null,
-      "id": "7502"
+      "id": "a85b",
+      "identifierRequirement": "RNF004",
+      "nameRequirement": "Upgrade",
+      "versionRequirement": "1.1",
+      "authorRequirement": "Teste",
+      "fontRequirement": [
+        "Design"
+      ],
+      "dangerRequirement": "Pequeno",
+      "priorityRequirement": "Baixa",
+      "responsibleRequirement": [
+        "Rebeca Carvalho"
+      ],
+      "typeRequirement": "Nào Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [
+        "RF007",
+        "RF009"
+      ],
+      "requirementDescription": "<p>Teste 5</p>",
+      "creationDate": "2024-08-02T18:20:56.110Z",
+      "status": "CREATED"
     }
   ]
 }
