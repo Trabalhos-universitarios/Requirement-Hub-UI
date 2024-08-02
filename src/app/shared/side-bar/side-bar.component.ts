@@ -7,6 +7,7 @@ import {SidebarService} from "../../services/sidebar/sidebar.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalDialogCreateProjectComponent} from "../../components/modals/modal-dialog-create-project/modal-dialog-create-project";
 import { ActivatedRoute } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'app-side-bar',
@@ -17,6 +18,7 @@ export class SideBarComponent implements OnInit{
 
     #route = inject(ActivatedRoute);
     currentRoute = '';
+    dataSource = new MatTableDataSource<DataModel>([]);
 
 
     @ViewChild('drawer') drawer!: MatDrawer;
@@ -44,6 +46,7 @@ export class SideBarComponent implements OnInit{
         this.projectsService.getProjects()
             .subscribe((projects: DataModel[]) => {
             this.hasProjects = projects && projects.length > 0;
+            this.dataSource.data = projects;
         });
     }
 

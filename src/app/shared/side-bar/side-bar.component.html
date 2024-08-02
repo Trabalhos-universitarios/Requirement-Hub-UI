@@ -4,9 +4,9 @@
         <span class="title">Projetos</span>
       </mat-toolbar>
       
-      <ng-template *ngIf="(currentRoute === 'home' || currentRoute === '') && hasProjects; else viewTableProjects">
+      <div *ngIf="(currentRoute === 'home' || currentRoute === '') && hasProjects; else viewTableProjects">
         <app-projects-table></app-projects-table>
-      </ng-template>
+      </div>
       
       <ng-template #viewTableProjects>
         <app-no-content *ngIf="currentRoute === 'home' || currentRoute === ''"></app-no-content>
@@ -24,14 +24,15 @@
     <mat-drawer #drawer class="sidenav mat-elevation-z8" mode="side">
 
         <div class="container-buttons">
+
+            <button mat-button routerLink="/home">
+                <mat-icon class="icons">home</mat-icon>
+                <span class="description">Projetos</span>
+            </button>
+
             <button mat-button (click)="openModalDialogComponent()">
                 <mat-icon class="icons">format_list_bulleted_add</mat-icon>
                 <span class="description">Criar Projeto</span>
-            </button>
-
-            <button mat-button>
-                <mat-icon class="icons">checklist</mat-icon>
-                <span class="description">Lista de Requisitos</span>
             </button>
 
             <button mat-button>

@@ -41,6 +41,7 @@ export class ProjectsTableComponent {
     getData() {
         this.projectsService.getProjects().subscribe((projects: DataModel[]) => {
             this.dataSource.data = projects;
+            console.log(this.dataSource.data)
         });
     }
 
