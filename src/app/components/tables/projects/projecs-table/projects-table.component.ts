@@ -12,6 +12,7 @@ import {
 import {DataModel} from "./model/data-model";
 import {Status} from "../../../../utils/util.status";
 import { TracebilityMatrixComponent } from '../../../modals/modeal-tracebility-matrix/tracebility-matrix.component';
+import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 
 @Component({
     selector: 'app-projects-table',
@@ -34,6 +35,7 @@ export class ProjectsTableComponent {
 
     constructor(
         private projectsService: ProjectsService,
+        private projectsTableService: ProjectsTableService,
         protected themeService: ThemeService,
         private dialog: MatDialog) {
         this.getData();
@@ -45,6 +47,11 @@ export class ProjectsTableComponent {
             console.log(this.dataSource.data)
         });
     }
+
+    setDataProjectTable(currentProject : string) {
+        this.projectsTableService.setCurrentProject(currentProject);
+        console.log(currentProject)
+        }
 
     stylesStatusIcon(status: string) {
         let colorIcon: string = '#616161';

@@ -58,7 +58,7 @@
                     <button mat-menu-item (click)="openDialog('Criar reqsuisitos')">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">add_circle</mat-icon>Criar requisitos
                     </button>
-                    <button mat-menu-item (click)="openDialog('Matriz de Rastreabilidade')">
+                    <button mat-menu-item (click)="openDialog('Matriz de Rastreabilidade'); setDataProjectTable(element.nameProject)">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">table_view</mat-icon>Matriz de Rastreabilidade
                     </button>
                 </mat-menu>

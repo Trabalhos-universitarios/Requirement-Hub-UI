@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import { MatrixService } from 'src/app/services/matrix/matrix.service';
+import { MatrixService } from 'src/app/services/matrix/traceability-matrix.service';
+import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 
 @Component({
   selector: 'app-tracebility-matrix',
@@ -10,13 +10,19 @@ import { MatrixService } from 'src/app/services/matrix/matrix.service';
 export class TracebilityMatrixComponent {
 
   dataSource = [];
+  currentProject: string = ''
 
   constructor(
-      private traceabilityService: MatrixService){this.getData();}
+      private traceabilityService: MatrixService,
+      private projectTableService: ProjectsTableService)
+      {this.getData();
+      }
 
   getData() {
       this.traceabilityService.getTraceabilityMatrix().subscribe((matrix: []) => {
           this.dataSource = matrix;
+          this.currentProject = this.projectTableService.getCurrentProject();
+          console.log(this.currentProject)
       });
   }
 

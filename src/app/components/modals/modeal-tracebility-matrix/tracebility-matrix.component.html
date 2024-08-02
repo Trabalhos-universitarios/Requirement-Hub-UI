@@ -1,6 +1,8 @@
 
 <section class="example-container">
 
+  <div><h1>{{currentProject}}</h1></div>
+
   <table>
     <tr *ngFor="let row of dataSource">
       <td *ngFor="let cell of row"  [ngStyle]="getCellStyles(cell)">
