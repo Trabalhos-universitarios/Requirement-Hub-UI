@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RequirementsService} from "../../../../services/requirements/requirements.service";
+import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 
 @Component({
   selector: 'app-create-requirement-form',
@@ -10,7 +11,7 @@ import {RequirementsService} from "../../../../services/requirements/requirement
 export class CreateRequirementFormComponent {
 
   public formGroup: FormGroup = this.formBuilder.group( {
-    projectRelated: new FormControl({ value: 'Requirement Hub', disabled: true }), //TODO NÃO ESQUECER DE FAZER LÓGICA PARA BUSCAR NOME DO PROJETO
+    projectRelated: new FormControl({value: "", disabled: true}),
     identifierRequirement: new FormControl('', Validators.required),
     nameRequirement: new FormControl('', Validators.required),
     versionRequirement: new FormControl('', Validators.required),
@@ -25,14 +26,23 @@ export class CreateRequirementFormComponent {
     requirementDescription: new FormControl(''),
   })
 
-  constructor(private formBuilder: FormBuilder, private requirementService: RequirementsService) {
-    this.createForm()
+  constructor(private formBuilder: FormBuilder, private requirementService: RequirementsService, 
+    private projectsTableService: ProjectsTableService) {
+    this.createForm();
+    this.getCurrentProject();
   }
 
   createForm() {
     this.formGroup.valueChanges.subscribe(val => {
       this.requirementService.updateForm(this.formGroup);
+      this.formGroup.value.projectRelated = this.projectsTableService.getCurrentProject();
     });
+  }
+
+  getCurrentProject(){
+    this.formGroup.patchValue({
+  projectRelated: this.projectsTableService.getCurrentProject()
+});
   }
 
   //todo Esses dados virão do back-end  o futuro
