@@ -11,6 +11,7 @@ import {
 } from "../../../modals/modal-dialog-information-project/modal-dialog-information-project.component";
 import {DataModel} from "./model/data-model";
 import {Status} from "../../../../utils/util.status";
+import { TracebilityMatrixComponent } from '../../../modals/modeal-tracebility-matrix/tracebility-matrix.component';
 
 @Component({
     selector: 'app-projects-table',
@@ -99,6 +100,9 @@ export class ProjectsTableComponent {
                 break;
             case 'Informações':
                 this.dialog.open(ModalDialogInformationProjectComponent);
+                break;
+            case 'Matriz de Rastreabilidade':
+                this.dialog.open(TracebilityMatrixComponent);
         }
 
     }

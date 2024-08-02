@@ -46,8 +46,7 @@ import { RequirementsTableComponent } from './components/tables/requirements/req
 import { ModalDialogInformationProjectComponent } from './components/modals/modal-dialog-information-project/modal-dialog-information-project.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { DisplayColumnFormatPipePipe } from './pipes/display-column-format-pipe.pipe';
-import { TracebilityMatrixComponent } from './components/tables/tracebility-matrix/tracebility-matrix.component';
-import { MatrixComponent } from './core/matrix/matrix.component';
+import { TracebilityMatrixComponent } from './components/modals/modeal-tracebility-matrix/tracebility-matrix.component';
 
 @NgModule({
     declarations: [
@@ -71,7 +70,6 @@ import { MatrixComponent } from './core/matrix/matrix.component';
         ModalDialogInformationProjectComponent,
         DisplayColumnFormatPipePipe,
         TracebilityMatrixComponent,
-        MatrixComponent
     ],
     imports: [
         BrowserModule,
