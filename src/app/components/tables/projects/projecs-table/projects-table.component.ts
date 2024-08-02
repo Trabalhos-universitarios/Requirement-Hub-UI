@@ -102,7 +102,7 @@ export class ProjectsTableComponent {
 
     openDialog(action?: string) {
         switch (action) {
-            case 'Criar reqsuisitos':
+            case 'Criar requisitos':
                 this.dialog.open(ModalDialogCreateRequirementComponent);
                 break;
             case 'Informações':
