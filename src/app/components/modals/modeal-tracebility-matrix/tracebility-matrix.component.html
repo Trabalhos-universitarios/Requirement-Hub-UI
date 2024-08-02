@@ -5,8 +5,13 @@
 
   <table>
     <tr *ngFor="let row of dataSource">
-      <td *ngFor="let cell of row"  [ngStyle]="getCellStyles(cell)">
-        {{ cell }}
+      <td *ngFor="let cell of row" [ngStyle]="getCellStyles(cell)">
+        <ng-container *ngIf="cell == ''; else normalCell">
+          <span class="special"></span>
+        </ng-container>
+        <ng-template #normalCell>
+          {{ cell }}
+        </ng-template>
       </td>
     </tr>
   </table>
