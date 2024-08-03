@@ -7,6 +7,7 @@ import {DataModel} from "./model/data-model";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";
+import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 
 @Component({
     selector: 'app-requirements-table',
@@ -37,10 +38,16 @@ export class RequirementsTableComponent implements AfterViewInit {
     columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
     expandedElement: DataModel | undefined;
 
+    public currentProject =''
+
     @ViewChild(MatPaginator) paginator?: MatPaginator;
 
-    constructor(private requirementsService: RequirementsService, private sanitizer: DomSanitizer, private themeService: ThemeService) {
+    constructor(private requirementsService: RequirementsService, 
+        private sanitizer: DomSanitizer, 
+        private themeService: ThemeService,
+        private projectsTableService: ProjectsTableService) {
         this.getData();
+        this.getCurrentProject();
     }
 
     ngAfterViewInit() {
@@ -52,6 +59,11 @@ export class RequirementsTableComponent implements AfterViewInit {
             this.dataSource.data = requirements;
             console.log(this.dataSource.data)
         })
+    }
+
+    getCurrentProject(){  
+      this.currentProject = this.projectsTableService.getCurrentProject()
+      console.log(this.currentProject)
     }
 
     sanitizeHtml(html: string): SafeHtml {

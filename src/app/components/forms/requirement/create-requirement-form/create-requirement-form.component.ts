@@ -35,7 +35,6 @@ export class CreateRequirementFormComponent {
   createForm() {
     this.formGroup.valueChanges.subscribe(val => {
       this.requirementService.updateForm(this.formGroup);
-      this.formGroup.value.projectRelated = this.projectsTableService.getCurrentProject();
     });
   }
 
