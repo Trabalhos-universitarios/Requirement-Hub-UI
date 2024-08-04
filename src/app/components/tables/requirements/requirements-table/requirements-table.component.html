@@ -34,13 +34,16 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>Informações
+                </button>
                 <button mat-menu-item class="icon">
                     <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
                 </button>
                 <button mat-menu-item>
                     <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
                 </button>
-                <button mat-menu-item (click)="openDialog('add')" >
+                <button mat-menu-item (click)="openDialog('add', element.identifierRequirement)" >
                     <mat-icon [ngStyle]="stylesIconColor('add_circle')">add_circle</mat-icon>Adicionar artefatos
                 </button>
             </mat-menu>

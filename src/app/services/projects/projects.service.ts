@@ -9,7 +9,7 @@ import {DataModel} from "../../components/tables/projects/create-project-table/d
 export class ProjectsService {
 
   private baseUrl = 'http://localhost:3000';
-  //private baseUrl = 'http://localhost:8080';
+  // private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
 

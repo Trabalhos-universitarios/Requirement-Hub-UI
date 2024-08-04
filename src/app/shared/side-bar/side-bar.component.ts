@@ -36,7 +36,6 @@ export class SideBarComponent implements OnInit{
         this.getData();
     }
     ngOnInit(): void {
-        console.log(this.#route.snapshot.url[0].path);
         this.currentRoute = this.#route.snapshot.url[0].path;
     }
 

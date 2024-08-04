@@ -1,7 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {BehaviorSubject, firstValueFrom, Observable} from "rxjs";
 import {FormGroup} from "@angular/forms";
+import {
+  RequirementsDataModel
+} from "../../components/tables/requirements/requirements-table/model/requirements-data-model";
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +13,8 @@ export class RequirementsService {
 
   private formGroupSource = new BehaviorSubject<FormGroup | null>(null);
   currentForm = this.formGroupSource.asObservable();
-  //private baseUrl = 'http://localhost:8180';
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'http://localhost:8180';
+  // private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
@@ -22,12 +25,12 @@ export class RequirementsService {
 
   //SERVIÇOS DE DB
   getRequirements(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/requirements`);
+    return this.http.get<any[]>(`${this.baseUrl}/requirements/search`);
   }
 
-  getRequirementsByName(nameRequirement: string): Observable<any> {
-    const encodedName = encodeURIComponent(nameRequirement);
-    return this.http.get<any>(`${this.baseUrl}/requirements/filter?nameRequirement=${encodedName}`);
+  async getRequirementsByIdentifier(identifier: string): Promise<RequirementsDataModel[]> {
+    const params = new HttpParams().set('identifier', identifier);
+    return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/filter`, { params }));
   }
 
   createRequirements(post: any): Observable<any> {

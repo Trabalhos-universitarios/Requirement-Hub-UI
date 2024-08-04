@@ -102,13 +102,13 @@ export class ProjectsTableComponent {
 
     openDialog(action?: string) {
         switch (action) {
-            case 'Criar requisitos':
+            case 'Create requirement':
                 this.dialog.open(ModalDialogCreateRequirementComponent);
                 break;
-            case 'Informações':
+            case 'Requirement list':
                 this.dialog.open(ModalDialogInformationProjectComponent);
                 break;
-            case 'Matriz de Rastreabilidade':
+            case 'Traceability matrix':
                 this.dialog.open(TracebilityMatrixComponent);
                 break
             default:

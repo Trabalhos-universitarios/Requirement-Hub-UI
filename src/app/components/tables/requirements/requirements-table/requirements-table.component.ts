@@ -3,7 +3,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {RequirementsService} from "../../../../services/requirements/requirements.service";
-import {DataModel} from "./model/data-model";
+import {RequirementsDataModel} from "./model/requirements-data-model";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";
@@ -25,7 +25,7 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 })
 
 export class RequirementsTableComponent implements AfterViewInit {
-    dataSource = new MatTableDataSource<DataModel>;
+    dataSource = new MatTableDataSource<RequirementsDataModel>;
     displayedColumns: string[] =
         [
             'identifierRequirement',
@@ -38,7 +38,7 @@ export class RequirementsTableComponent implements AfterViewInit {
             'status',
         ];
     columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
-    expandedElement: DataModel | undefined;
+    expandedElement: RequirementsDataModel | undefined;
 
     @ViewChild(MatPaginator) paginator?: MatPaginator;
 
@@ -106,11 +106,29 @@ export class RequirementsTableComponent implements AfterViewInit {
         }
     }
 
-    openDialog(value: String) {
-        switch (value) {
-            case "add":
-                this.matDialog.open(AddArtifactsComponent)
+    openDialog(action: String, value: string) {
+
+        console.log(`IDENTIFICADOR DO REQUISITO: ${value}`)
+        console.log(`IDENTIFICADOR DO REQUISITO TYPE: ${typeof value}`)
+
+        switch (action) {
+            case "information":
+                console.log("Aqui vai a ação a ser tomada em info")
                 break
+            case "edit":
+                console.log("Aqui vai a ação a ser tomada em edit")
+                break
+            case "delete":
+                console.log("Aqui vai a ação a ser tomada em delete")
+                break
+            case "add":
+                this.matDialog.open(AddArtifactsComponent, {
+                    data: {
+                        identifierRequirement: value
+                    }
+                })
+                break
+
             default:
                 console.error("This dialog non exists!")
         }
