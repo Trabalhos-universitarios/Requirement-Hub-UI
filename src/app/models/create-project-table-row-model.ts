@@ -1,4 +1,4 @@
-export interface TableRowModel {
+export interface CreateProjectTableRowModel {
     nameProject: string;
     nameProjectManager: string;
     nameRequirementAnalyst: string;
