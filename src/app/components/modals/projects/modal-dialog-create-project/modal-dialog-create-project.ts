@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {ReactiveFormServices} from "../../../services/forms/reactive-form-services.service";
-import {AlertService} from "../../../services/sweetalert/alert.service";
+import {ReactiveFormServices} from "../../../../services/forms/reactive-form-services.service";
+import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {MatDialog} from "@angular/material/dialog";
-import {CreateProjectTabComponent} from "../../tabs/create-project-tab/create-project-tab.component";
-import {ProjectsService} from "../../../services/projects/projects.service";
-import {Status} from "../../../utils/util.status";
+import {CreateProjectTabComponent} from "../../../tabs/create-project-tab/create-project-tab.component";
+import {ProjectsService} from "../../../../services/projects/projects.service";
+import {Status} from "../../../../utils/util.status";
 
 @Component({
     selector: 'app-modal-dialog-create-project',

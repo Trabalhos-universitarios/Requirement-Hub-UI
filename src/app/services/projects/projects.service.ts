@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {DataModel} from "../../components/tables/projects/create-project-table/data-model";
+import {CreateProjectDataModel} from "../../models/create-project-data-model";
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +9,12 @@ import {DataModel} from "../../components/tables/projects/create-project-table/d
 export class ProjectsService {
 
   private baseUrl = 'http://localhost:3000';
-  //private baseUrl = 'http://localhost:8080';
+  // private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
 
-  getProjects(): Observable<DataModel[]> {
-    return this.http.get<DataModel[]>(`${this.baseUrl}/projects`);
+  getProjects(): Observable<CreateProjectDataModel[]> {
+    return this.http.get<CreateProjectDataModel[]>(`${this.baseUrl}/projects`);
   }
 
   createProject(post: any): Observable<any> {
