@@ -3,7 +3,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {RequirementsService} from "../../../../services/requirements/requirements.service";
-import {RequirementsDataModel} from "./model/requirements-data-model";
+import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";

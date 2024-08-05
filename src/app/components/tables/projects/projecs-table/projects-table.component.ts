@@ -3,7 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {MatDialog} from "@angular/material/dialog";
-import {DataModel} from "./model/data-model";
+import {ProjectDataModel} from "../../../../models/project-data-model";
 import {Status} from "../../../../utils/util.status";
 import {
     ModalDialogCreateRequirementComponent
@@ -31,7 +31,7 @@ export class ProjectsTableComponent {
             'actions'
         ];
 
-    dataSource = new MatTableDataSource<DataModel>([]);
+    dataSource = new MatTableDataSource<ProjectDataModel>([]);
 
     constructor(
         private projectsService: ProjectsService,
@@ -42,7 +42,7 @@ export class ProjectsTableComponent {
     }
 
     getData() {
-        this.projectsService.getProjects().subscribe((projects: DataModel[]) => {
+        this.projectsService.getProjects().subscribe((projects: ProjectDataModel[]) => {
             this.dataSource.data = projects;
             console.log(this.dataSource.data)
         });

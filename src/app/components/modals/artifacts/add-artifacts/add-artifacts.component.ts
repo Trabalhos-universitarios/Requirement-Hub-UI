@@ -6,7 +6,7 @@ import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
 import {Status} from "../../../../utils/util.status";
-import {RequirementsDataModel} from "../../../tables/requirements/requirements-table/model/requirements-data-model";
+import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 
 @Component({
     selector: 'app-add-artifacts',
@@ -38,38 +38,46 @@ export class AddArtifactsComponent implements OnInit {
         this.artifactService.currentForm.subscribe(form => {
             this.artifactForm = form;
             this.buttonDisabled = !(form?.valid && form?.value);
+
+            console.log(`this.artifactForm.value OnInit: ${form?.value.identifierArtifact}`)
         });
     }
 
     async saveData(): Promise<void> {
 
-        this.getArtifactByIdentifierArtifact()
+        let verifyArtifactExists = await this.getArtifactByIdentifierArtifact()
+
+        console.log("retorno do artifact", verifyArtifactExists);
+
+        if (verifyArtifactExists) {
+            console.log("ENTROU AQUI ELSE")
+            await this.alertService.toErrorAlert("ERRO", "Esse artefato já está registrado!")
+            return;
+        }
+
+        console.log("ENTROU AQUI IF")
 
         this.requirementId = await this.getRequirementId();
-
-        this.prepareDataRequirement();
 
         this.artifactService.createArtifact(this.prepareDataArtifact(this.requirementId[0].id)).subscribe(respArt => {
 
             try {
                 this.alertService.toSuccessAlert("Requisito Cadastrado com sucesso!");
                 this.localStorageService.clearAll();
-                this.dialog.closeAll();
+                //this.dialog.closeAll();
                 setTimeout(() => {
-                    window.location.reload();
+                    //window.location.reload();
                 }, 3000);
             } catch (error) {
                 throw new Error(`Exception caused ${error} and api response id ${respArt}`);
             }
         });
+
     }
 
     //TODO PAREI AQUI, BUSCAR O ARTEFATO PARA VER SE NÃO EXISTE ANTES DE SALVAR.
-    async getArtifactByIdentifierArtifact(){
-
-        console.log(`IDENTIFIER ARTIFACT: ${await this.requirementForm?.value.identifierArtifact}`)
-
-        return await this.artifactService.getArtifactByIdentifierArtifact(await this.requirementForm?.value.identifierArtifact)
+    async getArtifactByIdentifierArtifact() {
+        return await this.artifactService.getArtifactByIdentifierArtifact(this.artifactForm?.value.identifierArtifact)
     }
 
     async getRequirementId(): Promise<RequirementsDataModel[]> {
@@ -97,6 +105,7 @@ export class AddArtifactsComponent implements OnInit {
 
     prepareDataArtifact(requirementId?: string) {
         const fileData = this.localStorageService.getItem('file');
+
         if (this.artifactForm && this.artifactForm.valid) {
             return {
                 ...this.artifactForm.value,

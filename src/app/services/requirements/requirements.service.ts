@@ -4,7 +4,7 @@ import {BehaviorSubject, firstValueFrom, Observable} from "rxjs";
 import {FormGroup} from "@angular/forms";
 import {
   RequirementsDataModel
-} from "../../components/tables/requirements/requirements-table/model/requirements-data-model";
+} from "../../models/requirements-data-model";
 
 @Injectable({
   providedIn: 'root'

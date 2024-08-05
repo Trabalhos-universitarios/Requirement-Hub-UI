@@ -4,7 +4,8 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {FormGroup} from "@angular/forms";
 import {
   RequirementsDataModel
-} from "../../../components/tables/requirements/requirements-table/model/requirements-data-model";
+} from "../../../models/requirements-data-model";
+import {ArtifactResponseModel} from "../../../models/artifact-response-model";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,10 @@ export class ArtifactService {
   }
 
   getArtifactByIdentifierArtifact(identifier: string) {
+
+    console.log(`artifact identifier dentro da service: ${identifier}`)
+
     const params = new HttpParams().set('identifier', identifier);
-    return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/artifacts/filter`, { params }));
+    return firstValueFrom(this.http.get<ArtifactResponseModel[]>(`${this.baseUrl}/artifacts/filter`, { params }));
   }
 }
