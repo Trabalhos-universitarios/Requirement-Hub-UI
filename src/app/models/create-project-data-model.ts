@@ -1,9 +1,9 @@
 export interface CreateProjectDataModel {
-    nameProject: string,
-    nameProjectManager: string,
-    nameRequirementAnalyst: string[],
-    nameBusinessAnalyst: string[],
-    nameCommonUser: string[]
+    name: string,
+    manager: string,
+    requirementAnalysts: string[],
+    businessAnalysts: string[],
+    commonUsers: string[]
     creationDate: Date;
     version: string;
     status: string;
