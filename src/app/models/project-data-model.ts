@@ -1,6 +1,6 @@
 export interface ProjectDataModel {
-    nameProject: string,
-    nameProjectManager: string,
+    name: string,
+    manager: string,
     creationDate: Date;
     version: string;
     status: string;

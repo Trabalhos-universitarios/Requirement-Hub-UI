@@ -44,19 +44,19 @@ export class CreateProjectTableComponent implements AfterViewInit{
         const transformedData: CreateProjectTableRowModel[] = [];
 
         const maxLength = Math.max(
-            data.nameRequirementAnalyst.length,
-            data.nameBusinessAnalyst.length,
-            data.nameCommonUser.length,
+            data.requirementAnalysts.length,
+            data.businessAnalysts.length,
+            data.commonUsers.length,
         );
 
         for (let i = 0; i < maxLength; i++) {
             transformedData.push({
-                nameProject: data.nameProject,
+                name: data.name,
                 version: data.version || '-',
-                nameProjectManager: data.nameProjectManager || '-',
-                nameRequirementAnalyst: data.nameRequirementAnalyst[i] || '-',
-                nameBusinessAnalyst: data.nameBusinessAnalyst[i] || '-',
-                nameCommonUser: data.nameCommonUser[i] || '-'
+                manager: data.manager || '-',
+                requirementAnalysts: data.requirementAnalysts[i] || '-',
+                businessAnalysts: data.businessAnalysts[i] || '-',
+                commonUsers: data.commonUsers[i] || '-'
             });
         }
         return transformedData;
