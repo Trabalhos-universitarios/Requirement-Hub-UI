@@ -2,12 +2,14 @@ import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {ThemeService} from "../../services/theme/theme.service";
 import {MatDrawer} from "@angular/material/sidenav";
 import {ProjectsService} from "../../services/projects/projects.service";
-import {DataModel} from "../../components/tables/projects/create-project-table/data-model";
+import {CreateProjectDataModel} from "../../models/create-project-data-model";
 import {SidebarService} from "../../services/sidebar/sidebar.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ModalDialogCreateProjectComponent} from "../../components/modals/modal-dialog-create-project/modal-dialog-create-project";
 import { ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
+import {
+    ModalDialogCreateProjectComponent
+} from "../../components/modals/projects/modal-dialog-create-project/modal-dialog-create-project";
 
 @Component({
     selector: 'app-side-bar',
@@ -18,7 +20,7 @@ export class SideBarComponent implements OnInit{
 
     #route = inject(ActivatedRoute);
     currentRoute = '';
-    dataSource = new MatTableDataSource<DataModel>([]);
+    dataSource = new MatTableDataSource<CreateProjectDataModel>([]);
 
 
     @ViewChild('drawer') drawer!: MatDrawer;
@@ -34,7 +36,6 @@ export class SideBarComponent implements OnInit{
         this.getData();
     }
     ngOnInit(): void {
-        console.log(this.#route.snapshot.url[0].path);
         this.currentRoute = this.#route.snapshot.url[0].path;
     }
 
@@ -44,7 +45,7 @@ export class SideBarComponent implements OnInit{
 
     getData() {
         this.projectsService.getProjects()
-            .subscribe((projects: DataModel[]) => {
+            .subscribe((projects: CreateProjectDataModel[]) => {
             this.hasProjects = projects && projects.length > 0;
             this.dataSource.data = projects;
         });

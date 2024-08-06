@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {
   ModalDialogCreateRequirementComponent
-} from "../modal-dialog-create-requirement/modal-dialog-create-requirement.component";
+} from "../../requirements/modal-dialog-create-requirement/modal-dialog-create-requirement.component";
 
 @Component({
   selector: 'app-modal-dialog-information-project',

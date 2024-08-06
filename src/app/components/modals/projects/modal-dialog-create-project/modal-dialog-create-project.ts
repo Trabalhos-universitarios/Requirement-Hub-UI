@@ -1,11 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {ReactiveFormServices} from "../../../services/forms/reactive-form-services.service";
-import {AlertService} from "../../../services/sweetalert/alert.service";
+import {ReactiveFormServices} from "../../../../services/forms/reactive-form-services.service";
+import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {MatDialog} from "@angular/material/dialog";
-import {CreateProjectTabComponent} from "../../tabs/create-project-tab/create-project-tab.component";
-import {ProjectsService} from "../../../services/projects/projects.service";
-import {Status} from "../../../utils/util.status";
+import {CreateProjectTabComponent} from "../../../tabs/create-project-tab/create-project-tab.component";
+import {ProjectsService} from "../../../../services/projects/projects.service";
+import {Status} from "../../../../utils/util.status";
+import {ProjectDataModel} from "../../../../models/project-data-model";
 
 @Component({
     selector: 'app-modal-dialog-create-project',
@@ -47,16 +48,20 @@ export class ModalDialogCreateProjectComponent implements OnInit {
         this.getData();
 
         if (this.formGroup && this.formGroup.valid) {
-            const projectData =
+
+            const prepareData: ProjectDataModel =
                 {
                     ...this.formGroup.value,
-                    creationDate: new Date().toISOString(),
+                    businessAnalysts: this.formGroup.value.businessAnalysts.map((v: { id: any; }) => v.id),
+                    commonUsers: this.formGroup.value.commonUsers.map((v: { id: any; }) => v.id),
+                    manager: this.formGroup.value.manager.id,
+                    requirementAnalysts: this.formGroup.value.requirementAnalysts.map((v: { id: any; }) => v.id),
                     status: Status.ACTIVE
                 };
 
-            this.projectService.createProject(projectData).subscribe(resp => {
+            this.projectService.createProject(prepareData).subscribe(resp => {
                 if (resp) {
-                    this.alertService.toSuccessAlert("Projeto Salvo com sucesso!");
+                    this.alertService.toSuccessAlert("Projeto salvo com sucesso!");
                     this.dialog.closeAll();
                     setTimeout(() => {
                         window.location.reload();

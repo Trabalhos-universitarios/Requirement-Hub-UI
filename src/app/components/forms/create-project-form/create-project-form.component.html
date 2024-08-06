@@ -4,63 +4,66 @@
 
          <mat-form-field class="mat-forms-fro-project">
             <mat-label>Nome do projeto</mat-label>
-            <input matInput placeholder="Ex: Requirement Hub" formControlName="nameProject">
+            <input matInput placeholder="Ex: Requirement Hub" formControlName="name">
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Gerente do projeto</mat-label>
-            <mat-select formControlName="nameProjectManager">
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">
-                    {{manager}}
+            <mat-select formControlName="manager">
+                <mat-option *ngFor="let manager of managers" [value]="manager">
+                    {{manager.name}}
                 </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
-         <mat-form-field class="mat-forms-fro-project">
+        <mat-form-field class="mat-forms-fro-project">
             <mat-label>Analista de requisitos</mat-label>
-            <mat-select multiple formControlName="nameRequirementAnalyst">
+            <mat-select multiple formControlName="requirementAnalysts" [compareWith]="compareObjects">
                 <mat-select-trigger>
-                    {{ formGroup.get('nameRequirementAnalyst')?.value?.[0] || '' }}
-                    <span *ngIf="(formGroup.get('nameRequirementAnalyst')?.value?.length || 0) > 1"
+                    {{ formGroup.get('requirementAnalysts')?.value?.[0]?.name || '' }}
+                    <span *ngIf="(formGroup.get('requirementAnalysts')?.value?.length || 0) > 1"
                           class="mat-select-for-project">
-                (+{{ (formGroup.get('nameRequirementAnalyst')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('nameRequirementAnalyst')?.value?.length === 2 ? 'other' : 'others' }})
+                (+{{ (formGroup.get('requirementAnalysts')?.value?.length || 0) - 1 }}
+                        {{ formGroup.get('requirementAnalysts')?.value?.length === 2 ? 'other' : 'others' }})
             </span>
                 </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+                <mat-option *ngFor="let analyst of requirementsAnalysts" [value]="analyst">
+                    {{ analyst.name }}
+                </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
+
          <mat-form-field class="mat-forms-fro-project">
             <mat-label>Analista de negócios</mat-label>
-            <mat-select multiple formControlName="nameBusinessAnalyst">
+            <mat-select multiple formControlName="businessAnalysts" [compareWith]="compareObjects">
                 <mat-select-trigger>
-                    {{ formGroup.get('nameBusinessAnalyst')?.value?.[0] || '' }}
-                    <span *ngIf="(formGroup.get('nameBusinessAnalyst')?.value?.length || 0) > 1"
+                    {{ formGroup.get('businessAnalysts')?.value?.[0]?.name || '' }}
+                    <span *ngIf="(formGroup.get('businessAnalysts')?.value?.length || 0) > 1"
                           class="mat-select-for-project">
-                (+{{ (formGroup.get('nameBusinessAnalyst')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('nameBusinessAnalyst')?.value?.length === 2 ? 'other' : 'others' }})
+                (+{{ (formGroup.get('businessAnalysts')?.value?.length || 0) - 1 }}
+                        {{ formGroup.get('businessAnalysts')?.value?.length === 2 ? 'other' : 'others' }})
             </span>
                 </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+                <mat-option *ngFor="let analysts of businessAnalysts" [value]="analysts">{{ analysts.name }}</mat-option>
             </mat-select>
         </mat-form-field>
 
          <mat-form-field class="mat-forms-fro-project">
             <mat-label>Usuário comum</mat-label>
-            <mat-select multiple formControlName="nameCommonUser">
+            <mat-select multiple formControlName="commonUsers" [compareWith]="compareObjects">
                 <mat-select-trigger>
-                    {{ formGroup.get('nameCommonUser')?.value?.[0] || '' }}
-                     <span *ngIf="(formGroup.get('nameCommonUser')?.value?.length || 0) > 1"
+                    {{ formGroup.get('commonUsers')?.value?.[0]?.name || '' }}
+                     <span *ngIf="(formGroup.get('commonUsers')?.value?.length || 0) > 1"
                           class="mat-select-for-project">
-                (+{{ (formGroup.get('nameCommonUser')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('nameCommonUser')?.value?.length === 2 ? 'other' : 'others' }})
+                (+{{ (formGroup.get('commonUsers')?.value?.length || 0) - 1 }}
+                        {{ formGroup.get('commonUsers')?.value?.length === 2 ? 'other' : 'others' }})
             </span>
                 </mat-select-trigger>
-                <mat-option *ngFor="let manager of toppingList" [value]="manager">{{ manager }}</mat-option>
+                <mat-option *ngFor="let common of commonUsers" [value]="common">{{ common.name }}</mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>

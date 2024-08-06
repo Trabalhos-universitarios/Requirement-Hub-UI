@@ -1,4 +1,5 @@
-export interface DataModel {
+export interface RequirementsDataModel {
+    id?: string
     identifierRequirement: string;
     nameRequirement: string;
     authorRequirement: string;

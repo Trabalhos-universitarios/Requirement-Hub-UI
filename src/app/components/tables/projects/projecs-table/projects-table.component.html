@@ -55,10 +55,13 @@
                     <button mat-menu-item (click)="setDataProjectTable(element.nameProject); openDialog('Informações')">
                         <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>Informações
                     </button>
-                    <button mat-menu-item (click)="setDataProjectTable(element.nameProject); openDialog('Criar requisitos')">
+                    <button mat-menu-item (click)="openDialog('Requirement list')">
+                        <mat-icon [ngStyle]="stylesIconColor('add_circle')">list</mat-icon>Lista de requisitos
+                    </button>
+                    <button mat-menu-item (click)="setDataProjectTable(element.nameProject); openDialog('Create requirement')">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">add_circle</mat-icon>Criar requisitos
                     </button>
-                    <button mat-menu-item (click)="setDataProjectTable(element.nameProject); openDialog('Matriz de Rastreabilidade')">
+                    <button mat-menu-item (click)="setDataProjectTable(element.nameProject); openDialog('Traceability matrix')">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">table_view</mat-icon>Matriz de Rastreabilidade
                     </button>
                 </mat-menu>

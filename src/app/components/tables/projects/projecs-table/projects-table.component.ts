@@ -3,16 +3,16 @@ import {MatTableDataSource} from "@angular/material/table";
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {MatDialog} from "@angular/material/dialog";
+import {ProjectDataModel} from "../../../../models/project-data-model";
+import {Status} from "../../../../utils/util.status";
 import {
     ModalDialogCreateRequirementComponent
-} from "../../../modals/modal-dialog-create-requirement/modal-dialog-create-requirement.component";
-import {
-    ModalDialogInformationProjectComponent
-} from "../../../modals/modal-dialog-information-project/modal-dialog-information-project.component";
-import {DataModel} from "./model/data-model";
-import {Status} from "../../../../utils/util.status";
+} from "../../../modals/requirements/modal-dialog-create-requirement/modal-dialog-create-requirement.component";
 import { TracebilityMatrixComponent } from '../../../modals/modeal-tracebility-matrix/tracebility-matrix.component';
 import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
+import {
+    ModalDialogInformationProjectComponent
+} from "../../../modals/projects/modal-dialog-information-project/modal-dialog-information-project.component";
 
 @Component({
     selector: 'app-projects-table',
@@ -31,7 +31,7 @@ export class ProjectsTableComponent {
             'actions'
         ];
 
-    dataSource = new MatTableDataSource<DataModel>([]);
+    dataSource = new MatTableDataSource<ProjectDataModel>([]);
 
     constructor(
         private projectsService: ProjectsService,
@@ -42,7 +42,7 @@ export class ProjectsTableComponent {
     }
 
     getData() {
-        this.projectsService.getProjects().subscribe((projects: DataModel[]) => {
+        this.projectsService.getProjects().subscribe((projects: ProjectDataModel[]) => {
             this.dataSource.data = projects;
             console.log(this.dataSource.data)
         });
@@ -102,14 +102,17 @@ export class ProjectsTableComponent {
 
     openDialog(action?: string) {
         switch (action) {
-            case 'Criar requisitos':
+            case 'Create requirement':
                 this.dialog.open(ModalDialogCreateRequirementComponent);
                 break;
-            case 'Informações':
+            case 'Requirement list':
                 this.dialog.open(ModalDialogInformationProjectComponent);
                 break;
-            case 'Matriz de Rastreabilidade':
+            case 'Traceability matrix':
                 this.dialog.open(TracebilityMatrixComponent);
+                break
+            default:
+                console.error("This dialog non exists!")
         }
 
     }
