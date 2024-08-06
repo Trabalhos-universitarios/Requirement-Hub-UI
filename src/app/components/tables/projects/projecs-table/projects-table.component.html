@@ -52,7 +52,7 @@
                     <button mat-menu-item>
                         <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
                     </button>
-                    <button mat-menu-item (click)="openDialog('Informações')">
+                    <button mat-menu-item (click)="setDataProjectTable(element.nameProject); openDialog('Informações')">
                         <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>Informações
                     </button>
                     <button mat-menu-item (click)="openDialog('Requirement list')">

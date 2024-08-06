@@ -7,6 +7,7 @@ import {RequirementsDataModel} from "../../../../models/requirements-data-model"
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";
+import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 import {MatDialog} from "@angular/material/dialog";
 import {AddArtifactsComponent} from "../../../modals/artifacts/add-artifacts/add-artifacts.component";
 import {error} from "@angular/compiler-cli/src/transformers/util";
@@ -40,13 +41,19 @@ export class RequirementsTableComponent implements AfterViewInit {
     columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
     expandedElement: RequirementsDataModel | undefined;
 
+    public currentProject =''
+
     @ViewChild(MatPaginator) paginator?: MatPaginator;
 
-    constructor(private requirementsService: RequirementsService,
-                private sanitizer: DomSanitizer,
+    constructor(private requirementsService: RequirementsService, 
+       
+                private sanitizer: DomSanitizer, 
+       
                 private themeService: ThemeService,
+        private projectsTableService: ProjectsTableService,
                 private matDialog: MatDialog) {
         this.getData();
+        this.getCurrentProject();
     }
 
     ngAfterViewInit() {
@@ -58,6 +65,11 @@ export class RequirementsTableComponent implements AfterViewInit {
             this.dataSource.data = requirements;
             console.log(this.dataSource.data)
         })
+    }
+
+    getCurrentProject(){  
+      this.currentProject = this.projectsTableService.getCurrentProject()
+      console.log(this.currentProject)
     }
 
     sanitizeHtml(html: string): SafeHtml {

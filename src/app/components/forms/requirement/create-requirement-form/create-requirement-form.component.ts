@@ -32,12 +32,12 @@ export class CreateRequirementFormComponent {
         this.getCurrentProject();
     }
 
-    createForm() {
-        this.formGroup.valueChanges.subscribe(val => {
-            this.requirementService.updateForm(this.formGroup);
-            this.formGroup.value.projectRelated = this.projectsTableService.getCurrentProject();
-        });
-    }
+  createForm() {
+    this.formGroup.valueChanges.subscribe(val => {
+      this.requirementService.updateForm(this.formGroup);
+      this.formGroup.value.projectRelated = this.projectsTableService.getCurrentProject();
+    });
+  }
 
     getCurrentProject() {
         this.formGroup.patchValue({
@@ -45,12 +45,12 @@ export class CreateRequirementFormComponent {
         });
     }
 
-    //todo Esses dados virão do back-end  o futuro
-    employeeList: string[] = ['Johnny Carvalho', 'Lucas Lemes', 'Elias Coutinho', 'Bruna Carvalho', 'Rebeca Carvalho', 'João Victor'];
-    fontList: string[] = ['Negócios', 'Produtos', 'Engenharia', 'Cliente', 'Design', 'Desenvolvimento'];
-    riskList: string[] = ['Pequeno', 'Médio', 'Alto'];
-    priorityList: string[] = ['Alta', 'Média', 'Baixa'];
-    typeList: string[] = ['Funcional', 'Nào Funcional']
-    esforcoList: string[] = ['Alta', 'Média', 'Baixa'];
-    requirementsIdsList: string[] = ['RF001', 'RF002', 'RF003', 'RF004', 'RF005', 'RF006', 'RF007', 'RF008', 'RF009', 'RF010',]
+  //todo Esses dados virão do back-end  o futuro
+  employeeList: string[] = ['Johnny Carvalho', 'Lucas Lemes', 'Elias Coutinho', 'Bruna Carvalho', 'Rebeca Carvalho', 'João Victor'];
+  fontList: string[] = ['Negócios', 'Produtos', 'Engenharia', 'Cliente', 'Design', 'Desenvolvimento'];
+  riskList: string[] = ['Pequeno', 'Médio', 'Alto'];
+  priorityList: string[] = ['Alta', 'Média', 'Baixa'];
+  typeList: string[] = ['Funcional', 'Nào Funcional']
+  esforcoList: string[] = ['Alta', 'Média', 'Baixa'];
+  requirementsIdsList: string[] = ['RF001', 'RF002', 'RF003', 'RF004', 'RF005', 'RF006', 'RF007', 'RF008', 'RF009', 'RF010', ]
 }
