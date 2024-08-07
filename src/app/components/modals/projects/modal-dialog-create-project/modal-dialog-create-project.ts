@@ -7,6 +7,7 @@ import {CreateProjectTabComponent} from "../../../tabs/create-project-tab/create
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {Status} from "../../../../utils/util.status";
 import {ProjectDataModel} from "../../../../models/project-data-model";
+import { CreateProjectDataModel } from 'src/app/models/create-project-data-model';
 
 @Component({
     selector: 'app-modal-dialog-create-project',
@@ -49,7 +50,7 @@ export class ModalDialogCreateProjectComponent implements OnInit {
 
         if (this.formGroup && this.formGroup.valid) {
 
-            const prepareData: ProjectDataModel =
+            const prepareData: CreateProjectDataModel =
                 {
                     ...this.formGroup.value,
                     businessAnalysts: this.formGroup.value.businessAnalysts.map((v: { id: any; }) => v.id),
@@ -65,7 +66,7 @@ export class ModalDialogCreateProjectComponent implements OnInit {
                     this.dialog.closeAll();
                     setTimeout(() => {
                         window.location.reload();
-                    }, 3000);
+                    }, 1000);
                 }
             });
         }

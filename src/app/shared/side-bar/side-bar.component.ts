@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {
     ModalDialogCreateProjectComponent
 } from "../../components/modals/projects/modal-dialog-create-project/modal-dialog-create-project";
+import { ProjectDataModel } from 'src/app/models/project-data-model';
 
 @Component({
     selector: 'app-side-bar',
@@ -20,7 +21,7 @@ export class SideBarComponent implements OnInit{
 
     #route = inject(ActivatedRoute);
     currentRoute = '';
-    dataSource = new MatTableDataSource<CreateProjectDataModel>([]);
+    dataSource = new MatTableDataSource<ProjectDataModel>([]);
 
 
     @ViewChild('drawer') drawer!: MatDrawer;
@@ -45,7 +46,7 @@ export class SideBarComponent implements OnInit{
 
     getData() {
         this.projectsService.getProjects()
-            .subscribe((projects: CreateProjectDataModel[]) => {
+            .subscribe((projects: ProjectDataModel[]) => {
             this.hasProjects = projects && projects.length > 0;
             this.dataSource.data = projects;
         });

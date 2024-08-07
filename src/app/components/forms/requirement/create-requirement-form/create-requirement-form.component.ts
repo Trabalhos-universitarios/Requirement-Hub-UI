@@ -48,9 +48,9 @@ export class CreateRequirementFormComponent {
     //todo Esses dados virão do back-end  o futuro
     employeeList: string[] = ['Johnny Carvalho', 'Lucas Lemes', 'Elias Coutinho', 'Bruna Carvalho', 'Rebeca Carvalho', 'João Victor'];
     fontList: string[] = ['Negócios', 'Produtos', 'Engenharia', 'Cliente', 'Design', 'Desenvolvimento'];
-    riskList: string[] = ['Pequeno', 'Médio', 'Alto'];
-    priorityList: string[] = ['Alta', 'Média', 'Baixa'];
-    typeList: string[] = ['Funcional', 'Nào Funcional']
-    esforcoList: string[] = ['Alta', 'Média', 'Baixa'];
+    riskList: string[] = ['Low', 'Medium', 'High'];
+    priorityList: string[] = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
+    typeList: string[] = ['Funcional', 'Não Funcional']
+    esforcoList: string[] = ['2', '3', '8', '13', '21', '34', '55'];
     requirementsIdsList: string[] = ['RF001', 'RF002', 'RF003', 'RF004', 'RF005', 'RF006', 'RF007', 'RF008', 'RF009', 'RF010',]
 }
