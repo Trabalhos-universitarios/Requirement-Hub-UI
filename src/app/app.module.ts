@@ -62,6 +62,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {AddArtifactsComponent} from './components/modals/artifacts/add-artifacts/add-artifacts.component';
 import { DisplayColumnFormatPipePipe } from './pipes/display-column-format-pipe.pipe';
 import { TracebilityMatrixComponent } from './components/modals/modeal-tracebility-matrix/tracebility-matrix.component';
+import { LoginComponent } from './core/login/login.component';
+import { ModalLoginComponent } from './components/modals/modal-login/modal-login.component';
 
 @NgModule({
     declarations: [
@@ -86,6 +88,8 @@ import { TracebilityMatrixComponent } from './components/modals/modeal-tracebili
         AddArtifactsComponent,
         DisplayColumnFormatPipePipe,
         TracebilityMatrixComponent,
+        LoginComponent,
+        ModalLoginComponent,
     ],
     imports: [
         BrowserModule,
