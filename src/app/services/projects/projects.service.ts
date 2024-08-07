@@ -14,7 +14,7 @@ export class ProjectsService {
   constructor(private http: HttpClient) {}
 
   getProjects(): Observable<CreateProjectDataModel[]> {
-    return this.http.get<CreateProjectDataModel[]>(`${this.baseUrl}/project`);
+    return this.http.get<CreateProjectDataModel[]>(`${this.baseUrl}/project/all`);
   }
 
   createProject(post: any): Observable<any> {

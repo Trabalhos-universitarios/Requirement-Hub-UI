@@ -6,15 +6,21 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DisplayColumnFormatPipePipe implements PipeTransform {
 
   private columnMap: { [key: string]: string } = {
-    'identifierRequirement': 'Identificador',
-    'nameRequirement': 'Nome',
-    'authorRequirement': 'Autor',
+    'identifier': 'Identificador',
+    'name': 'Nome',
+    'author': 'Autor',
     'creationDate': 'Data de criação',
-    'priorityRequirement': 'Prioridade de desenvolvimento',
-    'typeRequirement': 'Tipo',
-    'versionRequirement': 'Versão atual',
+    'priority': 'Prioridade de desenvolvimento',
+    'type': 'Tipo',
+    'version': 'Versão atual',
     'status': 'Status atual',
     'actions': 'Ações',
+    'source':'Fonte',
+    'risk':'Risco',
+    'responsible':'Responsavel',
+    'effort':'Esforço',
+    'release':'Release',
+    'dependency':'Dependência',
   };
 
   transform(column: string): string {
