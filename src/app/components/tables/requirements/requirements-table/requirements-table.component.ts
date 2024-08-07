@@ -56,7 +56,6 @@ export class RequirementsTableComponent implements AfterViewInit {
     getData() {
         this.requirementsService.getRequirements().subscribe(requirements => {
             this.dataSource.data = requirements;
-            console.log(this.dataSource.data)
         })
     }
 
@@ -107,10 +106,6 @@ export class RequirementsTableComponent implements AfterViewInit {
     }
 
     openDialog(action: String, value: string) {
-
-        console.log(`IDENTIFICADOR DO REQUISITO: ${value}`)
-        console.log(`IDENTIFICADOR DO REQUISITO TYPE: ${typeof value}`)
-
         switch (action) {
             case "information":
                 console.log("Aqui vai a ação a ser tomada em info")

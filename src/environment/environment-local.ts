@@ -1,4 +1,6 @@
 export const environmentLocal = {
     production: false,
-    apiUrl: 'http://localhost:8080',
+    springUrl: 'http://localhost:8080',
+    fakeUrl: 'http://localhost:3000',
+    nodeServerUrl: 'http://localhost:8081',
 };

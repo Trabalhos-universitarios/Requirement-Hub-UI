@@ -15,12 +15,10 @@ export class ModalDialogInformationProjectComponent {
   }
 
   getData() {
-    console.log('CRIAR REQUISITO!')
   }
 
   async openCreateRequirement(): Promise<void> {
     this.dialog.closeAll();
     this.dialog.open(ModalDialogCreateRequirementComponent);
-    console.log('CRIAR REQUISITO!')
   }
 }

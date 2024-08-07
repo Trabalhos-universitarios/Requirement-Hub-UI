@@ -8,7 +8,7 @@ import {UserResponseModel} from "../../models/user-model";
   providedIn: 'root'
 })
 export class UsersService {
-  private baseUrl = environmentLocal.apiUrl
+  private baseUrl = environmentLocal.springUrl
 
   constructor(private http: HttpClient) {}
 

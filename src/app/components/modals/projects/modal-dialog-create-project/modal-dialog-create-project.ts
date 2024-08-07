@@ -7,7 +7,9 @@ import {CreateProjectTabComponent} from "../../../tabs/create-project-tab/create
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {Status} from "../../../../utils/util.status";
 import {ProjectDataModel} from "../../../../models/project-data-model";
+import {RichTextService} from "../../../../services/richText/rich-text.service";
 import { CreateProjectDataModel } from 'src/app/models/create-project-data-model';
+
 
 @Component({
     selector: 'app-modal-dialog-create-project',
@@ -20,12 +22,14 @@ export class ModalDialogCreateProjectComponent implements OnInit {
 
     formGroup?: FormGroup | null;
     buttonDisabled: boolean = true;
+    private descriptionProject: string = '';
 
     constructor(
         private reactiveFormService: ReactiveFormServices,
         private projectService: ProjectsService,
         private alertService: AlertService,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        private richTextService: RichTextService) {
     }
 
 
@@ -34,12 +38,15 @@ export class ModalDialogCreateProjectComponent implements OnInit {
             this.formGroup = form;
             this.buttonDisabled = !(form?.valid);
         });
+
+        this.richTextService.currentContent.subscribe(content => {
+            this.descriptionProject = content;
+        });
     }
 
     getData() {
         this.projectService.getProjects().subscribe(posts => {
             for (let data of posts) {
-                console.log("PROJECTS OBJECT: ", data);
             }
             // TODO AQUI TERÁ A LÓGICA PARA TRATAR SE O PROJETO JÁ EXISTIR NO BACK END
         });
@@ -57,6 +64,7 @@ export class ModalDialogCreateProjectComponent implements OnInit {
                     commonUsers: this.formGroup.value.commonUsers.map((v: { id: any; }) => v.id),
                     manager: this.formGroup.value.manager.id,
                     requirementAnalysts: this.formGroup.value.requirementAnalysts.map((v: { id: any; }) => v.id),
+                    description: this.descriptionProject,
                     status: Status.ACTIVE
                 };
 

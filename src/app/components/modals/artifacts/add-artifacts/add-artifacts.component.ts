@@ -38,8 +38,6 @@ export class AddArtifactsComponent implements OnInit {
         this.artifactService.currentForm.subscribe(form => {
             this.artifactForm = form;
             this.buttonDisabled = !(form?.valid && form?.value);
-
-            console.log(`this.artifactForm.value OnInit: ${form?.value.identifierArtifact}`)
         });
     }
 
@@ -47,15 +45,10 @@ export class AddArtifactsComponent implements OnInit {
 
         let verifyArtifactExists = await this.getArtifactByIdentifierArtifact()
 
-        console.log("retorno do artifact", verifyArtifactExists);
-
         if (verifyArtifactExists) {
-            console.log("ENTROU AQUI ELSE")
             await this.alertService.toErrorAlert("ERRO", "Esse artefato já está registrado!")
             return;
         }
-
-        console.log("ENTROU AQUI IF")
 
         this.requirementId = await this.getRequirementId();
 

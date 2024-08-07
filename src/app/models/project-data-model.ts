@@ -8,4 +8,5 @@ export interface ProjectDataModel {
     lastUpdate?: Date;
     draft?: string;
     actions: string;
+    description?: string
 }

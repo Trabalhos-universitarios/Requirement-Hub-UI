@@ -44,13 +44,11 @@ export class ProjectsTableComponent {
     getData() {
         this.projectsService.getProjects().subscribe((projects: ProjectDataModel[]) => {
             this.dataSource.data = projects;
-            console.log(this.dataSource.data)
         });
     }
 
     setDataProjectTable(currentProject : string) {
         this.projectsTableService.setCurrentProject(currentProject);
-        console.log(currentProject)
         }
 
     stylesStatusIcon(status: string) {
