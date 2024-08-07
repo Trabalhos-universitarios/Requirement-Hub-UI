@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {CreateProjectDataModel} from "../../models/create-project-data-model";
 import {environmentLocal} from "../../../environment/environment-local";
+import { ProjectDataModel } from 'src/app/models/project-data-model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class ProjectsService {
 
   constructor(private http: HttpClient) {}
 
-  getProjects(): Observable<CreateProjectDataModel[]> {
-    return this.http.get<CreateProjectDataModel[]>(`${this.baseUrl}/project`);
+  getProjects(): Observable<ProjectDataModel[]> {
+    return this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all`);
   }
 
   createProject(post: any): Observable<any> {
