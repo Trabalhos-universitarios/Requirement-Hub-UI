@@ -5,4 +5,5 @@ export interface ProjectDataModel {
     version: string;
     status: string;
     actions: string;
+    description?: string
 }

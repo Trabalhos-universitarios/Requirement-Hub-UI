@@ -28,9 +28,6 @@ export class ArtifactService {
   }
 
   getArtifactByIdentifierArtifact(identifier: string) {
-
-    console.log(`artifact identifier dentro da service: ${identifier}`)
-
     const params = new HttpParams().set('identifier', identifier);
     return firstValueFrom(this.http.get<ArtifactResponseModel[]>(`${this.baseUrl}/artifacts/filter`, { params }));
   }

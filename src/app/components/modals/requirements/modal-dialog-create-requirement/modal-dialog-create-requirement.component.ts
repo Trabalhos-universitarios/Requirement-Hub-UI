@@ -47,10 +47,6 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
 
             if (respReq && respReq.id) {
                 this.artifactService.createArtifact(this.prepareDataArtifact(respReq.id)).subscribe(respArt => {
-
-                    console.log('respReq: ' + respReq);
-                    console.log('respArt: ' + respArt);
-                    
                     if (respReq) {
                         this.alertService.toSuccessAlert("Requisito Cadastrado com sucesso!");
                         this.localStorageService.clearAll();
@@ -74,9 +70,6 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
 
     prepareDataRequirement() {
         if (this.requirementForm && this.requirementForm.valid) {
-
-            console.log('TESTANDO DESCRICAO: ', this.requirementForm.value);
-
             return {
                 ...this.requirementForm.value,
                 creationDate: new Date().toISOString(),
@@ -88,15 +81,13 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
     prepareDataArtifact(requirementId?: string) {
         const fileData = this.localStorageService.getItem('file');
         if (this.artifactForm && this.artifactForm.valid) {
-          let data = {
-            ...this.artifactForm.value,
-            creationDate: new Date().toISOString(),
-            status: Status.CREATED,
-            files: fileData,
-            requirementId: requirementId // Inclui o ID do requisito
+            return {
+              ...this.artifactForm.value,
+              creationDate: new Date().toISOString(),
+              status: Status.CREATED,
+              files: fileData,
+              requirementId: requirementId // Inclui o ID do requisito
           };
-            console.log('ARTIFACT INDO PARA O BACK: ' + data)
-          return data;
         }
     }
 }

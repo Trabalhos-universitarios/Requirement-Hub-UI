@@ -24,7 +24,6 @@ export class TracebilityMatrixComponent {
       this.traceabilityService.getTraceabilityMatrix().subscribe((matrix: []) => {
           this.dataSource = matrix;
           this.currentProject = this.projectTableService.getCurrentProject();
-          console.log(this.currentProject)
       });
   }
 
@@ -42,7 +41,6 @@ export class TracebilityMatrixComponent {
     else if (cell !== null && cell !== '' && cell !== '0'){
       if(this.themeService.isDarkMode()){backgroundColor = '#E4E4E4'; color = 'black'}
       else {backgroundColor = '#3C3C3C'; color = 'white'} 
-      console.log('resto: ' + cell) 
     }
     else{
       if(this.themeService.isDarkMode()){backgroundColor = '#3C3C3C'}

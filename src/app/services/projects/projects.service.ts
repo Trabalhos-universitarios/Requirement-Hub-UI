@@ -9,7 +9,7 @@ import {environmentLocal} from "../../../environment/environment-local";
 })
 export class ProjectsService {
 
-  private baseUrl = environmentLocal.apiUrl
+  private baseUrl = environmentLocal.springUrl
 
   constructor(private http: HttpClient) {}
 
@@ -18,9 +18,6 @@ export class ProjectsService {
   }
 
   createProject(post: any): Observable<any> {
-
-    console.log('VALOR DENTRO DA SERVICE ', post)
-
     return this.http.post(`${this.baseUrl}/project`, post);
   }
 }
