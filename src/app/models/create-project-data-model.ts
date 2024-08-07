@@ -8,7 +8,7 @@ export interface CreateProjectDataModel {
     creationDate: Date;
     version: string;
     status: string;
-    lastUpdate: Date;
-    draft: string;
+    lastUpdate?: Date;
+    draft?: string;
     actions: string;
 }
