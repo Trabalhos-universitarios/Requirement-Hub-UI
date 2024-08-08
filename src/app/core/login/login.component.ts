@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
 import { ModalLoginComponent } from 'src/app/components/modals/modal-login/modal-login.component';
+import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 import { LoginService } from 'src/app/services/login/login.service';
 
 @Component({
@@ -17,8 +18,10 @@ export class LoginComponent {
     private fb: FormBuilder,
     private loginService: LoginService,
     private dialog: MatDialog,
-    private router: Router  // Injeta o Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {
+    this.localStorageService.clearAll(),
     this.loginForm = this.fb.group({
       login: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -30,11 +33,13 @@ export class LoginComponent {
       const { login, password } = this.loginForm.getRawValue();
       this.loginService.login(login, password).subscribe({
         next: (response) => {
+          this.localStorageService.setItem('token', response.token);
+          this.localStorageService.setItem('role', response.role);
           this.dialog.open(ModalLoginComponent, {
             width: '300px',
-            data: { message: 'Login successful!' }
+            data: { message: 'Login successfull!' }
           }).afterClosed().subscribe(() => {
-            this.router.navigate(['/home']);  // Redireciona para a rota 'home'
+            this.router.navigate(['/home']);
           });
         },
         error: (err) => {

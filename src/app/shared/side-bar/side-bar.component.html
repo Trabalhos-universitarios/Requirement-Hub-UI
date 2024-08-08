@@ -1,15 +1,15 @@
 <mat-drawer-container class="container" autosize>
 
-    <mat-toolbar *ngIf="currentRoute === 'home' || currentRoute === ''" class="title-toolbar">
+    <mat-toolbar class="title-toolbar">
         <span class="title">Projetos</span>
       </mat-toolbar>
       
-      <div *ngIf="(currentRoute === 'home' || currentRoute === '') && hasProjects; else viewTableProjects">
+      <div *ngIf="hasProjects; else viewTableProjects">
         <app-projects-table></app-projects-table>
       </div>
       
       <ng-template #viewTableProjects>
-        <app-no-content *ngIf="currentRoute === 'home' || currentRoute === ''"></app-no-content>
+        <app-no-content></app-no-content>
       </ng-template>
 
       <!--mat-toolbar *ngIf="currentRoute === 'traceability'" class="title-toolbar">

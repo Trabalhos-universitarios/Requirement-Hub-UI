@@ -17,10 +17,8 @@ import { ProjectDataModel } from 'src/app/models/project-data-model';
     templateUrl: './side-bar.component.html',
     styleUrls: ['./side-bar.component.scss']
 })
-export class SideBarComponent implements OnInit{
+export class SideBarComponent {
 
-    #route = inject(ActivatedRoute);
-    currentRoute = '';
     dataSource = new MatTableDataSource<ProjectDataModel>([]);
 
 
@@ -33,11 +31,7 @@ export class SideBarComponent implements OnInit{
         private sidebarService: SidebarService,
         private dialog: MatDialog) {
         this.themeService.initTheme();
-
         this.getData();
-    }
-    ngOnInit(): void {
-        this.currentRoute = this.#route.snapshot.url[0].path;
     }
 
     ngAfterViewInit() {
