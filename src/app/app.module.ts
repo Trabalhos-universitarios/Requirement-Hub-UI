@@ -28,7 +28,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CreateProjectFormComponent} from "./components/forms/create-project-form/create-project-form.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {
     CreateProjectTableComponent
@@ -62,8 +62,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {AddArtifactsComponent} from './components/modals/artifacts/add-artifacts/add-artifacts.component';
 import { DisplayColumnFormatPipePipe } from './pipes/display-column-format-pipe.pipe';
 import { TracebilityMatrixComponent } from './components/modals/modeal-tracebility-matrix/tracebility-matrix.component';
-import { LoginComponent } from './core/login/login.component';
 import { ModalLoginComponent } from './components/modals/modal-login/modal-login.component';
+import { TokenInterceptor } from './auth/token-interceptor';
+import { LoginComponent } from './core/login/login.component';
 
 @NgModule({
     declarations: [
@@ -127,7 +128,9 @@ import { ModalLoginComponent } from './components/modals/modal-login/modal-login
         MatPaginatorModule,
         MatTableModule,
     ],
-    providers: [],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+      ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
