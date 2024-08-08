@@ -34,6 +34,7 @@ export class LoginComponent {
       this.loginService.login(login, password).subscribe({
         next: (response) => {
           this.localStorageService.setItem('token', response.token);
+          this.localStorageService.setItem('role', response.role);
           this.dialog.open(ModalLoginComponent, {
             width: '300px',
             data: { message: 'Login successfull!' }
