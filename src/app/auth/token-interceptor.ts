@@ -7,9 +7,10 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
     if (token) {
+      const formattedToken = token.replace(/"/g, ''); 
       request = request.clone({
         setHeaders: {
-          Authorization: `Basic ${token}`
+          Authorization: `Bearer ${formattedToken}`
         }
       });
     }
