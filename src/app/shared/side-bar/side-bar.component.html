@@ -30,7 +30,7 @@
                 <span class="description">Projetos</span>
             </button>
 
-            <button mat-button (click)="openModalDialogComponent()">
+            <button mat-button [hidden]="isManager()" (click)="openModalDialogComponent()">
                 <mat-icon class="icons">format_list_bulleted_add</mat-icon>
                 <span class="description">Criar Projeto</span>
             </button>
@@ -40,22 +40,17 @@
                 <span class="description">Documentações</span>
             </button>
 
-            <button mat-button>
+            <button mat-button [hidden]="isManager()">
                 <mat-icon class="icons">pending_actions</mat-icon>
                 <span class="description">Pendências de Aprovações</span>
             </button>
 
-            <button mat-button>
+            <button mat-button [hidden]="isAdmin()">
                 <mat-icon class="icons">person_add</mat-icon>
                 <span>Cadastrar Membros</span>
             </button>
 
-            <!--button mat-button routerLink="/traceability">
-                <mat-icon class="icons">dataset</mat-icon>
-                <span>Matriz de Rastreabilidade</span>
-            </button-->
-
-            <button mat-button>
+            <button mat-button [hidden]="isAdmin()">
                 <mat-icon class="icons">settings</mat-icon>
                 <span>Configurações</span>
             </button>

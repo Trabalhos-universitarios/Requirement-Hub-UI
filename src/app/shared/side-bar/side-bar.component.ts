@@ -27,7 +27,7 @@ export class SideBarComponent {
     hasProjects: boolean = false;
 
     constructor(
-        private localstorage:LocalStorageService,
+        private localStorage:LocalStorageService,
         private router: Router,
         private themeService: ThemeService,
         private projectsService: ProjectsService,
@@ -53,8 +53,22 @@ export class SideBarComponent {
         this.dialog.open(ModalDialogCreateProjectComponent);
     }
 
+    isManager(){
+        if(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS"){
+            return false;
+        }
+        return true;
+    }
+
+    isAdmin(){
+        if(this.localStorage.getItem('role') == "ADMINISTRADOR"){
+            return false;
+        }
+        return true;
+    }
+
     logout(){
-        this.localstorage.clearAll()
+        this.localStorage.clearAll()
         this.router.navigate(['/login']);
     }
 }
