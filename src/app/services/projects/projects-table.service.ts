@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class ProjectsTableService {
 
   public currentProject = ''
+  public currentIdProject : number = 0;
 
   constructor() { }
 
@@ -15,5 +16,13 @@ export class ProjectsTableService {
 
   getCurrentProject(){
     return this.currentProject;
+  }
+
+  setCurrentIdProject(value : number){
+    this.currentIdProject = value;
+  }
+
+  getCurrentIdProject(){
+    return this.currentIdProject;
   }
 }

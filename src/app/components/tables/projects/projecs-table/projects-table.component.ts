@@ -13,6 +13,8 @@ import { ProjectsTableService } from 'src/app/services/projects/projects-table.s
 import {
     ModalDialogInformationProjectComponent
 } from "../../../modals/projects/modal-dialog-information-project/modal-dialog-information-project.component";
+import { ModalDialogDeleteProjectComponent } from 'src/app/components/modals/projects/modal-dialog-delete-project/modal-dialog-delete-project.component';
+import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 
 @Component({
     selector: 'app-projects-table',
@@ -37,6 +39,7 @@ export class ProjectsTableComponent {
         private projectsService: ProjectsService,
         private projectsTableService: ProjectsTableService,
         protected themeService: ThemeService,
+        private localStorage : LocalStorageService,
         private dialog: MatDialog) {
         this.getData();
     }
@@ -47,9 +50,17 @@ export class ProjectsTableComponent {
         });
     }
 
-    setDataProjectTable(currentProject : string) {
+    setDataProjectTable(id : number, currentProject : string) {
+        this.projectsTableService.setCurrentIdProject(id);
         this.projectsTableService.setCurrentProject(currentProject);
         }
+
+    userPermited(){
+        if(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS"){
+            return false;
+        }
+        return true;
+    }
 
     stylesStatusIcon(status: string) {
         let colorIcon: string = '#616161';
@@ -100,6 +111,14 @@ export class ProjectsTableComponent {
 
     openDialog(action?: string) {
         switch (action) {
+            case 'Put project':
+                this.dialog.open(ModalDialogCreateRequirementComponent);
+                break;
+            case 'Delete project':
+                this.dialog.open(ModalDialogDeleteProjectComponent, {
+                    width: '400px',
+                    data: { message: 'Tem certeza que deseja deletar o projeto?' }});
+                break;
             case 'Create requirement':
                 this.dialog.open(ModalDialogCreateRequirementComponent);
                 break;

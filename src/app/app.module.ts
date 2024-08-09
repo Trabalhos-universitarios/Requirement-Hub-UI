@@ -65,6 +65,7 @@ import { TracebilityMatrixComponent } from './components/modals/modeal-tracebili
 import { ModalLoginComponent } from './auth/modals/modal-login/modal-login.component';
 import { TokenInterceptor } from './auth/token-interceptor';
 import { LoginComponent } from './auth/components/login/login.component';
+import { ModalDialogDeleteProjectComponent } from './components/modals/projects/modal-dialog-delete-project/modal-dialog-delete-project.component';
 
 @NgModule({
     declarations: [
@@ -91,6 +92,7 @@ import { LoginComponent } from './auth/components/login/login.component';
         TracebilityMatrixComponent,
         LoginComponent,
         ModalLoginComponent,
+        ModalDialogDeleteProjectComponent,
     ],
     imports: [
         BrowserModule,

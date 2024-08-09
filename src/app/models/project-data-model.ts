@@ -1,4 +1,5 @@
 export interface ProjectDataModel {
+    id: string,
     name: string,
     manager: string,
     status: string;
