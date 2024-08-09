@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
-import { ModalLoginComponent } from 'src/app/components/modals/modal-login/modal-login.component';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
-import { LoginService } from 'src/app/services/login/login.service';
+import { LoginService } from 'src/app/auth/services/login/login.service';
+import { ModalLoginComponent } from '../../modals/modal-login/modal-login.component';
 
 @Component({
   selector: 'app-login',
@@ -35,17 +35,12 @@ export class LoginComponent {
         next: (response) => {
           this.localStorageService.setItem('token', response.token);
           this.localStorageService.setItem('role', response.role);
-          this.dialog.open(ModalLoginComponent, {
-            width: '300px',
-            data: { message: 'Login successfull!' }
-          }).afterClosed().subscribe(() => {
-            this.router.navigate(['/home']);
-          });
+          this.router.navigate(['/home']);
         },
         error: (err) => {
           this.dialog.open(ModalLoginComponent, {
             width: '300px',
-            data: { message: 'Login failed. Please try again.' }
+            data: { message: 'Usuário ou senha invalida!.' }
           });
         }
       });
