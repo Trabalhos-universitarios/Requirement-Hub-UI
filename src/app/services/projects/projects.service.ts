@@ -20,4 +20,12 @@ export class ProjectsService {
   createProject(post: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/project`, post);
   }
+
+  updateProject(id: number, project: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/project/${id}`, project);
+  }
+
+  deleteProject(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/project/${id}`);
+  }
 }
