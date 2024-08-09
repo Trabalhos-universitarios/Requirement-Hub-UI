@@ -1,0 +1,21 @@
+<mat-dialog-content>
+
+    <app-update-project-tab></app-update-project-tab>
+    
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+
+        <button mat-button
+                cdkFocusInitial
+                (click)="close()">
+            Cancelar
+            <mat-icon>cancel</mat-icon>
+        </button>
+
+        <button mat-button
+                (click)="saveData()">
+            Salvar modificação
+            <mat-icon>edit_document</mat-icon>
+        </button>
+    
+    </mat-dialog-actions>

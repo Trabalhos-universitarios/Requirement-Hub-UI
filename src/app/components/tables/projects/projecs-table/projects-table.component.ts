@@ -15,6 +15,7 @@ import {
 } from "../../../modals/projects/modal-dialog-information-project/modal-dialog-information-project.component";
 import { ModalDialogDeleteProjectComponent } from 'src/app/components/modals/projects/modal-dialog-delete-project/modal-dialog-delete-project.component';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
+import { ModalDialogUpdateProjectComponent } from 'src/app/components/modals/projects/modal-dialog-update-project/modal-dialog-update-project.component';
 
 @Component({
     selector: 'app-projects-table',
@@ -114,7 +115,7 @@ export class ProjectsTableComponent {
     openDialog(action?: string) {
         switch (action) {
             case 'Put project':
-                this.dialog.open(ModalDialogCreateRequirementComponent);
+                this.dialog.open(ModalDialogUpdateProjectComponent);
                 break;
             case 'Delete project':
                 this.dialog.open(ModalDialogDeleteProjectComponent, {

@@ -66,6 +66,10 @@ import { ModalLoginComponent } from './auth/modals/modal-login/modal-login.compo
 import { TokenInterceptor } from './auth/token-interceptor';
 import { LoginComponent } from './auth/components/login/login.component';
 import { ModalDialogDeleteProjectComponent } from './components/modals/projects/modal-dialog-delete-project/modal-dialog-delete-project.component';
+import { ModalDialogUpdateProjectComponent } from './components/modals/projects/modal-dialog-update-project/modal-dialog-update-project.component';
+import { UpdateProjectTabComponent } from './components/tabs/update-project-tab/update-project-tab.component';
+import { UpdateProjectFormComponent } from './components/forms/update-project-form/update-project-form.component';
+import { UpdateProjectTableComponent } from './components/tables/projects/update-project-table/update-project-table.component';
 
 @NgModule({
     declarations: [
@@ -93,6 +97,10 @@ import { ModalDialogDeleteProjectComponent } from './components/modals/projects/
         LoginComponent,
         ModalLoginComponent,
         ModalDialogDeleteProjectComponent,
+        ModalDialogUpdateProjectComponent,
+        UpdateProjectTabComponent,
+        UpdateProjectFormComponent,
+        UpdateProjectTableComponent,
     ],
     imports: [
         BrowserModule,
