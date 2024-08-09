@@ -9,7 +9,12 @@ export class AuthService {
   constructor(private localStorage : LocalStorageService) { }
 
   isLoggedIn(): boolean {
-    return !this.localStorage.getItem('token'); 
+    const token = this.localStorage.getItem('token');
+    if (token) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
