@@ -9,8 +9,8 @@ export class AuthService {
   constructor(private localStorage : LocalStorageService) { }
 
   isLoggedIn(): boolean {
-    const token = this.localStorage.getItem('token');
-    if (token) {
+    const userLogged = this.localStorage.getItem('userLogged');
+    if (userLogged === true) {
       return true;
     } else {
       return false;
