@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
-import { LoginService } from 'src/app/auth/services/login/login.service';
+import { AuthService} from 'src/app/auth/services/auth/auth.service';
 import { ModalLoginComponent } from '../../modals/modal-login/modal-login.component';
 
 @Component({
@@ -16,7 +16,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService,
+    private authService: AuthService,
     private dialog: MatDialog,
     private router: Router,
     private localStorageService: LocalStorageService
@@ -31,7 +31,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       const { login, password } = this.loginForm.getRawValue();
-      this.loginService.login(login, password).subscribe({
+      this.authService.login(login, password).subscribe({
         next: (response) => {
           this.localStorageService.setItem('token', response.token);
           this.localStorageService.setItem('role', response.role);
