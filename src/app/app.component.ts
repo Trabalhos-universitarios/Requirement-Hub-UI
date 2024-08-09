@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LocalStorageService } from './services/localstorage/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +8,5 @@ import { LocalStorageService } from './services/localstorage/local-storage.servi
 export class AppComponent {
   title = 'app';
 
-  constructor(private localstorage:LocalStorageService){
-    this.localstorage.clearAll()
-  }
+
 }

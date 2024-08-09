@@ -5,12 +5,13 @@ import {ProjectsService} from "../../services/projects/projects.service";
 import {CreateProjectDataModel} from "../../models/create-project-data-model";
 import {SidebarService} from "../../services/sidebar/sidebar.service";
 import {MatDialog} from "@angular/material/dialog";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import {
     ModalDialogCreateProjectComponent
 } from "../../components/modals/projects/modal-dialog-create-project/modal-dialog-create-project";
 import { ProjectDataModel } from 'src/app/models/project-data-model';
+import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 
 @Component({
     selector: 'app-side-bar',
@@ -26,6 +27,8 @@ export class SideBarComponent {
     hasProjects: boolean = false;
 
     constructor(
+        private localstorage:LocalStorageService,
+        private router: Router,
         private themeService: ThemeService,
         private projectsService: ProjectsService,
         private sidebarService: SidebarService,
@@ -48,5 +51,10 @@ export class SideBarComponent {
 
     openModalDialogComponent() {
         this.dialog.open(ModalDialogCreateProjectComponent);
+    }
+
+    logout(){
+        this.localstorage.clearAll()
+        this.router.navigate(['/login']);
     }
 }
