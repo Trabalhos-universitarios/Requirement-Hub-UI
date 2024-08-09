@@ -55,8 +55,10 @@ export class ProjectsTableComponent {
         this.projectsTableService.setCurrentProject(currentProject);
         }
 
-    userPermited(){
-        if(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS"){
+    isPermited(){
+        if(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
+        this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
+        this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO"){
             return false;
         }
         return true;

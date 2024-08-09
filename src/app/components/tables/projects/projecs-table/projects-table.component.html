@@ -46,17 +46,17 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item class="icon" (click)="setDataProjectTable(element.id, element.name); openDialog('Put project')">
+                    <button [disabled]="isPermited()" mat-menu-item class="icon" (click)="setDataProjectTable(element.id, element.name); openDialog('Put project')">
                         <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
                     </button>
-                    <button [disabled]="userPermited()" mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Delete project')">
+                    <button [disabled]="isPermited()" mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Delete project')">
                         <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
                     </button>
 
                     <button mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Requirement list')">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">list</mat-icon>Lista de requisitos
                     </button>
-                    <button mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Create requirement')">
+                    <button [disabled]="isPermited()" mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Create requirement')">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">add_circle</mat-icon>Criar requisitos
                     </button>
                     <button mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Traceability matrix')">
