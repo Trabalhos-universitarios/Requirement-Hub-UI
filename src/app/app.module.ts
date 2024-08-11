@@ -70,6 +70,7 @@ import { ModalDialogUpdateProjectComponent } from './components/modals/projects/
 import { UpdateProjectTabComponent } from './components/tabs/update-project-tab/update-project-tab.component';
 import { UpdateProjectFormComponent } from './components/forms/update-project-form/update-project-form.component';
 import { UpdateProjectTableComponent } from './components/tables/projects/update-project-table/update-project-table.component';
+import { UpdateProjectUserTableComponent } from './components/tables/projects/update-project-user-table/update-project-user-table.component';
 
 @NgModule({
     declarations: [
@@ -137,6 +138,7 @@ import { UpdateProjectTableComponent } from './components/tables/projects/update
         RichTextEditorModule,
         MatPaginatorModule,
         MatTableModule,
+        UpdateProjectUserTableComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }

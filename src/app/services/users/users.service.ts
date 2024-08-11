@@ -27,4 +27,8 @@ export class UsersService {
   async getCommonUsers(): Promise<UserResponseModel[]> {
     return firstValueFrom(this.http.get<UserResponseModel[]>(`${this.baseUrl}/user/common-users`))
   }
+
+  async getUsers(): Promise<UserResponseModel[]> {
+    return firstValueFrom(this.http.get<UserResponseModel[]>(`${this.baseUrl}/user/all`))
+  }
 }

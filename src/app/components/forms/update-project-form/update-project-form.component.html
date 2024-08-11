@@ -19,63 +19,12 @@
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
-            <mat-label>Analista de requisitos</mat-label>
-            <mat-select multiple formControlName="requirementAnalysts" [compareWith]="compareObjects">
-                <mat-select-trigger>
-                    {{ formGroup.get('requirementAnalysts')?.value?.[0]?.name || '' }}
-                    <span *ngIf="(formGroup.get('requirementAnalysts')?.value?.length || 0) > 1"
-                          class="mat-select-for-project">
-                (+{{ (formGroup.get('requirementAnalysts')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('requirementAnalysts')?.value?.length === 2 ? 'other' : 'others' }})
-                    </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let analyst of requirementsAnalysts" [value]="analyst">
-                    {{ analyst.name }}
-                </mat-option>
-            </mat-select>
-            <mat-error>Campo obrigatório!</mat-error>
-        </mat-form-field>
-
-
-         <mat-form-field class="mat-forms-fro-project">
-            <mat-label>Analista de negócios</mat-label>
-            <mat-select multiple formControlName="businessAnalysts" [compareWith]="compareObjects">
-                <mat-select-trigger>
-                    {{ formGroup.get('businessAnalysts')?.value?.[0]?.name || '' }}
-                    <span *ngIf="(formGroup.get('businessAnalysts')?.value?.length || 0) > 1"
-                          class="mat-select-for-project">
-                (+{{ (formGroup.get('businessAnalysts')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('businessAnalysts')?.value?.length === 2 ? 'other' : 'others' }})
-            </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let analysts of businessAnalysts" [value]="analysts">{{ analysts.name }}</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-         <mat-form-field class="mat-forms-fro-project">
-            <mat-label>Usuário comum</mat-label>
-            <mat-select multiple formControlName="commonUsers" [compareWith]="compareObjects">
-                <mat-select-trigger>
-                    {{ formGroup.get('commonUsers')?.value?.[0]?.name || '' }}
-                     <span *ngIf="(formGroup.get('commonUsers')?.value?.length || 0) > 1"
-                          class="mat-select-for-project">
-                (+{{ (formGroup.get('commonUsers')?.value?.length || 0) - 1 }}
-                        {{ formGroup.get('commonUsers')?.value?.length === 2 ? 'other' : 'others' }})
-            </span>
-                </mat-select-trigger>
-                <mat-option *ngFor="let common of commonUsers" [value]="common">{{ common.name }}</mat-option>
-            </mat-select>
-            <mat-error>Campo obrigatório!</mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="mat-forms-fro-project">
             <mat-label>Versão</mat-label>
             <input matInput placeholder="Ex: 1.0.0" formControlName="version">
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
         <app-richTextEditor formControlName="description"></app-richTextEditor>
-
 
     </div>
 </form>
