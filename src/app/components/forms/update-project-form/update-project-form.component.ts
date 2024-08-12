@@ -14,7 +14,7 @@ import { UsersService } from 'src/app/services/users/users.service';
   templateUrl: './update-project-form.component.html',
   styleUrls: ['./update-project-form.component.scss']
 })
-export class UpdateProjectFormComponent{
+export class UpdateProjectFormComponent implements OnInit{
 
     public managers: UserResponseModel[] = [];
     public requirementsAnalysts: UserResponseModel[] = [];
@@ -26,7 +26,7 @@ export class UpdateProjectFormComponent{
     public formGroup: FormGroup = this.formBuilder.group({
         name: new FormControl('', Validators.required),
         manager: new FormControl('', Validators.required),
-        requirementAnalysts: new FormControl('', Validators.required),
+        requirementAnalysts: new FormControl(''),
         businessAnalysts: new FormControl(''),
         commonUsers: new FormControl(''),
         version: new FormControl('', Validators.required),
@@ -39,7 +39,9 @@ export class UpdateProjectFormComponent{
         private updateProjectService : UpdateProjectsService,
         private userService: UsersService,
         private richTextService: RichTextService) {
-        this.formValueSubscriber()
+        this.formValueSubscriber();
+    }
+    ngOnInit(): void {
         this.getData();
     }
 
@@ -98,18 +100,18 @@ export class UpdateProjectFormComponent{
     getData() {
         this.getUsers();
         this.updateProjectService.getProject().subscribe((project: CreateProjectDataModel) => {
-
-            console.log(project);
+            const selectedManager = this.managers.find(manager => manager.name === project.manager);
             
             this.formGroup.patchValue({
                 name: project.name,
+                manager: selectedManager,
                 version: project.version,
                 description: project.description
             });
-
+    
+            console.log(selectedManager);
+    
             this.richTextService.changeContent(project.description);
-            
-            console.log(this.formGroup.value);
         });
     }
 

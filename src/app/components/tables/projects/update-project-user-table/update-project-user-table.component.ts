@@ -19,23 +19,34 @@ export class UpdateProjectUserTableComponent {
   selection = new SelectionModel<UserResponseModel>(true, []);
   users?: UserResponseModel[];
 
+  preSelectedUserIds: string[] = ['13', '14', '15'];
 
-  constructor(private userService: UsersService)
-  {
+
+  constructor(private userService: UsersService){}
+
+  ngOnInit() {
     this.getUsers();
   }
 
   getUsers(): void {
     this.userService.getUsers()
-        .then(resp => {
-          this.users = resp.filter(user => user.role.trim().toUpperCase() !== "GERENTE_DE_PROJETOS");
-            this.dataSource.data = this.users;
-            console.log(this.users);
-        })
-        .catch(error => {
-            console.error(`Error : ${error} -> ${error.message}`);
+      .then(resp => {
+        this.users = resp.filter(user => user.role.trim().toUpperCase() !== "GERENTE_DE_PROJETOS");
+        this.dataSource.data = this.users;
+        
+        // Seleciona usuários pré-definidos
+        this.users.forEach(user => {
+          if (this.preSelectedUserIds.includes(user.id.toString())) {
+            this.selection.select(user);
+          }
         });
-   }
+
+        console.log(this.users);
+      })
+      .catch(error => {
+        console.error(`Error : ${error} -> ${error.message}`);
+      });
+  }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
