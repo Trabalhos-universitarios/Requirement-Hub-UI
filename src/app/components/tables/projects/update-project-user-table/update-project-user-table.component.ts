@@ -6,6 +6,7 @@ import { UserResponseModel } from 'src/app/models/user-model';
 import { UsersService } from 'src/app/services/users/users.service';
 import { TeamResponseModel } from 'src/app/models/user-team-model';
 import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
+import { UpdateProjectsService } from 'src/app/services/projects/update-projects.service';
 
 
 @Component({
@@ -24,10 +25,14 @@ export class UpdateProjectUserTableComponent {
   preSelectedUserIds: string[] = []; // Inicialmente vazio
 
   constructor(private userService: UsersService,
-              private projectTableService: ProjectsTableService) {}
+              private projectTableService: ProjectsTableService,
+              private updateProjectService: UpdateProjectsService) {}
 
   ngOnInit() {
     this.getTeam(); // Primeiro carrega o time
+    this.selection.changed.subscribe(() => {
+      this.onSelectionChange();
+    });
   }
 
   getTeam(): void {
@@ -82,4 +87,14 @@ export class UpdateProjectUserTableComponent {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'}`;
   }
+
+  /** Função de escuta de alterações */
+  onSelectionChange() {
+    const selectedData: UserResponseModel[] = this.selection.selected.map(item => ({
+        id: item.id,
+        name: item.name,
+        role: item.role
+    }));
+    this.updateProjectService.setCurrentProjectTeam(selectedData);
+}
 }

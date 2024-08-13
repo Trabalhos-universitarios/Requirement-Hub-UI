@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateProjectTabComponent } from 'src/app/components/tabs/update-project-tab/update-project-tab.component';
 import { ProjectDataModel } from 'src/app/models/project-data-model';
+import { UserResponseModel } from 'src/app/models/user-model';
 import { ReactiveFormServices } from 'src/app/services/forms/reactive-form-services.service';
 import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 import { UpdateProjectsService } from 'src/app/services/projects/update-projects.service';
@@ -22,6 +23,7 @@ export class ModalDialogUpdateProjectComponent implements OnInit {
     formGroup?: FormGroup | null;
     buttonDisabled: boolean = true;
     private descriptionProject: string = '';
+    private currentProjectTeam: UserResponseModel[] = [];
 
     constructor(
         private reactiveFormService: ReactiveFormServices,
@@ -48,20 +50,36 @@ export class ModalDialogUpdateProjectComponent implements OnInit {
     }
 
     async saveData() {
+        this.currentProjectTeam = this.updateProjectService.getCurrentProjectTeam();
 
+        console.log(this.currentProjectTeam);
+    
         if (this.formGroup && this.formGroup.valid) {
-
-            const prepareData: ProjectDataModel =
-                {
-                    ...this.formGroup.value,
-                    //businessAnalysts: this.formGroup.value.businessAnalysts.map((v: { id: any; }) => v.id),
-                    //commonUsers: this.formGroup.value.commonUsers.map((v: { id: any; }) => v.id),
-                    manager: this.formGroup.value.manager.name,
-                    //requirementAnalysts: this.formGroup.value.requirementAnalysts.map((v: { id: any; }) => v.id),
-                    description: this.descriptionProject,
-                    status: Status.ACTIVE
-                };
-
+            // Filtrar usuários por cada role
+            const businessAnalysts = this.currentProjectTeam
+                .filter(member => member.role === 'ANALISTA_DE_NEGOCIO')
+                .map(member => member.id);
+    
+            const commonUsers = this.currentProjectTeam
+                .filter(member => member.role === 'USUARIO_COMUM')
+                .map(member => member.id);
+    
+            const requirementAnalysts = this.currentProjectTeam
+                .filter(member => member.role === 'ANALISTA_DE_REQUISITOS')
+                .map(member => member.id);
+    
+            // Preparar os dados para o projeto
+            const prepareData: ProjectDataModel = {
+                ...this.formGroup.value,
+                businessAnalysts: businessAnalysts,
+                commonUsers: commonUsers,
+                manager: this.formGroup.value.manager.name,
+                requirementAnalysts: requirementAnalysts,
+                description: this.descriptionProject,
+                status: Status.ACTIVE
+            };
+    
+            // Enviar os dados para o serviço de atualização
             this.updateProjectService.updateProject(this.projectTableService.currentIdProject, prepareData).subscribe(resp => {
                 if (resp) {
                     this.alertService.toSuccessAlert("Projeto atualizado com sucesso!");
