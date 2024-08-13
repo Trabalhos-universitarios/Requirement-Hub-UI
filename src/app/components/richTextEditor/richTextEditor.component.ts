@@ -62,7 +62,8 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, On
   }
 
   writeValue(value: any): void {
-    // this.editorContent = value || '';
+    this.editorContent = value || '';
+    this.richTextService.changeContent(this.editorContent);
   }
 
   registerOnChange(fn: any): void {

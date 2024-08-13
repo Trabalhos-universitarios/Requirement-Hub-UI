@@ -15,13 +15,25 @@ import {
 } from "../../../modals/projects/modal-dialog-information-project/modal-dialog-information-project.component";
 import { ModalDialogDeleteProjectComponent } from 'src/app/components/modals/projects/modal-dialog-delete-project/modal-dialog-delete-project.component';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
+import { ModalDialogUpdateProjectComponent } from 'src/app/components/modals/projects/modal-dialog-update-project/modal-dialog-update-project.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-projects-table',
     templateUrl: './projects-table.component.html',
-    styleUrls: ['./projects-table.component.scss']
+    styleUrls: ['./projects-table.component.scss'],
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed', style({height: '0px', minHeight: '0'})),
+            state('expanded', style({height: '*'})),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
 })
 export class ProjectsTableComponent {
+
+    dataSource = new MatTableDataSource<ProjectDataModel>;
 
     displayedColumns: string[] =
         [
@@ -30,16 +42,17 @@ export class ProjectsTableComponent {
             'nameProjectManager',
             'status',
             'version',
-            'actions'
         ];
 
-    dataSource = new MatTableDataSource<ProjectDataModel>([]);
+    columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+    expandedElement: ProjectDataModel | undefined;
 
     constructor(
         private projectsService: ProjectsService,
         private projectsTableService: ProjectsTableService,
         protected themeService: ThemeService,
         private localStorage : LocalStorageService,
+        private sanitizer: DomSanitizer,
         private dialog: MatDialog) {
         this.getData();
     }
@@ -48,6 +61,10 @@ export class ProjectsTableComponent {
         this.projectsService.getProjects().subscribe((projects: ProjectDataModel[]) => {
             this.dataSource.data = projects;
         });
+    }
+
+    sanitizeHtml(html: string): SafeHtml {
+        return this.sanitizer.bypassSecurityTrustHtml(html);
     }
 
     setDataProjectTable(id : number, currentProject : string) {
@@ -114,7 +131,7 @@ export class ProjectsTableComponent {
     openDialog(action?: string) {
         switch (action) {
             case 'Put project':
-                this.dialog.open(ModalDialogCreateRequirementComponent);
+                this.dialog.open(ModalDialogUpdateProjectComponent);
                 break;
             case 'Delete project':
                 this.dialog.open(ModalDialogDeleteProjectComponent, {

@@ -62,7 +62,7 @@ export class ModalDialogCreateProjectComponent implements OnInit {
                     ...this.formGroup.value,
                     businessAnalysts: this.formGroup.value.businessAnalysts.map((v: { id: any; }) => v.id),
                     commonUsers: this.formGroup.value.commonUsers.map((v: { id: any; }) => v.id),
-                    manager: this.formGroup.value.manager.id,
+                    manager: this.formGroup.value.manager.name,
                     requirementAnalysts: this.formGroup.value.requirementAnalysts.map((v: { id: any; }) => v.id),
                     description: this.descriptionProject,
                     status: Status.ACTIVE

@@ -1,0 +1,30 @@
+<form [formGroup]="formGroup" novalidate>
+
+    <div class="container-form-create-project">
+
+         <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Nome do projeto</mat-label>
+            <input matInput placeholder="Ex: Requirement Hub" formControlName="name">
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Gerente do projeto</mat-label>
+            <mat-select formControlName="manager">
+                <mat-option *ngFor="let manager of managers" [value]="manager">
+                    {{manager.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Versão</mat-label>
+            <input matInput placeholder="Ex: 1.0.0" formControlName="version">
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+        <app-richTextEditor formControlName="description"></app-richTextEditor>
+
+    </div>
+</form>
