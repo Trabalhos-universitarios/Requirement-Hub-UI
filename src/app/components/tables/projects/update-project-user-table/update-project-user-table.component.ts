@@ -4,6 +4,8 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { UserResponseModel } from 'src/app/models/user-model';
 import { UsersService } from 'src/app/services/users/users.service';
+import { TeamResponseModel } from 'src/app/models/user-team-model';
+import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 
 
 @Component({
@@ -18,14 +20,32 @@ export class UpdateProjectUserTableComponent {
   dataSource = new MatTableDataSource<UserResponseModel>();
   selection = new SelectionModel<UserResponseModel>(true, []);
   users?: UserResponseModel[];
+  team?: TeamResponseModel[];
+  preSelectedUserIds: string[] = []; // Inicialmente vazio
 
-  preSelectedUserIds: string[] = ['13', '14', '15'];
-
-
-  constructor(private userService: UsersService){}
+  constructor(private userService: UsersService,
+              private projectTableService: ProjectsTableService) {}
 
   ngOnInit() {
-    this.getUsers();
+    this.getTeam(); // Primeiro carrega o time
+  }
+
+  getTeam(): void {
+    this.userService.getTeam(this.projectTableService.getCurrentIdProject())
+      .then(resp => {
+        this.team = resp;
+
+        // Extrai os IDs dos membros do time e armazena em preSelectedUserIds
+        this.preSelectedUserIds = this.team.map(teamMember => teamMember.userId);
+
+        console.log(this.preSelectedUserIds);
+
+        // Após obter os IDs, carrega os usuários
+        this.getUsers();
+      })
+      .catch(error => {
+        console.error(`Error : ${error} -> ${error.message}`);
+      });
   }
 
   getUsers(): void {
@@ -33,10 +53,10 @@ export class UpdateProjectUserTableComponent {
       .then(resp => {
         this.users = resp.filter(user => user.role.trim().toUpperCase() !== "GERENTE_DE_PROJETOS");
         this.dataSource.data = this.users;
-        
-        // Seleciona usuários pré-definidos
+
+        // Seleciona os usuários pré-definidos
         this.users.forEach(user => {
-          if (this.preSelectedUserIds.includes(user.id.toString())) {
+          if (this.preSelectedUserIds.includes(user.id)) {
             this.selection.select(user);
           }
         });

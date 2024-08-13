@@ -3,6 +3,7 @@ import {environmentLocal} from "../../../environment/environment-local";
 import {HttpClient} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
 import {UserResponseModel} from "../../models/user-model";
+import { TeamResponseModel } from 'src/app/models/user-team-model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class UsersService {
 
   async getUsers(): Promise<UserResponseModel[]> {
     return firstValueFrom(this.http.get<UserResponseModel[]>(`${this.baseUrl}/user/all`))
+  }
+
+  async getTeam(id: number): Promise<TeamResponseModel[]> {
+    return firstValueFrom(this.http.get<TeamResponseModel[]>(`${this.baseUrl}/team/${id}`))
   }
 }

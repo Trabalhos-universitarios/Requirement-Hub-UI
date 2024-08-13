@@ -17,18 +17,11 @@ import { UsersService } from 'src/app/services/users/users.service';
 export class UpdateProjectFormComponent implements OnInit{
 
     public managers: UserResponseModel[] = [];
-    public requirementsAnalysts: UserResponseModel[] = [];
-    public businessAnalysts: UserResponseModel[] = [];
-    public commonUsers: UserResponseModel[] = [];
-
     dataSource = new MatTableDataSource<CreateProjectDataModel>([]);
 
     public formGroup: FormGroup = this.formBuilder.group({
         name: new FormControl('', Validators.required),
         manager: new FormControl('', Validators.required),
-        requirementAnalysts: new FormControl(''),
-        businessAnalysts: new FormControl(''),
-        commonUsers: new FormControl(''),
         version: new FormControl('', Validators.required),
         description: new FormControl('')
     })
@@ -42,6 +35,7 @@ export class UpdateProjectFormComponent implements OnInit{
         this.formValueSubscriber();
     }
     ngOnInit(): void {
+        this.getManager();
         this.getData();
     }
 
@@ -59,7 +53,7 @@ export class UpdateProjectFormComponent implements OnInit{
         return this.formGroup.value;
     }
 
-    getUsers(): void {
+    getManager(): void {
         this.userService.getManager()
             .then(resp => {
                 this.managers = resp;
@@ -68,37 +62,9 @@ export class UpdateProjectFormComponent implements OnInit{
             .catch(error => {
                 console.error(`Error : ${error} -> ${error.message}`);
             });
-    
-        this.userService.getRequirementAnalysts()
-            .then(resp => {
-                this.requirementsAnalysts = resp;
-                console.log(this.requirementsAnalysts);
-            })
-            .catch(error => {
-                console.error(`Error: ${error} -> ${error.message}`);
-            });
-    
-        this.userService.getBusinessAnalysts()
-            .then(resp => {
-                this.businessAnalysts = resp;
-                console.log(this.businessAnalysts);
-            })
-            .catch(error => {
-                console.error(`Error: ${error} -> ${error.message}`);
-            });
-    
-        this.userService.getCommonUsers()
-            .then(resp => {
-                this.commonUsers = resp;
-                console.log(this.commonUsers);
-            })
-            .catch(error => {
-                console.error(`Error: ${error} -> ${error.message}`);
-            });
     }
 
     getData() {
-        this.getUsers();
         this.updateProjectService.getProject().subscribe((project: CreateProjectDataModel) => {
             const selectedManager = this.managers.find(manager => manager.name === project.manager);
             
