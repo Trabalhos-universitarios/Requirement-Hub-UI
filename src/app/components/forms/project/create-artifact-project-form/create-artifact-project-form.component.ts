@@ -1,9 +1,12 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { FileItem, FileUploader } from 'ng2-file-upload';
+import { filter } from 'rxjs';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 import { ArtifactProjectService } from 'src/app/services/projects/artifacts/artifact-project.service';
+import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
+import { AlertService } from 'src/app/services/sweetalert/alert.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 
 @Component({
@@ -11,9 +14,12 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
   templateUrl: './create-artifact-project-form.component.html',
   styleUrls: ['./create-artifact-project-form.component.scss']
 })
-export class CreateArtifactProjectFormComponent {
+export class CreateArtifactProjectFormComponent implements OnInit {
 
-  @ViewChild('fileInput') fileInput!: ElementRef;
+    @ViewChild('fileInput') fileInput!: ElementRef;
+
+    projectId?: number;
+    buttonDisabled: boolean = true;
 
     public formGroup: FormGroup = this.formBuilder.group({
         name: new FormControl(''),
@@ -23,16 +29,27 @@ export class CreateArtifactProjectFormComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        private artifactProjectServices: ArtifactProjectService,
+        private artifactProjectService: ArtifactProjectService,
         protected themeService: ThemeService,
         private localStorageService: LocalStorageService,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        private alertService: AlertService,
+        private projectsTableService: ProjectsTableService) {
 
         this.createForm();
         this.uploader.onAfterAddingFile = (file: FileItem) => {
             file.withCredentials = false;
             this.simulateUploadProgress(file);
         };
+    }
+
+    ngOnInit() {
+        this.artifactProjectService.currentForm
+            .pipe(filter(form => !!form))
+            .subscribe(form => {
+                this.formGroup.patchValue(form.value);
+                this.buttonDisabled = !(this.formGroup.valid && this.formGroup.value);
+            });
     }
 
     public fileOverBase(e: any): void {
@@ -45,7 +62,7 @@ export class CreateArtifactProjectFormComponent {
 
     createForm() {
         this.formGroup.valueChanges.subscribe(val => {
-            this.artifactProjectServices.updateForm(this.formGroup);
+            this.artifactProjectService.updateForm(this.formGroup);
         });
     }
 
@@ -87,12 +104,43 @@ export class CreateArtifactProjectFormComponent {
         reader.readAsDataURL(file._file);
     }
 
-    saveData(){
-        
+    async saveData(): Promise<void> {
+
+        this.projectId = this.projectsTableService.getCurrentIdProject();
+        console.log(this.projectId);
+
+        this.artifactProjectService.createArtifact(this.prepareDataArtifact(this.projectId)).subscribe(respArt => {
+
+            try {
+                this.alertService.toSuccessAlert("Artefato Cadastrado com sucesso!");
+                this.localStorageService.removeItem('file');
+                //this.dialog.closeAll();
+                setTimeout(() => {
+                    //window.location.reload();
+                }, 2000);
+            } catch (error) {
+                throw new Error(`Exception caused ${error} and api response id ${respArt}`);
+            }
+        });
+
     }
 
-    close(){
-        this.dialog.closeAll();
-      }
+
+    prepareDataArtifact(projectId?: number) {
+        const fileData = this.localStorageService.getItem('file');
+
+        if (this.formGroup && this.formGroup.valid) {
+            return {
+                ...this.formGroup.value,
+                creationDate: new Date().toISOString(),
+                files: fileData,
+                projectId: projectId
+            };
+        }
+    }
+
+    close() {
+        this.dialog.closeAll()
+    }
 
 }

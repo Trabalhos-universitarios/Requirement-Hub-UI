@@ -63,11 +63,9 @@ openDialog(action?: string) {
             //baixar o conteudo
             break;
         case 'Delete artifact':
-            this.dialog.open(AddArtifactProjectComponent, {
-                width: '400px',
-                data: { message: 'Tem certeza que deseja deletar o artefato?' }});
+             // Dialogo delete projeto
             break;
-        default:
+       default:
             console.error("This dialog non exists!")
     }
   }

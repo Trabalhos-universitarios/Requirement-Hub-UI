@@ -58,7 +58,7 @@ export class AddArtifactProjectComponent {
 
             try {
                 this.alertService.toSuccessAlert("Artefato Cadastrado com sucesso!");
-                this.localStorageService.clearAll();
+                //this.localStorageService.clearAll();
                 //this.dialog.closeAll();
                 setTimeout(() => {
                     //window.location.reload();

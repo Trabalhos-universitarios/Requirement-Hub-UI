@@ -12,7 +12,7 @@ export class ArtifactProjectService {
 
   private baseUrl = environmentLocal.springUrl
   
-  private formGroupSource = new BehaviorSubject<FormGroup | null>(null);
+  private formGroupSource = new BehaviorSubject<FormGroup>(new FormGroup({}));
   currentForm = this.formGroupSource.asObservable();
 
   constructor(private http: HttpClient) {}
