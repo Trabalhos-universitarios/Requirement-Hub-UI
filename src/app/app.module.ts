@@ -26,7 +26,7 @@ import {
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTabsModule} from "@angular/material/tabs";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CreateProjectFormComponent} from "./components/forms/create-project-form/create-project-form.component";
+import {CreateProjectFormComponent} from "./components/forms/project/create-project-form/create-project-form.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -68,9 +68,13 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { ModalDialogDeleteProjectComponent } from './components/modals/projects/modal-dialog-delete-project/modal-dialog-delete-project.component';
 import { ModalDialogUpdateProjectComponent } from './components/modals/projects/modal-dialog-update-project/modal-dialog-update-project.component';
 import { UpdateProjectTabComponent } from './components/tabs/update-project-tab/update-project-tab.component';
-import { UpdateProjectFormComponent } from './components/forms/update-project-form/update-project-form.component';
+import { UpdateProjectFormComponent } from './components/forms/project/update-project-form/update-project-form.component';
 import { UpdateProjectTableComponent } from './components/tables/projects/update-project-table/update-project-table.component';
 import { UpdateProjectUserTableComponent } from './components/tables/projects/update-project-user-table/update-project-user-table.component';
+import { ArtifactsProjectTableComponent } from './components/tables/projects/artifacts-project-table/artifacts-project-table.component';
+import { ModalDialogArtifactsProjectComponent } from './components/modals/projects/modal-dialog-artifacts-project/modal-dialog-artifacts-project.component';
+import { AddArtifactProjectComponent } from './components/modals/artifacts/add-artifact-project/add-artifact-project.component';
+import { CreateArtifactProjectFormComponent } from './components/forms/project/create-artifact-project-form/create-artifact-project-form.component';
 
 @NgModule({
     declarations: [
@@ -102,6 +106,10 @@ import { UpdateProjectUserTableComponent } from './components/tables/projects/up
         UpdateProjectTabComponent,
         UpdateProjectFormComponent,
         UpdateProjectTableComponent,
+        ArtifactsProjectTableComponent,
+        ModalDialogArtifactsProjectComponent,
+        AddArtifactProjectComponent,
+        CreateArtifactProjectFormComponent,
     ],
     imports: [
         BrowserModule,

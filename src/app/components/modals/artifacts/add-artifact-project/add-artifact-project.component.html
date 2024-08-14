@@ -1,0 +1,25 @@
+<mat-dialog-content>
+
+    <app-create-artifact-project-form></app-create-artifact-project-form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+    <!--            TODO NÃO ESQUECER DE MUDAR A CHAMADA DO BOTAO CANCELAR DEPOIS-->
+
+    <button mat-button
+            *ngIf="!buttonDisabled"
+            (click)="getArtifactByIdentifierArtifact()">
+        Cancelar
+        <mat-icon>edit_document</mat-icon>
+    </button>
+
+    <button mat-button
+            *ngIf="!buttonDisabled"
+            cdkFocusInitial
+            (click)="saveData()">
+        Salvar
+        <mat-icon>add</mat-icon>
+    </button>
+
+</mat-dialog-actions>

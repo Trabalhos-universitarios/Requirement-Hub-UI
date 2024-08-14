@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { UpdateProjectFormComponent } from '../../forms/update-project-form/update-project-form.component';
+import { UpdateProjectFormComponent } from '../../forms/project/update-project-form/update-project-form.component';
 import { UpdateProjectTableComponent } from '../../tables/projects/update-project-table/update-project-table.component';
 
 @Component({

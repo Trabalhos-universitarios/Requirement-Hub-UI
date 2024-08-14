@@ -18,6 +18,7 @@ import { LocalStorageService } from 'src/app/services/localstorage/local-storage
 import { ModalDialogUpdateProjectComponent } from 'src/app/components/modals/projects/modal-dialog-update-project/modal-dialog-update-project.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ModalDialogArtifactsProjectComponent } from 'src/app/components/modals/projects/modal-dialog-artifacts-project/modal-dialog-artifacts-project.component';
 
 @Component({
     selector: 'app-projects-table',
@@ -146,6 +147,9 @@ export class ProjectsTableComponent {
                 break;
             case 'Traceability matrix':
                 this.dialog.open(TracebilityMatrixComponent);
+                break
+            case 'Artifacts project':
+                this.dialog.open(ModalDialogArtifactsProjectComponent);
                 break
             default:
                 console.error("This dialog non exists!")

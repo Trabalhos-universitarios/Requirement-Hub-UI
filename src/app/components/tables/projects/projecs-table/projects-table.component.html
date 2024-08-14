@@ -62,6 +62,10 @@
                     <button mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Traceability matrix')">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">table_view</mat-icon>Matriz de Rastreabilidade
                     </button>
+
+                    <button mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Artifacts project')">
+                        <mat-icon [ngStyle]="stylesIconColor('add_circle')">folder_open</mat-icon>Artefatos do Projeto
+                    </button>
                 </mat-menu>
             </td>
         </ng-container>

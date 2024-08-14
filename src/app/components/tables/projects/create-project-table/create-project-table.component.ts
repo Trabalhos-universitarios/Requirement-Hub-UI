@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {ReactiveFormServices} from "../../../../services/forms/reactive-form-services.service";
 import {CreateProjectDataModel} from "../../../../models/create-project-data-model";
-import {CreateProjectFormComponent} from "../../../forms/create-project-form/create-project-form.component";
+import {CreateProjectFormComponent} from "../../../forms/project/create-project-form/create-project-form.component";
 import {CreateProjectTableRowModel} from "../../../../models/create-project-table-row-model";
 import {MatTableDataSource} from "@angular/material/table";
 
