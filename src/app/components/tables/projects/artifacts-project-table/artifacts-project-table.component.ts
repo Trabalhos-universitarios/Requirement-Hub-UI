@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { AddArtifactProjectComponent } from 'src/app/components/modals/artifacts/add-artifact-project/add-artifact-project.component';
 import { ArtifactProjectDataModel } from 'src/app/models/artifact-project-model';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 import { ArtifactProjectService } from 'src/app/services/projects/artifacts/artifact-project.service';

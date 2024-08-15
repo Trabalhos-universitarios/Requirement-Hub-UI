@@ -73,7 +73,6 @@ import { UpdateProjectTableComponent } from './components/tables/projects/update
 import { UpdateProjectUserTableComponent } from './components/tables/projects/update-project-user-table/update-project-user-table.component';
 import { ArtifactsProjectTableComponent } from './components/tables/projects/artifacts-project-table/artifacts-project-table.component';
 import { ModalDialogArtifactsProjectComponent } from './components/modals/projects/modal-dialog-artifacts-project/modal-dialog-artifacts-project.component';
-import { AddArtifactProjectComponent } from './components/modals/artifacts/add-artifact-project/add-artifact-project.component';
 import { CreateArtifactProjectFormComponent } from './components/forms/project/create-artifact-project-form/create-artifact-project-form.component';
 
 @NgModule({
@@ -108,7 +107,6 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
         UpdateProjectTableComponent,
         ArtifactsProjectTableComponent,
         ModalDialogArtifactsProjectComponent,
-        AddArtifactProjectComponent,
         CreateArtifactProjectFormComponent,
     ],
     imports: [
