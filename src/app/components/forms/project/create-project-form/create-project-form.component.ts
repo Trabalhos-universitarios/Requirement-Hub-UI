@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ReactiveFormServices} from "../../../services/forms/reactive-form-services.service";
-import {UsersService} from "../../../services/users/users.service";
-import {UserResponseModel} from "../../../models/user-model";
+import {ReactiveFormServices} from "../../../../services/forms/reactive-form-services.service";
+import {UsersService} from "../../../../services/users/users.service";
+import {UserResponseModel} from "../../../../models/user-model";
 
 @Component({
     selector: 'app-create-project-form',

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {CreateProjectFormComponent} from "../../forms/create-project-form/create-project-form.component";
+import {CreateProjectFormComponent} from "../../forms/project/create-project-form/create-project-form.component";
 import {CreateProjectTableComponent} from "../../tables/projects/create-project-table/create-project-table.component";
 
 @Component({

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { UpdateProjectFormComponent } from 'src/app/components/forms/update-project-form/update-project-form.component';
+import { UpdateProjectFormComponent } from 'src/app/components/forms/project/update-project-form/update-project-form.component';
 import { CreateProjectDataModel } from 'src/app/models/create-project-data-model';
 import { CreateProjectTableRowModel } from 'src/app/models/create-project-table-row-model';
 import { ProjectDataModel } from 'src/app/models/project-data-model';
