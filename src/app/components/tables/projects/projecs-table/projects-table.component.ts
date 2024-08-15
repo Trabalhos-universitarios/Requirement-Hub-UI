@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {ThemeService} from "../../../../services/theme/theme.service";
@@ -34,8 +34,8 @@ import { ModalDialogArtifactsProjectComponent } from 'src/app/components/modals/
 })
 export class ProjectsTableComponent {
 
-    dataSource = new MatTableDataSource<ProjectDataModel>;
-
+    @Input()
+    dataSource = new MatTableDataSource<ProjectDataModel>([]);
     displayedColumns: string[] =
         [
             'nameProject',
@@ -49,19 +49,11 @@ export class ProjectsTableComponent {
     expandedElement: ProjectDataModel | undefined;
 
     constructor(
-        private projectsService: ProjectsService,
         private projectsTableService: ProjectsTableService,
         protected themeService: ThemeService,
         private localStorage : LocalStorageService,
         private sanitizer: DomSanitizer,
         private dialog: MatDialog) {
-        this.getData();
-    }
-
-    getData() {
-        this.projectsService.getProjects().subscribe((projects: ProjectDataModel[]) => {
-            this.dataSource.data = projects;
-        });
     }
 
     sanitizeHtml(html: string): SafeHtml {
@@ -69,8 +61,8 @@ export class ProjectsTableComponent {
     }
 
     setDataProjectTable(id : number, currentProject : string) {
-        this.projectsTableService.setCurrentIdProject(id);
-        this.projectsTableService.setCurrentProject(currentProject);
+        this.projectsTableService.setCurrentProjectById(id);
+        this.projectsTableService.setCurrentProjectByName(currentProject);
         }
 
     isPermited(){
@@ -154,6 +146,5 @@ export class ProjectsTableComponent {
             default:
                 console.error("This dialog non exists!")
         }
-
     }
 }

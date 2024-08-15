@@ -9,7 +9,6 @@ import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";
 import {MatDialog} from "@angular/material/dialog";
 import {AddArtifactsComponent} from "../../../modals/artifacts/add-artifacts/add-artifacts.component";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
     selector: 'app-requirements-table',
@@ -46,15 +45,15 @@ export class RequirementsTableComponent implements AfterViewInit {
                 private sanitizer: DomSanitizer,
                 private themeService: ThemeService,
                 private matDialog: MatDialog) {
-        this.getData();
+        this.getData().then();
     }
 
     ngAfterViewInit() {
         this.paginator ? this.dataSource.paginator = this.paginator : null;
     }
 
-    getData() {
-        this.requirementsService.getRequirements().subscribe(requirements => {
+    async getData() {
+        this.requirementsService.getRequirements().then(requirements => {
             this.dataSource.data = requirements;
         })
     }

@@ -71,6 +71,7 @@ import { UpdateProjectTabComponent } from './components/tabs/update-project-tab/
 import { UpdateProjectFormComponent } from './components/forms/project/update-project-form/update-project-form.component';
 import { UpdateProjectTableComponent } from './components/tables/projects/update-project-table/update-project-table.component';
 import { UpdateProjectUserTableComponent } from './components/tables/projects/update-project-user-table/update-project-user-table.component';
+import { CapitalizeFirstPipePipe } from './pipes/capitalize-first-pipe.pipe';
 import { ArtifactsProjectTableComponent } from './components/tables/projects/artifacts-project-table/artifacts-project-table.component';
 import { ModalDialogArtifactsProjectComponent } from './components/modals/projects/modal-dialog-artifacts-project/modal-dialog-artifacts-project.component';
 import { CreateArtifactProjectFormComponent } from './components/forms/project/create-artifact-project-form/create-artifact-project-form.component';
@@ -100,6 +101,7 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
         TracebilityMatrixComponent,
         LoginComponent,
         ModalLoginComponent,
+        CapitalizeFirstPipePipe,
         ModalDialogDeleteProjectComponent,
         ModalDialogUpdateProjectComponent,
         UpdateProjectTabComponent,
@@ -147,6 +149,7 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
         UpdateProjectUserTableComponent
     ],
     providers: [
+        [CapitalizeFirstPipePipe],
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
       ],
     bootstrap: [AppComponent]

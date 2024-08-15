@@ -10,19 +10,19 @@ export class ProjectsTableService {
 
   constructor() { }
 
-  setCurrentProject(value : string){
+  setCurrentProjectByName(value : string){
     this.currentProject = value;
   }
 
-  getCurrentProject(){
+  getCurrentProjectByName(){
     return this.currentProject;
   }
 
-  setCurrentIdProject(value : number){
+  setCurrentProjectById(value : number){
     this.currentIdProject = value;
   }
 
-  getCurrentIdProject(){
+  getCurrentProjectById(){
     return this.currentIdProject;
   }
 }

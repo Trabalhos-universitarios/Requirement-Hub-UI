@@ -6,15 +6,13 @@ import Swal from "sweetalert2";
 })
 export class AlertService {
 
-  constructor() { }
-
   async toSuccessAlert(title: string) {
     return await Swal.fire({
       position: "center",
       icon: "success",
       title: title,
       showConfirmButton: false,
-      timer: 2500,
+      timer: 5000,
       backdrop: false
     });
   }

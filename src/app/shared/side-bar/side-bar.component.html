@@ -4,8 +4,8 @@
         <span class="title">Projetos</span>
       </mat-toolbar>
       
-      <div *ngIf="hasProjects; else viewTableProjects">
-        <app-projects-table></app-projects-table>
+      <div *ngIf="this.dataSource.data.length; else viewTableProjects">
+        <app-projects-table [dataSource]="dataSource"></app-projects-table>
       </div>
       
       <ng-template #viewTableProjects>

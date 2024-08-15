@@ -23,7 +23,7 @@ export class TracebilityMatrixComponent {
   getData() {
       this.traceabilityService.getTraceabilityMatrix().subscribe((matrix: []) => {
           this.dataSource = matrix;
-          this.currentProject = this.projectTableService.getCurrentProject();
+          this.currentProject = this.projectTableService.getCurrentProjectByName();
       });
   }
 

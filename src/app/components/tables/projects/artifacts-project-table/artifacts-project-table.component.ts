@@ -34,7 +34,7 @@ export class ArtifactsProjectTableComponent {
               {this.getData();}
         
   getData() {
-      this.artifactProjectService.getArtifactByProjectId(this.projectsTableService.getCurrentIdProject())
+      this.artifactProjectService.getArtifactByProjectId(this.projectsTableService.getCurrentProjectById())
             .then(artifacts => {
               console.log(artifacts);
               this.dataSource.data = artifacts;

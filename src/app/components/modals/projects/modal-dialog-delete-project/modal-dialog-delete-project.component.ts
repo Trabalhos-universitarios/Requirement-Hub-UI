@@ -15,7 +15,7 @@ export class ModalDialogDeleteProjectComponent {
               private projectsTableService : ProjectsTableService) {}
 
   deleteProject() {
-      this.projectsService.deleteProject(this.projectsTableService.getCurrentIdProject()).subscribe(() => {
+      this.projectsService.deleteProject(this.projectsTableService.getCurrentProjectById()).subscribe(() => {
       location.reload();
       });
   }

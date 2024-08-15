@@ -1,5 +1,5 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { UserResponseModel } from 'src/app/models/user-model';
@@ -16,36 +16,30 @@ import { UpdateProjectsService } from 'src/app/services/projects/update-projects
   standalone: true,
   imports: [MatTableModule, MatCheckboxModule],
 })
-export class UpdateProjectUserTableComponent {
+export class UpdateProjectUserTableComponent implements OnInit{
   displayedColumns: string[] = ['select', 'name', 'role'];
   dataSource = new MatTableDataSource<UserResponseModel>();
   selection = new SelectionModel<UserResponseModel>(true, []);
   users?: UserResponseModel[];
   team?: TeamResponseModel[];
-  preSelectedUserIds: string[] = []; // Inicialmente vazio
+  preSelectedUserIds: string[] = [];
 
   constructor(private userService: UsersService,
               private projectTableService: ProjectsTableService,
               private updateProjectService: UpdateProjectsService) {}
 
   ngOnInit() {
-    this.getTeam(); // Primeiro carrega o time
+    this.getTeam();
     this.selection.changed.subscribe(() => {
       this.onSelectionChange();
     });
   }
 
   getTeam(): void {
-    this.userService.getTeam(this.projectTableService.getCurrentIdProject())
+    this.userService.getTeam(this.projectTableService.getCurrentProjectById())
       .then(resp => {
         this.team = resp;
-
-        // Extrai os IDs dos membros do time e armazena em preSelectedUserIds
         this.preSelectedUserIds = this.team.map(teamMember => teamMember.userId);
-
-        console.log(this.preSelectedUserIds);
-
-        // Após obter os IDs, carrega os usuários
         this.getUsers();
       })
       .catch(error => {
@@ -58,29 +52,22 @@ export class UpdateProjectUserTableComponent {
       .then(resp => {
         this.users = resp.filter(user => user.role.trim().toUpperCase() !== "GERENTE_DE_PROJETOS");
         this.dataSource.data = this.users;
-
-        // Seleciona os usuários pré-definidos
         this.users.forEach(user => {
           if (this.preSelectedUserIds.includes(user.id)) {
             this.selection.select(user);
           }
         });
-
-        console.log(this.users);
       })
       .catch(error => {
         console.error(`Error : ${error} -> ${error.message}`);
       });
   }
-
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
-  /** The label for the checkbox on the passed row */
   checkboxLabel(row?: UserResponseModel): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
@@ -88,7 +75,6 @@ export class UpdateProjectUserTableComponent {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'}`;
   }
 
-  /** Função de escuta de alterações */
   onSelectionChange() {
     const selectedData: UserResponseModel[] = this.selection.selected.map(item => ({
         id: item.id,

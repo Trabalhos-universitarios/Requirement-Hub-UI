@@ -1,12 +1,19 @@
 export interface RequirementsDataModel {
     id?: string
-    identifierRequirement: string;
-    nameRequirement: string;
-    authorRequirement: string;
-    creationDate: string;
-    priorityRequirement: string;
-    typeRequirement: string;
-    versionRequirement: string;
-    status: string;
-    requirementDescription: string;
+    identifier: string;
+    name: string;
+    author: string;
+    createdDate?: string;
+    priority: string;
+    type: string;
+    version: string;
+    status?: string;
+    description: string;
+    stakeholders: string[];
+    responsible: string;
+    effort: string;
+    dependencies: number[];
+    projectId?: number[];
+    artifactIds?: number[];
+
 }
