@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { CreateProjectDataModel } from 'src/app/models/create-project-data-model';
-import { UserResponseModel } from 'src/app/models/user-model';
-import { ReactiveFormServices } from 'src/app/services/forms/reactive-form-services.service';
-import { ProjectsService } from 'src/app/services/projects/projects.service';
-import { UpdateProjectsService } from 'src/app/services/projects/update-projects.service';
-import { RichTextService } from 'src/app/services/richText/rich-text.service';
-import { UsersService } from 'src/app/services/users/users.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatTableDataSource} from '@angular/material/table';
+import {CreateProjectDataModel} from 'src/app/models/create-project-data-model';
+import {UserResponseModel} from 'src/app/models/user-model';
+import {ReactiveFormServices} from 'src/app/services/forms/reactive-form-services.service';
+import {UpdateProjectsService} from 'src/app/services/projects/update-projects.service';
+import {RichTextService} from 'src/app/services/richText/rich-text.service';
+import {UsersService} from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-update-project-form',
@@ -57,7 +56,6 @@ export class UpdateProjectFormComponent implements OnInit{
         this.userService.getManager()
             .then(resp => {
                 this.managers = resp;
-                console.log(this.managers);
             })
             .catch(error => {
                 console.error(`Error : ${error} -> ${error.message}`);
@@ -74,12 +72,8 @@ export class UpdateProjectFormComponent implements OnInit{
                 version: project.version,
                 description: project.description
             });
-    
-            console.log(selectedManager);
-    
+
             this.richTextService.changeContent(project.description);
         });
     }
-
-    
 }

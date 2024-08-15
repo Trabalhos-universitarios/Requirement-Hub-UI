@@ -17,7 +17,7 @@ export class UpdateProjectsService {
   constructor(private http: HttpClient, private projectTableService : ProjectsTableService) {}
 
   getProject(): Observable<CreateProjectDataModel> {
-    return this.http.get<CreateProjectDataModel>(`${this.baseUrl}/project/${this.projectTableService.getCurrentIdProject()}`);
+    return this.http.get<CreateProjectDataModel>(`${this.baseUrl}/project/${this.projectTableService.getCurrentProjectById()}`);
   }
 
   updateProject(id: number, project: any): Observable<any> {

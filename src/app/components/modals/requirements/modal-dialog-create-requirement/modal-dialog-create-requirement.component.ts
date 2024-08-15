@@ -6,6 +6,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {ArtifactService} from "../../../../services/requirements/artifacts/artifact.service";
 import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
 import {Status} from "../../../../utils/util.status";
+import {ProjectsTableService} from "../../../../services/projects/projects-table.service";
+import {RichTextService} from "../../../../services/richText/rich-text.service";
 
 @Component({
     selector: 'app-modal-dialog-create-requirement',
@@ -21,6 +23,8 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
     constructor(
         private requirementService: RequirementsService,
         private artifactService: ArtifactService,
+        private projectsTableService: ProjectsTableService,
+        private richTextService: RichTextService,
         private alertService: AlertService,
         private dialog: MatDialog,
         private localStorageService: LocalStorageService) {
@@ -41,53 +45,73 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
     async saveData(): Promise<void> {
         this.getData();
 
-        this.prepareDataRequirement();
-
-        this.requirementService.createRequirements(this.prepareDataRequirement()).subscribe(respReq => {
-
-            if (respReq && respReq.id) {
-                this.artifactService.createArtifact(this.prepareDataArtifact(respReq.id)).subscribe(respArt => {
-                    if (respReq) {
-                        this.alertService.toSuccessAlert("Requisito Cadastrado com sucesso!");
-                        this.localStorageService.clearAll();
-                        this.dialog.closeAll();
-                        setTimeout(() => {
-                          window.location.reload();
-                        }, 3000);
-                    }
-                });
+        this.requirementService.createRequirements(this.prepareData()).subscribe(
+            respReq => {
+                if (respReq) {
+                    this.alertService.toSuccessAlert(`Requisito ${respReq.identifier} cadastrado com sucesso!`);
+                    this.dialog.closeAll();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                }
+            },
+            error => {
+                if (error === 'Requisito já existe') {
+                    this.alertService.toErrorAlert("Erro!", 'O requisito já existe no sistema.');
+                } else {
+                    this.alertService.toErrorAlert('Erro!','Ocorreu um erro ao cadastrar o requisito.');
+                }
             }
-        });
+        );
     }
 
     getData() {
-        this.requirementService.getRequirements().subscribe(posts => {
+        this.requirementService.getRequirements().then(posts => {
             for (let data of posts) {
             }
             // TODO AQUI TERÁ A LÓGICA PARA TRATAR SE O PROJETO JÁ EXISTIR NO BACK END
         });
     }
 
-    prepareDataRequirement() {
-        if (this.requirementForm && this.requirementForm.valid) {
+    private prepareData() {
+
+        let descriptionValue: string = '';
+
+            this.richTextService.currentContent.subscribe(content => {
+                descriptionValue = content;
+        })
+
+        if (this.requirementForm?.value && this.requirementForm.valid) {
             return {
                 ...this.requirementForm.value,
-                creationDate: new Date().toISOString(),
-                status: Status.CREATED
-            };
+                effort: Number(this.requirementForm.value.effort),
+                projectRelated: {id: this.projectsTableService.getCurrentProjectById()},
+                author: this.localStorageService.getItem("id"),
+                description: descriptionValue,
+                stakeholders: this.requirementForm.value.stakeholders
+                    .map((item: { id: number }) => ({id: item.id})),
+                dependencies: this.requirementForm.value.dependencies
+                    .map((item: { id: number }) => ({id: item.id})),
+                responsible: this.requirementForm.value.responsible
+                    .map((item: { id: number }) => ({id: item.id})),
+                //todo Não remover, pois será usado na sequIencia
+                // files: fileData,
+                // requirementId: requirementId // Inclui o ID do requisito
+            }
         }
     }
 
     prepareDataArtifact(requirementId?: string) {
+        //todo Não remover, pois será usado na sequIencia
         const fileData = this.localStorageService.getItem('file');
         if (this.artifactForm && this.artifactForm.valid) {
             return {
-              ...this.artifactForm.value,
-              creationDate: new Date().toISOString(),
-              status: Status.CREATED,
-              files: fileData,
-              requirementId: requirementId // Inclui o ID do requisito
-          };
+                ...this.artifactForm.value,
+                creationDate: new Date().toISOString(),
+                status: Status.CREATED,
+                files: fileData,
+                requirementId: requirementId // Inclui o ID do requisito
+            };
         }
     }
 }

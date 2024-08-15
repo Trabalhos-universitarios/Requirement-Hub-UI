@@ -6,9 +6,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {CreateProjectTabComponent} from "../../../tabs/create-project-tab/create-project-tab.component";
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {Status} from "../../../../utils/util.status";
-import {ProjectDataModel} from "../../../../models/project-data-model";
 import {RichTextService} from "../../../../services/richText/rich-text.service";
-import { CreateProjectDataModel } from 'src/app/models/create-project-data-model';
+import {CreateProjectDataModel} from 'src/app/models/create-project-data-model';
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 
 @Component({
@@ -44,16 +44,12 @@ export class ModalDialogCreateProjectComponent implements OnInit {
         });
     }
 
-    getData() {
-        this.projectService.getProjects().subscribe(posts => {
-            for (let data of posts) {
-            }
-            // TODO AQUI TERÁ A LÓGICA PARA TRATAR SE O PROJETO JÁ EXISTIR NO BACK END
-        });
+    async getData() {
+        console.log("vai buscar um projeto por nome para não deixar criar repetido")
     }
 
     async saveData() {
-        this.getData();
+        await this.getData();
 
         if (this.formGroup && this.formGroup.valid) {
 

@@ -110,7 +110,7 @@ export class CreateArtifactProjectFormComponent implements OnInit {
     }
 
     async saveData(): Promise<void> {
-        this.projectId = this.projectsTableService.getCurrentIdProject();
+        this.projectId = this.projectsTableService.getCurrentProjectById();
         console.log(this.projectId);
 
         this.artifactProjectService.createArtifact(this.prepareDataArtifact(this.projectId)).subscribe(respArt => {

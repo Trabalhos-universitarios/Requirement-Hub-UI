@@ -2,6 +2,14 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RequirementsService} from "../../../../services/requirements/requirements.service";
 import {ProjectsTableService} from 'src/app/services/projects/projects-table.service';
+import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
+import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
+import {StakeholdersService} from "../../../../services/stakeholders/stakeholders.service";
+import {StakeholdersModel} from "../../../../models/stakeholders-model";
+import {UsersService} from "../../../../services/users/users.service";
+import {UserResponseModel} from "../../../../models/user-model";
+import {RequirementsDataModel} from "../../../../models/requirements-data-model";
+import {RichTextService} from "../../../../services/richText/rich-text.service";
 
 @Component({
     selector: 'app-create-requirement-form',
@@ -12,45 +20,82 @@ export class CreateRequirementFormComponent {
 
     public formGroup: FormGroup = this.formBuilder.group({
         projectRelated: new FormControl({value: "", disabled: true}),
-        identifierRequirement: new FormControl('', Validators.required),
-        nameRequirement: new FormControl('', Validators.required),
-        versionRequirement: new FormControl('', Validators.required),
-        authorRequirement: new FormControl('', Validators.required),
-        fontRequirement: new FormControl('', Validators.required),
-        dangerRequirement: new FormControl('', Validators.required),
-        priorityRequirement: new FormControl('', Validators.required),
-        responsibleRequirement: new FormControl('', Validators.required),
-        typeRequirement: new FormControl('', Validators.required),
-        effortRequirement: new FormControl('', Validators.required),
-        dependencyRequirement: new FormControl(''),
-        requirementDescription: new FormControl(''),
+        version: new FormControl({value: "", disabled: true}),
+        author: new FormControl({value: "", disabled: true}),
+        /*identifier: new FormControl({value: "", disabled: true}),*/ // ESSE CAMPO DEVERÁ APARECER NA TELA DE EDITAR REQUISITO
+        name: new FormControl('', Validators.required),
+        stakeholders: new FormControl('', Validators.required),
+        risk: new FormControl('', Validators.required),
+        priority: new FormControl('', Validators.required),
+        responsible: new FormControl('', Validators.required),
+        type: new FormControl('', Validators.required),
+        effort: new FormControl('', Validators.required),
+        dependencies: new FormControl(''),
+        description: new FormControl(''),
     })
+    public fontList: StakeholdersModel[] | undefined;
+    public responsibleList: UserResponseModel[] | undefined;
+    public requirementsDependencies: RequirementsDataModel[] | undefined;
+    public riskList: string[] = ['Low', 'Medium', 'High'];
+    public priorityList: string[] = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
+    public typeList: string[] = ['Funcional', 'Não Funcional']
+    public effortList: string[] = ['2', '3', '8', '13', '21', '34', '55'];
 
-    constructor(private formBuilder: FormBuilder, private requirementService: RequirementsService,
-                private projectsTableService: ProjectsTableService) {
-        this.createForm();
+    constructor(private formBuilder: FormBuilder,
+                private requirementService: RequirementsService,
+                private projectsTableService: ProjectsTableService,
+                private localStorageService: LocalStorageService,
+                private stakeholderService: StakeholdersService,
+                private userService: UsersService,
+                private capitalizeFirstPipe: CapitalizeFirstPipePipe,
+                private richTextService: RichTextService) {
         this.getCurrentProject();
+        this.createForm();
+        this.getCurrentStakeholders().then()
+        this.getRequirementAnalysts().then()
+        this.getRequirements().then()
+        this.autoCompleteForm().then()
     }
 
-    createForm() {
+    private createForm() {
         this.formGroup.valueChanges.subscribe(val => {
             this.requirementService.updateForm(this.formGroup);
-            this.formGroup.value.projectRelated = this.projectsTableService.getCurrentProject();
         });
     }
 
-    getCurrentProject() {
+    private async autoCompleteForm() {
         this.formGroup.patchValue({
-            projectRelated: this.projectsTableService.getCurrentProject()
-        });
+                projectRelated: this.getCurrentProject(),
+                author: this.getCurrentAuthor(),
+                version: 1,
+            }
+        );
     }
 
-    //todo Esses dados virão do back-end  o futuro
-    employeeList: string[] = ['Johnny Carvalho', 'Lucas Lemes', 'Elias Coutinho', 'Bruna Carvalho', 'Rebeca Carvalho', 'João Victor'];
-    fontList: string[] = ['Negócios', 'Produtos', 'Engenharia', 'Cliente', 'Design', 'Desenvolvimento'];
-    riskList: string[] = ['Low', 'Medium', 'High'];
-    priorityList: string[] = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
-    typeList: string[] = ['Funcional', 'Não Funcional']
-    esforcoList: string[] = ['2', '3', '8', '13', '21', '34', '55'];
-    requirementsIdsList: string[] = ['RF001', 'RF002', 'RF003', 'RF004', 'RF005', 'RF006', 'RF007', 'RF008', 'RF009', 'RF010',]
+    private async getCurrentStakeholders() {
+        this.stakeholderService.getStakeholders().then(stakeholders => {
+            this.fontList = stakeholders
+        })
+    }
+
+    private async getRequirementAnalysts() {
+        this.userService.getRequirementAnalysts().then(analysts => {
+            this.responsibleList = analysts
+        })
+    }
+
+    private async getRequirements() {
+        this.requirementService.getRequirements().then(requirements => {
+            this.requirementsDependencies = requirements;
+        })
+    }
+
+    private getCurrentProject() {
+        return this.projectsTableService.getCurrentProjectByName();
+    }
+
+    protected getCurrentAuthor() {
+        const author = this.localStorageService.getItem('name');
+        return this.capitalizeFirstPipe.transform(author);
+    }
 }

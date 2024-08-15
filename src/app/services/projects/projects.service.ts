@@ -1,37 +1,38 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Injectable} from "@angular/core";
+import {BehaviorSubject, firstValueFrom, Observable} from "rxjs";
+import {FormGroup} from "@angular/forms";
 import {environmentLocal} from "../../../environment/environment-local";
-import { ProjectDataModel } from 'src/app/models/project-data-model';
-import { FormGroup } from '@angular/forms';
+import {HttpClient} from "@angular/common/http";
+import {ProjectDataModel} from "../../models/project-data-model";
+
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ProjectsService {
 
-  private formGroupSource = new BehaviorSubject<FormGroup | null>(null);
-  currentForm = this.formGroupSource.asObservable();
+    private formGroupSource = new BehaviorSubject<FormGroup | null>(null);
+    currentForm = this.formGroupSource.asObservable();
 
-  private baseUrl = environmentLocal.springUrl
+    private baseUrl = environmentLocal.springUrl
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+    }
 
+    async getProjects(): Promise<ProjectDataModel[]> {
+        return firstValueFrom(this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all`));
+    }
 
-  //SERVIÇOS DO FORMULÁRIO
-  updateForm(formGroup: FormGroup) {
-    this.formGroupSource.next(formGroup);
-  }
+    //SERVIÇOS DO FORMULÁRIO
+    updateForm(formGroup: FormGroup) {
+        this.formGroupSource.next(formGroup);
+    }
 
-  getProjects(): Observable<ProjectDataModel[]> {
-    return this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all`);
-  }
+    createProject(post: any): Observable<any> {
+        return this.http.post(`${this.baseUrl}/project`, post);
+    }
 
-  createProject(post: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/project`, post);
-  }
-
-  deleteProject(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/project/${id}`);
-  }
+    deleteProject(id: number): Observable<any> {
+        return this.http.delete(`${this.baseUrl}/project/${id}`);
+    }
 }
