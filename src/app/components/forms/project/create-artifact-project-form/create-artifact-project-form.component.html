@@ -12,13 +12,16 @@
                  [uploader]="uploader"
                  class="file-drop-zone"
                  (fileOver)="fileOverBase($event)">
-                <span>Arraste e solte quantos arquivos quiser</span>
+                <span>Arraste e solte um arquivo</span>
                 <span>ou</span>
-                <button class="button-update-file" mat-raised-button (click)="selectFile()">
+                <button class="button-update-file" 
+                        mat-raised-button 
+                        (click)="selectFile()"
+                        [disabled]="uploader.queue.length > 0"> <!-- Desabilita o botão se já tiver um arquivo na fila -->
                     <mat-icon>upload_file</mat-icon>
-                    Upload de arquivos
+                    Upload de arquivo
                 </button>
-                <input type="file" #fileInput ng2FileSelect [uploader]="uploader" multiple hidden/>
+                <input type="file" #fileInput ng2FileSelect [uploader]="uploader" hidden />
             </div>
 
             <ul>
@@ -48,6 +51,4 @@
             </button>
         </div> 
     </div>
-        
 </form>
-

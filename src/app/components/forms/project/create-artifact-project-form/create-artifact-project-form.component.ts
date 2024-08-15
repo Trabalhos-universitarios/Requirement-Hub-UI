@@ -38,6 +38,10 @@ export class CreateArtifactProjectFormComponent implements OnInit {
 
         this.createForm();
         this.uploader.onAfterAddingFile = (file: FileItem) => {
+            // Se já existir um arquivo na fila, remove-o antes de adicionar um novo
+            if (this.uploader.queue.length > 1) {
+                this.uploader.queue[0].remove();
+            }
             file.withCredentials = false;
             this.simulateUploadProgress(file);
         };
@@ -57,6 +61,7 @@ export class CreateArtifactProjectFormComponent implements OnInit {
     }
 
     public selectFile() {
+        this.clearFileInput(); // Limpa o campo antes de abrir o seletor de arquivos
         this.fileInput.nativeElement.click();
     }
 
@@ -105,27 +110,19 @@ export class CreateArtifactProjectFormComponent implements OnInit {
     }
 
     async saveData(): Promise<void> {
-
         this.projectId = this.projectsTableService.getCurrentIdProject();
         console.log(this.projectId);
 
         this.artifactProjectService.createArtifact(this.prepareDataArtifact(this.projectId)).subscribe(respArt => {
-            
-
             try {
                 this.alertService.toSuccessAlert("Artefato Cadastrado com sucesso!");
                 this.localStorageService.removeItem('file');
                 this.dialog.closeAll();
-                setTimeout(() => {
-                    //window.location.reload();
-                }, 2000);
             } catch (error) {
                 throw new Error(`Exception caused ${error} and api response id ${respArt}`);
             }
         });
-
     }
-
 
     prepareDataArtifact(projectId?: number) {
         const fileData = this.localStorageService.getItem('file');
@@ -134,19 +131,21 @@ export class CreateArtifactProjectFormComponent implements OnInit {
         if (this.formGroup && this.formGroup.valid) {
             return {
                 ...this.formGroup.value,
-                //creationDate: new Date().toISOString(),
                 fileName: fileData.fileName,
                 size: fileData.size,
                 type: fileData.type,
                 contentBase64: fileData.contentBase64,
-                //files: fileData,
                 projectId: projectId
             };
         }
     }
 
     close() {
-        this.dialog.closeAll()
+        this.dialog.closeAll();
     }
 
+    clearFileInput() {
+        // Limpa o campo de entrada de arquivo
+        this.fileInput.nativeElement.value = '';
+    }
 }

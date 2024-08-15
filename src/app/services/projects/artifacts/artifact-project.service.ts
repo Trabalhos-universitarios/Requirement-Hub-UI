@@ -31,9 +31,16 @@ export class ArtifactProjectService {
     return this.http.get<ArtifactProjectDataModel[]>(`${this.baseUrl}/project-artifacts/all`);
   }
 
-  getArtifactById(id: number) {
-    const params = new HttpParams().set('id', id);
-    return firstValueFrom(this.http.get<ArtifactProjectDataModel[]>(`${this.baseUrl}/project-artifacts/`, { params }));
+  getArtifactByProjectId(projectId: number) {
+    return firstValueFrom(this.http.get<ArtifactProjectDataModel[]>(`${this.baseUrl}/project-artifacts/by-project/${projectId}`));
+  }
+
+  getDownloadArtifactById(id: number): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/project-artifacts/download/${id}`, { responseType: 'blob' });
+  }
+
+  deleteArtifactById(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/project-artifacts/${id}`);
   }
 }
 

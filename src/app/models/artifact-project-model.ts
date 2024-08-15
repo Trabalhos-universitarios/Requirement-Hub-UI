@@ -5,7 +5,7 @@ export interface ArtifactProjectDataModel {
         fileName: string,
         size: any,
         type: string,
-        contentBase64: any
+        contentBase64: string
     },
     projectId: string
 }
