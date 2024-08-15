@@ -94,12 +94,12 @@ export class CreateArtifactProjectFormComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = (event: any) => {
             const fileInfo = {
-                name: file.file.name,
+                fileName: file.file.name,
                 size: file.file.size,
                 type: file.file.type,
-                content: event.target.result // Base64
+                contentBase64: event.target.result // Base64
             };
-            this.localStorageService.setItem('file', JSON.stringify(fileInfo));
+            this.localStorageService.setItem('file', fileInfo);
         };
         reader.readAsDataURL(file._file);
     }
@@ -110,11 +110,12 @@ export class CreateArtifactProjectFormComponent implements OnInit {
         console.log(this.projectId);
 
         this.artifactProjectService.createArtifact(this.prepareDataArtifact(this.projectId)).subscribe(respArt => {
+            
 
             try {
                 this.alertService.toSuccessAlert("Artefato Cadastrado com sucesso!");
                 this.localStorageService.removeItem('file');
-                //this.dialog.closeAll();
+                this.dialog.closeAll();
                 setTimeout(() => {
                     //window.location.reload();
                 }, 2000);
@@ -128,12 +129,17 @@ export class CreateArtifactProjectFormComponent implements OnInit {
 
     prepareDataArtifact(projectId?: number) {
         const fileData = this.localStorageService.getItem('file');
+        console.log(fileData);
 
         if (this.formGroup && this.formGroup.valid) {
             return {
                 ...this.formGroup.value,
-                creationDate: new Date().toISOString(),
-                files: fileData,
+                //creationDate: new Date().toISOString(),
+                fileName: fileData.fileName,
+                size: fileData.size,
+                type: fileData.type,
+                contentBase64: fileData.contentBase64,
+                //files: fileData,
                 projectId: projectId
             };
         }

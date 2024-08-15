@@ -70,11 +70,6 @@ export class AddArtifactProjectComponent {
 
     }
 
-    //TODO PAREI AQUI, BUSCAR O ARTEFATO PARA VER SE NÃO EXISTE ANTES DE SALVAR.
-    async getArtifactByIdentifierArtifact() {
-        return await this.artifactProjectService.getArtifactByIdentifierArtifact(this.artifactForm?.value.identifierArtifact)
-    }
-
     getData() {
         this.projectsService.getProjects().subscribe(posts => {
             for (let data of posts) {

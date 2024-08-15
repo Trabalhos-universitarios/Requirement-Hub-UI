@@ -2,11 +2,10 @@ export interface ArtifactProjectDataModel {
     id?: string;
     name: string;
     file: {
-        filename: string,
-        originalname:string,
-        mimetype: string,
-        size: number,
-        content: string
+        fileName: string,
+        size: any,
+        type: string,
+        contentBase64: any
     },
     projectId: string
 }

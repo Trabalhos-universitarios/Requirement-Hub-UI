@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddArtifactProjectComponent } from 'src/app/components/modals/artifacts/add-artifact-project/add-artifact-project.component';
 import { ArtifactProjectDataModel } from 'src/app/models/artifact-project-model';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
+import { ArtifactProjectService } from 'src/app/services/projects/artifacts/artifact-project.service';
+import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 
 @Component({
@@ -25,8 +27,18 @@ export class ArtifactsProjectTableComponent {
 
   constructor(protected themeService: ThemeService,
               private localStorage : LocalStorageService,
-              private dialog: MatDialog
-  ){}
+              private dialog: MatDialog,
+              private artifactProjectService: ArtifactProjectService,
+              private projectsTableService: ProjectsTableService )
+              {this.getData();}
+        
+            getData() {
+                this.artifactProjectService.getArtifactById(this.projectsTableService.getCurrentIdProject())
+                      .then(artifacts => {
+                        this.dataSource.data = artifacts;
+                });
+            }
+        
 
   stylesIconColor(iconName: string) {
 

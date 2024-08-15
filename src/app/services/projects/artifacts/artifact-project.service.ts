@@ -23,12 +23,17 @@ export class ArtifactProjectService {
   }
 
   createArtifact(post: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/project/artifacts`, post);
+    console.log(post)
+    return this.http.post(`${this.baseUrl}/project-artifacts`, post);
   }
 
-  getArtifactByIdentifierArtifact(identifier: string) {
-    const params = new HttpParams().set('identifier', identifier);
-    return firstValueFrom(this.http.get<ArtifactProjectDataModel[]>(`${this.baseUrl}/artifacts/filter`, { params }));
+  getArtifacts(): Observable<ArtifactProjectDataModel[]> {
+    return this.http.get<ArtifactProjectDataModel[]>(`${this.baseUrl}/project-artifacts/all`);
+  }
+
+  getArtifactById(id: number) {
+    const params = new HttpParams().set('id', id);
+    return firstValueFrom(this.http.get<ArtifactProjectDataModel[]>(`${this.baseUrl}/project-artifacts/`, { params }));
   }
 }
 
