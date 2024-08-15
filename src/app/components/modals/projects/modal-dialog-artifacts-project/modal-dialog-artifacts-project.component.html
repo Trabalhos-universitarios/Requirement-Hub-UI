@@ -12,7 +12,7 @@
             <mat-icon>close</mat-icon>
         </button>
 
-        <button mat-button
+        <button [hidden]="isPermited()" mat-button
                 (click)="addData()">
             Add artefato
             <mat-icon>edit_document</mat-icon>
