@@ -66,9 +66,7 @@ export class ArtifactsProjectTableComponent {
   }
 
   isPermited(){
-        if(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
-        this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
-        this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO"){
+        if(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS"){
             return false;
         }
         return true;
