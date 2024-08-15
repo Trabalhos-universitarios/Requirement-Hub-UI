@@ -1,8 +1,9 @@
 .container-form-create-project {
     display: flex;
-    flex-direction: row;
+    align-items: center;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 1200px;
   
     .mat-select-for-project {
       opacity: 0.75;
@@ -11,20 +12,24 @@
   
     .mat-forms-fro-project {
       padding: 20px;
-      width: 250px;
+      width: 350px;
     }
   
     .description-project-form {
       width: 830px;
       margin-top: -20px;
+      height: 100vh;
+    }
+
+    .button-control{
+      height: 100vh;
     }
   
     .file-upload-container {
       display: flex;
-      width: 790px;
-      height: 150px;
-      margin: auto;
-      margin-bottom: 30px;
+      width: 800px;
+      height: 250px;
+      margin: 30px;
       padding: 20px;
       border: 3px dashed;
       border-radius: 5px;
