@@ -65,7 +65,9 @@ export class ArtifactsProjectTableComponent {
   }
 
   isPermited(){
-        if(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS"){
+        if(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
+        this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
+        this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO"){
             return false;
         }
         return true;
@@ -83,21 +85,34 @@ export class ArtifactsProjectTableComponent {
       });
   }
 
+  visualizarArtifact(id: number, fileName: string) {
+    this.artifactProjectService.getDownloadArtifactById(id)
+      .subscribe({
+        next: (blob) => {
+          const fileType = fileName.split('.').pop()?.toLowerCase();
+          const url = window.URL.createObjectURL(blob);
+          if (fileType === 'pdf' || ['png', 'jpg', 'jpeg', 'gif'].includes(fileType!)) {
+            window.open(url, '_blank');
+          } else {
+            console.error("Formato não suportado para visualização");
+            this.alertService.toErrorAlert('Erro',"Formato de arquivo não suportado para visualização.");
+          }
+        },
+        error: (error) => {
+          console.error("Erro ao realizar a visualização:", error);
+          this.alertService.toErrorAlert('Erro',"Erro ao tentar visualizar o arquivo.");
+        }
+      });
+  }
+
   download(blob: Blob, id: number) {
-    // Obtenha o nome do arquivo (opcional)
     const fileName = `arquivo_${id}`;
-
-    // Crie uma URL temporária para o Blob
     const url = window.URL.createObjectURL(blob);
-
-    // Crie um elemento <a> para iniciar o download
     const a = document.createElement('a');
     a.href = url;
-    a.download = fileName; // Nome do arquivo para o download
+    a.download = fileName;
     document.body.appendChild(a);
     a.click();
-
-    // Limpar recursos temporários
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   }
