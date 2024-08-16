@@ -42,8 +42,8 @@ export class LoginComponent {
                     this.localStorageService.setItem('name', response.name);
                     this.localStorageService.setItem('userLogged', true);
                     this.router.navigate(['/home']).then();
-                    await this.alertService.toSuccessAlert("Login efetuado com sucesso!")
                     this.spinnerService.stop();
+                    await this.alertService.toSuccessAlert("Login efetuado com sucesso!")
                 },
                 error: async (err) => {
                     this.spinnerService.stop();

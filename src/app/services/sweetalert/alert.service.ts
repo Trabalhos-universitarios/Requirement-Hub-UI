@@ -12,7 +12,7 @@ export class AlertService {
       icon: "success",
       title: title,
       showConfirmButton: false,
-      timer: 5000,
+      timer: 1000,
       backdrop: false
     });
   }
