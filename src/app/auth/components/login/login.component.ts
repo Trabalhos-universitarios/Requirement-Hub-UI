@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {LocalStorageService} from 'src/app/services/localstorage/local-storage.service';
 import {AuthService} from 'src/app/auth/services/auth/auth.service';
 import {AlertService} from "../../../services/sweetalert/alert.service";
+import {SpinnerService} from "../../../services/spinner/spinner.service";
 
 @Component({
     selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
     private localStorageService: LocalStorageService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private spinnerService: SpinnerService
   ) {
     this.localStorageService.clearAll(),
     this.loginForm = this.fb.group({
@@ -29,6 +31,7 @@ export class LoginComponent {
   }
 
     async onSubmit() {
+      this.spinnerService.start();
         if (this.loginForm.valid) {
             const {login, password} = this.loginForm.getRawValue();
             this.authService.login(login, password).subscribe({
@@ -38,10 +41,12 @@ export class LoginComponent {
                     this.localStorageService.setItem('role', response.role);
                     this.localStorageService.setItem('name', response.name);
                     this.localStorageService.setItem('userLogged', true);
+                    this.router.navigate(['/home']).then();
                     await this.alertService.toSuccessAlert("Login efetuado com sucesso!")
-                    await this.router.navigate(['/home']);
+                    this.spinnerService.stop();
                 },
                 error: async (err) => {
+                    this.spinnerService.stop();
                     await this.alertService.toErrorAlert("Erro!", "Login ou senha inválidos!")
                 }
             });
