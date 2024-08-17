@@ -28,11 +28,11 @@
                 <li *ngFor="let item of uploader.queue">
                     <div class="file-item" [ngStyle]="getStyles()">
                         <div class="file-details">
-                            <strong>{{ item?.file?.name }}</strong>
+                            <strong>{{ item.file.name }}</strong>
                             <mat-progress-bar mode="determinate" [value]="item.progress" color="primary"></mat-progress-bar>
                             <span>{{ item.progress }}%</span>
                         </div>
-                        <button mat-icon-button (click)="item.remove()">
+                        <button mat-icon-button (click)="removeFile(item)">
                             <mat-icon>delete_forever</mat-icon>
                         </button>
                     </div>
@@ -45,7 +45,7 @@
                 <mat-icon>cancel</mat-icon>
                 Cancelar
             </button>  
-            <button class="button-save-file" mat-raised-button (click)="saveData()">
+            <button class="button-save-file" [disabled]="formInvalid || this.uploader.queue.length === 0" mat-raised-button (click)="saveData()">
                 <mat-icon>save</mat-icon>
                 Salvar
             </button>

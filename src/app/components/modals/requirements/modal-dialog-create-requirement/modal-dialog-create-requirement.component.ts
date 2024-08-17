@@ -8,6 +8,7 @@ import {LocalStorageService} from "../../../../services/localstorage/local-stora
 import {Status} from "../../../../utils/util.status";
 import {ProjectsTableService} from "../../../../services/projects/projects-table.service";
 import {RichTextService} from "../../../../services/richText/rich-text.service";
+import {SpinnerService} from "../../../../services/spinner/spinner.service";
 
 @Component({
     selector: 'app-modal-dialog-create-requirement',
@@ -27,7 +28,8 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
         private richTextService: RichTextService,
         private alertService: AlertService,
         private dialog: MatDialog,
-        private localStorageService: LocalStorageService) {
+        private localStorageService: LocalStorageService,
+        private spinnerService: SpinnerService) {
     }
 
     ngOnInit() {
@@ -43,6 +45,7 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
     }
 
     async saveData(): Promise<void> {
+        this.spinnerService.start();
         this.getData();
 
         this.requirementService.createRequirements(this.prepareData()).subscribe(
@@ -66,6 +69,7 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
     }
 
     getData() {
+        this.spinnerService.start();
         this.requirementService.getRequirements().then(posts => {
             for (let data of posts) {
             }

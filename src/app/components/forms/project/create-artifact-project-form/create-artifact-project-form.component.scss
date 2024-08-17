@@ -1,83 +1,82 @@
 .container-form-create-project {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1200px;
+
+  .mat-select-for-project {
+    opacity: 0.75;
+    font-size: 0.75em;
+  }
+
+  .mat-forms-fro-project {
+    padding: 20px;
+    width: 350px;
+  }
+
+  .description-project-form {
+    width: 830px;
+    margin-top: -20px;
+    height: 100vh;
+  }
+
+  .file-upload-container {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    width: 800px;
+    height: 250px;
+    margin: 30px;
+    padding: 20px;
+    border: 3px dashed;
+    border-radius: 5px;
+    text-align: center;
     justify-content: center;
-    max-width: 1200px;
-  
-    .mat-select-for-project {
-      opacity: 0.75;
-      font-size: 0.75em;
-    }
-  
-    .mat-forms-fro-project {
-      padding: 20px;
-      width: 350px;
-    }
-  
-    .description-project-form {
-      width: 830px;
-      margin-top: -20px;
-      height: 100vh;
-    }
-  
-    .file-upload-container {
+    overflow: auto;
+  }
+
+  .file-drop-zone {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .file-item {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid;
+    padding: 10px;
+    border-radius: 5px;
+
+    .file-details {
+      flex: 1;
       display: flex;
-      width: 800px;
-      height: 250px;
-      margin: 30px;
-      padding: 20px;
-      border: 3px dashed;
-      border-radius: 5px;
-      text-align: center;
-      justify-content: center;
-      overflow: auto;
-    }
-  
-    .file-drop-zone {
-      display: grid;
-      align-items: center;
-      justify-content: center;
-    }
-  
-    .file-item {
-      margin-bottom: 20px;
-      margin-left: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid;
-      padding: 10px;
-      border-radius: 5px;
-  
-      .file-details {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        margin-right: 10px;
-  
-        strong {
-          margin-bottom: 5px;
-        }
-  
-        mat-progress-bar {
-          width: 100%;
-          margin: 5px 0;
-        }
-  
-        span {
-          font-size: 10px;
-          text-align: right;
-        }
+      flex-direction: column;
+      margin-right: 10px;
+
+      strong {
+        margin-bottom: 5px;
+      }
+
+      mat-progress-bar {
+        width: 100%;
+        margin: 5px 0;
+      }
+
+      span {
+        font-size: 10px;
+        text-align: right;
       }
     }
   }
+}
 
-  .button-save-file{
-    margin: 30px;
-  }
-  
-  ul {
-    list-style-type: none;
-  }
-  
+.button-save-file{
+  margin: 30px;
+}
+
+ul {
+  list-style-type: none;
+}

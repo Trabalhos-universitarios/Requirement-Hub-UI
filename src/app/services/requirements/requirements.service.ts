@@ -40,9 +40,9 @@ export class RequirementsService {
                 catchError((error: HttpErrorResponse) => {
                     if (error.status === 409) {
                         console.error('Requisito já existe');
-                        return throwError('Requisito já existe');
+                        return throwError(() => new Error('Requisito já existe'));
                     }
-                    return throwError(error);
+                    return throwError(() => new Error(error.message));
                 })
             );
     }
