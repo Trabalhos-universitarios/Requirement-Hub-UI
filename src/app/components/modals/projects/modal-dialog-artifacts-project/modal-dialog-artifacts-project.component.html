@@ -1,21 +1,22 @@
 <mat-dialog-content>
 
     <app-artifacts-project-table></app-artifacts-project-table>
-    
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
 
-        <button mat-button
-                cdkFocusInitial
-                (click)="close()">
-            Fechar
-            <mat-icon>close</mat-icon>
-        </button>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
 
-        <button [hidden]="isPermited()" mat-button
-                (click)="addData()">
-            Add artefato
-            <mat-icon>edit_document</mat-icon>
-        </button>
-    
+    <button mat-raised-button
+            cdkFocusInitial
+            (click)="close()">
+        Fechar
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <button mat-raised-button
+            [hidden]="isPermited()"
+            (click)="addData()">
+        Add artefato
+        <mat-icon>edit_document</mat-icon>
+    </button>
+
 </mat-dialog-actions>

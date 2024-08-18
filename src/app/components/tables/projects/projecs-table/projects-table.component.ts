@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {ProjectsService} from "../../../../services/projects/projects.service";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ProjectDataModel} from "../../../../models/project-data-model";
@@ -8,17 +7,23 @@ import {Status} from "../../../../utils/util.status";
 import {
     ModalDialogCreateRequirementComponent
 } from "../../../modals/requirements/modal-dialog-create-requirement/modal-dialog-create-requirement.component";
-import { TracebilityMatrixComponent } from '../../../modals/modeal-tracebility-matrix/tracebility-matrix.component';
-import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
+import {TracebilityMatrixComponent} from '../../../modals/modeal-tracebility-matrix/tracebility-matrix.component';
+import {ProjectsTableService} from 'src/app/services/projects/projects-table.service';
 import {
     ModalDialogInformationProjectComponent
 } from "../../../modals/projects/modal-dialog-information-project/modal-dialog-information-project.component";
-import { ModalDialogDeleteProjectComponent } from 'src/app/components/modals/projects/modal-dialog-delete-project/modal-dialog-delete-project.component';
-import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
-import { ModalDialogUpdateProjectComponent } from 'src/app/components/modals/projects/modal-dialog-update-project/modal-dialog-update-project.component';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ModalDialogArtifactsProjectComponent } from 'src/app/components/modals/projects/modal-dialog-artifacts-project/modal-dialog-artifacts-project.component';
+import {LocalStorageService} from 'src/app/services/localstorage/local-storage.service';
+import {
+    ModalDialogUpdateProjectComponent
+} from 'src/app/components/modals/projects/modal-dialog-update-project/modal-dialog-update-project.component';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {
+    ModalDialogArtifactsProjectComponent
+} from 'src/app/components/modals/projects/modal-dialog-artifacts-project/modal-dialog-artifacts-project.component';
+import {AlertService} from "../../../../services/sweetalert/alert.service";
+import {ProjectsService} from "../../../../services/projects/projects.service";
+import {reloadPage} from "../../../../utils/reload.page";
 
 @Component({
     selector: 'app-projects-table',
@@ -51,27 +56,26 @@ export class ProjectsTableComponent {
     constructor(
         private projectsTableService: ProjectsTableService,
         protected themeService: ThemeService,
-        private localStorage : LocalStorageService,
+        private localStorage: LocalStorageService,
         private sanitizer: DomSanitizer,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        private alertService: AlertService,
+        private projectsService: ProjectsService) {
     }
 
     sanitizeHtml(html: string): SafeHtml {
         return this.sanitizer.bypassSecurityTrustHtml(html);
     }
 
-    setDataProjectTable(id : number, currentProject : string) {
+    setDataProjectTable(id: number, currentProject: string) {
         this.projectsTableService.setCurrentProjectById(id);
         this.projectsTableService.setCurrentProjectByName(currentProject);
-        }
+    }
 
-    isPermited(){
-        if(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
-        this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
-        this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO"){
-            return false;
-        }
-        return true;
+    isPermitted() {
+        return !(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
+            this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
+            this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO");
     }
 
     stylesStatusIcon(status: string) {
@@ -127,9 +131,7 @@ export class ProjectsTableComponent {
                 this.dialog.open(ModalDialogUpdateProjectComponent);
                 break;
             case 'Delete project':
-                this.dialog.open(ModalDialogDeleteProjectComponent, {
-                    width: '400px',
-                    data: { message: 'Tem certeza que deseja deletar o projeto?' }});
+                this.deleteProject().then()
                 break;
             case 'Create requirement':
                 this.dialog.open(ModalDialogCreateRequirementComponent);
@@ -145,6 +147,22 @@ export class ProjectsTableComponent {
                 break
             default:
                 console.error("This dialog non exists!")
+        }
+    }
+
+    private async deleteProject() {
+        const result = await this.alertService.toOptionalActionAlert(
+            "Deletar projeto",
+            "Deseja realmente excluir o projeto?"
+        );
+
+        console.log("result", result);
+
+        console.log("this.projectsTableService.getCurrentProjectById()", this.projectsTableService.getCurrentProjectById());
+
+        if (result.isConfirmed) {
+            await this.projectsService.deleteProject(this.projectsTableService.getCurrentProjectById());
+            reloadPage();
         }
     }
 }

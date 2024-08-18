@@ -1,45 +1,41 @@
-.container-form-create-project {
+/* src/app/components/forms/project/create-artifact-project-form/create-artifact-project-form.component.scss */
+
+.container {
+  overflow: hidden;
+
+  .container-form-create-project {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
     max-width: 1200px;
-  
-    .mat-select-for-project {
-      opacity: 0.75;
-      font-size: 0.75em;
-    }
-  
+    //height: 500px;
+    overflow: hidden !important; /* Garante que o overflow seja escondido */
+
     .mat-forms-fro-project {
       padding: 20px;
       width: 350px;
     }
-  
-    .description-project-form {
-      width: 830px;
-      margin-top: -20px;
-      height: 100vh;
-    }
-  
+
     .file-upload-container {
       display: flex;
       width: 800px;
-      height: 250px;
+      height: 150px;
       margin: 30px;
       padding: 20px;
       border: 3px dashed;
       border-radius: 5px;
       text-align: center;
       justify-content: center;
-      overflow: auto;
+      overflow: hidden; /* Garante que o overflow seja escondido */
     }
-  
+
     .file-drop-zone {
       display: grid;
       align-items: center;
       justify-content: center;
     }
-  
+
     .file-item {
       margin-bottom: 20px;
       margin-left: 20px;
@@ -49,22 +45,22 @@
       border: 1px solid;
       padding: 10px;
       border-radius: 5px;
-  
+
       .file-details {
         flex: 1;
         display: flex;
         flex-direction: column;
         margin-right: 10px;
-  
+
         strong {
           margin-bottom: 5px;
         }
-  
+
         mat-progress-bar {
           width: 100%;
           margin: 5px 0;
         }
-  
+
         span {
           font-size: 10px;
           text-align: right;
@@ -73,11 +69,14 @@
     }
   }
 
-  .button-save-file{
-    margin: 30px;
+  .create-artifact-button {
+    display: flex;
+    justify-content: flex-end !important;
+    align-items: end !important;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    .mat-button {
+      margin-left: 10px;
+    }
   }
-  
-  ul {
-    list-style-type: none;
-  }
-  
+}

@@ -1,28 +1,30 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { FileItem, FileUploader } from 'ng2-file-upload';
-import { filter } from 'rxjs';
-import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
-import { ArtifactProjectService } from 'src/app/services/projects/artifacts/artifact-project.service';
-import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
-import { AlertService } from 'src/app/services/sweetalert/alert.service';
-import { ThemeService } from 'src/app/services/theme/theme.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {FileItem, FileUploader} from 'ng2-file-upload';
+import {filter} from 'rxjs';
+import {LocalStorageService} from 'src/app/services/localstorage/local-storage.service';
+import {ArtifactProjectService} from 'src/app/services/projects/artifacts/artifact-project.service';
+import {ProjectsTableService} from 'src/app/services/projects/projects-table.service';
+import {AlertService} from 'src/app/services/sweetalert/alert.service';
+import {ThemeService} from 'src/app/services/theme/theme.service';
+import {SpinnerService} from "../../../../services/spinner/spinner.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
-  selector: 'app-create-artifact-project-form',
-  templateUrl: './create-artifact-project-form.component.html',
-  styleUrls: ['./create-artifact-project-form.component.scss']
+    selector: 'app-create-artifact-project-form',
+    templateUrl: './create-artifact-project-form.component.html',
+    styleUrls: ['./create-artifact-project-form.component.scss']
 })
 export class CreateArtifactProjectFormComponent implements OnInit {
 
     @ViewChild('fileInput') fileInput!: ElementRef;
 
     projectId?: number;
-    buttonDisabled: boolean = true;
+    formInvalid: boolean = true;
 
     public formGroup: FormGroup = this.formBuilder.group({
-        name: new FormControl(''),
+        name: new FormControl('', Validators.required),
     });
     public uploader: FileUploader = new FileUploader({url: '', itemAlias: 'file'});
     public hasBaseDropZoneOver: boolean = false;
@@ -34,7 +36,8 @@ export class CreateArtifactProjectFormComponent implements OnInit {
         private localStorageService: LocalStorageService,
         private dialog: MatDialog,
         private alertService: AlertService,
-        private projectsTableService: ProjectsTableService) {
+        private projectsTableService: ProjectsTableService,
+        private spinnerService: SpinnerService) {
 
         this.createForm();
         this.uploader.onAfterAddingFile = (file: FileItem) => {
@@ -52,8 +55,11 @@ export class CreateArtifactProjectFormComponent implements OnInit {
             .pipe(filter(form => !!form))
             .subscribe(form => {
                 this.formGroup.patchValue(form.value);
-                this.buttonDisabled = !(this.formGroup.valid && this.formGroup.value);
             });
+
+        this.formGroup.valueChanges.subscribe((f) => {
+            this.formInvalid = this.formGroup.invalid;
+        });
     }
 
     public fileOverBase(e: any): void {
@@ -92,7 +98,7 @@ export class CreateArtifactProjectFormComponent implements OnInit {
                 clearInterval(interval);
                 this.saveFileToLocalStorage(file);
             }
-        }, 150);
+        }, 100);
     }
 
     saveFileToLocalStorage(file: FileItem) {
@@ -110,23 +116,42 @@ export class CreateArtifactProjectFormComponent implements OnInit {
     }
 
     async saveData(): Promise<void> {
-        this.projectId = this.projectsTableService.getCurrentProjectById();
-        console.log(this.projectId);
+        try {
+            this.spinnerService.start();
+            this.projectId = this.projectsTableService.getCurrentProjectById();
 
-        this.artifactProjectService.createArtifact(this.prepareDataArtifact(this.projectId)).subscribe(respArt => {
-            try {
-                this.alertService.toSuccessAlert("Artefato Cadastrado com sucesso!");
+            const response = await this.artifactProjectService.createArtifact(this.prepareDataArtifact(this.projectId));
+
+            if (response) {
+                await this.alertService.toSuccessAlert("Artefato Cadastrado com sucesso!");
                 this.localStorageService.removeItem('file');
                 this.dialog.closeAll();
-            } catch (error) {
-                throw new Error(`Exception caused ${error} and api response id ${respArt}`);
             }
-        });
+        } catch (error) {
+            switch (error) {
+                case 409:
+                    console.log("ENTOU AQUI 409", error)
+                    await this.alertService.toErrorAlert("Erro!", "Artefato já existe com esse nome!");
+                    break;
+                case 404:
+                    console.log("ENTOU AQUI 404", error)
+                    await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
+                    break;
+                case 500:
+                    console.log("ENTOU AQUI 500", error)
+                    await this.alertService.toErrorAlert("Erro!", "Erro interno do servidor!");
+                    break;
+                default:
+                    console.log("ENTOU AQUI OUTROS", error)
+                    await this.alertService.toErrorAlert("Erro!", "Erro ao cadastrar artefato - " + error);
+            }
+        } finally {
+            this.spinnerService.stop();
+        }
     }
 
     prepareDataArtifact(projectId?: number) {
         const fileData = this.localStorageService.getItem('file');
-        console.log(fileData);
 
         if (this.formGroup && this.formGroup.valid) {
             return {
@@ -147,5 +172,10 @@ export class CreateArtifactProjectFormComponent implements OnInit {
     clearFileInput() {
         // Limpa o campo de entrada de arquivo
         this.fileInput.nativeElement.value = '';
+    }
+
+    removeFile(item: FileItem) {
+        item.remove();
+        this.localStorageService.removeItem('file');
     }
 }
