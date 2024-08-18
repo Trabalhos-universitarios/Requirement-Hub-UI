@@ -5,14 +5,14 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
 
-    <button mat-button
+    <button mat-raised-button
             *ngIf="!buttonDisabled"
             (click)="getData()">
-        Salvar rascunho
-        <mat-icon>edit_document</mat-icon>
+        Cancelar
+        <mat-icon>cancel</mat-icon>
     </button>
 
-    <button mat-button
+    <button mat-raised-button
             *ngIf="!buttonDisabled"
             cdkFocusInitial
             (click)="saveData()">

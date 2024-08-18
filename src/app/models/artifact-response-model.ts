@@ -7,6 +7,4 @@ export interface ArtifactResponseModel {
     artifactDescription: string;
     creationDate: string;
     status: string;
-
-
 }

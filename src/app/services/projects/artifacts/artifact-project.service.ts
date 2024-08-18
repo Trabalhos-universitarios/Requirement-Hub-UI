@@ -34,7 +34,7 @@ export class ArtifactProjectService {
               if (error.status === 409) {
                 console.error('This requirement already exists!');
                 return throwError(() => HttpStatusCode.Conflict);
-              } if (error.status === 404) {
+              } if (error.status === 404 || error.status === 405) {
                 console.error('This route not exists or not starting!');
                 return throwError(() => HttpStatusCode.NotFound);
               } else if (error.status === 500 || error.status === 503) {

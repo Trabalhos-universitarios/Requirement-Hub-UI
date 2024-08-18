@@ -26,3 +26,12 @@ button:disabled {
 .mat-button:disabled {
   cursor: not-allowed;
 }
+
+.swal2-container {
+  overflow: hidden;
+}
+
+.swal2-popup {
+  margin: auto !important;
+  bottom: 0 !important;
+}

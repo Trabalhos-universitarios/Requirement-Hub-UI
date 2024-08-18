@@ -27,7 +27,6 @@ export class ModalDialogArtifactsProjectComponent {
 
     isPermited() {
         return this.localStorage.getItem('role') != "GERENTE_DE_PROJETOS";
-
     }
 
 }

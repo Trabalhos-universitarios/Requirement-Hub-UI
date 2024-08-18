@@ -9,6 +9,7 @@ import {Status} from "../../../../utils/util.status";
 import {ProjectsTableService} from "../../../../services/projects/projects-table.service";
 import {RichTextService} from "../../../../services/richText/rich-text.service";
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
+import {reloadPage} from "../../../../utils/reload.page";
 
 @Component({
     selector: 'app-modal-dialog-create-requirement',
@@ -32,6 +33,8 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
         private spinnerService: SpinnerService) {
     }
 
+    //todo parei aqui, aplicando trataiva de erros e spinner no requisito
+
     ngOnInit() {
         this.requirementService.currentForm.subscribe(form => {
             this.requirementForm = form;
@@ -46,35 +49,37 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
 
     async saveData(): Promise<void> {
         this.spinnerService.start();
-        this.getData();
+        try {
+            const response = await this.requirementService.createRequirements(this.prepareData()).then(response => response.identifier);
 
-        this.requirementService.createRequirements(this.prepareData()).subscribe(
-            respReq => {
-                if (respReq) {
-                    this.alertService.toSuccessAlert(`Requisito ${respReq.identifier} cadastrado com sucesso!`);
-                    this.dialog.closeAll();
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 3000);
-                }
-            },
-            error => {
-                if (error === 'Requisito já existe') {
-                    this.alertService.toErrorAlert("Erro!", 'O requisito já existe no sistema.');
-                } else {
-                    this.alertService.toErrorAlert('Erro!','Ocorreu um erro ao cadastrar o requisito.');
-                }
+            if (response) {
+                await this.alertService.toSuccessAlert(`Reququisito ${response} cadastrado com sucesso!`);
+                this.localStorageService.removeItem('file');
+                this.dialog.closeAll();
+                reloadPage()
+                this.spinnerService.stop()
             }
-        );
-    }
-
-    getData() {
-        this.spinnerService.start();
-        this.requirementService.getRequirements().then(posts => {
-            for (let data of posts) {
+        } catch (error) {
+            switch (error) {
+                case 409:
+                    console.log("ENTOU AQUI 409", error)
+                    await this.alertService.toErrorAlert("Erro!", "Já existe um requisito com esse nome vinculado a esse projeto!");
+                    break;
+                case 404:
+                    console.log("ENTOU AQUI 404", error)
+                    await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
+                    break;
+                case 500:
+                    console.log("ENTOU AQUI 500", error)
+                    await this.alertService.toErrorAlert("Erro!", "Erro interno do servidor!");
+                    break;
+                default:
+                    console.log("ENTOU AQUI OUTROS", error)
+                    await this.alertService.toErrorAlert("Erro!", "Erro ao cadastrar requisito - " + error);
             }
-            // TODO AQUI TERÁ A LÓGICA PARA TRATAR SE O PROJETO JÁ EXISTIR NO BACK END
-        });
+        } finally {
+            this.spinnerService.stop();
+        }
     }
 
     private prepareData() {

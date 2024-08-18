@@ -1,54 +1,57 @@
-<form [formGroup]="formGroup" novalidate>
-    <div class="container-form-create-project">
+<div class="container">
+    <form [formGroup]="formGroup" novalidate>
+        <div class="container-form-create-project">
 
-        <mat-form-field class="mat-forms-fro-project">
-            <mat-label>Nome</mat-label>
-            <input matInput placeholder="Ex: Diagrama de Classes" formControlName="name">
-            <mat-error>Campo obrigatório!</mat-error>
-        </mat-form-field>
+            <mat-form-field class="mat-forms-fro-project">
+                <mat-label>Nome</mat-label>
+                <input matInput placeholder="Ex: Diagrama de Classes" formControlName="name">
+                <mat-error>Campo obrigatório!</mat-error>
+            </mat-form-field>
 
-        <div class="file-upload-container" [ngStyle]="getStyles()">
-            <div ng2FileDrop
-                 [uploader]="uploader"
-                 class="file-drop-zone"
-                 (fileOver)="fileOverBase($event)">
-                <span>Arraste e solte um arquivo</span>
-                <span>ou</span>
-                <button class="button-update-file" 
-                        mat-raised-button 
-                        (click)="selectFile()"
-                        [disabled]="uploader.queue.length > 0"> <!-- Desabilita o botão se já tiver um arquivo na fila -->
-                    <mat-icon>upload_file</mat-icon>
-                    Upload de arquivo
-                </button>
-                <input type="file" #fileInput ng2FileSelect [uploader]="uploader" hidden />
-            </div>
+            <div class="file-upload-container" [ngStyle]="getStyles()">
+                <div ng2FileDrop
+                     [uploader]="uploader"
+                     class="file-drop-zone"
+                     (fileOver)="fileOverBase($event)">
+                    <span>Arraste e solte um arquivo</span>
+                    <span>ou</span>
+                    <button class="button-update-file"
+                            mat-raised-button
+                            (click)="selectFile()"
+                            [disabled]="uploader.queue.length > 0">
+                        <!-- Desabilita o botão se já tiver um arquivo na fila -->
+                        <mat-icon>upload_file</mat-icon>
+                        Upload de arquivo
+                    </button>
+                    <input type="file" #fileInput ng2FileSelect [uploader]="uploader" hidden/>
+                </div>
 
-            <ul>
-                <li *ngFor="let item of uploader.queue">
-                    <div class="file-item" [ngStyle]="getStyles()">
-                        <div class="file-details">
-                            <strong>{{ item.file.name }}</strong>
-                            <mat-progress-bar mode="determinate" [value]="item.progress" color="primary"></mat-progress-bar>
-                            <span>{{ item.progress }}%</span>
+                <ul>
+                    <li *ngFor="let item of uploader.queue">
+                        <div class="file-item" [ngStyle]="getStyles()">
+                            <div class="file-details">
+                                <strong>{{ item.file.name }}</strong>
+                                <mat-progress-bar mode="determinate" [value]="item.progress"
+                                                  color="primary"></mat-progress-bar>
+                                <span>{{ item.progress }}%</span>
+                            </div>
+                            <button mat-icon-button (click)="removeFile(item)">
+                                <mat-icon>delete_forever</mat-icon>
+                            </button>
                         </div>
-                        <button mat-icon-button (click)="removeFile(item)">
-                            <mat-icon>delete_forever</mat-icon>
-                        </button>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-
-        <div class="button-control">    
-            <button class="button-save-file" mat-raised-button (click)="close()">
-                <mat-icon>cancel</mat-icon>
-                Cancelar
-            </button>  
-            <button class="button-save-file" [disabled]="formInvalid || this.uploader.queue.length === 0" mat-raised-button (click)="saveData()">
-                <mat-icon>save</mat-icon>
-                Salvar
+        <div class="create-artifact-button">
+            <button mat-raised-button class="mat-button" (click)="close()">
+                <mat-icon>cancel</mat-icon>Cancelar
             </button>
-        </div> 
-    </div>
-</form>
+            <button mat-raised-button class="mat-button"
+                    [disabled]="formInvalid || this.uploader.queue.length === 0"
+                    (click)="saveData()">
+                <mat-icon>save</mat-icon>Salvar
+            </button>
+        </div>
+    </form>
+</div>

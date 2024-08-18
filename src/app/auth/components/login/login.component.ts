@@ -21,9 +21,8 @@ export class LoginComponent {
     private router: Router,
     private localStorageService: LocalStorageService,
     private alertService: AlertService,
-    private spinnerService: SpinnerService
-  ) {
-    this.localStorageService.clearAll(),
+    private spinnerService: SpinnerService) {
+    this.localStorageService.clearAll()
     this.loginForm = this.fb.group({
       login: ['', [Validators.required]],
       password: ['', [Validators.required]]

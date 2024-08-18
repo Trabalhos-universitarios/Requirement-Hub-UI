@@ -65,7 +65,6 @@ import { TracebilityMatrixComponent } from './components/modals/modeal-tracebili
 import { ModalLoginComponent } from './auth/modals/modal-login/modal-login.component';
 import { TokenInterceptor } from './auth/token-interceptor';
 import { LoginComponent } from './auth/components/login/login.component';
-import { ModalDialogDeleteProjectComponent } from './components/modals/projects/modal-dialog-delete-project/modal-dialog-delete-project.component';
 import { ModalDialogUpdateProjectComponent } from './components/modals/projects/modal-dialog-update-project/modal-dialog-update-project.component';
 import { UpdateProjectTabComponent } from './components/tabs/update-project-tab/update-project-tab.component';
 import { UpdateProjectFormComponent } from './components/forms/project/update-project-form/update-project-form.component';
@@ -102,7 +101,6 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
         LoginComponent,
         ModalLoginComponent,
         CapitalizeFirstPipePipe,
-        ModalDialogDeleteProjectComponent,
         ModalDialogUpdateProjectComponent,
         UpdateProjectTabComponent,
         UpdateProjectFormComponent,
