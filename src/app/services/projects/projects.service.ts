@@ -17,8 +17,18 @@ export class ProjectsService {
 
     constructor(private http: HttpClient) {}
 
+    async getProjects(): Promise<ProjectDataModel[]> {
+        return firstValueFrom(this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all`));
+    }
+
+
     async getProjectsByUserId(userId : number): Promise<ProjectDataModel[]> {
         return firstValueFrom(this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all/${userId}`));
+    }
+
+    //SERVIÇOS DO FORMULÁRIO
+    updateForm(formGroup: FormGroup) {
+        this.formGroupSource.next(formGroup);
     }
 
     createProject(post: any): Promise<any> {
