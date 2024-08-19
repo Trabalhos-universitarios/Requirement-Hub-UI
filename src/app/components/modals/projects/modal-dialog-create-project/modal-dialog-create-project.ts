@@ -7,8 +7,9 @@ import {CreateProjectTabComponent} from "../../../tabs/create-project-tab/create
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {Status} from "../../../../utils/util.status";
 import {RichTextService} from "../../../../services/richText/rich-text.service";
-import {CreateProjectDataModel} from 'src/app/models/create-project-data-model';
-import {error} from "@angular/compiler-cli/src/transformers/util";
+import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
+import {SpinnerService} from "../../../../services/spinner/spinner.service";
+import {reloadPage} from "../../../../utils/reload.page";
 
 
 @Component({
@@ -29,7 +30,9 @@ export class ModalDialogCreateProjectComponent implements OnInit {
         private projectService: ProjectsService,
         private alertService: AlertService,
         private dialog: MatDialog,
-        private richTextService: RichTextService) {
+        private richTextService: RichTextService,
+        private localStorageService: LocalStorageService,
+        private spinnerService: SpinnerService) {
     }
 
 
@@ -48,31 +51,52 @@ export class ModalDialogCreateProjectComponent implements OnInit {
         console.log("vai buscar um projeto por nome para não deixar criar repetido")
     }
 
-    async saveData() {
-        await this.getData();
+    async saveData(): Promise<void> {
+        this.spinnerService.start();
+        try {
+            const response = await this.projectService.createProject(this.prepareData());
 
+            if (response) {
+                await this.alertService.toSuccessAlert(`Projeto cadastrado com sucesso!`);
+                this.localStorageService.removeItem('file');
+                this.dialog.closeAll();
+                this.spinnerService.stop()
+                reloadPage()
+            }
+        } catch (error) {
+            switch (error) {
+                case 409:
+                    console.log("ENTOU AQUI 409", error)
+                    await this.alertService.toErrorAlert("Erro!", "Já existe um projeto com esse nome vinculado a esse gerente!");
+                    break;
+                case 404:
+                    console.log("ENTOU AQUI 404", error)
+                    await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
+                    break;
+                case 500:
+                    console.log("ENTOU AQUI 500", error)
+                    await this.alertService.toErrorAlert("Erro!", "Erro interno do servidor!");
+                    break;
+                default:
+                    console.log("ENTOU AQUI OUTROS", error)
+                    await this.alertService.toErrorAlert("Erro!", "Erro ao cadastrar projeto - " + error);
+            }
+        } finally {
+            this.spinnerService.stop();
+        }
+    }
+
+    private prepareData() {
         if (this.formGroup && this.formGroup.valid) {
-
-            const prepareData: CreateProjectDataModel =
-                {
-                    ...this.formGroup.value,
-                    businessAnalysts: this.formGroup.value.businessAnalysts.map((v: { id: any; }) => v.id),
-                    commonUsers: this.formGroup.value.commonUsers.map((v: { id: any; }) => v.id),
-                    manager: this.formGroup.value.manager.name,
-                    requirementAnalysts: this.formGroup.value.requirementAnalysts.map((v: { id: any; }) => v.id),
-                    description: this.descriptionProject,
-                    status: Status.ACTIVE
-                };
-
-            this.projectService.createProject(prepareData).subscribe(resp => {
-                if (resp) {
-                    this.alertService.toSuccessAlert("Projeto salvo com sucesso!");
-                    this.dialog.closeAll();
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-                }
-            });
+            return {
+                ...this.formGroup.value,
+                businessAnalysts: this.formGroup.value.businessAnalysts.map((v: { id: any; }) => v.id),
+                commonUsers: this.formGroup.value.commonUsers.map((v: { id: any; }) => v.id),
+                manager: this.formGroup.value.manager.name,
+                requirementAnalysts: this.formGroup.value.requirementAnalysts.map((v: { id: any; }) => v.id),
+                description: this.descriptionProject,
+                status: Status.ACTIVE
+            };
         }
     }
 }

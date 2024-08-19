@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpParams, HttpStatusCode} from "@angular/common/http";
 import {BehaviorSubject, catchError, firstValueFrom, Observable, throwError} from "rxjs";
 import {FormGroup} from "@angular/forms";
 import {
@@ -25,8 +25,12 @@ export class RequirementsService {
     }
 
     //SERVIÇOS DE DB
-    async getRequirements(): Promise<RequirementsDataModel[]> {
+    async getAllRequirements(): Promise<RequirementsDataModel[]> {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements`))
+    }
+
+    async getRequirementsByProjectRelated(projectId: number): Promise<RequirementsDataModel[]> {
+        return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/project-id/${projectId}`))
     }
 
     async getRequirementsByIdentifier(identifier: string): Promise<RequirementsDataModel[]> {
@@ -34,16 +38,25 @@ export class RequirementsService {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/filter`, {params}));
     }
 
-    createRequirements(post: any): Observable<any> {
-        return this.http.post(`${this.baseUrl}/requirements`, post)
-            .pipe(
+    async createRequirements(post: any): Promise<RequirementsDataModel[] | any> {
+        return firstValueFrom(
+            this.http.post(`${this.baseUrl}/requirements`, post).pipe(
                 catchError((error: HttpErrorResponse) => {
+
                     if (error.status === 409) {
-                        console.error('Requisito já existe');
-                        return throwError('Requisito já existe');
+                        console.error('This requirement already exists!');
+                        return throwError(() => HttpStatusCode.Conflict);
                     }
-                    return throwError(error);
+                    if (error.status === 404 || error.status === 405) {
+                        console.error('This route not exists or not starting!');
+                        return throwError(() => HttpStatusCode.NotFound);
+                    } else if (error.status === 500 || error.status === 503) {
+                        console.error('Internal server error!');
+                        return throwError(() => HttpStatusCode.InternalServerError);
+                    }
+                    return throwError(() => new Error(error.message));
                 })
-            );
+            )
+        );
     }
 }

@@ -10,6 +10,8 @@ import {UpdateProjectsService} from 'src/app/services/projects/update-projects.s
 import {RichTextService} from 'src/app/services/richText/rich-text.service';
 import {AlertService} from 'src/app/services/sweetalert/alert.service';
 import {Status} from 'src/app/utils/util.status';
+import {SpinnerService} from "../../../../services/spinner/spinner.service";
+import {reloadPage} from "../../../../utils/reload.page";
 
 @Component({
   selector: 'app-modal-dialog-update-project',
@@ -31,7 +33,8 @@ export class ModalDialogUpdateProjectComponent implements OnInit {
         private alertService: AlertService,
         private dialog: MatDialog,
         private richTextService: RichTextService,
-        private projectTableService: ProjectsTableService) {
+        private projectTableService: ProjectsTableService,
+        private spinnerService: SpinnerService) {
     }
 
     ngOnInit() {
@@ -50,40 +53,48 @@ export class ModalDialogUpdateProjectComponent implements OnInit {
     }
 
     async saveData() {
+        this.spinnerService.start();
         this.currentProjectTeam = this.updateProjectService.getCurrentProjectTeam();
 
         if (this.formGroup && this.formGroup.valid) {
             const businessAnalysts = this.currentProjectTeam
                 .filter(member => member.role === 'ANALISTA_DE_NEGOCIO')
                 .map(member => member.id);
-    
+
             const commonUsers = this.currentProjectTeam
                 .filter(member => member.role === 'USUARIO_COMUM')
                 .map(member => member.id);
-    
+
             const requirementAnalysts = this.currentProjectTeam
                 .filter(member => member.role === 'ANALISTA_DE_REQUISITOS')
                 .map(member => member.id);
-    
-            const prepareData: ProjectDataModel = {
-                ...this.formGroup.value,
-                businessAnalysts: businessAnalysts,
-                commonUsers: commonUsers,
-                manager: this.formGroup.value.manager.name,
-                requirementAnalysts: requirementAnalysts,
-                description: this.descriptionProject,
-                status: Status.ACTIVE
-            };
-    
+
+            const prepareData: ProjectDataModel = this.prepareData(businessAnalysts, commonUsers, requirementAnalysts, this.formGroup);
+
             this.updateProjectService.updateProject(this.projectTableService.currentIdProject, prepareData).subscribe(resp => {
                 if (resp) {
                     this.alertService.toSuccessAlert("Projeto atualizado com sucesso!");
                     this.dialog.closeAll();
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
+                    reloadPage()
+                    this.spinnerService.stop();
                 }
             });
         }
+    }
+
+    private prepareData(
+        businessAnalysts: string[],
+        commonUsers: string[],
+        requirementAnalysts: string[],
+        formGroup:  FormGroup<any>): ProjectDataModel {
+        return  {
+            ...formGroup.value,
+            businessAnalysts: businessAnalysts,
+            commonUsers: commonUsers,
+            manager: formGroup.value.manager.name,
+            requirementAnalysts: requirementAnalysts,
+            description: this.descriptionProject,
+            status: Status.ACTIVE
+        };
     }
 }

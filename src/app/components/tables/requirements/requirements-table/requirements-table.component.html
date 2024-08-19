@@ -1,5 +1,5 @@
 <mat-toolbar class="title-toolbar">
-    <span class="title">Requisitos do Projeto</span>
+    <span class="title">Requisitos do Projeto {{getCurrentProjectByName()}}</span>
 </mat-toolbar>
 
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
