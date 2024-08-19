@@ -98,15 +98,29 @@ export class CreateArtifactProjectFormComponent implements OnInit {
     saveFileToLocalStorage(file: FileItem) {
         const reader = new FileReader();
         reader.onload = (event: any) => {
+
+            let fileType = file.file.type;
+    
+            if (!fileType && file.file && file.file.name) {
+                // Se o tipo estiver vazio, obtenha a extensão do nome do arquivo
+                const fileExtension = file.file.name.split('.').pop();
+                fileType = fileExtension ? `application/${fileExtension}` : 'application/octet-stream';
+            }
+            
             const fileInfo = {
                 fileName: file.file.name,
                 size: file.file.size,
-                type: file.file.type,
+                type: fileType,
                 contentBase64: event.target.result // Base64
             };
             this.localStorageService.setItem('file', fileInfo);
         };
-        reader.readAsDataURL(file._file);
+        
+        if (file._file) {
+            reader.readAsDataURL(file._file);
+        } else {
+            console.error("File is undefined or not valid.");
+        }
     }
 
     async saveData(): Promise<void> {

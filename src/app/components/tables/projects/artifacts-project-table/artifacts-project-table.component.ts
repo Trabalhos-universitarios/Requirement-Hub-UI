@@ -73,49 +73,60 @@ export class ArtifactsProjectTableComponent {
         return true;
   }
 
-  downloadArtifact(id: number){
-    this.artifactProjectService.getDownloadArtifactById(id)
-      .subscribe({
-        next: (blob) => {
-          this.download(blob, id);
-        },
-        error: (error) => {
-          console.error("Erro ao realizar o download:", error);
-        }
-      });
-  }
+    downloadArtifact(id: number) {
+        this.artifactProjectService.getDownloadArtifactById(id)
+            .subscribe({
+                next: (blob) => {
+                    this.artifactProjectService.getArtifactById(id).then(artifact => {
+                        let fileName = artifact.fileName
+                        const fileType = blob.type;
+    
+                        if (!fileType || fileType === 'application/octet-stream') {
+                            const fileExtension = fileName.split('.').pop();
+                            if (fileExtension) {
+                                fileName = `${fileName}.${fileExtension}`;
+                            }
+                        }
+    
+                        this.download(blob, fileName);
+                    });
+                },
+                error: (error) => {
+                    console.error("Erro ao realizar o download:", error);
+                }
+            });
+    }
 
-  visualizarArtifact(id: number, fileName: string) {
-    this.artifactProjectService.getDownloadArtifactById(id)
-      .subscribe({
-        next: (blob) => {
-          const fileType = fileName.split('.').pop()?.toLowerCase();
-          const url = window.URL.createObjectURL(blob);
-          if (fileType === 'pdf' || ['png', 'jpg', 'jpeg', 'gif'].includes(fileType!)) {
-            window.open(url, '_blank');
-          } else {
-            console.error("Formato não suportado para visualização");
-            this.alertService.toErrorAlert('Erro',"Formato de arquivo não suportado para visualização.");
-          }
-        },
-        error: (error) => {
-          console.error("Erro ao realizar a visualização:", error);
-          this.alertService.toErrorAlert('Erro',"Erro ao tentar visualizar o arquivo.");
-        }
-      });
-  }
+    download(blob: Blob, fileName: string) {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    }
 
-  download(blob: Blob, id: number) {
-    const fileName = `arquivo_${id}`;
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  }
+    visualizarArtifact(id: number, fileName: string) {
+        this.artifactProjectService.getDownloadArtifactById(id)
+            .subscribe({
+                next: (blob) => {
+                    const fileType = fileName.split('.').pop()?.toLowerCase();
+                    const url = window.URL.createObjectURL(blob);
+                    if (fileType === 'pdf' || ['png', 'jpg', 'jpeg', 'gif'].includes(fileType!)) {
+                        window.open(url, '_blank');
+                    } else {
+                        console.error("Formato não suportado para visualização");
+                        this.alertService.toErrorAlert('Erro', "Formato de arquivo não suportado para visualização.");
+                    }
+                },
+                error: (error) => {
+                    console.error("Erro ao realizar a visualização:", error);
+                    this.alertService.toErrorAlert('Erro', "Erro ao tentar visualizar o arquivo.");
+                }
+            });
+    }
 
   deleteArtifact(id: number) {
     this.artifactProjectService.deleteArtifactById(id)
