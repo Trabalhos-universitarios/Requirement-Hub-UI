@@ -31,9 +31,6 @@ export class ProjectsService {
         this.formGroupSource.next(formGroup);
     }
 
-    createProject(post: any): Observable<any> {
-        return this.http.post(`${this.baseUrl}/project`, post);
-
     createProject(post: any): Promise<any> {
         return firstValueFrom(
             this.http.post(`${this.baseUrl}/project`, post).pipe(
