@@ -81,35 +81,12 @@ export class ArtifactsProjectTableComponent {
         this.artifactProjectService.getDownloadArtifactById(id)
             .subscribe({
                 next: (blob) => {
-                    this.artifactProjectService.getArtifactById(id).then(artifact => {
-                        let fileName = artifact.fileName
-                        const fileType = blob.type;
-    
-                        if (!fileType || fileType === 'application/octet-stream') {
-                            const fileExtension = fileName.split('.').pop();
-                            if (fileExtension) {
-                                fileName = `${fileName}.${fileExtension}`;
-                            }
-                        }
-    
-                        this.download(blob, fileName);
-                    });
+                    this.download(blob, id);
                 },
                 error: (error) => {
                     console.error("Erro ao realizar o download:", error);
                 }
             });
-    }
-
-    download(blob: Blob, fileName: string) {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
     }
 
     visualizarArtifact(id: number, fileName: string) {
@@ -132,17 +109,28 @@ export class ArtifactsProjectTableComponent {
             });
     }
 
-  deleteArtifact(id: number) {
-    this.artifactProjectService.deleteArtifactById(id)
-      .subscribe({
-        next: () => {
-            this.alertService.toSuccessAlert(`Artefato ${id} deletado com sucesso.`);
-            this.dialog.closeAll();
-        },
-        error: (error) => {
-          console.error("Erro ao deletar o artefato:", error);
-        }
-      });
-  }
-}
+    download(blob: Blob, id: number) {
+        const fileName = `arquivo_${id}`;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    }
 
+    deleteArtifact(id: number) {
+        this.artifactProjectService.deleteArtifactById(id)
+            .subscribe({
+                next: () => {
+                    this.alertService.toSuccessAlert(`Artefato ${id} deletado com sucesso.`);
+                    this.dialog.closeAll();
+                },
+                error: (error) => {
+                    console.error("Erro ao deletar o artefato:", error);
+                }
+            });
+    }
+}

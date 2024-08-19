@@ -21,19 +21,6 @@ export class ProjectsService {
         return firstValueFrom(this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all`));
     }
 
-
-    async getProjectsByUserId(userId : number): Promise<ProjectDataModel[]> {
-        return firstValueFrom(this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all/${userId}`));
-    }
-
-    //SERVIÇOS DO FORMULÁRIO
-    updateForm(formGroup: FormGroup) {
-        this.formGroupSource.next(formGroup);
-    }
-
-    createProject(post: any): Observable<any> {
-        return this.http.post(`${this.baseUrl}/project`, post);
-
     createProject(post: any): Promise<any> {
         return firstValueFrom(
             this.http.post(`${this.baseUrl}/project`, post).pipe(

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {BehaviorSubject, catchError, firstValueFrom, Observable, throwError} from 'rxjs';
 import { ArtifactProjectDataModel } from 'src/app/models/artifact-project-model';
-import { ArtifactResponseModel } from 'src/app/models/artifact-response-model';
 import { environmentLocal } from 'src/environment/environment-local';
 import {ErrorCode} from "@angular/compiler-cli/src/ngtsc/diagnostics";
 
@@ -50,10 +49,6 @@ export class ArtifactProjectService {
 
   getArtifacts(): Observable<ArtifactProjectDataModel[]> {
     return this.http.get<ArtifactProjectDataModel[]>(`${this.baseUrl}/project-artifacts/all`);
-  }
-
-  getArtifactById(Id: number) {
-    return firstValueFrom(this.http.get<ArtifactResponseModel>(`${this.baseUrl}/project-artifacts/${Id}`));
   }
 
   getArtifactByProjectId(projectId: number) {

@@ -29,8 +29,7 @@ export class SideBarComponent implements AfterViewInit {
         private themeService: ThemeService,
         private projectsService: ProjectsService,
         private sidebarService: SidebarService,
-        private dialog: MatDialog,
-        private localStorageService: LocalStorageService) {
+        private dialog: MatDialog) {
         this.themeService.initTheme();
         this.getData().then();
     }
@@ -40,7 +39,7 @@ export class SideBarComponent implements AfterViewInit {
     }
 
     async getData() {
-        await this.projectsService.getProjectsByUserId(this.localStorageService.getItem('id'))
+        await this.projectsService.getProjects()
             .then((projects) => {
                 this.dataSource.data = projects
             })
