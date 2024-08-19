@@ -78,7 +78,7 @@ export class AddArtifactsComponent implements OnInit {
     }
 
     getData() {
-        this.requirementService.getAllRequirements().then(posts => {
+        this.requirementService.getRequirements().then(posts => {
             for (let data of posts) {
             }
             // TODO AQUI TERÁ A LÓGICA PARA TRATAR SE O PROJETO JÁ EXISTIR NO BACK END
