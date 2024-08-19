@@ -6,7 +6,6 @@ import { ArtifactProjectDataModel } from 'src/app/models/artifact-project-model'
 import { ArtifactResponseModel } from 'src/app/models/artifact-response-model';
 import { environmentLocal } from 'src/environment/environment-local';
 import {ErrorCode} from "@angular/compiler-cli/src/ngtsc/diagnostics";
-import { ArtifactResponseModel } from 'src/app/models/artifact-response-model';
 
 @Injectable({
   providedIn: 'root'
