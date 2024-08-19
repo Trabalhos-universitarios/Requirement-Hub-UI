@@ -2,7 +2,7 @@ export interface RequirementsDataModel {
     id?: string
     identifier: string;
     name: string;
-    author: number;
+    author: string;
     createdDate?: string;
     priority: string;
     type: string;

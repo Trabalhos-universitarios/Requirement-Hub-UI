@@ -33,10 +33,6 @@ export class UsersService {
     return firstValueFrom(this.http.get<UserResponseModel[]>(`${this.baseUrl}/user/all`))
   }
 
-  async getUserById(id: number | undefined): Promise<UserResponseModel> {
-    return firstValueFrom(this.http.get<UserResponseModel>(`${this.baseUrl}/user/${id}`))
-  }
-
   async getTeam(id: number): Promise<TeamResponseModel[]> {
     return firstValueFrom(this.http.get<TeamResponseModel[]>(`${this.baseUrl}/team/${id}`))
   }
