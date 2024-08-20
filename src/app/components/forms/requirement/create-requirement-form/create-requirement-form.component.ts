@@ -9,7 +9,6 @@ import {StakeholdersModel} from "../../../../models/stakeholders-model";
 import {UsersService} from "../../../../services/users/users.service";
 import {UserResponseModel} from "../../../../models/user-model";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
-import {RichTextService} from "../../../../services/richText/rich-text.service";
 
 @Component({
     selector: 'app-create-requirement-form',
@@ -47,8 +46,7 @@ export class CreateRequirementFormComponent {
                 private localStorageService: LocalStorageService,
                 private stakeholderService: StakeholdersService,
                 private userService: UsersService,
-                private capitalizeFirstPipe: CapitalizeFirstPipePipe,
-                private richTextService: RichTextService) {
+                private capitalizeFirstPipe: CapitalizeFirstPipePipe) {
         this.getCurrentProject();
         this.createForm();
         this.getCurrentStakeholders().then()
