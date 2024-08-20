@@ -10,6 +10,24 @@
     padding: 30px;
   }
 
+  .pointer-cursor {
+    cursor: pointer;
+  }
+  
+  .related {
+    background-color: rgba(0, 128, 0, 0.2) !important; /* Cor de destaque para as células relacionadas */
+  }
+  
+  .highlight-header {
+    background-color: rgba(0, 128, 0, 0.4) !important; /* Cor de destaque para os cabeçalhos */
+  }
+  
+  .highlight-specific {
+    background-color: green !important; /* Cor verde para as células específicas */
+    cursor: pointer; /* Mostrar a mãozinha */
+  }
+  
+  
   .example-container div {
     text-align: center;
   }
