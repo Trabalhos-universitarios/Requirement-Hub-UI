@@ -85,7 +85,7 @@ export class CreateRequirementFormComponent {
     }
 
     private async getRequirements() {
-        this.requirementService.getRequirements().then(requirements => {
+        this.requirementService.getAllRequirements().then(requirements => {
             this.requirementsDependencies = requirements;
         })
     }

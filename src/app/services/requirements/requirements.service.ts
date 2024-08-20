@@ -25,8 +25,12 @@ export class RequirementsService {
     }
 
     //SERVIÇOS DE DB
-    async getRequirements(): Promise<RequirementsDataModel[]> {
+    async getAllRequirements(): Promise<RequirementsDataModel[]> {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements`))
+    }
+
+    async getRequirementsByProjectRelated(projectId: number): Promise<RequirementsDataModel[]> {
+        return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/project-id/${projectId}`))
     }
 
     async getRequirementsByIdentifier(identifier: string): Promise<RequirementsDataModel[]> {
