@@ -78,7 +78,7 @@ export class AddArtifactsComponent implements OnInit {
     }
 
     getData() {
-        this.requirementService.getRequirements().then(posts => {
+        this.requirementService.getAllRequirements().then(posts => {
             for (let data of posts) {
             }
             // TODO AQUI TERÁ A LÓGICA PARA TRATAR SE O PROJETO JÁ EXISTIR NO BACK END
@@ -96,7 +96,7 @@ export class AddArtifactsComponent implements OnInit {
         }
     }
 
-    prepareDataArtifact(requirementId?: string) {
+    prepareDataArtifact(requirementId?: number) {
         const fileData = this.localStorageService.getItem('file');
 
         if (this.artifactForm && this.artifactForm.valid) {

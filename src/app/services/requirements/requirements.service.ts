@@ -19,14 +19,16 @@ export class RequirementsService {
     constructor(private http: HttpClient) {
     }
 
-    //SERVIÇOS DO FORMULÁRIO
     updateForm(formGroup: FormGroup) {
         this.formGroupSource.next(formGroup);
     }
 
-    //SERVIÇOS DE DB
-    async getRequirements(): Promise<RequirementsDataModel[]> {
+    async getAllRequirements(): Promise<RequirementsDataModel[]> {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements`))
+    }
+
+    async getRequirementsByProjectRelated(projectId: number): Promise<RequirementsDataModel[]> {
+        return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/project-id/${projectId}`))
     }
 
     async getRequirementsByIdentifier(identifier: string): Promise<RequirementsDataModel[]> {
@@ -54,5 +56,9 @@ export class RequirementsService {
                 })
             )
         );
+    }
+
+    deleteRequirement(id: number): Promise<any> {
+        return firstValueFrom(this.http.delete(`${this.baseUrl}/requirements/${id}`));
     }
 }
