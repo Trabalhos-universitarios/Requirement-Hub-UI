@@ -9,6 +9,10 @@ import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";
 import {MatDialog} from "@angular/material/dialog";
 import {AddArtifactsComponent} from "../../../modals/artifacts/add-artifacts/add-artifacts.component";
+import {ProjectsTableService} from "../../../../services/projects/projects-table.service";
+import {UsersService} from "../../../../services/users/users.service";
+import {SpinnerService} from "../../../../services/spinner/spinner.service";
+import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
 
 @Component({
     selector: 'app-requirements-table',
@@ -24,27 +28,31 @@ import {AddArtifactsComponent} from "../../../modals/artifacts/add-artifacts/add
 })
 
 export class RequirementsTableComponent implements AfterViewInit {
-    dataSource = new MatTableDataSource<RequirementsDataModel>;
-    displayedColumns: string[] =
+    @ViewChild(MatPaginator) paginator?: MatPaginator;
+    protected dataSource = new MatTableDataSource<RequirementsDataModel>;
+    protected displayedColumns: string[] =
         [
-            'identifierRequirement',
-            'nameRequirement',
-            'authorRequirement',
-            'creationDate',
-            'priorityRequirement',
-            'typeRequirement',
-            'versionRequirement',
+            'identifier',
+            'name',
+            'author',
+            'dateCreated',
+            'priority',
+            'type',
+            'version',
             'status',
         ];
-    columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
-    expandedElement: RequirementsDataModel | undefined;
-
-    @ViewChild(MatPaginator) paginator?: MatPaginator;
+    protected columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+    protected expandedElement: RequirementsDataModel | undefined;
 
     constructor(private requirementsService: RequirementsService,
                 private sanitizer: DomSanitizer,
                 private themeService: ThemeService,
-                private matDialog: MatDialog) {
+                private matDialog: MatDialog,
+                private projectsTableService: ProjectsTableService,
+                private usersService: UsersService,
+                private spinnerService: SpinnerService,
+                private capitalizeFirstPipe: CapitalizeFirstPipePipe) {
+        spinnerService.start()
         this.getData().then();
     }
 
@@ -52,59 +60,76 @@ export class RequirementsTableComponent implements AfterViewInit {
         this.paginator ? this.dataSource.paginator = this.paginator : null;
     }
 
-    async getData() {
-        this.requirementsService.getRequirements().then(requirements => {
+    protected async getData() {
+        this.requirementsService.getRequirementsByProjectRelated(this.getCurrentProjectById()).then(requirements => {
+            requirements.forEach(async requirement => {
+                requirement.author = await this.getAuthorById(requirement.author).then();
+            });
             this.dataSource.data = requirements;
+            this.spinnerService.stop();
         })
     }
 
-    sanitizeHtml(html: string): SafeHtml {
+    private getCurrentProjectById() {
+        return this.projectsTableService.getCurrentProjectById();
+    }
+
+    protected getCurrentProjectByName() {
+        return this.projectsTableService.getCurrentProjectByName();
+    }
+
+    private async getAuthorById(id: number | undefined) {
+        let author = await this.usersService.getUserById(id).then(user => user.name);
+        return this.capitalizeFirstPipe.transform(author);
+    }
+
+    protected sanitizeHtml(html: string): SafeHtml {
         return this.sanitizer.bypassSecurityTrustHtml(html);
     }
 
-    getStatusIcon(status: string) {
+    protected getStatusIcon(status: string) {
         switch (status) {
             case Status.ACTIVE:
-                return { icon: 'verified', name: 'Ativo' };
+                return {icon: 'verified', name: 'Ativo'};
             case Status.DRAFT:
-                return { icon: 'pending_actions', name: 'Rascunho' };
+                return {icon: 'pending_actions', name: 'Rascunho'};
             case Status.PENDING:
-                return { icon: 'schedule', name: 'Pendente' };
+                return {icon: 'schedule', name: 'Pendente'};
             case Status.APPROVE:
-                return { icon: 'preliminary', name: 'Aprovado' };
+                return {icon: 'preliminary', name: 'Aprovado'};
             case Status.CREATED:
-                return { icon: 'pending', name: 'Criado' };
+                return {icon: 'pending', name: 'Criado'};
             case Status.REFUSE:
-                return { icon: 'brightness_alert', name: 'Recusado' };
+                return {icon: 'brightness_alert', name: 'Recusado'};
             default:
-                return { icon: 'help', name: 'Status desconhecido' };
+                return {icon: 'help', name: 'Status desconhecido'};
         }
     }
 
-    stylesIconColor(iconName: string) {
+    protected stylesIconColor(iconName: string) {
         let colorIcon: string = '#616161';
         if (this.themeService.isDarkMode()) {
             colorIcon = '#e0e0e0';
         }
         switch (iconName) {
             case 'verified':
-                return { color: '#4CAF50' };
+                return {color: '#4CAF50'};
             case 'pending_actions':
-                return { color: `${colorIcon}` };
+                return {color: `${colorIcon}`};
             case 'schedule':
-                return { color: '#FFD54F' };
+                return {color: '#FFD54F'};
             case 'preliminary':
-                return { color: '#4CAF50' };
+                return {color: '#4CAF50'};
             case 'pending':
-                return { color: '#A5D6A7' };
+                return {color: '#A5D6A7'};
             case 'brightness_alert':
-                return { color: `${colorIcon}` };
+                return {color: `${colorIcon}`};
             default:
-                return { color: `${colorIcon}` };
+                return {color: `${colorIcon}`};
         }
     }
 
-    openDialog(action: String, value: string) {
+    protected openDialog(action: String, value: string) {
         switch (action) {
             case "information":
                 console.log("Aqui vai a ação a ser tomada em info")
