@@ -13,6 +13,8 @@ import {ProjectsTableService} from "../../../../services/projects/projects-table
 import {UsersService} from "../../../../services/users/users.service";
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
+import {reloadPage} from "../../../../utils/reload.page";
+import {AlertService} from "../../../../services/sweetalert/alert.service";
 
 @Component({
     selector: 'app-requirements-table',
@@ -28,8 +30,6 @@ import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.p
 })
 
 export class RequirementsTableComponent implements AfterViewInit {
-    @ViewChild(MatPaginator) paginator?: MatPaginator;
-    protected dataSource = new MatTableDataSource<RequirementsDataModel>;
     protected displayedColumns: string[] =
         [
             'identifier',
@@ -41,8 +41,11 @@ export class RequirementsTableComponent implements AfterViewInit {
             'version',
             'status',
         ];
+    @ViewChild(MatPaginator) paginator?: MatPaginator;
+    protected dataSource = new MatTableDataSource<RequirementsDataModel>;
     protected columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
     protected expandedElement: RequirementsDataModel | undefined;
+    private requirementId: number | undefined;
 
     constructor(private requirementsService: RequirementsService,
                 private sanitizer: DomSanitizer,
@@ -51,7 +54,8 @@ export class RequirementsTableComponent implements AfterViewInit {
                 private projectsTableService: ProjectsTableService,
                 private usersService: UsersService,
                 private spinnerService: SpinnerService,
-                private capitalizeFirstPipe: CapitalizeFirstPipePipe) {
+                private capitalizeFirstPipe: CapitalizeFirstPipePipe,
+                private alertService: AlertService,) {
         spinnerService.start()
         this.getData().then();
     }
@@ -61,11 +65,11 @@ export class RequirementsTableComponent implements AfterViewInit {
     }
 
     protected async getData() {
-        this.requirementsService.getRequirementsByProjectRelated(this.getCurrentProjectById()).then(requirements => {
-            requirements.forEach(async requirement => {
+        this.requirementsService.getRequirementsByProjectRelated(this.getCurrentProjectById()).then(response => {
+            response.forEach(async requirement => {
                 requirement.author = await this.getAuthorById(requirement.author).then();
             });
-            this.dataSource.data = requirements;
+            this.dataSource.data = response;
             this.spinnerService.stop();
         })
     }
@@ -137,9 +141,6 @@ export class RequirementsTableComponent implements AfterViewInit {
             case "edit":
                 console.log("Aqui vai a ação a ser tomada em edit")
                 break
-            case "delete":
-                console.log("Aqui vai a ação a ser tomada em delete")
-                break
             case "add":
                 this.matDialog.open(AddArtifactsComponent, {
                     data: {
@@ -150,6 +151,18 @@ export class RequirementsTableComponent implements AfterViewInit {
 
             default:
                 console.error("This dialog non exists!")
+        }
+    }
+
+    protected async deleteRequirement(id: number) {
+        const result = await this.alertService.toOptionalActionAlert(
+            "Deletar requisito",
+            "Deseja realmente excluir o requisito?"
+        );
+
+        if (result.isConfirmed) {
+            await this.requirementsService.deleteRequirement(id);
+            reloadPage();
         }
     }
 }

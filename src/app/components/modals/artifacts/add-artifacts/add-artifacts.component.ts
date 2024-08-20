@@ -96,7 +96,7 @@ export class AddArtifactsComponent implements OnInit {
         }
     }
 
-    prepareDataArtifact(requirementId?: string) {
+    prepareDataArtifact(requirementId?: number) {
         const fileData = this.localStorageService.getItem('file');
 
         if (this.artifactForm && this.artifactForm.valid) {

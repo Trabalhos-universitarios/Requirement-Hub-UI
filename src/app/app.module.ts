@@ -107,7 +107,7 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
         UpdateProjectTableComponent,
         ArtifactsProjectTableComponent,
         ModalDialogArtifactsProjectComponent,
-        CreateArtifactProjectFormComponent,
+        CreateArtifactProjectFormComponent
     ],
     imports: [
         BrowserModule,
