@@ -25,7 +25,7 @@ export class RequirementsService {
     }
 
     //SERVIÇOS DE DB
-    async getRequirements(): Promise<RequirementsDataModel[]> {
+    async getAllRequirements(): Promise<RequirementsDataModel[]> {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements`))
     }
 

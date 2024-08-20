@@ -24,7 +24,6 @@ import {
 import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {reloadPage} from "../../../../utils/reload.page";
-import {SpinnerService} from "../../../../services/spinner/spinner.service";
 
 @Component({
     selector: 'app-projects-table',
@@ -61,8 +60,7 @@ export class ProjectsTableComponent {
         private sanitizer: DomSanitizer,
         private dialog: MatDialog,
         private alertService: AlertService,
-        private projectsService: ProjectsService,
-        private spinnerService: SpinnerService) {
+        private projectsService: ProjectsService) {
     }
 
     sanitizeHtml(html: string): SafeHtml {
@@ -139,7 +137,6 @@ export class ProjectsTableComponent {
                 this.dialog.open(ModalDialogCreateRequirementComponent);
                 break;
             case 'Requirement list':
-                console.log("ABRIU AQUI PROJECT TABLE")
                 this.dialog.open(ModalDialogInformationProjectComponent);
                 break;
             case 'Traceability matrix':
