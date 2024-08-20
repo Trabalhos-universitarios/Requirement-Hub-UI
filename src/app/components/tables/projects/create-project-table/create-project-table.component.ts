@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {ReactiveFormServices} from "../../../../services/forms/reactive-form-services.service";
-import {CreateProjectDataModel} from "../../../../models/create-project-data-model";
-import {CreateProjectFormComponent} from "../../../forms/project/create-project-form/create-project-form.component";
-import {CreateProjectTableRowModel} from "../../../../models/create-project-table-row-model";
+import {DataModel} from "./data-model";
+import {CreateProjectFormComponent} from "../../../forms/create-project-form/create-project-form.component";
+import {TableRowModel} from "./TableRowModel";
 import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
@@ -26,7 +26,7 @@ export class CreateProjectTableComponent implements AfterViewInit{
             'nameBusinessAnalyst',
             'nameCommonUser'
         ];
-    dataSource = new MatTableDataSource<CreateProjectTableRowModel>([]);
+    dataSource = new MatTableDataSource<TableRowModel>([]);
 
     ngAfterViewInit(): void {
         this.toDataSource();
@@ -36,27 +36,27 @@ export class CreateProjectTableComponent implements AfterViewInit{
         this.createProjectService.currentForm.subscribe();
     }
 
-    updateDataTable(data: CreateProjectDataModel) {
+    updateDataTable(data: DataModel) {
         this.dataSource.data = this.formatDataToTable(data);
     }
 
-    formatDataToTable(data: CreateProjectDataModel): CreateProjectTableRowModel[] {
-        const transformedData: CreateProjectTableRowModel[] = [];
+    formatDataToTable(data: DataModel): TableRowModel[] {
+        const transformedData: TableRowModel[] = [];
 
         const maxLength = Math.max(
-            data.requirementAnalysts.length,
-            data.businessAnalysts.length,
-            data.commonUsers.length,
+            data.nameRequirementAnalyst.length,
+            data.nameBusinessAnalyst.length,
+            data.nameCommonUser.length,
         );
 
         for (let i = 0; i < maxLength; i++) {
             transformedData.push({
-                name: data.name,
+                nameProject: data.nameProject,
                 version: data.version || '-',
-                manager: data.manager || '-',
-                requirementAnalysts: data.requirementAnalysts[i] || '-',
-                businessAnalysts: data.businessAnalysts[i] || '-',
-                commonUsers: data.commonUsers[i] || '-'
+                nameProjectManager: data.nameProjectManager || '-',
+                nameRequirementAnalyst: data.nameRequirementAnalyst[i] || '-',
+                nameBusinessAnalyst: data.nameBusinessAnalyst[i] || '-',
+                nameCommonUser: data.nameCommonUser[i] || '-'
             });
         }
         return transformedData;

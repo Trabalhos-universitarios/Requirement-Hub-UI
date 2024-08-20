@@ -3,7 +3,6 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { QuillModules, ContentChange } from 'ngx-quill';
 import { Subscription } from 'rxjs';
 import {ThemeService} from "../../services/theme/theme.service";
-import {RichTextService} from "../../services/richText/rich-text.service";
 
 @Component({
   selector: 'app-richTextEditor',
@@ -43,10 +42,7 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, On
   onChange: any = () => {};
   onTouched: any = () => {};
 
-  constructor(
-      protected themeService: ThemeService,
-      private renderer: Renderer2,
-      private richTextService: RichTextService) {}
+  constructor(protected themeService: ThemeService, private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.themeSubscription = this.themeService.getColorThemeObservable().subscribe(theme => {
@@ -63,7 +59,6 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, On
 
   writeValue(value: any): void {
     this.editorContent = value || '';
-    this.richTextService.changeContent(this.editorContent);
   }
 
   registerOnChange(fn: any): void {
@@ -79,9 +74,9 @@ export class RichTextEditorComponent implements ControlValueAccessor, OnInit, On
   }
 
   onEditorContentChange(event: any): void {
-    const content = event.html;
+    const content = event.html; // assuming you want the HTML content
     this.editorContent = content;
-    this.richTextService.changeContent(content);
+    this.onChange(content);
   }
 
   private updateEditorTheme(theme: string) {

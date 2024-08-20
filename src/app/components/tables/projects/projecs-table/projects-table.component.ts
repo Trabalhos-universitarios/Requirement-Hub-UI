@@ -1,47 +1,24 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
+import {ProjectsService} from "../../../../services/projects/projects.service";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ProjectDataModel} from "../../../../models/project-data-model";
-import {Status} from "../../../../utils/util.status";
 import {
     ModalDialogCreateRequirementComponent
-} from "../../../modals/requirements/modal-dialog-create-requirement/modal-dialog-create-requirement.component";
-import {TracebilityMatrixComponent} from '../../../modals/modeal-tracebility-matrix/tracebility-matrix.component';
-import {ProjectsTableService} from 'src/app/services/projects/projects-table.service';
+} from "../../../modals/modal-dialog-create-requirement/modal-dialog-create-requirement.component";
 import {
     ModalDialogInformationProjectComponent
-} from "../../../modals/projects/modal-dialog-information-project/modal-dialog-information-project.component";
-import {LocalStorageService} from 'src/app/services/localstorage/local-storage.service';
-import {
-    ModalDialogUpdateProjectComponent
-} from 'src/app/components/modals/projects/modal-dialog-update-project/modal-dialog-update-project.component';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {
-    ModalDialogArtifactsProjectComponent
-} from 'src/app/components/modals/projects/modal-dialog-artifacts-project/modal-dialog-artifacts-project.component';
-import {AlertService} from "../../../../services/sweetalert/alert.service";
-import {ProjectsService} from "../../../../services/projects/projects.service";
-import {reloadPage} from "../../../../utils/reload.page";
-import {SpinnerService} from "../../../../services/spinner/spinner.service";
+} from "../../../modals/modal-dialog-information-project/modal-dialog-information-project.component";
+import {DataModel} from "./model/data-model";
+import {Status} from "../../../../utils/util.status";
 
 @Component({
     selector: 'app-projects-table',
     templateUrl: './projects-table.component.html',
-    styleUrls: ['./projects-table.component.scss'],
-    animations: [
-        trigger('detailExpand', [
-            state('collapsed', style({height: '0px', minHeight: '0'})),
-            state('expanded', style({height: '*'})),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
-    ],
+    styleUrls: ['./projects-table.component.scss']
 })
 export class ProjectsTableComponent {
 
-    @Input()
-    dataSource = new MatTableDataSource<ProjectDataModel>([]);
     displayedColumns: string[] =
         [
             'nameProject',
@@ -49,35 +26,22 @@ export class ProjectsTableComponent {
             'nameProjectManager',
             'status',
             'version',
+            'actions'
         ];
 
-    columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
-    expandedElement: ProjectDataModel | undefined;
+    dataSource = new MatTableDataSource<DataModel>([]);
 
     constructor(
-        private projectsTableService: ProjectsTableService,
-        protected themeService: ThemeService,
-        private localStorage: LocalStorageService,
-        private sanitizer: DomSanitizer,
-        private dialog: MatDialog,
-        private alertService: AlertService,
         private projectsService: ProjectsService,
-        private spinnerService: SpinnerService) {
+        protected themeService: ThemeService,
+        private dialog: MatDialog) {
+        this.getData();
     }
 
-    sanitizeHtml(html: string): SafeHtml {
-        return this.sanitizer.bypassSecurityTrustHtml(html);
-    }
-
-    setDataProjectTable(id: number, currentProject: string) {
-        this.projectsTableService.setCurrentProjectById(id);
-        this.projectsTableService.setCurrentProjectByName(currentProject);
-    }
-
-    isPermitted() {
-        return !(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
-            this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
-            this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO");
+    getData() {
+        this.projectsService.getProjects().subscribe((projects: DataModel[]) => {
+            this.dataSource.data = projects;
+        });
     }
 
     stylesStatusIcon(status: string) {
@@ -129,43 +93,12 @@ export class ProjectsTableComponent {
 
     openDialog(action?: string) {
         switch (action) {
-            case 'Put project':
-                this.dialog.open(ModalDialogUpdateProjectComponent);
-                break;
-            case 'Delete project':
-                this.deleteProject().then()
-                break;
-            case 'Create requirement':
+            case 'Criar reqsuisitos':
                 this.dialog.open(ModalDialogCreateRequirementComponent);
                 break;
-            case 'Requirement list':
-                console.log("ABRIU AQUI PROJECT TABLE")
+            case 'Informações':
                 this.dialog.open(ModalDialogInformationProjectComponent);
-                break;
-            case 'Traceability matrix':
-                this.dialog.open(TracebilityMatrixComponent);
-                break
-            case 'Artifacts project':
-                this.dialog.open(ModalDialogArtifactsProjectComponent);
-                break
-            default:
-                console.error("This dialog non exists!")
         }
-    }
 
-    private async deleteProject() {
-        const result = await this.alertService.toOptionalActionAlert(
-            "Deletar projeto",
-            "Deseja realmente excluir o projeto?"
-        );
-
-        console.log("result", result);
-
-        console.log("this.projectsTableService.getCurrentProjectById()", this.projectsTableService.getCurrentProjectById());
-
-        if (result.isConfirmed) {
-            await this.projectsService.deleteProject(this.projectsTableService.getCurrentProjectById());
-            reloadPage();
-        }
     }
 }

@@ -1,49 +1,22 @@
-import {Injectable} from "@angular/core";
-import {BehaviorSubject, catchError, firstValueFrom, Observable, throwError} from "rxjs";
-import {FormGroup} from "@angular/forms";
-import {environmentLocal} from "../../../environment/environment-local";
-import {HttpClient, HttpErrorResponse, HttpStatusCode} from "@angular/common/http";
-import {ProjectDataModel} from "../../models/project-data-model";
-
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {DataModel} from "../../components/tables/projects/create-project-table/data-model";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ProjectsService {
 
-    private formGroupSource = new BehaviorSubject<FormGroup | null>(null);
-    private baseUrl = environmentLocal.springUrl
-    public currentForm = this.formGroupSource.asObservable();
+  private baseUrl = 'http://localhost:3000';
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    async getProjectsByUserId(userId : number): Promise<ProjectDataModel[]> {
-        return firstValueFrom(this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all/${userId}`));
-    }
+  getProjects(): Observable<DataModel[]> {
+    return this.http.get<DataModel[]>(`${this.baseUrl}/projects`);
+  }
 
-    createProject(post: any): Promise<any> {
-        return firstValueFrom(
-            this.http.post(`${this.baseUrl}/project`, post).pipe(
-                catchError((error: HttpErrorResponse) => {
-
-                    if (error.status === 409) {
-                        console.error('This project already exists!');
-                        return throwError(() => HttpStatusCode.Conflict);
-                    }
-                    if (error.status === 404 || error.status === 405) {
-                        console.error('This route not exists or not starting!');
-                        return throwError(() => HttpStatusCode.NotFound);
-                    } else if (error.status === 500 || error.status === 503) {
-                        console.error('Internal server error!');
-                        return throwError(() => HttpStatusCode.InternalServerError);
-                    }
-                    return throwError(() => new Error(error.message));
-                })
-            )
-        );
-    }
-
-    deleteProject(id: number): Promise<any> {
-        return firstValueFrom(this.http.delete(`${this.baseUrl}/project/${id}`));
-    }
+  createProject(post: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/projects`, post);
+  }
 }
