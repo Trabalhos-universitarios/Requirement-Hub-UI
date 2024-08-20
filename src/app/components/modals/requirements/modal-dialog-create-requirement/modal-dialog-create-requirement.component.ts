@@ -98,11 +98,14 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
                 author: this.localStorageService.getItem("id"),
                 description: descriptionValue,
                 stakeholders: this.requirementForm.value.stakeholders
-                    .map((item: { id: number }) => ({id: item.id})),
+                ? this.requirementForm.value.stakeholders.map((item: { id: number }) => ({ id: item.id }))
+                : null,
                 dependencies: this.requirementForm.value.dependencies
-                    .map((item: { id: number }) => ({id: item.id})),
+                ? this.requirementForm.value.dependencies.map((item: { id: number }) => ({ id: item.id }))
+                : null,
                 responsible: this.requirementForm.value.responsible
-                    .map((item: { id: number }) => ({id: item.id})),
+                ? this.requirementForm.value.responsible.map((item: { id: number }) => ({ id: item.id }))
+                : null,
                 //todo Não remover, pois será usado na sequIencia
                 // files: fileData,
                 // requirementId: requirementId // Inclui o ID do requisito

@@ -6,6 +6,7 @@
       <td *ngFor="let cell of row; let colIndex = index"
           [ngStyle]="getCellStyles(cell)" 
           [matTooltip]="cell ? getTooltipText(cell, rowIndex, colIndex) : ''"
+          matTooltipPosition="above"
           [ngClass]="{
             'related': isRelated(rowIndex, colIndex),
             'highlight-header': isHeader(rowIndex, colIndex),

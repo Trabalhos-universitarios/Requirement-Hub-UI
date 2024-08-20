@@ -14,6 +14,31 @@ export class TracebilityMatrixComponent {
   currentProject: string = '';
   highlightedRow: number | null = null;
   highlightedColumn: number | null = null;
+  relationsIdentifierAndName: any = {
+    RF1: "Cadastro de Projetos/ Engenharia",
+    RF2: "Cadastro de Membros do Projeto/ Engenharia",
+    RF3: "Login de Membros do Projeto/ Engenharia",
+    RF4: "Controle de Acesso/ Engenharia",
+    RF5: "Área Inicial dos Projetos/ Negócios",
+    RF6: "Cadastro de Requisitos/ Negócios",
+    RF7: "Classificação e Organização de Requisitos/ Negócios",
+    RF8: "Cadastro de Artefatos, Módulos e Documentos/ Negócios",
+    RF9: "Associação de Requisitos com Artefatos/ Negócios",
+    RF10: "Visualização das Associações dos Requisitos/ Negócios",
+    RF11: "Revisões dos Requisitos/ Negócios",
+    RF12: "Associação de Requisitos a Usuários ou Equipes/ Negócios",
+    RF13: "Especificação dos Requisito/ Negócioss",
+    RF14: "Validação dos Requisitos/ Negócios",
+    RF15: "Validação de Artefatos/ Negócios",
+    RF16: "Versionamento dos Requisitos/ Negócios",
+    RF17: "Registro de Mudanças nos Requisitos/ Negócios",
+    RF18: "Geração de Visualizações de Status/ Negócios",
+    RF19: "Criação de Matriz de Rastreabilidade de Requisitos/ Negócios",
+    RF20: "Deleção de Projetos/ Negócios",
+    RF21: "Deleção de Membros de Projetos/ Negócios",
+    RF22: "Upload de Arquivos de Projeto/ Negócios",
+    RF23: "Download de Arquivos de Projeto/ Negócios"
+  };
 
   constructor(
       private traceabilityService: MatrixService,
@@ -58,7 +83,8 @@ export class TracebilityMatrixComponent {
 
   getTooltipText(cell: any, rowIndex: number, colIndex: number): string {
     if (rowIndex === 0 || colIndex === 0) {
-      return cell;
+      const value = this.relationsIdentifierAndName[cell];
+      return value
     }
     return cell === "X" ? "Click" : cell;
   }
@@ -89,7 +115,7 @@ export class TracebilityMatrixComponent {
   }
   
   isHeader(rowIndex: number, colIndex: number): boolean {
-    // Aqui se mantém a lógica de destacar os cabeçalhos, se necessário
+    // Lógica de destacar os cabeçalhos
     return rowIndex === this.highlightedRow || colIndex === this.highlightedColumn;
   }
   
