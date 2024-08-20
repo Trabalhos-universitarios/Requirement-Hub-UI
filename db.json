@@ -1,0 +1,986 @@
+{
+  "projects": [
+    {
+      "id": "b74e",
+      "nameProject": "Requirement Hub",
+      "nameProjectManager": "Bruna Carvalho",
+      "nameRequirementAnalyst": [
+        "Johnny Carvalho",
+        "Lucas Lemes"
+      ],
+      "nameBusinessAnalyst": [
+        "Elias Coutinho"
+      ],
+      "nameCommonUser": [
+        "Rebeca Carvalho",
+        "João Victor"
+      ],
+      "version": "1.0.0",
+      "projectDescription": "Sistema de gerenciamento de requisitos para projetos de TI.",
+      "creationDate": "2024-06-13T01:19:40.563Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "8b91",
+      "nameProject": "Salão Simplificado",
+      "nameProjectManager": "Rebeca Carvalho",
+      "nameRequirementAnalyst": [
+        "Bruna Carvalho",
+        "João Victor"
+      ],
+      "nameBusinessAnalyst": [
+        "Bruna Carvalho"
+      ],
+      "nameCommonUser": [
+        "Johnny Carvalho",
+        "Lucas Lemes",
+        "Elias Coutinho"
+      ],
+      "version": "3.2.5",
+      "projectDescription": "Aplicativo para agendamento e gerenciamento de serviços de salão de beleza.",
+      "creationDate": "2024-06-13T01:25:15.813Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "98f0",
+      "nameProject": "Smart Home Automation",
+      "nameProjectManager": "Johnny Carvalho",
+      "nameRequirementAnalyst": [
+        "Lucas Lemes",
+        "Elias Coutinho"
+      ],
+      "nameBusinessAnalyst": [
+        "Bruna Carvalho"
+      ],
+      "nameCommonUser": [
+        "Rebeca Carvalho",
+        "João Victor"
+      ],
+      "version": "1.0.0",
+      "projectDescription": "Sistema de automação residencial inteligente para controle de dispositivos.",
+      "creationDate": "2024-06-13T01:26:32.097Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "611c",
+      "nameProject": "Green Energy Tracker",
+      "nameProjectManager": "Lucas Lemes",
+      "nameRequirementAnalyst": [
+        "Johnny Carvalho",
+        "Lucas Lemes",
+        "Elias Coutinho"
+      ],
+      "nameBusinessAnalyst": [
+        "Bruna Carvalho",
+        "Rebeca Carvalho",
+        "João Victor"
+      ],
+      "nameCommonUser": [
+        "Johnny Carvalho",
+        "Lucas Lemes",
+        "Elias Coutinho",
+        "Bruna Carvalho",
+        "Rebeca Carvalho",
+        "João Victor"
+      ],
+      "version": "1.0.0",
+      "projectDescription": "Plataforma para monitoramento e otimização do uso de energia renovável.",
+      "creationDate": "2024-06-14T18:46:28.949Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "af6d",
+      "nameProject": "Health Tracker",
+      "nameProjectManager": "Johnny Carvalho",
+      "nameRequirementAnalyst": [
+        "Johnny Carvalho",
+        "Lucas Lemes",
+        "Elias Coutinho"
+      ],
+      "nameBusinessAnalyst": [
+        "Johnny Carvalho",
+        "Lucas Lemes",
+        "Elias Coutinho"
+      ],
+      "nameCommonUser": [
+        "Johnny Carvalho",
+        "Lucas Lemes",
+        "Elias Coutinho",
+        "Bruna Carvalho",
+        "Rebeca Carvalho",
+        "João Victor"
+      ],
+      "version": "1.0.0",
+      "projectDescription": "Aplicativo para monitoramento de saúde e bem-estar pessoal.",
+      "creationDate": "2024-06-14T19:27:56.206Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "33b8",
+      "nameProject": "EduLearn",
+      "nameProjectManager": "Lucas Lemes",
+      "nameRequirementAnalyst": [
+        "Rebeca Carvalho"
+      ],
+      "nameBusinessAnalyst": [
+        "Elias Coutinho"
+      ],
+      "nameCommonUser": [
+        "João Victor"
+      ],
+      "version": "1.0",
+      "projectDescription": "Plataforma de e-learning para cursos interativos e online.",
+      "creationDate": "2024-08-02T01:40:58.153Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d41d",
+      "nameProject": "EduTech",
+      "nameProjectManager": "Elias Coutinho",
+      "nameRequirementAnalyst": [
+        "Bruna Carvalho",
+        "Rebeca Carvalho"
+      ],
+      "nameBusinessAnalyst": [
+        "Lucas Lemes"
+      ],
+      "nameCommonUser": [
+        "Johnny Carvalho",
+        "João Victor"
+      ],
+      "version": "2.1.0",
+      "projectDescription": "Plataforma de educação online com cursos interativos.",
+      "creationDate": "2024-07-15T08:30:45.012Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ac34",
+      "nameProject": "Health Monitor",
+      "nameProjectManager": "João Victor",
+      "nameRequirementAnalyst": [
+        "Elias Coutinho",
+        "Lucas Lemes"
+      ],
+      "nameBusinessAnalyst": [
+        "Bruna Carvalho"
+      ],
+      "nameCommonUser": [
+        "Johnny Carvalho",
+        "Rebeca Carvalho"
+      ],
+      "version": "1.5.3",
+      "projectDescription": "Sistema de monitoramento de saúde para clínicas e hospitais.",
+      "creationDate": "2024-05-22T14:15:23.678Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "f656",
+      "name": "teste",
+      "manager": 23,
+      "requirementAnalysts": [
+        15
+      ],
+      "businessAnalysts": [
+        16
+      ],
+      "commonUsers": [
+        14
+      ],
+      "version": "1",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "8b0a",
+      "name": "TESTE 2",
+      "manager": 23,
+      "requirementAnalysts": [
+        15
+      ],
+      "businessAnalysts": [
+        16
+      ],
+      "commonUsers": [
+        14
+      ],
+      "version": "123",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "e80d",
+      "name": "TESTE 3",
+      "manager": 23,
+      "requirementAnalysts": [
+        15
+      ],
+      "businessAnalysts": [
+        16
+      ],
+      "commonUsers": [
+        14
+      ],
+      "version": "12",
+      "description": "",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "3b95",
+      "name": "Teste rich text",
+      "manager": 23,
+      "requirementAnalysts": [
+        15
+      ],
+      "businessAnalysts": [
+        16
+      ],
+      "commonUsers": [
+        14
+      ],
+      "version": "1",
+      "description": "<p><strong>Requirement Hub: Sistema de Gestão de Requisitos</strong></p><p><strong>Visão Geral:</strong> O Requirement Hub é uma plataforma robusta projetada para otimizar a gestão de requisitos de software. Com foco na organização e transparência, a ferramenta facilita a elicitação, documentação, análise, rastreamento e gerenciamento de requisitos de software, abordando uma necessidade crítica para o sucesso de projetos de desenvolvimento.</p><p><strong>Objetivos:</strong></p><p><br></p><ol><li><strong>Facilitar a Elicitação de Requisitos:</strong> Simplificar a coleta e documentação de requisitos com interfaces amigáveis e intuitivas.</li><li><strong>Organização e Rastreabilidade:</strong> Implementar uma Matriz de Rastreabilidade de Requisitos para garantir que todos os requisitos sejam atendidos e facilmente rastreáveis ao longo do ciclo de desenvolvimento.</li><li><strong>Melhoria da Comunicação:</strong> Melhorar a comunicação entre stakeholders através de uma documentação clara e acessível.</li><li><strong>Redução de Falhas:</strong> Minimizar os riscos de falhas em projetos devido à má gestão de requisitos, através de ferramentas eficazes e acessíveis.</li></ol><p><strong>Tecnologias Utilizadas:</strong></p><p><br></p><ul><li><strong>Backend:</strong></li><li class=\"ql-indent-1\">Linguagem de Programação: Java</li><li class=\"ql-indent-1\">Framework: Spring</li><li class=\"ql-indent-1\">Infraestrutura: AWS</li><li class=\"ql-indent-1\">Banco de Dados: MySQL</li><li class=\"ql-indent-1\">IDE: IntelliJ</li><li><strong>Frontend:</strong></li><li class=\"ql-indent-1\">Framework: Angular</li><li class=\"ql-indent-1\">Biblioteca de Componentes: Angular Material</li><li class=\"ql-indent-1\">Linguagem de Programação: TypeScript</li><li class=\"ql-indent-1\">Ferramenta de Desenvolvimento: VSCode ou IntelliJ</li><li><strong>Prototipação:</strong></li><li class=\"ql-indent-1\">Ferramenta de Design: Figma</li></ul><p><strong>Componentes do Sistema:</strong></p><p><br></p><ol><li><strong>Módulo de Elicitação de Requisitos:</strong> Ferramentas para coleta e documentação de requisitos, facilitando a captura de informações dos stakeholders.</li><li><strong>Módulo de Análise de Requisitos:</strong> Funcionalidades para análise detalhada dos requisitos coletados, permitindo a identificação de dependências e conflitos.</li><li><strong>Módulo de Rastreamento de Requisitos:</strong> Implementação da Matriz de Rastreabilidade de Requisitos para garantir o rastreamento eficaz de todos os requisitos desde a definição até a entrega.</li><li><strong>Módulo de Gestão de Projetos:</strong> Ferramentas para monitoramento e controle de projetos, integrando os requisitos com as atividades de desenvolvimento e testes.</li><li><strong>Interface de Usuário:</strong> Interface amigável e intuitiva desenvolvida com Angular e Angular Material, proporcionando uma experiência de usuário eficiente e agradável.</li></ol><p><strong>Benefícios Esperados:</strong></p><p><br></p><ul><li><strong>Aumento da Eficiência:</strong> Redução do tempo e esforço necessário para gerenciar requisitos de software.</li><li><strong>Melhoria da Qualidade:</strong> Garantia de que todos os requisitos são atendidos e validados, melhorando a qualidade final do produto.</li><li><strong>Redução de Riscos:</strong> Diminuição dos riscos de falhas em projetos devido a uma gestão de requisitos inadequada.</li><li><strong>Transparência:</strong> Maior transparência e visibilidade sobre o status e progresso dos requisitos ao longo do ciclo de desenvolvimento.</li></ul><p><strong>Conclusão:</strong> O Requirement Hub visa ser uma solução completa para a gestão de requisitos de software, abordando uma das áreas mais críticas e frequentemente negligenciadas no desenvolvimento de software. Com uma combinação de tecnologias avançadas e foco na usabilidade, o Requirement Hub promete transformar a forma como os requisitos são gerenciados, contribuindo significativamente para o sucesso dos projetos de desenvolvimento de software.</p>"
+    }
+  ],
+  "matriz_de_rastreabilidade_array": [
+    [
+      null,
+      "RF1",
+      "RF2",
+      "RNF1",
+      "RNF2",
+      "UC1",
+      "UC2",
+      "UC3",
+      "UH1",
+      "UH2",
+      "CT1",
+      "CT2",
+      "M1"
+    ],
+    [
+      "Gerente de vendas",
+      "",
+      "X",
+      "",
+      "X",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      "Diretor de marketing",
+      "X",
+      "",
+      "",
+      "",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      "Vendedor",
+      "",
+      "",
+      "",
+      "",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      "RF1",
+      null,
+      "",
+      "X",
+      "",
+      "X",
+      "X",
+      "",
+      "",
+      "",
+      "",
+      "X",
+      ""
+    ],
+    [
+      "RF2",
+      null,
+      null,
+      "",
+      "X",
+      "",
+      "",
+      "X",
+      "X",
+      "",
+      "",
+      "",
+      "X"
+    ],
+    [
+      "RNF1",
+      null,
+      null,
+      null,
+      "",
+      "",
+      "",
+      "",
+      "X",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "RNF2",
+      null,
+      null,
+      null,
+      null,
+      "",
+      "",
+      "",
+      "X",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "RNF3",
+      null,
+      null,
+      null,
+      null,
+      "",
+      "",
+      "X",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "UC1",
+      null,
+      null,
+      null,
+      null,
+      null,
+      "",
+      "",
+      "",
+      "",
+      "X",
+      "X",
+      ""
+    ],
+    [
+      "UC2",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "UC3",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "",
+      "",
+      "",
+      "",
+      "X"
+    ],
+    [
+      "UH1",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "UH2",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      "",
+      ""
+    ],
+    [
+      "CT1",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      ""
+    ],
+    [
+      "CT2",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      ""
+    ],
+    [
+      "M1",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  ],
+  "requirements": [
+    {
+      "id": "001",
+      "identifierRequirement": "RF-01",
+      "nameRequirement": "Cadastro de Projetos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "João Victor",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Lucas Lemes"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir que os usuários cadastrem novos projetos na plataforma. Os projetos devem incluir informações como nome do projeto, descrição, data de início e fim, e status.</p>",
+      "creationDate": "2024-08-02T19:00:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "002",
+      "identifierRequirement": "RF-02",
+      "nameRequirement": "Cadastro de Membros do Projeto",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Rebeca Carvalho",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Elias Coutinho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Média",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir que os usuários cadastrem membros para os projetos. Os membros devem ser associados a papéis específicos dentro do projeto, como gerente, analista, etc.</p>",
+      "creationDate": "2024-08-02T19:05:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "003",
+      "identifierRequirement": "RF-03",
+      "nameRequirement": "Login de Membros do Projeto",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Lucas Lemes",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Rebeca Carvalho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Possibilitar que os membros façam login na plataforma utilizando suas credenciais. O sistema deve validar as credenciais e fornecer acesso de acordo com os papéis e permissões atribuídas.</p>",
+      "creationDate": "2024-08-02T19:10:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "004",
+      "identifierRequirement": "RF-04",
+      "nameRequirement": "Controle de Acesso",
+      "versionRequirement": "1.0",
+      "authorRequirement": "João Victor",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Lucas Lemes"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Média",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Garantir que apenas usuários autorizados tenham acesso a certas áreas ou funcionalidades da plataforma. Isso inclui a implementação de permissões baseadas em papéis.</p>",
+      "creationDate": "2024-08-02T19:15:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "005",
+      "identifierRequirement": "RF-05",
+      "nameRequirement": "Área Inicial dos Projetos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Rebeca Carvalho",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Elias Coutinho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Apresentar uma área inicial que mostre os projetos em andamento. Esta área deve ser personalizável e fornecer uma visão geral do status dos projetos.</p>",
+      "creationDate": "2024-08-02T19:20:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "006",
+      "identifierRequirement": "RF-06",
+      "nameRequirement": "Cadastro de Requisitos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Lucas Lemes",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Rebeca Carvalho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir o registro de requisitos, incluindo título, descrição, prioridade e tipo. O sistema deve validar as informações fornecidas e armazená-las de forma organizada.</p>",
+      "creationDate": "2024-08-02T19:25:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "007",
+      "identifierRequirement": "RF-07",
+      "nameRequirement": "Classificação e Organização de Requisitos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "João Victor",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Lucas Lemes"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Média",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir a organização dos requisitos com base em critérios como prioridade, estado e categoria. Os usuários devem poder filtrar e classificar os requisitos conforme necessário.</p>",
+      "creationDate": "2024-08-02T19:30:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "008",
+      "identifierRequirement": "RF-08",
+      "nameRequirement": "Cadastro de Artefatos, Módulos e Documentos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Rebeca Carvalho",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Elias Coutinho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir o registro de artefatos, módulos e documentos relacionados ao projeto. Esses itens devem ser associados a requisitos e outras entidades do projeto.</p>",
+      "creationDate": "2024-08-02T19:35:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "009",
+      "identifierRequirement": "RF-09",
+      "nameRequirement": "Associação de Requisitos com Artefatos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Lucas Lemes",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Rebeca Carvalho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir que requisitos sejam associados a artefatos, módulos e documentos. Esta funcionalidade deve facilitar o rastreamento e a gestão dos relacionamentos entre os itens do projeto.</p>",
+      "creationDate": "2024-08-02T19:40:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "010",
+      "identifierRequirement": "RF-10",
+      "nameRequirement": "Visualização das Associações dos Requisitos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "João Victor",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Lucas Lemes"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Média",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir aos usuários visualizar as associações entre requisitos e outros elementos do projeto. Isso inclui uma interface intuitiva para navegação e análise dessas associações.</p>",
+      "creationDate": "2024-08-02T19:45:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "011",
+      "identifierRequirement": "RF-11",
+      "nameRequirement": "Revisões dos Requisitos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Rebeca Carvalho",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Elias Coutinho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir que os membros revisem os requisitos, adicionem comentários e participem de discussões. Esta funcionalidade deve suportar a colaboração e a comunicação eficazes entre os membros da equipe.</p>",
+      "creationDate": "2024-08-02T19:50:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "012",
+      "identifierRequirement": "RF-12",
+      "nameRequirement": "Associação de Requisitos a Usuários, Equipes ou Partes Interessadas",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Lucas Lemes",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Rebeca Carvalho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir a associação de requisitos a usuários específicos ou equipes relevantes. Esta funcionalidade deve facilitar a atribuição de responsabilidades e o acompanhamento do progresso.</p>",
+      "creationDate": "2024-08-02T19:55:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "013",
+      "identifierRequirement": "RF-13",
+      "nameRequirement": "Especificação dos Requisitos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "João Victor",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Lucas Lemes"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Média",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir a especificação de requisitos, incluindo critérios de aceitação, restrições e dependências. Esta funcionalidade deve garantir que os requisitos sejam bem definidos e compreendidos por todos os envolvidos.</p>",
+      "creationDate": "2024-08-02T20:00:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "014",
+      "identifierRequirement": "RF-14",
+      "nameRequirement": "Validação dos Requisitos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Rebeca Carvalho",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Elias Coutinho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir que os membros validem os requisitos. Esta funcionalidade deve incluir a capacidade de aprovar ou rejeitar requisitos e fornecer feedback detalhado.</p>",
+      "creationDate": "2024-08-02T20:05:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "015",
+      "identifierRequirement": "RF-15",
+      "nameRequirement": "Validação de Artefatos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Lucas Lemes",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Rebeca Carvalho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir que os membros validem artefatos, módulos e documentos relacionados ao projeto. Esta funcionalidade deve garantir que todos os itens estejam em conformidade com os requisitos e padrões estabelecidos.</p>",
+      "creationDate": "2024-08-02T20:10:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "016",
+      "identifierRequirement": "RF-16",
+      "nameRequirement": "Versionamento dos Requisitos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "João Victor",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Lucas Lemes"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Média",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Manter um histórico de alterações nos requisitos. Esta funcionalidade deve permitir o acompanhamento de versões, comparações de versões e a recuperação de versões anteriores.</p>",
+      "creationDate": "2024-08-02T20:15:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "017",
+      "identifierRequirement": "RF-17",
+      "nameRequirement": "Registro de Mudanças nos Requisitos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Rebeca Carvalho",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Elias Coutinho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Registrar todas as mudanças feitas nos requisitos, incluindo informações sobre quem e quando foram realizadas. Esta funcionalidade deve fornecer um histórico detalhado e auditável das alterações.</p>",
+      "creationDate": "2024-08-02T20:20:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "018",
+      "identifierRequirement": "RF-18",
+      "nameRequirement": "Geração de Visualizações de Status",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Lucas Lemes",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Rebeca Carvalho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Gerar visualizações de status, mostrando o progresso, requisitos concluídos, em andamento e pendentes. Estas visualizações devem ser interativas e personalizáveis conforme as necessidades dos usuários.</p>",
+      "creationDate": "2024-08-02T20:25:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "019",
+      "identifierRequirement": "RF-19",
+      "nameRequirement": "Criação de Matriz de Rastreabilidade de Requisitos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "João Victor",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Lucas Lemes"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Média",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir a criação de uma matriz de rastreabilidade de requisitos. Esta funcionalidade deve facilitar o acompanhamento das relações entre requisitos e outros elementos do projeto.</p>",
+      "creationDate": "2024-08-02T20:30:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "020",
+      "identifierRequirement": "RF-20",
+      "nameRequirement": "Deleção de Projetos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Rebeca Carvalho",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Elias Coutinho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Incluir a opção de deletar projetos existentes para administradores. Esta funcionalidade deve garantir que apenas usuários com permissões apropriadas possam realizar esta ação.</p>",
+      "creationDate": "2024-08-02T20:35:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "021",
+      "identifierRequirement": "RF-21",
+      "nameRequirement": "Deleção de Membros de Projetos",
+      "versionRequirement": "1.0",
+      "authorRequirement": "João Victor",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Lucas Lemes"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Média",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Incluir a opção de deletar membros de projetos para administradores.</p>",
+      "creationDate": "2024-08-02T19:55:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "022",
+      "identifierRequirement": "RF-22",
+      "nameRequirement": "Upload de Arquivos de Projeto",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Rebeca Carvalho",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Elias Coutinho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir o upload de diversos tipos de arquivos para gerentes e analistas.</p>",
+      "creationDate": "2024-08-02T20:00:44.241Z",
+      "status": "CREATED"
+    },
+    {
+      "id": "023",
+      "identifierRequirement": "RF-23",
+      "nameRequirement": "Download de Arquivos de Projeto",
+      "versionRequirement": "1.0",
+      "authorRequirement": "Lucas Lemes",
+      "fontRequirement": [
+        "Engenharia"
+      ],
+      "dangerRequirement": "Médio",
+      "priorityRequirement": "Alta",
+      "responsibleRequirement": [
+        "Rebeca Carvalho"
+      ],
+      "typeRequirement": "Funcional",
+      "effortRequirement": "Alta",
+      "dependencyRequirement": [],
+      "requirementDescription": "<p>Permitir o download de arquivos de projeto para membros do projeto.</p>",
+      "creationDate": "2024-08-02T20:05:44.241Z",
+      "status": "CREATED"
+    }
+  ]
+}

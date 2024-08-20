@@ -1,0 +1,22 @@
+<mat-dialog-content>
+
+    <app-create-requirement-tab></app-create-requirement-tab>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+    <button mat-raised-button
+            *ngIf="!buttonDisabled">
+        Cancelar
+        <mat-icon>cancel</mat-icon>
+    </button>
+
+    <button mat-raised-button
+            cdkFocusInitial
+            *ngIf="!buttonDisabled"
+            (click)="saveData()">
+        Criar requisito
+        <mat-icon>add</mat-icon>
+    </button>
+
+</mat-dialog-actions>

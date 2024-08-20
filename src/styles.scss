@@ -14,3 +14,24 @@ html, body {
 table {
   margin-top: 20px;
 }
+
+input:disabled {
+  cursor: not-allowed
+}
+
+button:disabled {
+  cursor: not-allowed
+}
+
+.mat-button:disabled {
+  cursor: not-allowed;
+}
+
+.swal2-container {
+  overflow: hidden;
+}
+
+.swal2-popup {
+  margin: auto !important;
+  bottom: 0 !important;
+}
