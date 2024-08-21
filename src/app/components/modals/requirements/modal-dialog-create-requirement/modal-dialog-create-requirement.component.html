@@ -6,7 +6,8 @@
 <mat-dialog-actions align="end">
 
     <button mat-raised-button
-            *ngIf="!buttonDisabled">
+            *ngIf="!buttonDisabled"
+            (click)="close()">
         Cancelar
         <mat-icon>cancel</mat-icon>
     </button>

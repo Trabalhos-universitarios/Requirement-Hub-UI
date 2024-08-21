@@ -126,4 +126,8 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
             };
         }
     }
+
+    close() {
+        this.dialog.closeAll();
+    }
 }
