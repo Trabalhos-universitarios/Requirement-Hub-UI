@@ -26,10 +26,9 @@ export class AddArtifactsComponent implements OnInit {
         private alertService: AlertService,
         private dialog: MatDialog,
         private localStorageService: LocalStorageService,
-        @Inject(MAT_DIALOG_DATA) public data: { identifierRequirement: string }) {
+        @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
 
-        console.log("DATA EM ADD ARTIFACT: ", data)
-
+        console.log("DATA: ", data)
     }
 
     ngOnInit() {
@@ -72,7 +71,7 @@ export class AddArtifactsComponent implements OnInit {
     }
 
     async getRequirementId(): Promise<RequirementsDataModel[]> {
-        return await this.requirementService.getRequirementsByIdentifier(this.data.identifierRequirement)
+        return await this.requirementService.getRequirementsByIdentifier(this.data.identifier)
     }
 
     getData() {
