@@ -10,6 +10,7 @@
     max-height: 80vh; /* Define a altura máxima em 70% da altura da viewport */
     overflow-y: auto; /* Permite scroll vertical quando necessário */
     overflow-x: auto; /* Permite scroll horizontal se necessário */
+  }
 
   .sidenav {
     flex-grow: 1;
@@ -56,4 +57,3 @@
       font-size: 48px;
     }
   }
-}
