@@ -27,6 +27,9 @@ export class AddArtifactsComponent implements OnInit {
         private dialog: MatDialog,
         private localStorageService: LocalStorageService,
         @Inject(MAT_DIALOG_DATA) public data: { identifierRequirement: string }) {
+
+        console.log("DATA EM ADD ARTIFACT: ", data)
+
     }
 
     ngOnInit() {
@@ -42,18 +45,13 @@ export class AddArtifactsComponent implements OnInit {
     }
 
     async saveData(): Promise<void> {
-
         let verifyArtifactExists = await this.getArtifactByIdentifierArtifact()
-
         if (verifyArtifactExists) {
             await this.alertService.toErrorAlert("ERRO", "Esse artefato já está registrado!")
             return;
         }
-
         this.requirementId = await this.getRequirementId();
-
         this.artifactService.createArtifact(this.prepareDataArtifact(this.requirementId[0].id)).subscribe(respArt => {
-
             try {
                 this.alertService.toSuccessAlert("Requisito Cadastrado com sucesso!");
                 //this.localStorageService.clearAll();
