@@ -9,12 +9,15 @@
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Autor</mat-label>
             <input matInput placeholder="Ex: João Silva" formControlName="author">
-            <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Tipo</mat-label>
-            <input matInput placeholder="Ex: Use case" formControlName="type">
+            <mat-select formControlName="type">
+                <mat-option *ngFor="let type of ARTIFACT_TYPE_LIST" [value]="type.identifier" [matTooltip]="type.name" matTooltipPosition="right">
+                    {{ type.identifier }}
+                </mat-option>
+            </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 

@@ -7,6 +7,8 @@ import {ArtifactService} from "../../../../services/requirements/artifacts/artif
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 import e from "express";
 import {interval} from "rxjs";
+import {ARTIFACT_TYPE_LIST} from "../../../../utils/artifact-type-list-util";
+import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
 
 @Component({
     selector: 'app-create-artifact-form',
@@ -19,8 +21,8 @@ export class CreateArtifactFormComponent implements OnInit {
     @Input() dataRequirementToTableRequirement: RequirementsDataModel | undefined;
 
     public formGroup: FormGroup = this.formBuilder.group({
-        name: new FormControl({value: "", disabled: true}),
-        author: new FormControl(''),
+        name: new FormControl({value: '', disabled: true}),
+        author: new FormControl({value: '', disabled: true}),
         type: new FormControl(''),
         description: new FormControl(''),
     });
@@ -31,7 +33,8 @@ export class CreateArtifactFormComponent implements OnInit {
         private formBuilder: FormBuilder,
         private artifactServices: ArtifactService,
         protected themeService: ThemeService,
-        private localStorageService: LocalStorageService) {
+        private localStorageService: LocalStorageService,
+        private capitalizeFirstPipe: CapitalizeFirstPipePipe) {
 
         this.createForm();
         this.uploader.onAfterAddingFile = (file: FileItem) => {
@@ -41,8 +44,11 @@ export class CreateArtifactFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.formGroup.patchValue({name: this.dataRequirementToTableRequirement?.name});
-        console.log("DATA EM CREATE ARTIFACT: ", this.dataRequirementToTableRequirement)
+        this.formGroup.patchValue(
+            {
+                name: this.dataRequirementToTableRequirement?.name,
+                author: this.capitalizeFirstPipe.transform(this.localStorageService.getItem('name'))
+            });
     }
 
     public fileOverBase(e: any): void {
@@ -96,4 +102,7 @@ export class CreateArtifactFormComponent implements OnInit {
         };
         reader.readAsDataURL(file._file);
     }
+
+    //protected readonly ARTIFACT_TYPE_LIST = ARTIFACT_TYPE_LIST;
+    protected readonly ARTIFACT_TYPE_LIST = ARTIFACT_TYPE_LIST;
 }
