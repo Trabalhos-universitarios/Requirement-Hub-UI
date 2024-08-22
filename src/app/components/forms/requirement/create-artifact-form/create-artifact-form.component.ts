@@ -5,8 +5,6 @@ import {ThemeService} from "../../../../services/theme/theme.service";
 import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
 import {ArtifactService} from "../../../../services/requirements/artifacts/artifact.service";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
-import e from "express";
-import {interval} from "rxjs";
 import {ARTIFACT_TYPE_LIST} from "../../../../utils/artifact-type-list-util";
 import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
 
@@ -19,6 +17,7 @@ export class CreateArtifactFormComponent implements OnInit {
 
     @ViewChild('fileInput') fileInput!: ElementRef;
     @Input() dataRequirementToTableRequirement: RequirementsDataModel | undefined;
+    protected readonly ARTIFACT_TYPE_LIST = ARTIFACT_TYPE_LIST;
 
     public formGroup: FormGroup = this.formBuilder.group({
         name: new FormControl({value: '', disabled: true}),
@@ -26,8 +25,8 @@ export class CreateArtifactFormComponent implements OnInit {
         type: new FormControl(''),
         description: new FormControl(''),
     });
-    public uploader: FileUploader = new FileUploader({url: '', itemAlias: 'file'});
-    public hasBaseDropZoneOver: boolean = false;
+    protected uploader: FileUploader = new FileUploader({url: '', itemAlias: 'file'});
+    protected hasBaseDropZoneOver: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -43,7 +42,7 @@ export class CreateArtifactFormComponent implements OnInit {
         };
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.formGroup.patchValue(
             {
                 name: this.dataRequirementToTableRequirement?.name,
@@ -51,21 +50,21 @@ export class CreateArtifactFormComponent implements OnInit {
             });
     }
 
-    public fileOverBase(e: any): void {
+    protected fileOverBase(e: any): void {
         this.hasBaseDropZoneOver = e;
     }
 
-    public selectFile() {
+    protected selectFile() {
         this.fileInput.nativeElement.click();
     }
 
-    createForm() {
+    private createForm() {
         this.formGroup.valueChanges.subscribe(val => {
             this.artifactServices.updateForm(this.formGroup);
         });
     }
 
-    getStyles() {
+    protected getStyles() {
         return this.themeService.isDarkMode()
             ? {
                 'background-color': '#616161',
@@ -77,7 +76,7 @@ export class CreateArtifactFormComponent implements OnInit {
             };
     }
 
-    simulateUploadProgress(file: FileItem) {
+    private simulateUploadProgress(file: FileItem) {
         let progress = 0;
         const interval = setInterval(() => {
             progress += 10;
@@ -89,7 +88,7 @@ export class CreateArtifactFormComponent implements OnInit {
         }, 150);
     }
 
-    saveFileToLocalStorage(file: FileItem) {
+    private saveFileToLocalStorage(file: FileItem) {
         const reader = new FileReader();
         reader.onload = (event: any) => {
             const fileInfo = {
@@ -103,6 +102,8 @@ export class CreateArtifactFormComponent implements OnInit {
         reader.readAsDataURL(file._file);
     }
 
-    //protected readonly ARTIFACT_TYPE_LIST = ARTIFACT_TYPE_LIST;
-    protected readonly ARTIFACT_TYPE_LIST = ARTIFACT_TYPE_LIST;
+    removeFile(item: FileItem) {
+        item.remove();
+        this.localStorageService.removeItem('file');
+    }
 }

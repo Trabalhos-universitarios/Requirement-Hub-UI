@@ -14,7 +14,7 @@
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Tipo</mat-label>
             <mat-select formControlName="type">
-                <mat-option *ngFor="let type of ARTIFACT_TYPE_LIST" [value]="type.identifier" [matTooltip]="type.name" matTooltipPosition="right">
+                <mat-option *ngFor="let type of ARTIFACT_TYPE_LIST" [value]="type.name" [matTooltip]="type.name" matTooltipPosition="right">
                     {{ type.identifier }}
                 </mat-option>
             </mat-select>
@@ -45,7 +45,7 @@
                             <mat-progress-bar mode="determinate" [value]="item.progress" color="primary"></mat-progress-bar>
                             <span>{{ item.progress }}%</span>
                         </div>
-                        <button mat-icon-button (click)="item.remove()">
+                        <button mat-icon-button (click)="removeFile(item)">
                             <mat-icon>delete_forever</mat-icon>
                         </button>
                     </div>

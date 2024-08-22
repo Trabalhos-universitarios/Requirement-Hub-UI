@@ -6,13 +6,14 @@ import {
   RequirementsDataModel
 } from "../../../models/requirements-data-model";
 import {ArtifactResponseModel} from "../../../models/artifact-response-model";
+import {environmentLocal} from "../../../../environment/environment-local";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtifactService {
 
-  private baseUrl = 'http://localhost:8180';
+  private baseUrl = environmentLocal.springUrl;
   private formGroupSource = new BehaviorSubject<FormGroup | null>(null);
   currentForm = this.formGroupSource.asObservable();
 
