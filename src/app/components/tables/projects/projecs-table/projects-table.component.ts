@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -24,6 +24,7 @@ import {
 import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {reloadPage} from "../../../../utils/reload.page";
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
     selector: 'app-projects-table',
@@ -37,7 +38,7 @@ import {reloadPage} from "../../../../utils/reload.page";
         ]),
     ],
 })
-export class ProjectsTableComponent {
+export class ProjectsTableComponent implements AfterViewInit {
 
     @Input()
     dataSource = new MatTableDataSource<ProjectDataModel>([]);
@@ -53,6 +54,8 @@ export class ProjectsTableComponent {
     columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
     expandedElement: ProjectDataModel | undefined;
 
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+
     constructor(
         private projectsTableService: ProjectsTableService,
         protected themeService: ThemeService,
@@ -61,6 +64,10 @@ export class ProjectsTableComponent {
         private dialog: MatDialog,
         private alertService: AlertService,
         private projectsService: ProjectsService) {
+    }
+
+    ngAfterViewInit() {
+        this.dataSource.paginator = this.paginator;
     }
 
     sanitizeHtml(html: string): SafeHtml {

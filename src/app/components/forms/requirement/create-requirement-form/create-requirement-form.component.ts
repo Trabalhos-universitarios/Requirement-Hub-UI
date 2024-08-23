@@ -29,7 +29,7 @@ export class CreateRequirementFormComponent {
         priority: new FormControl('', Validators.required),
         responsible: new FormControl('', Validators.required),
         type: new FormControl('', Validators.required),
-        effort: new FormControl('', Validators.required),
+        effort: new FormControl(''),
         dependencies: new FormControl(''),
         description: new FormControl(''),
     })
@@ -85,7 +85,7 @@ export class CreateRequirementFormComponent {
     }
 
     private async getRequirements() {
-        this.requirementService.getAllRequirements().then(requirements => {
+        this.requirementService.getRequirementsByProjectRelated(this.projectsTableService.getCurrentProjectById()).then(requirements => {
             this.requirementsDependencies = requirements;
         })
     }

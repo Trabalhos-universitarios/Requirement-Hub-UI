@@ -1,19 +1,23 @@
-
 <section class="example-container">
-
-  <div><h1>{{currentProject}}</h1></div>
+  <div><h1>{{ currentProject }}</h1></div>
 
   <table>
-    <tr *ngFor="let row of dataSource">
-      <td *ngFor="let cell of row" [ngStyle]="getCellStyles(cell)">
-        <ng-container *ngIf="cell == ''; else normalCell">
-          <span class="special"></span>
-        </ng-container>
-        <ng-template #normalCell>
+    <tr *ngFor="let row of dataSource; let rowIndex = index">
+      <td *ngFor="let cell of row; let colIndex = index"
+          [ngStyle]="getCellStyles(cell)" 
+          [matTooltip]="cell ? getTooltipText(cell, rowIndex, colIndex) : ''"
+          matTooltipPosition="above"
+          [ngClass]="{
+            'related': isRelated(rowIndex, colIndex),
+            'highlight-header': isHeader(rowIndex, colIndex),
+            'highlight-specific': isSpecificHighlight(rowIndex, colIndex),
+            'pointer-cursor': cell !== null  && cell !== ''
+          }"
+          (click)="toggleHighlight(rowIndex, colIndex)">
+        <ng-container *ngIf="cell">
           {{ cell }}
-        </ng-template>
+        </ng-container>
       </td>
     </tr>
   </table>
- 
 </section>

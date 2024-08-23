@@ -4,6 +4,14 @@
   min-height: 100vh;
   overflow: hidden !important;
 
+  }
+
+  .project-tab {
+    max-height: 75vh;
+    overflow-y: auto;
+    overflow-x: auto;
+  }
+
   .sidenav {
     flex-grow: 1;
     width: 50px;
@@ -49,4 +57,3 @@
       font-size: 48px;
     }
   }
-}

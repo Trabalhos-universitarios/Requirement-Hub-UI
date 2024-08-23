@@ -113,6 +113,7 @@ export class ArtifactsProjectTableComponent {
     }
 
     visualizarArtifact(id: number, fileName: string) {
+        this.alertService.toInfoAlert("Visualização do arquivo","O arquivo será aberto pelo navegador");
         this.artifactProjectService.getDownloadArtifactById(id)
             .subscribe({
                 next: (blob) => {

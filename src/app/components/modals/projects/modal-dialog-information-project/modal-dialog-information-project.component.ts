@@ -21,4 +21,8 @@ export class ModalDialogInformationProjectComponent {
     this.dialog.closeAll();
     this.dialog.open(ModalDialogCreateRequirementComponent);
   }
+
+  close() {
+    this.dialog.closeAll();
+  }
 }
