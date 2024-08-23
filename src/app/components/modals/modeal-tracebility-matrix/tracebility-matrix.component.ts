@@ -91,32 +91,43 @@ export class TracebilityMatrixComponent {
 
   toggleHighlight(rowIndex: number, colIndex: number): void {
     const cellValue = this.dataSource[rowIndex][colIndex];
-    
+  
+    // Apenas células com "X" podem ser destacadas
     if (cellValue === "X") {
       if (this.highlightedRow === rowIndex && this.highlightedColumn === colIndex) {
-        // Se a célula já está destacada, desmarcar
+        // Desmarcar se a célula já estiver destacada
         this.highlightedRow = null;
         this.highlightedColumn = null;
       } else {
-        // Se a célula não está destacada, destacar
+        // Registrar nova célula como destacada
         this.highlightedRow = rowIndex;
         this.highlightedColumn = colIndex;
       }
     }
+  
+    console.log('Highlighted Row:', this.highlightedRow);
+    console.log('Highlighted Column:', this.highlightedColumn);
   }
   
   isRelated(rowIndex: number, colIndex: number): boolean {
-    // Destacar apenas as células à esquerda e acima
+    // Verificar se temos uma célula selecionada
     if (this.highlightedRow === null || this.highlightedColumn === null) {
       return false;
     }
-    return (rowIndex === this.highlightedRow && colIndex <= this.highlightedColumn) || 
-           (colIndex === this.highlightedColumn && rowIndex <= this.highlightedRow);
-  }
+  
+    // Verificar se a célula está à esquerda (mesma linha) ou acima (mesma coluna)
+    return (rowIndex === this.highlightedRow && colIndex < this.highlightedColumn) || 
+           (colIndex === this.highlightedColumn && rowIndex < this.highlightedRow);
+  }  
   
   isHeader(rowIndex: number, colIndex: number): boolean {
-    // Lógica de destacar os cabeçalhos
-    return rowIndex === this.highlightedRow || colIndex === this.highlightedColumn;
+    if (this.highlightedRow === null || this.highlightedColumn === null) {
+      return false;
+    }
+  
+    // Destaque apenas o cabeçalho da coluna e linha relacionados
+    return (rowIndex === 0 && colIndex === this.highlightedColumn) || 
+           (colIndex === 0 && rowIndex === this.highlightedRow);
   }
   
   isSpecificHighlight(rowIndex: number, colIndex: number): boolean {

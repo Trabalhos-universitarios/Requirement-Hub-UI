@@ -15,18 +15,17 @@
   }
   
   .related {
-    background-color: rgba(0, 128, 0, 0.2) !important; /* Cor de destaque para as células relacionadas */
+    background-color: rgba(0, 128, 0, 0.2) !important; /* Verde claro para células relacionadas */
   }
   
   .highlight-header {
-    background-color: rgba(0, 128, 0, 0.4) !important; /* Cor de destaque para os cabeçalhos */
+    background-color: rgba(0, 128, 0, 0.4) !important; /* Verde mais escuro para cabeçalhos */
   }
   
   .highlight-specific {
-    background-color: green !important; /* Cor verde para as células específicas */
-    cursor: pointer; /* Mostrar a mãozinha */
-  }
-  
+    background-color: green !important; /* Verde para células específicas */
+    cursor: pointer;
+  } 
   
   .example-container div {
     text-align: center;
