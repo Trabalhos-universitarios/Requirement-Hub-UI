@@ -9,6 +9,7 @@ export class DisplayColumnFormatPipePipe implements PipeTransform {
     'identifier': 'Identificador',
     'name': 'Nome',
     'author': 'Autor',
+    'creationDate': 'Data de criação',
     'dateCreated': 'Data de criação',
     'priority': 'Prioridade de desenvolvimento',
     'type': 'Tipo',

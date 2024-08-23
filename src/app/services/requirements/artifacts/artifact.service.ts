@@ -6,13 +6,14 @@ import {
   RequirementsDataModel
 } from "../../../models/requirements-data-model";
 import {ArtifactResponseModel} from "../../../models/artifact-response-model";
+import {environmentLocal} from "../../../../environment/environment-local";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtifactService {
 
-  private baseUrl = 'http://localhost:8180';
+  private baseUrl = environmentLocal.springUrl;
   private formGroupSource = new BehaviorSubject<FormGroup | null>(null);
   currentForm = this.formGroupSource.asObservable();
 
@@ -24,11 +25,10 @@ export class ArtifactService {
   }
 
   createArtifact(post: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/artifacts`, post);
+    return this.http.post(`${this.baseUrl}/requirement-artifacts`, post);
   }
 
-  getArtifactByIdentifierArtifact(identifier: string) {
-    const params = new HttpParams().set('identifier', identifier);
-    return firstValueFrom(this.http.get<ArtifactResponseModel[]>(`${this.baseUrl}/artifacts/filter`, { params }));
+  async getArtifactByIdentifierArtifact(id: number) {
+    return firstValueFrom(this.http.get<ArtifactResponseModel>(`${this.baseUrl}/requirement-artifacts/${id}`));
   }
 }

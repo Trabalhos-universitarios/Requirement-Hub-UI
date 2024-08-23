@@ -86,8 +86,8 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
 
         let descriptionValue: string = '';
 
-            this.richTextService.currentContent.subscribe(content => {
-                descriptionValue = content;
+        this.richTextService.currentContent.subscribe(content => {
+            descriptionValue = content;
         })
 
         if (this.requirementForm?.value && this.requirementForm.valid) {
