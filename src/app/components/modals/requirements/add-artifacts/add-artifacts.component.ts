@@ -149,7 +149,4 @@ export class AddArtifactsComponent implements OnInit {
             console.error('Error downloading the file', error);
         }
     }
-
-
-
 }
