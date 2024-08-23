@@ -25,11 +25,10 @@ export class ArtifactService {
   }
 
   createArtifact(post: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/artifacts`, post);
+    return this.http.post(`${this.baseUrl}/requirement-artifacts`, post);
   }
 
-  getArtifactByIdentifierArtifact(identifier: string) {
-    const params = new HttpParams().set('identifier', identifier);
-    return firstValueFrom(this.http.get<ArtifactResponseModel[]>(`${this.baseUrl}/artifacts/filter`, { params }));
+  async getArtifactByIdentifierArtifact(id: number) {
+    return firstValueFrom(this.http.get<ArtifactResponseModel>(`${this.baseUrl}/requirement-artifacts/${id}`));
   }
 }
