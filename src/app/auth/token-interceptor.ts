@@ -8,7 +8,7 @@ export class TokenInterceptor implements HttpInterceptor {
     const token = localStorage.getItem('token');
 
     // Verifica se a URL começa com http://localhost:3000/matrix   PROVISORIO
-    if (!request.url.startsWith('http://localhost:3000/matrix')) {
+    //if (!request.url.startsWith('http://localhost:3000/matrix')) {
       if (token) {
         const formattedToken = token.replace(/"/g, ''); 
         request = request.clone({
@@ -17,7 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
           }
         });
       }
-    }
+    //}
     return next.handle(request);
   }
 }

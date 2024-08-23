@@ -8,13 +8,13 @@ import { environmentLocal } from 'src/environment/environment-local';
 })
 export class MatrixService {
 
-  private baseUrl = 'http://localhost:3000';
-  //private baseUrl = environmentLocal.springUrl
+  //private baseUrl = 'http://localhost:3000';
+  private baseUrl = environmentLocal.springUrl
 
   constructor(private http: HttpClient) {}
 
   getTraceabilityMatrix(projectId: number): Observable<[]> {
-    return this.http.get<[]>(`${this.baseUrl}/matrix_${projectId}`);
-    //return this.http.get<[]>(`${this.baseUrl}/matrix/generate`);
+    //return this.http.get<[]>(`${this.baseUrl}/matrix_${projectId}`);
+    return this.http.get<[]>(`${this.baseUrl}/matrix/generate/${projectId}`);
   }
 }
