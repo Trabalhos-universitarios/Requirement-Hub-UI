@@ -8,7 +8,7 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";
 import {MatDialog} from "@angular/material/dialog";
-import {AddArtifactsComponent} from "../../../modals/artifacts/add-artifacts/add-artifacts.component";
+import {AddArtifactsComponent} from "../../../modals/requirements/add-artifacts/add-artifacts.component";
 import {ProjectsTableService} from "../../../../services/projects/projects-table.service";
 import {UsersService} from "../../../../services/users/users.service";
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
@@ -133,7 +133,7 @@ export class RequirementsTableComponent implements AfterViewInit {
         }
     }
 
-    protected openDialog(action: String, value: string) {
+    protected openDialog(action: String, value: RequirementsDataModel) {
         switch (action) {
             case "information":
                 console.log("Aqui vai a ação a ser tomada em info")
@@ -143,9 +143,7 @@ export class RequirementsTableComponent implements AfterViewInit {
                 break
             case "add":
                 this.matDialog.open(AddArtifactsComponent, {
-                    data: {
-                        identifierRequirement: value
-                    }
+                    data: value
                 })
                 break
 

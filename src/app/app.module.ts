@@ -59,7 +59,7 @@ import {
     ModalDialogInformationProjectComponent
 } from './components/modals/projects/modal-dialog-information-project/modal-dialog-information-project.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {AddArtifactsComponent} from './components/modals/artifacts/add-artifacts/add-artifacts.component';
+import {AddArtifactsComponent} from './components/modals/requirements/add-artifacts/add-artifacts.component';
 import { DisplayColumnFormatPipePipe } from './pipes/display-column-format-pipe.pipe';
 import { TracebilityMatrixComponent } from './components/modals/modeal-tracebility-matrix/tracebility-matrix.component';
 import { ModalLoginComponent } from './auth/modals/modal-login/modal-login.component';
