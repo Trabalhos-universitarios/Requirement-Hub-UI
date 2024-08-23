@@ -27,7 +27,7 @@ export class TracebilityMatrixComponent {
     RF10: "Visualização das Associações dos Requisitos/ Negócios",
     RF11: "Revisões dos Requisitos/ Negócios",
     RF12: "Associação de Requisitos a Usuários ou Equipes/ Negócios",
-    RF13: "Especificação dos Requisito/ Negócioss",
+    RF13: "Especificação dos Requisitos/ Negócios",
     RF14: "Validação dos Requisitos/ Negócios",
     RF15: "Validação de Artefatos/ Negócios",
     RF16: "Versionamento dos Requisitos/ Negócios",
@@ -37,8 +37,19 @@ export class TracebilityMatrixComponent {
     RF20: "Deleção de Projetos/ Negócios",
     RF21: "Deleção de Membros de Projetos/ Negócios",
     RF22: "Upload de Arquivos de Projeto/ Negócios",
-    RF23: "Download de Arquivos de Projeto/ Negócios"
-  };
+    RF23: "Download de Arquivos de Projeto/ Negócios",
+    RNF1: "Criação de Relatórios/ Engenharia",
+    RNF2: "Monitoramento de Performance/ Engenharia",
+    RNF3: "Automatização de Tarefas/ Engenharia",
+    UC1: "Simulação de Cenários",
+    UC2: "Gestão de Equipes",
+    UC3: "Planejamento de Recursos",
+    UH1: "Personalização de Interface",
+    UH2: "Criação de Dashboards",
+    CT1: "Validação de Dados",
+    CT2: "Integração de Sistemas",
+    M1: "Gestão de Configurações"
+};
 
   constructor(
       private traceabilityService: MatrixService,
