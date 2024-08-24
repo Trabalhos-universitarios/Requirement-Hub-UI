@@ -8,13 +8,14 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";
 import {MatDialog} from "@angular/material/dialog";
-import {AddArtifactsComponent} from "../../../modals/requirements/add-artifacts/add-artifacts.component";
 import {ProjectsTableService} from "../../../../services/projects/projects-table.service";
 import {UsersService} from "../../../../services/users/users.service";
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
 import {reloadPage} from "../../../../utils/reload.page";
 import {AlertService} from "../../../../services/sweetalert/alert.service";
+import { ArtifactsRequirementsTableComponent } from '../artifacts-requirements-table/artifacts-requirements-table.component';
+import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 
 @Component({
     selector: 'app-requirements-table',
@@ -142,7 +143,7 @@ export class RequirementsTableComponent implements AfterViewInit {
                 console.log("Aqui vai a ação a ser tomada em edit")
                 break
             case "add":
-                this.matDialog.open(AddArtifactsComponent, {
+                this.matDialog.open(ModalDialogArtifactsRequirementComponent, {
                     data: value
                 })
                 break

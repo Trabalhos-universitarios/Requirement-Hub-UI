@@ -74,6 +74,8 @@ import { CapitalizeFirstPipePipe } from './pipes/capitalize-first-pipe.pipe';
 import { ArtifactsProjectTableComponent } from './components/tables/projects/artifacts-project-table/artifacts-project-table.component';
 import { ModalDialogArtifactsProjectComponent } from './components/modals/projects/modal-dialog-artifacts-project/modal-dialog-artifacts-project.component';
 import { CreateArtifactProjectFormComponent } from './components/forms/project/create-artifact-project-form/create-artifact-project-form.component';
+import { ModalDialogArtifactsRequirementComponent } from './components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
+import { ArtifactsRequirementsTableComponent } from './components/tables/requirements/artifacts-requirements-table/artifacts-requirements-table.component';
 
 @NgModule({
     declarations: [
@@ -107,7 +109,9 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
         UpdateProjectTableComponent,
         ArtifactsProjectTableComponent,
         ModalDialogArtifactsProjectComponent,
-        CreateArtifactProjectFormComponent
+        CreateArtifactProjectFormComponent,
+        ModalDialogArtifactsRequirementComponent,
+        ArtifactsRequirementsTableComponent
     ],
     imports: [
         BrowserModule,

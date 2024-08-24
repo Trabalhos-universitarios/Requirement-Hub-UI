@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {FileItem, FileUploader} from "ng2-file-upload";
 import {ThemeService} from "../../../../services/theme/theme.service";
@@ -7,6 +7,10 @@ import {ArtifactService} from "../../../../services/requirements/artifacts/artif
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 import {ARTIFACT_TYPE_LIST} from "../../../../utils/artifact-type-list-util";
 import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { Status } from 'src/app/utils/util.status';
+import { RichTextService } from 'src/app/services/richText/rich-text.service';
+import { AlertService } from 'src/app/services/sweetalert/alert.service';
 
 @Component({
     selector: 'app-create-artifact-form',
@@ -18,6 +22,7 @@ export class CreateArtifactFormComponent implements OnInit {
     @ViewChild('fileInput') fileInput!: ElementRef;
     @Input() dataRequirementToTableRequirement: RequirementsDataModel | undefined;
     protected readonly ARTIFACT_TYPE_LIST = ARTIFACT_TYPE_LIST;
+    formInvalid: boolean = true;
 
     public formGroup: FormGroup = this.formBuilder.group({
         name: new FormControl({value: '', disabled: true}),
@@ -30,10 +35,14 @@ export class CreateArtifactFormComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private artifactServices: ArtifactService,
+        private artifactService: ArtifactService,
         protected themeService: ThemeService,
         private localStorageService: LocalStorageService,
-        private capitalizeFirstPipe: CapitalizeFirstPipePipe) {
+        private capitalizeFirstPipe: CapitalizeFirstPipePipe,
+        private dialog: MatDialog,
+        private alertService: AlertService,
+        private richTextService: RichTextService,
+        @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
 
         this.createForm();
         this.uploader.onAfterAddingFile = (file: FileItem) => {
@@ -48,6 +57,10 @@ export class CreateArtifactFormComponent implements OnInit {
                 name: this.dataRequirementToTableRequirement?.name,
                 author: this.capitalizeFirstPipe.transform(this.localStorageService.getItem('name'))
             });
+            this.formGroup.valueChanges.subscribe((f) => {
+                    this.formInvalid = this.formGroup.invalid;
+            });
+     
     }
 
     protected fileOverBase(e: any): void {
@@ -60,7 +73,7 @@ export class CreateArtifactFormComponent implements OnInit {
 
     private createForm() {
         this.formGroup.valueChanges.subscribe(val => {
-            this.artifactServices.updateForm(this.formGroup);
+            this.artifactService.updateForm(this.formGroup);
         });
     }
 
@@ -105,5 +118,60 @@ export class CreateArtifactFormComponent implements OnInit {
     removeFile(item: FileItem) {
         item.remove();
         this.localStorageService.removeItem('file');
+    }
+
+    async saveData(): Promise<void> {
+
+        console.log("this.prepareDataArtifact(this.requirementId): ", this.prepareDataArtifact(this.data.id))
+
+        this.artifactService.createArtifact(this.prepareDataArtifact(this.data.id)).subscribe(respArt => {
+
+            try {
+                this.alertService.toSuccessAlert("Requisito Cadastrado com sucesso!");
+                //this.localStorageService.clearAll();
+                //this.dialog.closeAll();
+                setTimeout(() => {
+                    //window.location.reload();
+                }, 3000);
+            } catch (error) {
+                throw new Error(`Exception caused ${error} and api response id ${respArt}`);
+            }
+        });
+
+    }
+
+    prepareDataArtifact(requirementId?: number) {
+
+        const fileData = this.localStorageService.getItem('file');
+
+        // console.log("fileData: ", fileData)
+        //
+        // console.log("fileData type: ", typeof fileData)
+
+        let descriptionValue: string = '';
+
+        this.richTextService.currentContent.subscribe(content => {
+            descriptionValue = content;
+        })
+
+        //todo parei aqui, buscar a description
+
+        if (this.formGroup && this.formGroup.valid) {
+
+            console.log("this.artifactForm.value: ", this.formGroup.value)
+
+            return {
+                ...this.formGroup.value,
+                name: this.formGroup.value.type.name,
+                type: this.formGroup.value.type.identifier,
+                file: fileData,
+                requirementId: requirementId,
+                description: descriptionValue
+            };
+        }
+    }
+
+    close() {
+        this.dialog.closeAll();
     }
 }

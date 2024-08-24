@@ -107,46 +107,7 @@ export class AddArtifactsComponent implements OnInit {
         }
     }
 
-    async downloadFile() {
-        try {
-            const response = await this.artifactService.getArtifactByIdentifierArtifact(1);
-
-            // Verifique se a resposta possui a estrutura esperada
-            if (response && response.file) {
-                // Converter a resposta para um objeto JSON
-                const file = JSON.parse(response.file);
-
-                console.log("file: ", file)
-
-                // Verifique se o objeto `file` possui a propriedade `content`
-                if (file && file.content) {
-                    // Decodificar o conteúdo base64
-                    const byteCharacters = atob(file.content.split(',')[1]);
-                    const byteNumbers = new Array(byteCharacters.length);
-                    for (let i = 0; i < byteCharacters.length; i++) {
-                        byteNumbers[i] = byteCharacters.charCodeAt(i);
-                    }
-                    const byteArray = new Uint8Array(byteNumbers);
-
-                    // Criar um blob a partir do array de bytes
-                    const blob = new Blob([byteArray], { type: file.type });
-
-                    // Criar um link temporário para download
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = file.name;
-                    link.click();
-
-                    // Liberar o URL criado
-                    URL.revokeObjectURL(link.href);
-                } else {
-                    console.error('O arquivo não contém a propriedade "content".');
-                }
-            } else {
-                console.error('A resposta não contém o arquivo esperado.');
-            }
-        } catch (error) {
-            console.error('Error downloading the file', error);
-        }
+    close() {
+        this.dialog.closeAll();
     }
 }
