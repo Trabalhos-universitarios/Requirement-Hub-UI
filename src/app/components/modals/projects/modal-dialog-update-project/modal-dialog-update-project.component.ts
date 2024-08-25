@@ -53,7 +53,6 @@ export class ModalDialogUpdateProjectComponent implements OnInit {
     }
 
     async saveData() {
-        this.spinnerService.start();
         this.currentProjectTeam = this.updateProjectService.getCurrentProjectTeam();
 
         if (this.formGroup && this.formGroup.valid) {
@@ -75,8 +74,8 @@ export class ModalDialogUpdateProjectComponent implements OnInit {
                 if (resp) {
                     this.alertService.toSuccessAlert("Projeto atualizado com sucesso!");
                     this.dialog.closeAll();
+                    this.spinnerService.start();
                     reloadPage()
-                    this.spinnerService.stop();
                 }
             });
         }

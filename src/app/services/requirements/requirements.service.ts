@@ -57,7 +57,7 @@ export class RequirementsService {
         );
     }
 
-    deleteRequirement(id: number): Promise<any> {
+    async deleteRequirement(id: number): Promise<any> {
         return firstValueFrom(this.http.delete(`${this.baseUrl}/requirements/${id}`));
     }
 }
