@@ -3,7 +3,7 @@
 
         <mat-form-field class="mat-forms-fro-project" *ngIf="dataRequirementToTableRequirement?.name">
             <mat-label>Requisito referência</mat-label>
-            <input matInput formControlName="name">
+            <input matInput formControlName="requirement">
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
@@ -12,9 +12,14 @@
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="Ex: Teste login" formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field class="mat-forms-fro-project">
             <mat-label>Tipo</mat-label>
             <mat-select formControlName="type">
-                <mat-option *ngFor="let type of ARTIFACT_TYPE_LIST" [value]="{identifier: type.identifier, name: type.name}" [matTooltip]="type.name" matTooltipPosition="right">
+                <mat-option *ngFor="let type of ARTIFACT_TYPE_LIST" [value]="type" [matTooltip]="type.name" matTooltipPosition="right">
                     {{ type.identifier }}
                 </mat-option>
             </mat-select>

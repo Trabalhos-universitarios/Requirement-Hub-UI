@@ -9,6 +9,8 @@ import {Status} from "../../../../utils/util.status";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 import {Observable} from "rxjs";
 import {RichTextService} from "../../../../services/richText/rich-text.service";
+import {SpinnerService} from "../../../../services/spinner/spinner.service";
+import {reloadPage} from "../../../../utils/reload.page";
 
 @Component({
     selector: 'app-add-artifacts',
@@ -28,6 +30,7 @@ export class AddArtifactsComponent implements OnInit {
         private dialog: MatDialog,
         private localStorageService: LocalStorageService,
         private richTextService: RichTextService,
+        private spinnerService: SpinnerService,
         @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
 
         console.log("DATA: ", data)
@@ -46,23 +49,36 @@ export class AddArtifactsComponent implements OnInit {
     }
 
     async saveData(): Promise<void> {
-
-        console.log("this.prepareDataArtifact(this.requirementId): ", this.prepareDataArtifact(this.data.id))
-
-        this.artifactService.createArtifact(this.prepareDataArtifact(this.data.id)).subscribe(respArt => {
-
-            try {
-                this.alertService.toSuccessAlert("Requisito Cadastrado com sucesso!");
-                //this.localStorageService.clearAll();
-                //this.dialog.closeAll();
-                setTimeout(() => {
-                    //window.location.reload();
-                }, 3000);
-            } catch (error) {
-                throw new Error(`Exception caused ${error} and api response id ${respArt}`);
+        try {
+            const response = await this.artifactService.createArtifact(this.prepareDataArtifact(this.data.id));
+            if (response) {
+                await this.alertService.toSuccessAlert("Artefato Cadastrado com sucesso!");
+                this.localStorageService.removeItem('file');
+                this.dialog.closeAll();
+                this.spinnerService.start();
+                reloadPage();
             }
-        });
-
+        } catch (error) {
+            switch (error) {
+                case 409:
+                    console.error("ENTOU AQUI 409", error)
+                    await this.alertService.toErrorAlert(
+                        "Erro!",
+                        "Já existe um artefato com esse nome e esse tipo vinculado a esse requisito!");
+                    break;
+                case 404:
+                    console.error("ENTOU AQUI 404", error)
+                    await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
+                    break;
+                case 500:
+                    console.error("ENTOU AQUI 500", error)
+                    await this.alertService.toErrorAlert("Erro!", "Erro interno do servidor!");
+                    break;
+                default:
+                    console.error("ENTOU AQUI OUTROS", error)
+                    await this.alertService.toErrorAlert("Erro!", "Erro ao cadastrar artefato - " + error);
+            }
+        }
     }
 
     prepareDataRequirement() {
@@ -80,17 +96,11 @@ export class AddArtifactsComponent implements OnInit {
 
         const fileData = this.localStorageService.getItem('file');
 
-        // console.log("fileData: ", fileData)
-        //
-        // console.log("fileData type: ", typeof fileData)
-
         let descriptionValue: string = '';
 
         this.richTextService.currentContent.subscribe(content => {
             descriptionValue = content;
         })
-
-        //todo parei aqui, buscar a description
 
         if (this.artifactForm && this.artifactForm.valid) {
 
@@ -98,8 +108,8 @@ export class AddArtifactsComponent implements OnInit {
 
             return {
                 ...this.artifactForm.value,
-                name: this.artifactForm.value.type.name,
-                type: this.artifactForm.value.type.identifier,
+                name: this.artifactForm.value.name,
+                type: this.artifactForm.value.type,
                 file: fileData,
                 requirementId: requirementId,
                 description: descriptionValue

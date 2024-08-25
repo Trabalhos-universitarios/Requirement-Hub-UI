@@ -77,3 +77,14 @@ tr.example-detail-row {
     margin: 10px;
   }
 }
+
+mat-paginator {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    margin-top: -39px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    background-color: transparent;
+}
