@@ -173,7 +173,7 @@ export class CreateArtifactFormComponent implements OnInit {
 
             return {
                 ...this.formGroup.value,
-                name: this.formGroup.value.type.name,
+                name: this.formGroup.value.name,
                 type: this.formGroup.value.type,
                 file: fileData,
                 requirementId: requirementId,

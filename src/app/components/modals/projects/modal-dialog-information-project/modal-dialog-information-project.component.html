@@ -6,14 +6,15 @@
 <mat-dialog-actions align="end">
 
     <button mat-raised-button
+            cdkFocusInitial
             (click)="close()">
         Fechar
         <mat-icon>close</mat-icon>
     </button>
 
     <button mat-raised-button
-            cdkFocusInitial
-            (click)="openCreateRequirement()">
+            (click)="openCreateRequirement()"
+            [hidden]="isPermited()">
         Criar requisito
         <mat-icon>add</mat-icon>
     </button>

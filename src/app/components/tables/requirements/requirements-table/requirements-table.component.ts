@@ -17,6 +17,7 @@ import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {response} from "express";
 import { ArtifactsRequirementsTableComponent } from '../artifacts-requirements-table/artifacts-requirements-table.component';
 import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
+import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 
 @Component({
     selector: 'app-requirements-table',
@@ -57,7 +58,8 @@ export class RequirementsTableComponent implements AfterViewInit {
                 private usersService: UsersService,
                 private spinnerService: SpinnerService,
                 private capitalizeFirstPipe: CapitalizeFirstPipePipe,
-                private alertService: AlertService,) {
+                private alertService: AlertService,
+                private localStorage: LocalStorageService) {
         spinnerService.start()
         this.getData().then();
     }
@@ -91,6 +93,15 @@ export class RequirementsTableComponent implements AfterViewInit {
 
     protected sanitizeHtml(html: string): SafeHtml {
         return this.sanitizer.bypassSecurityTrustHtml(html);
+    }
+
+    isPermitted() {
+        if (this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
+            this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
+            this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO") {
+            return false;
+        }
+        return true;
     }
 
     protected getStatusIcon(status: string) {
