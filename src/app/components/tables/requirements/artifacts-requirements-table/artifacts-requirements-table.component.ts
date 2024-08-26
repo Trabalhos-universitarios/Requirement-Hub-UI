@@ -81,6 +81,8 @@ export class ArtifactsRequirementsTableComponent {
         switch (iconName) {
             case "border_color":
                 return {color: colorIcon};
+            case "download":
+                return {color: colorIcon};
             case "delete_forever":
                 return {color: colorIcon};
             case "info":
@@ -185,17 +187,29 @@ export class ArtifactsRequirementsTableComponent {
         }
     }
 
-  deleteArtifact(id: number) {
-    this.artifactRequirementService.deleteArtifactById(id)
+  async deleteArtifact(id: number) {
+
+    const result = await this.alertService.toOptionalActionAlert(
+        "Deletar artefato requisito",
+        "Deseja realmente excluir o artefato?"
+    );
+
+    if (result.isConfirmed) {
+        this.artifactRequirementService.deleteArtifactById(id)
       .subscribe({
-        next: () => {
-            this.alertService.toSuccessAlert(`Artefato ${id} deletado com sucesso.`);
-            this.dialog.closeAll();
-        },
-        error: (error) => {
-          console.error("Erro ao deletar o artefato:", error);
-        }
-      });
-  }
+            next: () => {
+                this.alertService.toSuccessAlert(`Artefato ${id} deletado com sucesso.`);
+                this.dialog.closeAll();
+            },
+            error: (error) => {
+              console.error("Erro ao deletar o artefato:", error);
+            }
+        });
+      }
+    }
+
+    async updateArtifact(id: number) {
+        this.alertService.toSuccessAlert(`Falta implementar! ID artefato: ${id}`);
+    }
 }
 

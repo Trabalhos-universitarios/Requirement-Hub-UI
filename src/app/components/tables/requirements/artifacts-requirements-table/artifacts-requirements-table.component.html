@@ -27,6 +27,9 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
+                    <button [disabled]="isPermited()" mat-menu-item class="icon" (click)="updateArtifact(element.id)">
+                        <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
+                    </button>
                     <button mat-menu-item class="icon" (click)="downloadArtifact(element.id)">
                         <mat-icon [ngStyle]="stylesIconColor('download')">download</mat-icon>Download
                     </button>
