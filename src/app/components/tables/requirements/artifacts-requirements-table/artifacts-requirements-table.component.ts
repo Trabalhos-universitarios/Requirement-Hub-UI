@@ -8,22 +8,32 @@ import { ArtifactService } from 'src/app/services/requirements/artifacts/artifac
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 import { AlertService } from 'src/app/services/sweetalert/alert.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-artifacts-requirements-table',
   templateUrl: './artifacts-requirements-table.component.html',
-  styleUrls: ['./artifacts-requirements-table.component.scss']
+  styleUrls: ['./artifacts-requirements-table.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ArtifactsRequirementsTableComponent {
   
   dataSource = new MatTableDataSource<ArtifactResponseModel>();
+  expandedElement: ArtifactResponseModel | null = null;
 
     displayedColumns: string[] =
         [
             'name',
             'filename',
             'size',
-            'actions'
+            'actions',
         ];
 
     constructor(protected themeService: ThemeService,
@@ -32,6 +42,7 @@ export class ArtifactsRequirementsTableComponent {
                 private artifactRequirementService: ArtifactService,
                 private alertService: AlertService,
                 private spinnerService: SpinnerService,
+                private sanitizer: DomSanitizer,
                 @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
         this.getData().then();
     }
@@ -56,6 +67,10 @@ export class ArtifactsRequirementsTableComponent {
 
     formatSize(sizeInBytes: number): string {
         return (sizeInBytes / 1024).toFixed(2) + ' KB';
+    }
+
+    sanitizeHtml(html: string): SafeHtml {
+        return this.sanitizer.bypassSecurityTrustHtml(html);
     }
 
     stylesIconColor(iconName: string) {
