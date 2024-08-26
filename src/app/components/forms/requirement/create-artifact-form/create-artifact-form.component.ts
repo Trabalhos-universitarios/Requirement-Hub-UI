@@ -1,5 +1,5 @@
 import {Component, ElementRef, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {FileItem, FileUploader} from "ng2-file-upload";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
@@ -25,9 +25,10 @@ export class CreateArtifactFormComponent implements OnInit {
     formInvalid: boolean = true;
 
     public formGroup: FormGroup = this.formBuilder.group({
-        name: new FormControl({value: '', disabled: true}),
+        requirement: new FormControl({value: '', disabled: true}),
         author: new FormControl({value: '', disabled: true}),
-        type: new FormControl(''),
+        name: new FormControl('', Validators.required),
+        type: new FormControl('', Validators.required),
         description: new FormControl(''),
     });
     protected uploader: FileUploader = new FileUploader({url: '', itemAlias: 'file'});
@@ -54,7 +55,7 @@ export class CreateArtifactFormComponent implements OnInit {
     public ngOnInit(): void {
         this.formGroup.patchValue(
             {
-                name: this.dataRequirementToTableRequirement?.name,
+                requirement: this.dataRequirementToTableRequirement?.name,
                 author: this.capitalizeFirstPipe.transform(this.localStorageService.getItem('name'))
             });
             this.formGroup.valueChanges.subscribe((f) => {

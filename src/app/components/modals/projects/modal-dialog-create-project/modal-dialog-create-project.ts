@@ -52,15 +52,13 @@ export class ModalDialogCreateProjectComponent implements OnInit {
     }
 
     async saveData(): Promise<void> {
-        this.spinnerService.start();
         try {
             const response = await this.projectService.createProject(this.prepareData());
-
             if (response) {
                 await this.alertService.toSuccessAlert(`Projeto cadastrado com sucesso!`);
                 this.localStorageService.removeItem('file');
                 this.dialog.closeAll();
-                this.spinnerService.stop()
+                this.spinnerService.start();
                 reloadPage()
             }
         } catch (error) {
@@ -81,8 +79,6 @@ export class ModalDialogCreateProjectComponent implements OnInit {
                     console.log("ENTOU AQUI OUTROS", error)
                     await this.alertService.toErrorAlert("Erro!", "Erro ao cadastrar projeto - " + error);
             }
-        } finally {
-            this.spinnerService.stop();
         }
     }
 

@@ -14,6 +14,7 @@ import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
 import {reloadPage} from "../../../../utils/reload.page";
 import {AlertService} from "../../../../services/sweetalert/alert.service";
+import {response} from "express";
 import { ArtifactsRequirementsTableComponent } from '../artifacts-requirements-table/artifacts-requirements-table.component';
 import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 
@@ -160,7 +161,12 @@ export class RequirementsTableComponent implements AfterViewInit {
         );
 
         if (result.isConfirmed) {
-            await this.requirementsService.deleteRequirement(id);
+            await this.requirementsService.deleteRequirement(id).then(response => {
+                if (response) {
+                    this.alertService.toSuccessAlert("Requisito excluído com sucesso!");
+                }
+            });
+            this.spinnerService.start();
             reloadPage();
         }
     }

@@ -25,6 +25,7 @@ import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {reloadPage} from "../../../../utils/reload.page";
 import { MatPaginator } from '@angular/material/paginator';
+import {SpinnerService} from "../../../../services/spinner/spinner.service";
 
 @Component({
     selector: 'app-projects-table',
@@ -63,7 +64,8 @@ export class ProjectsTableComponent implements AfterViewInit {
         private sanitizer: DomSanitizer,
         private dialog: MatDialog,
         private alertService: AlertService,
-        private projectsService: ProjectsService) {
+        private projectsService: ProjectsService,
+        private spinnerService: SpinnerService) {
     }
 
     ngAfterViewInit() {
@@ -169,6 +171,7 @@ export class ProjectsTableComponent implements AfterViewInit {
 
         if (result.isConfirmed) {
             await this.projectsService.deleteProject(this.projectsTableService.getCurrentProjectById());
+            this.spinnerService.start()
             reloadPage();
         }
     }

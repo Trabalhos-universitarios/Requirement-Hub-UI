@@ -48,7 +48,6 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
     }
 
     async saveData(): Promise<void> {
-        this.spinnerService.start();
         try {
             const response = await this.requirementService.createRequirements(this.prepareData()).then(response => response.identifier);
 
@@ -56,8 +55,8 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
                 await this.alertService.toSuccessAlert(`Reququisito ${response} cadastrado com sucesso!`);
                 this.localStorageService.removeItem('file');
                 this.dialog.closeAll();
+                this.spinnerService.start();
                 reloadPage()
-                this.spinnerService.stop()
             }
         } catch (error) {
             switch (error) {
@@ -77,8 +76,6 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
                     console.log("ENTOU AQUI OUTROS", error)
                     await this.alertService.toErrorAlert("Erro!", "Erro ao cadastrar requisito - " + error);
             }
-        } finally {
-            this.spinnerService.stop();
         }
     }
 

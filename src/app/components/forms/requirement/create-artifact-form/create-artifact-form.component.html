@@ -2,25 +2,30 @@
     <form [formGroup]="formGroup" novalidate>
         <div class="container-form-create-project">
 
-            <mat-form-field class="mat-forms-fro-project" *ngIf="dataRequirementToTableRequirement?.name">
-                <mat-label>Requisito referência</mat-label>
-                <input matInput formControlName="name">
-            </mat-form-field>
+        <mat-form-field class="mat-forms-fro-project" *ngIf="dataRequirementToTableRequirement?.name">
+            <mat-label>Requisito referência</mat-label>
+            <input matInput formControlName="requirement">
+        </mat-form-field>
 
-            <mat-form-field class="mat-forms-fro-project">
-                <mat-label>Autor</mat-label>
-                <input matInput placeholder="Ex: João Silva" formControlName="author">
-            </mat-form-field>
+        <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Autor</mat-label>
+            <input matInput placeholder="Ex: João Silva" formControlName="author">
+        </mat-form-field>
 
-            <mat-form-field class="mat-forms-fro-project">
-                <mat-label>Tipo</mat-label>
-                <mat-select formControlName="type">
-                    <mat-option *ngFor="let type of ARTIFACT_TYPE_LIST" [value]="{identifier: type.identifier, name: type.name}" [matTooltip]="type.name" matTooltipPosition="right">
-                        {{ type.identifier }}
-                    </mat-option>
-                </mat-select>
-                <mat-error>Campo obrigatório!</mat-error>
-            </mat-form-field>
+        <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="Ex: Teste login" formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="type">
+                <mat-option *ngFor="let type of ARTIFACT_TYPE_LIST" [value]="type" [matTooltip]="type.name" matTooltipPosition="right">
+                    {{ type.identifier }}
+                </mat-option>
+            </mat-select>
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
 
             <app-richTextEditor formControlName="description"></app-richTextEditor>
 
