@@ -1,6 +1,6 @@
 <mat-dialog-content>
 
-    <app-requirements-table></app-requirements-table>
+    <app-artifacts-requirements-table></app-artifacts-requirements-table>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
@@ -13,10 +13,11 @@
     </button>
 
     <button mat-raised-button
-            (click)="openCreateRequirement()"
-            [hidden]="isPermited()">
-        Criar requisito
-        <mat-icon>add</mat-icon>
+            [hidden]="isPermited()"
+            (click)="addData(data)">
+        Add artefato
+        <mat-icon>edit_document</mat-icon>
     </button>
 
 </mat-dialog-actions>
+

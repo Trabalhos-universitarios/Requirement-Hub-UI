@@ -37,14 +37,14 @@
                 <button mat-menu-item>
                     <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>Informações
                 </button>
-                <button mat-menu-item class="icon">
+                <button mat-menu-item class="icon" [disabled]="isPermitted()">
                     <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
                 </button>
-                <button mat-menu-item (click)="deleteRequirement(element.id)">
-                    <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
-                </button>
                 <button mat-menu-item (click)="openDialog('add', element)">
-                    <mat-icon [ngStyle]="stylesIconColor('add_circle')">add_circle</mat-icon>Adicionar artefatos
+                    <mat-icon [ngStyle]="stylesIconColor('add_circle')">folder_open</mat-icon>Artefatos requisitos
+                </button>
+                <button mat-menu-item (click)="deleteRequirement(element.id)" [disabled]="isPermitted()">
+                    <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
                 </button>
             </mat-menu>
         </td>

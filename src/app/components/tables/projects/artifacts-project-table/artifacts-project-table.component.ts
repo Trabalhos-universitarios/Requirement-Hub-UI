@@ -133,17 +133,26 @@ export class ArtifactsProjectTableComponent {
             });
     }
 
-  deleteArtifact(id: number) {
-    this.artifactProjectService.deleteArtifactById(id)
-      .subscribe({
-        next: () => {
-            this.alertService.toSuccessAlert(`Artefato ${id} deletado com sucesso.`);
-            this.dialog.closeAll();
-        },
-        error: (error) => {
-          console.error("Erro ao deletar o artefato:", error);
-        }
-      });
-  }
+  async deleteArtifact(id: number) {
+
+    const result = await this.alertService.toOptionalActionAlert(
+        "Deletar artefato projeto",
+        "Deseja realmente excluir o artefato?"
+    );
+
+    if (result.isConfirmed) {
+        this.artifactProjectService.deleteArtifactById(id)
+        .subscribe({
+          next: () => {
+              this.alertService.toSuccessAlert(`Artefato ${id} deletado com sucesso.`);
+              this.dialog.closeAll();
+          },
+          error: (error) => {
+            console.error("Erro ao deletar o artefato:", error);
+          }
+        });
+      }
+   }
+
 }
 

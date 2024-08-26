@@ -44,7 +44,15 @@ export class ArtifactService {
     );
   }
 
-  async getArtifactByIdentifierArtifact(id: number) {
+  async getArtifactByIdentifierArtifact(id: number)  {
     return firstValueFrom(this.http.get<ArtifactResponseModel>(`${this.baseUrl}/requirement-artifacts/${id}`));
+  }
+
+  async getArtifactByRequirementId(requirementId?: number) {
+    return firstValueFrom(this.http.get<ArtifactResponseModel[]>(`${this.baseUrl}/requirement-artifacts/by-requirement/${requirementId}`));
+  }
+
+  deleteArtifactById(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/requirement-artifacts/${id}`);
   }
 }

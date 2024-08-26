@@ -8,7 +8,6 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";
 import {MatDialog} from "@angular/material/dialog";
-import {AddArtifactsComponent} from "../../../modals/requirements/add-artifacts/add-artifacts.component";
 import {ProjectsTableService} from "../../../../services/projects/projects-table.service";
 import {UsersService} from "../../../../services/users/users.service";
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
@@ -16,6 +15,9 @@ import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.p
 import {reloadPage} from "../../../../utils/reload.page";
 import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {response} from "express";
+import { ArtifactsRequirementsTableComponent } from '../artifacts-requirements-table/artifacts-requirements-table.component';
+import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
+import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 
 @Component({
     selector: 'app-requirements-table',
@@ -56,7 +58,8 @@ export class RequirementsTableComponent implements AfterViewInit {
                 private usersService: UsersService,
                 private spinnerService: SpinnerService,
                 private capitalizeFirstPipe: CapitalizeFirstPipePipe,
-                private alertService: AlertService,) {
+                private alertService: AlertService,
+                private localStorage: LocalStorageService) {
         spinnerService.start()
         this.getData().then();
     }
@@ -90,6 +93,15 @@ export class RequirementsTableComponent implements AfterViewInit {
 
     protected sanitizeHtml(html: string): SafeHtml {
         return this.sanitizer.bypassSecurityTrustHtml(html);
+    }
+
+    isPermitted() {
+        if (this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
+            this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
+            this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO") {
+            return false;
+        }
+        return true;
     }
 
     protected getStatusIcon(status: string) {
@@ -143,7 +155,7 @@ export class RequirementsTableComponent implements AfterViewInit {
                 console.log("Aqui vai a ação a ser tomada em edit")
                 break
             case "add":
-                this.matDialog.open(AddArtifactsComponent, {
+                this.matDialog.open(ModalDialogArtifactsRequirementComponent, {
                     data: value
                 })
                 break
