@@ -61,8 +61,8 @@ export class ArtifactsRequirementsTableComponent {
                   });
                 this.spinnerService.stop();
             });
-
-           
+            
+            
     }
 
     formatSize(sizeInBytes: number): string {

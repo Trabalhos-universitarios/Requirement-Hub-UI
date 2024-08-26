@@ -85,11 +85,13 @@ export class CreateArtifactFormComponent implements OnInit {
         return this.themeService.isDarkMode()
             ? {
                 'background-color': '#616161',
-                'border-color': '#9E9E9E'
+                'border-color': '#9E9E9E',
+                 'color': '#EEEEEE'
             }
             : {
                 'background-color': '#EEEEEE',
-                'border-color': '#BDBDBD'
+                'border-color': '#BDBDBD',
+                'color': '#616161'
             };
     }
 
@@ -159,8 +161,22 @@ export class CreateArtifactFormComponent implements OnInit {
 
     prepareDataArtifact(requirementId?: number) {
 
-        const fileData = this.localStorageService.getItem('file');
+        let fileData: any = {
+            name: null,
+            size: null,
+            type: null,
+            content: null
+        };
 
+        let local = this.localStorageService.getItem('file') 
+
+        if(!(local && Object.keys(local).length === 0)){
+            fileData = this.localStorageService.getItem('file');
+        }
+        else{
+            fileData = JSON.stringify(fileData)
+        }
+      
         let descriptionValue: string = '';
 
         this.richTextService.currentContent.subscribe(content => {

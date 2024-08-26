@@ -74,3 +74,14 @@
 ul {
   list-style-type: none;
 }
+
+.container .create-artifact-button {
+  display: flex;
+  justify-content: flex-end !important;
+  align-items: end !important;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  .mat-button {
+    margin-left: 10px;
+  }
+}
