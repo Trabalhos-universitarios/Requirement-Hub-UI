@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RequirementsService} from "../../../../services/requirements/requirements.service";
 import {ProjectsTableService} from 'src/app/services/projects/projects-table.service';
@@ -16,13 +16,14 @@ import {RichTextService} from "../../../../services/richText/rich-text.service";
     templateUrl: './create-requirement-form.component.html',
     styleUrls: ['./create-requirement-form.component.scss']
 })
-export class CreateRequirementFormComponent {
+export class CreateRequirementFormComponent implements OnInit {
 
+    @Input() inputRequirementDataWithUpdateRequirement: RequirementsDataModel | undefined;
     public formGroup: FormGroup = this.formBuilder.group({
         projectRelated: new FormControl({value: "", disabled: true}),
         version: new FormControl({value: "", disabled: true}),
         author: new FormControl({value: "", disabled: true}),
-        /*identifier: new FormControl({value: "", disabled: true}),*/ // ESSE CAMPO DEVERÁ APARECER NA TELA DE EDITAR REQUISITO
+        identifier: new FormControl({value: "", disabled: true}), // ESSE CAMPO DEVERÁ APARECER NA TELA DE EDITAR REQUISITO
         name: new FormControl('', Validators.required),
         stakeholders: new FormControl('', Validators.required),
         risk: new FormControl('', Validators.required),
@@ -48,13 +49,27 @@ export class CreateRequirementFormComponent {
                 private stakeholderService: StakeholdersService,
                 private userService: UsersService,
                 private capitalizeFirstPipe: CapitalizeFirstPipePipe,
-                private richTextService: RichTextService) {
+                private richTextService: RichTextService) {}
+
+    ngOnInit() {
+        this.disableFormWithUpdateRequirement();
         this.getCurrentProject();
         this.createForm();
         this.getCurrentStakeholders().then()
         this.getRequirementAnalysts().then()
         this.getRequirements().then()
         this.autoCompleteForm().then()
+    }
+
+    disableFormWithUpdateRequirement() {
+
+        const valuesForm: string[] = ['projectRelated', 'version', 'author', 'identifier', 'name', 'stakeholders', 'type',]
+
+        for (let value of valuesForm) {
+            if (this.inputRequirementDataWithUpdateRequirement) {
+                this.formGroup.get(value)?.disable();
+            }
+        }
     }
 
     private createForm() {
@@ -68,6 +83,7 @@ export class CreateRequirementFormComponent {
                 projectRelated: this.getCurrentProject(),
                 author: this.getCurrentAuthor(),
                 version: 1,
+                identifier: this.inputRequirementDataWithUpdateRequirement?.identifier,
             }
         );
     }

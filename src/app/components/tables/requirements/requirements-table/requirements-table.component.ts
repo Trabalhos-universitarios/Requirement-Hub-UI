@@ -18,6 +18,9 @@ import {response} from "express";
 import { ArtifactsRequirementsTableComponent } from '../artifacts-requirements-table/artifacts-requirements-table.component';
 import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
+import {
+    ModalDialogUpdateRequirementComponent
+} from "../../../modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component";
 
 @Component({
     selector: 'app-requirements-table',
@@ -73,6 +76,9 @@ export class RequirementsTableComponent implements AfterViewInit {
             response.forEach(async requirement => {
                 requirement.author = await this.getAuthorById(requirement.author).then();
             });
+
+            console.log("RESPONSE", response)
+
             this.dataSource.data = response;
             this.spinnerService.stop();
         })
@@ -152,7 +158,10 @@ export class RequirementsTableComponent implements AfterViewInit {
                 console.log("Aqui vai a ação a ser tomada em info")
                 break
             case "edit":
-                console.log("Aqui vai a ação a ser tomada em edit")
+                this.matDialog.open(ModalDialogUpdateRequirementComponent, {
+                    data: value,
+                    width: '1000px',
+                })
                 break
             case "add":
                 this.matDialog.open(ModalDialogArtifactsRequirementComponent, {

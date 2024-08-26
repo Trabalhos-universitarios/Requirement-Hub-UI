@@ -76,6 +76,7 @@ import { ModalDialogArtifactsProjectComponent } from './components/modals/projec
 import { CreateArtifactProjectFormComponent } from './components/forms/project/create-artifact-project-form/create-artifact-project-form.component';
 import { ModalDialogArtifactsRequirementComponent } from './components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 import { ArtifactsRequirementsTableComponent } from './components/tables/requirements/artifacts-requirements-table/artifacts-requirements-table.component';
+import { ModalDialogUpdateRequirementComponent } from './components/modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component';
 
 @NgModule({
     declarations: [
@@ -111,7 +112,8 @@ import { ArtifactsRequirementsTableComponent } from './components/tables/require
         ModalDialogArtifactsProjectComponent,
         CreateArtifactProjectFormComponent,
         ModalDialogArtifactsRequirementComponent,
-        ArtifactsRequirementsTableComponent
+        ArtifactsRequirementsTableComponent,
+        ModalDialogUpdateRequirementComponent
     ],
     imports: [
         BrowserModule,

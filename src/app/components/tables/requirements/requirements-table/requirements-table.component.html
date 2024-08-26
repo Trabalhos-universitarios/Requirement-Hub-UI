@@ -37,7 +37,7 @@
                 <button mat-menu-item>
                     <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>Informações
                 </button>
-                <button mat-menu-item class="icon" [disabled]="isPermitted()">
+                <button mat-menu-item class="icon" [disabled]="isPermitted()" (click)="openDialog('edit', element)">
                     <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
                 </button>
                 <button mat-menu-item (click)="openDialog('add', element)">

@@ -6,12 +6,12 @@
             <mat-label>Projeto relacionado</mat-label>
             <input matInput formControlName="projectRelated">
         </mat-form-field>
-<!--todo não remover daqui, vamos usar na tela de edit possivelmente-->
-<!--        <mat-form-field class="mat-forms-fro-project">-->
-<!--            <mat-label>Identificador</mat-label>-->
-<!--            <input matInput placeholder="Ex: RF1" formControlName="identifier">-->
-<!--            <mat-error>Campo obrigatório!</mat-error>-->
-<!--        </mat-form-field>-->
+
+        <mat-form-field class="mat-forms-fro-project" *ngIf="inputRequirementDataWithUpdateRequirement?.identifier">
+            <mat-label>Identificador</mat-label>
+            <input matInput formControlName="identifier">
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Versão</mat-label>
