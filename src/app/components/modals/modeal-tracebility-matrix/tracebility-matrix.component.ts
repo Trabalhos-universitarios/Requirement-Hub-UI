@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatrixService } from 'src/app/services/matrix/traceability-matrix.service';
 import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
+import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
   templateUrl: './tracebility-matrix.component.html',
   styleUrls: ['./tracebility-matrix.component.scss']
 })
-export class TracebilityMatrixComponent {
+export class TracebilityMatrixComponent implements AfterViewInit{
 
   dataSource = [];
   currentProject: string = '';
@@ -54,16 +55,29 @@ export class TracebilityMatrixComponent {
   constructor(
       private traceabilityService: MatrixService,
       private projectTableService: ProjectsTableService,
-      private themeService: ThemeService)
+      private themeService: ThemeService,
+      private spinnerService: SpinnerService)
       {
-        this.getData();
+        
       }
+  ngAfterViewInit(): void { 
+        this.getData();
+  }
 
   getData() {
-      this.traceabilityService.getTraceabilityMatrix(this.projectTableService.getCurrentProjectById()).subscribe((matrix: []) => {
+    this.spinnerService.start();
+    this.traceabilityService.getTraceabilityMatrix(this.projectTableService.getCurrentProjectById())
+      .subscribe(
+        (matrix: []) => {
           this.dataSource = matrix;
           this.currentProject = this.projectTableService.getCurrentProjectByName();
-      });
+          this.spinnerService.stop();
+        },
+        (error) => {
+          console.error('Erro ao carregar a matriz de rastreabilidade:', error);
+          this.spinnerService.stop();
+        }
+      );
   }
 
   getCellStyles(cell: any): any {
