@@ -69,7 +69,7 @@ export class RequirementsTableComponent implements AfterViewInit {
     }
 
     protected async getData() {
-        this.requirementsService.getRequirementsByProjectRelated(this.getCurrentProjectById()).then(response => {
+        this.requirementsService.listRequirementsByProjectId(this.getCurrentProjectById()).then(response => {
             response.forEach(async requirement => {
                 requirement.author = await this.getAuthorById(requirement.author).then();
             });
