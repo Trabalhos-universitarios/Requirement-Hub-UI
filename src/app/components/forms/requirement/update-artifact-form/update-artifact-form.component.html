@@ -23,7 +23,7 @@
           <div ng2FileDrop [uploader]="uploader" class="file-drop-zone" (fileOver)="fileOverBase($event)">
             <span>Arraste e solte</span>
             <span>ou</span>
-            <button class="button-update-file" mat-raised-button (click)="selectFile()">
+            <button class="button-update-file" mat-raised-button (click)="selectFile()" [disabled]="uploader.queue.length > 0">
               <mat-icon>upload_file</mat-icon>
               Upload de arquivo
             </button>

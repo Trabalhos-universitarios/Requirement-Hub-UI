@@ -33,6 +33,7 @@ export class UpdateArtifactFormComponent implements OnInit{
   });
   protected uploader: FileUploader = new FileUploader({url: '', itemAlias: 'file'});
   protected hasBaseDropZoneOver: boolean = false;
+  hasFile: boolean = false;
 
   constructor(
       private formBuilder: FormBuilder,
@@ -50,6 +51,10 @@ export class UpdateArtifactFormComponent implements OnInit{
       this.createForm();
 
       this.uploader.onAfterAddingFile = (file: FileItem) => {
+        // Se já existir um arquivo na fila, remove-o antes de adicionar um novo
+        if (this.uploader.queue.length > 1) {
+            this.uploader.queue[0].remove();
+        }
         file.withCredentials = false;
         this.simulateUploadProgress(file);
         }
@@ -91,7 +96,8 @@ export class UpdateArtifactFormComponent implements OnInit{
   }
 
   protected selectFile() {
-      this.fileInput.nativeElement.click();
+    this.uploader.clearQueue();
+    this.fileInput.nativeElement.click();
   }
 
   private createForm() {
@@ -187,9 +193,9 @@ export class UpdateArtifactFormComponent implements OnInit{
   }
 
   removeFile(item: FileItem) {
-      item.remove(); // Remove o item da fila do uploader
-      //this.uploader.clearQueue();
+      item.remove();
       this.localStorageService.removeItem('file');
+      this.hasFile = false;
   }
 
   updateData(): void {
