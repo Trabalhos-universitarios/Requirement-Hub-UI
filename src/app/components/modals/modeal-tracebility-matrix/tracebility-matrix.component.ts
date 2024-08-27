@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatrixService } from 'src/app/services/matrix/traceability-matrix.service';
 import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
+import { RequirementsService } from 'src/app/services/requirements/requirements.service';
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 
@@ -16,59 +17,30 @@ export class TracebilityMatrixComponent implements AfterViewInit{
   highlightedRow: number | null = null;
   highlightedColumn: number | null = null;
   relationsIdentifierAndName: any = {
-    RF1: "Cadastro de Projetos/ Engenharia",
-    RF2: "Cadastro de Membros do Projeto/ Engenharia",
-    RF3: "Login de Membros do Projeto/ Engenharia",
-    RF4: "Controle de Acesso/ Engenharia",
-    RF5: "Área Inicial dos Projetos/ Negócios",
-    RF6: "Cadastro de Requisitos/ Negócios",
-    RF7: "Classificação e Organização de Requisitos/ Negócios",
-    RF8: "Cadastro de Artefatos, Módulos e Documentos/ Negócios",
-    RF9: "Associação de Requisitos com Artefatos/ Negócios",
-    RF10: "Visualização das Associações dos Requisitos/ Negócios",
-    RF11: "Revisões dos Requisitos/ Negócios",
-    RF12: "Associação de Requisitos a Usuários ou Equipes/ Negócios",
-    RF13: "Especificação dos Requisitos/ Negócios",
-    RF14: "Validação dos Requisitos/ Negócios",
-    RF15: "Validação de Artefatos/ Negócios",
-    RF16: "Versionamento dos Requisitos/ Negócios",
-    RF17: "Registro de Mudanças nos Requisitos/ Negócios",
-    RF18: "Geração de Visualizações de Status/ Negócios",
-    RF19: "Criação de Matriz de Rastreabilidade de Requisitos/ Negócios",
-    RF20: "Deleção de Projetos/ Negócios",
-    RF21: "Deleção de Membros de Projetos/ Negócios",
-    RF22: "Upload de Arquivos de Projeto/ Negócios",
-    RF23: "Download de Arquivos de Projeto/ Negócios",
-    RNF1: "Criação de Relatórios/ Engenharia",
-    RNF2: "Monitoramento de Performance/ Engenharia",
-    RNF3: "Automatização de Tarefas/ Engenharia",
-    UC1: "Simulação de Cenários",
-    UC2: "Gestão de Equipes",
-    UC3: "Planejamento de Recursos",
-    UH1: "Personalização de Interface",
-    UH2: "Criação de Dashboards",
-    CT1: "Validação de Dados",
-    CT2: "Integração de Sistemas",
-    M1: "Gestão de Configurações"
-};
+    // Mapeamento inicial existente...
+  };
 
   constructor(
-      private traceabilityService: MatrixService,
-      private projectTableService: ProjectsTableService,
-      private themeService: ThemeService,
-      private spinnerService: SpinnerService)
-      {
-        
-      }
-  ngAfterViewInit(): void { 
-        this.getData();
+    private traceabilityService: MatrixService,
+    private projectTableService: ProjectsTableService,
+    private themeService: ThemeService,
+    private spinnerService: SpinnerService,
+    private requirementsService: RequirementsService // Altere o serviço para o RequirementsService
+  ) { }
+
+  ngAfterViewInit(): void {
+    this.getData();
+    this.getRequirementIdentifier();
   }
 
-  getData() {
+  async getData() {
     this.spinnerService.start();
-    this.traceabilityService.getTraceabilityMatrix(this.projectTableService.getCurrentProjectById())
+    const projectId = this.projectTableService.getCurrentProjectById();
+
+    // Carregar a matriz de rastreabilidade
+    this.traceabilityService.getTraceabilityMatrix(projectId)
       .subscribe(
-        (matrix: []) => {
+        async (matrix: []) => {
           this.dataSource = matrix;
           this.currentProject = this.projectTableService.getCurrentProjectByName();
           this.spinnerService.stop();
@@ -78,6 +50,21 @@ export class TracebilityMatrixComponent implements AfterViewInit{
           this.spinnerService.stop();
         }
       );
+  }
+
+  async getRequirementIdentifier() {
+
+      const projectId = this.projectTableService.getCurrentProjectById();
+          try {
+            const requisitos = await this.requirementsService.getRequirementsByProjectRelated(projectId);
+            requisitos.forEach(req => {
+              this.relationsIdentifierAndName[req.identifier] = req.name
+            });
+          } catch (error) {
+            console.error('Erro ao carregar os requisitos:', error);
+          } finally {
+            console.log(this.relationsIdentifierAndName)
+          }
   }
 
   getCellStyles(cell: any): any {
