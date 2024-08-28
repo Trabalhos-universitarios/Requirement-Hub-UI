@@ -2,6 +2,12 @@
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
 
         <!-- Nome Column -->
+        <ng-container matColumnDef="identifier">
+            <th mat-header-cell *matHeaderCellDef> Nome </th>
+            <td mat-cell *matCellDef="let element"> {{ element.identifier }}</td>
+        </ng-container>
+
+        <!-- Nome Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Nome </th>
             <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
@@ -27,13 +33,13 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button [disabled]="isPermited()" mat-menu-item class="icon" (click)="updateArtifact(element.id)">
+                    <button [disabled]="isPermited()" mat-menu-item class="icon" (click)="updateArtifact(element)">
                         <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
                     </button>
-                    <button mat-menu-item (click)="visualizarArtifact(element.id, element.fileName)">
+                    <button [disabled]="!element.file.name" mat-menu-item (click)="visualizarArtifact(element.id, element.fileName)">
                         <mat-icon [ngStyle]="stylesIconColor('info')">visibility</mat-icon>Visualizar
                     </button>
-                    <button mat-menu-item class="icon" (click)="downloadArtifact(element.id)">
+                    <button [disabled]="!element.file.name" mat-menu-item class="icon" (click)="downloadArtifact(element.id)">
                         <mat-icon [ngStyle]="stylesIconColor('download')">download</mat-icon>Download
                     </button>
                     <button [disabled]="isPermited()" mat-menu-item (click)="deleteArtifact(element.id)">

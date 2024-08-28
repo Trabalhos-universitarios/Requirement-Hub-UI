@@ -44,13 +44,21 @@ export class ArtifactService {
     );
   }
 
-  async getArtifactByIdentifierArtifact(id: number)  {
+  async getArtifactByIdentifierArtifact(Identifier: number)  {
+    return firstValueFrom(this.http.get<ArtifactResponseModel>(`${this.baseUrl}/requirement-artifacts/${Identifier}`));
+  }
+
+  async getArtifactById(id?: string)  {
     return firstValueFrom(this.http.get<ArtifactResponseModel>(`${this.baseUrl}/requirement-artifacts/${id}`));
   }
 
   async getArtifactByRequirementId(requirementId?: number) {
     return firstValueFrom(this.http.get<ArtifactResponseModel[]>(`${this.baseUrl}/requirement-artifacts/by-requirement/${requirementId}`));
   }
+
+  updateArtifact(id?: string, artifact?: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/requirement-artifacts/${id}`, artifact)
+}
 
   deleteArtifactById(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/requirement-artifacts/${id}`);

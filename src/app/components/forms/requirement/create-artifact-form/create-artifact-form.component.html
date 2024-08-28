@@ -64,7 +64,7 @@
                 <mat-icon>cancel</mat-icon>Cancelar
             </button>
             <button mat-raised-button class="mat-button"
-                    [disabled]="formInvalid || this.uploader.queue.length === 0"
+                    [disabled]="formInvalid"
                     (click)="saveData()">
                 <mat-icon>save</mat-icon>Salvar
             </button>

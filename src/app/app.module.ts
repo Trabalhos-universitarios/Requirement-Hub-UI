@@ -77,6 +77,8 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
 import { ModalDialogArtifactsRequirementComponent } from './components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 import { ArtifactsRequirementsTableComponent } from './components/tables/requirements/artifacts-requirements-table/artifacts-requirements-table.component';
 import { ModalDialogUpdateRequirementComponent } from './components/modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component';
+import { UpdateArtifactFormComponent } from './components/forms/requirement/update-artifact-form/update-artifact-form.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -112,8 +114,9 @@ import { ModalDialogUpdateRequirementComponent } from './components/modals/requi
         ModalDialogArtifactsProjectComponent,
         CreateArtifactProjectFormComponent,
         ModalDialogArtifactsRequirementComponent,
+        ModalDialogUpdateRequirementComponent,
         ArtifactsRequirementsTableComponent,
-        ModalDialogUpdateRequirementComponent
+        UpdateArtifactFormComponent
     ],
     imports: [
         BrowserModule,
@@ -150,7 +153,8 @@ import { ModalDialogUpdateRequirementComponent } from './components/modals/requi
         RichTextEditorModule,
         MatPaginatorModule,
         MatTableModule,
-        UpdateProjectUserTableComponent
+        UpdateProjectUserTableComponent,
+        MatCheckboxModule
     ],
     providers: [
         [CapitalizeFirstPipePipe],

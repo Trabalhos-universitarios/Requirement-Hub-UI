@@ -81,11 +81,13 @@ export class CreateArtifactProjectFormComponent implements OnInit {
         return this.themeService.isDarkMode()
             ? {
                 'background-color': '#616161',
-                'border-color': '#9E9E9E'
+                'border-color': '#9E9E9E',
+                 'color': '#EEEEEE'
             }
             : {
                 'background-color': '#EEEEEE',
-                'border-color': '#BDBDBD'
+                'border-color': '#BDBDBD',
+                'color': '#616161'
             };
     }
 
