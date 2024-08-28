@@ -10,6 +10,7 @@ import { AlertService } from 'src/app/services/sweetalert/alert.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { UpdateArtifactFormComponent } from 'src/app/components/forms/requirement/update-artifact-form/update-artifact-form.component';
 
 @Component({
   selector: 'app-artifacts-requirements-table',
@@ -30,6 +31,7 @@ export class ArtifactsRequirementsTableComponent {
 
     displayedColumns: string[] =
         [
+            'identifier',
             'name',
             'filename',
             'size',
@@ -208,8 +210,10 @@ export class ArtifactsRequirementsTableComponent {
       }
     }
 
-    async updateArtifact(id: number) {
-        this.alertService.toSuccessAlert(`Falta implementar! ID artefato: ${id}`);
+    async updateArtifact(value: ArtifactResponseModel) {
+            this.dialog.open(UpdateArtifactFormComponent, {
+              data: value
+          }); 
     }
 }
 

@@ -73,6 +73,7 @@ export class RequirementsTableComponent implements AfterViewInit {
             response.forEach(async requirement => {
                 requirement.author = await this.getAuthorById(requirement.author).then();
             });
+            response.sort((a, b) => a.identifier.localeCompare(b.identifier));
             this.dataSource.data = response;
             this.spinnerService.stop();
         })
