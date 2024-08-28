@@ -31,6 +31,10 @@ export class RequirementsService {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/project-id/${projectId}`))
     }
 
+    async listRequirementsByProjectId(projectId: number): Promise<RequirementsDataModel[]> {
+        return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/byproject/${projectId}`))
+    }
+
     getRequirementsByIdentifier(id: number | undefined): Observable<RequirementsDataModel[]> {
         return this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/${id}`);
     }
