@@ -11,7 +11,7 @@ export interface RequirementsDataModel {
     status?: string;
     description: string;
     stakeholderIds: string[];
-    responsibleIds: number[];
+    responsibleIds: string[];
     effort: string;
     dependencyIds: number[];
     projectId?: number[];

@@ -72,14 +72,11 @@ export class RequirementsTableComponent implements AfterViewInit {
     }
 
     protected async getData() {
-        this.requirementsService.listRequirementsByProjectId(this.getCurrentProjectById()).then(response => {
+        this.requirementsService.getRequirementsByProjectId(this.getCurrentProjectById()).then(response => {
             response.forEach(async requirement => {
                 requirement.author = await this.getAuthorById(requirement.author).then();
             });
             response.sort((a, b) => a.identifier.localeCompare(b.identifier));
-
-            console.log("RESPONSE", response)
-
             this.dataSource.data = response;
             this.spinnerService.stop();
         })

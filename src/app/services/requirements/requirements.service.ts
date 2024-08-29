@@ -23,25 +23,17 @@ export class RequirementsService {
         this.formGroupSource.next(formGroup);
     }
 
-    async getAllRequirements(): Promise<RequirementsDataModel[]> {
-        return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements`))
+    async getRequirementDataToUpdate(requirementId: number | undefined): Promise<RequirementsDataModel[]> {
+        return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/requirement-id/${requirementId}`))
     }
 
-    async getRequirementsByProjectRelated(projectId: number): Promise<RequirementsDataModel[]> {
-        return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/project-id/${projectId}`))
-    }
-
-    async listRequirementsByProjectId(projectId: number): Promise<RequirementsDataModel[]> {
+    async getRequirementsByProjectId(projectId: number): Promise<RequirementsDataModel[]> {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/byproject/${projectId}`))
-    }
-
-    getRequirementsByIdentifier(id: number | undefined): Observable<RequirementsDataModel[]> {
-        return this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/${id}`);
     }
 
     async createRequirements(post: any): Promise<RequirementsDataModel[] | any> {
         return firstValueFrom(
-            this.http.post(`${this.baseUrl}/requirements`, post).pipe(
+            this.http.post(`${this.baseUrl}/requirements/2`, post).pipe(//TODO NÃO ESQUECER DE VOLTAR A ROTA
                 catchError((error: HttpErrorResponse) => {
 
                     if (error.status === 409) {

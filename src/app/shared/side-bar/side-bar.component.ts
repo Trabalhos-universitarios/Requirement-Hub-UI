@@ -41,7 +41,8 @@ export class SideBarComponent implements AfterViewInit {
 
     async getData() {
         await this.projectsService.getProjectsByUserId(this.localStorageService.getItem('id'))
-            .then((projects) => {
+            .then((projects: ProjectDataModel[]) => {
+                projects.sort((a, b) => a.name.localeCompare(b.name));
                 this.dataSource.data = projects
             })
             .catch(error => {

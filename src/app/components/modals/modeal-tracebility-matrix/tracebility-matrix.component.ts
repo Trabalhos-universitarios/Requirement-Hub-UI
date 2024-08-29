@@ -56,7 +56,7 @@ export class TracebilityMatrixComponent implements AfterViewInit{
 
       const projectId = this.projectTableService.getCurrentProjectById();
           try {
-            const requisitos = await this.requirementsService.getRequirementsByProjectRelated(projectId);
+            const requisitos = await this.requirementsService.getRequirementsByProjectId(projectId);
             requisitos.forEach(req => {
               this.relationsIdentifierAndName[req.identifier] = req.name
             });

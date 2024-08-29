@@ -32,10 +32,7 @@ export class ModalDialogUpdateRequirementComponent {
       private dialog: MatDialog,
       private localStorageService: LocalStorageService,
       private spinnerService: SpinnerService,
-      @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
-
-    console.log("ENTROU AQUI", data)
-  }
+      @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {}
 
   //todo parei aqui, aplicando trataiva de erros e spinner no requisito
 
@@ -53,6 +50,12 @@ export class ModalDialogUpdateRequirementComponent {
 
   async saveData(): Promise<void> {
     try {
+
+      console.log("DATA", this.data)
+      console.log("this.requirementForm?.value: ", this.requirementForm?.value)
+
+      //TODO PAREI AQUI TENTANDO ATUALIZAR O REQUISITO
+
       const response = await this.requirementService.createRequirements(this.prepareData()).then(response => response.identifier);
 
       if (response) {

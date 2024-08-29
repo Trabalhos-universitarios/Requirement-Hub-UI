@@ -1,33 +1,20 @@
 .table-container {
-  background-color: red;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Alinha a tabela e o paginator em coluna */
   align-items: center;
   justify-content: center;
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: auto;
   padding: 20px;
   box-sizing: border-box;
 }
 
 table {
-  //width: 500px;
+  width: 100%;
   margin-bottom: 40px;
-  .column-actions {
-    background-color: red;
-    width: 30px;
-  }
-  .column-version {
-    background-color: blue;
-    width: 60px;
-  }
-  .column-status {
-    background-color: green;
-    width: 100px;
-  }
   th {
     text-align: center;
-    width: 200px;
+    width: 300px;
     font-weight: bold;
     font-size: 16px;
   }
@@ -74,32 +61,30 @@ tr.example-detail-row {
   opacity: 0.5;
 }
 
-//.column-status {
-//  display: flex;
-//  align-items: center;
-//
-//  @media only screen and (min-width: 1366px) {
-//    background-color: blue;
-//    padding-left: 80px;
-//  }
-//
-//  @media only screen and (min-width: 1540px) {
-//    background-color: red;
-//    padding-left: 140px;
-//  }
-//
-//  mat-icon {
-//    margin: 10px;
-//  }
-//}
+.column-status {
+  display: flex;
+  align-items: center;
+
+  @media only screen and (min-width: 1366px) {
+    padding-left: 80px;
+  }
+
+  @media only screen and (min-width: 1540px) {
+    padding-left: 140px;
+  }
+
+  mat-icon {
+    margin: 10px;
+  }
+}
 
 mat-paginator {
-    width: 100%;
-    display: flex;
-    justify-content: end;
-    align-items: end;
-    margin-top: -39px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-    background-color: transparent;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  margin-top: -39px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  background-color: transparent;
 }
