@@ -137,16 +137,22 @@ export class ProjectsTableComponent implements AfterViewInit {
     openDialog(action?: string) {
         switch (action) {
             case 'Put project':
-                this.dialog.open(ModalDialogUpdateProjectComponent);
+                this.dialog.open(ModalDialogUpdateProjectComponent,{
+                    disableClose: true
+                });
                 break;
             case 'Delete project':
                 this.deleteProject().then()
                 break;
             case 'Create requirement':
-                this.dialog.open(ModalDialogCreateRequirementComponent);
+                this.dialog.open(ModalDialogCreateRequirementComponent,{
+                    disableClose: true
+                });
                 break;
             case 'Requirement list':
-                this.dialog.open(ModalDialogInformationProjectComponent);
+                this.dialog.open(ModalDialogInformationProjectComponent,{
+                    disableClose: true
+                });
                 break;
             case 'Traceability matrix':
                 this.dialog.open(TracebilityMatrixComponent,{
@@ -154,7 +160,9 @@ export class ProjectsTableComponent implements AfterViewInit {
                 });
                 break
             case 'Artifacts project':
-                this.dialog.open(ModalDialogArtifactsProjectComponent);
+                this.dialog.open(ModalDialogArtifactsProjectComponent,{
+                    disableClose: true
+                });
                 break
             default:
                 console.error("This dialog non exists!")
