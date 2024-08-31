@@ -11,7 +11,8 @@
             'related': isRelated(rowIndex, colIndex),
             'highlight-header': isHeader(rowIndex, colIndex),
             'highlight-specific': isSpecificHighlight(rowIndex, colIndex),
-            'pointer-cursor': cell !== null  && cell !== ''
+            'pointer-cursor': cell !== null && cell !== '',
+            'transparent-cell': rowIndex === 0 && colIndex === 0
           }"
           (click)="toggleHighlight(rowIndex, colIndex)">
         <ng-container *ngIf="cell">

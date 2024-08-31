@@ -47,21 +47,22 @@ export class ModalDialogCreateProjectComponent implements OnInit {
         });
     }
 
-    async getData() {
-        console.log("vai buscar um projeto por nome para não deixar criar repetido")
+    close() {
+        this.dialog.closeAll();
     }
 
     async saveData(): Promise<void> {
+        this.spinnerService.start();
         try {
             const response = await this.projectService.createProject(this.prepareData());
             if (response) {
                 await this.alertService.toSuccessAlert(`Projeto cadastrado com sucesso!`);
                 this.localStorageService.removeItem('file');
                 this.dialog.closeAll();
-                this.spinnerService.start();
                 reloadPage()
             }
         } catch (error) {
+            this.spinnerService.stop();
             switch (error) {
                 case 409:
                     console.log("ENTOU AQUI 409", error)

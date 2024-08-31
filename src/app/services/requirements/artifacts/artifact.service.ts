@@ -56,6 +56,10 @@ export class ArtifactService {
     return firstValueFrom(this.http.get<ArtifactResponseModel[]>(`${this.baseUrl}/requirement-artifacts/by-requirement/${requirementId}`));
   }
 
+  async getArtifactsByProjectRelated(projectId: number) {
+    return firstValueFrom(this.http.get<ArtifactResponseModel[]>(`${this.baseUrl}/requirement-artifacts/by-project/${projectId}`));
+  }
+
   updateArtifact(id?: string, artifact?: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/requirement-artifacts/${id}`, artifact)
 }

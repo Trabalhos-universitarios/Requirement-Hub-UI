@@ -1,0 +1,22 @@
+.title-toolbar {
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  
+    .title {
+      font-size: 24px;
+    }
+  }
+  
+  .requirement-details {
+    max-height: 1000px;
+    overflow: auto;
+  }
+  
+  .description-text {
+    white-space: pre-wrap; /* Mantém as quebras de linha */
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-top: 8px;
+  }
+  

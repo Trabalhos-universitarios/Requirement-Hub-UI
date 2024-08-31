@@ -19,6 +19,12 @@
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Versão</mat-label>
+            <input matInput placeholder="Ex: 1.0.0" formControlName="version">
+            <mat-error>Campo obrigatório!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="mat-forms-fro-project">
             <mat-label>Analista de requisitos</mat-label>
             <mat-select multiple formControlName="requirementAnalysts" [compareWith]="compareObjects">
                 <mat-select-trigger>
@@ -65,12 +71,6 @@
                 </mat-select-trigger>
                 <mat-option *ngFor="let common of commonUsers" [value]="common">{{ common.name }}</mat-option>
             </mat-select>
-            <mat-error>Campo obrigatório!</mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="mat-forms-fro-project">
-            <mat-label>Versão</mat-label>
-            <input matInput placeholder="Ex: 1.0.0" formControlName="version">
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 

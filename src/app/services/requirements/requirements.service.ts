@@ -6,6 +6,7 @@ import {
     RequirementsDataModel
 } from "../../models/requirements-data-model";
 import {environmentLocal} from "../../../environment/environment-local";
+import { ArtifactResponseModel } from 'src/app/models/artifact-response-model';
 
 @Injectable({
     providedIn: 'root'
@@ -35,8 +36,12 @@ export class RequirementsService {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/byproject/${projectId}`))
     }
 
-    getRequirementsByIdentifier(id: number | undefined): Observable<RequirementsDataModel[]> {
-        return this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/${id}`);
+    getRequirementByIdentifierAndProjectRelated(identifier: string, projectId: number): Observable<ArtifactResponseModel> {
+        return this.http.get<ArtifactResponseModel>(`${this.baseUrl}/requirements/requirementByProjectRelated/${identifier}/${projectId}`);
+    }
+
+    getArtifactRequirementByIdentifierAndProjectRelated(identifier: string, projectId: number): Observable<RequirementsDataModel> {
+        return this.http.get<RequirementsDataModel>(`${this.baseUrl}/requirements/artifactRequirementByProjectRelated/${identifier}/${projectId}`);
     }
 
     async createRequirements(post: any): Promise<RequirementsDataModel[] | any> {

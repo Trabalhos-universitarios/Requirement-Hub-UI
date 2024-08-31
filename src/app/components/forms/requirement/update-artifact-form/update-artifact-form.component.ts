@@ -8,7 +8,7 @@ import { ArtifactService } from 'src/app/services/requirements/artifacts/artifac
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 import { CapitalizeFirstPipePipe } from 'src/app/pipes/capitalize-first-pipe.pipe';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from 'src/app/services/sweetalert/alert.service';
 import { RichTextService } from 'src/app/services/richText/rich-text.service';
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
@@ -45,7 +45,9 @@ export class UpdateArtifactFormComponent implements OnInit{
       private alertService: AlertService,
       private richTextService: RichTextService,
       private spinnerService: SpinnerService,
-      @Inject(MAT_DIALOG_DATA) public data: ArtifactResponseModel) {
+      @Inject(MAT_DIALOG_DATA) public data: ArtifactResponseModel,
+      private dialogRef: MatDialogRef<UpdateArtifactFormComponent>,
+      @Inject(MAT_DIALOG_DATA) public data2: any) {
 
       this.getData(); 
       this.createForm();
@@ -260,7 +262,7 @@ export class UpdateArtifactFormComponent implements OnInit{
   }
 
   close() {
-      this.dialog.closeAll();
+      this.dialogRef.close();
   }
 }
 

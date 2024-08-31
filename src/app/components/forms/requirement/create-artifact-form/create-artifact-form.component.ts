@@ -7,7 +7,7 @@ import {ArtifactService} from "../../../../services/requirements/artifacts/artif
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 import {ARTIFACT_TYPE_LIST} from "../../../../utils/artifact-type-list-util";
 import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Status } from 'src/app/utils/util.status';
 import { RichTextService } from 'src/app/services/richText/rich-text.service';
 import { AlertService } from 'src/app/services/sweetalert/alert.service';
@@ -46,7 +46,9 @@ export class CreateArtifactFormComponent implements OnInit {
         private alertService: AlertService,
         private richTextService: RichTextService,
         private spinnerService: SpinnerService,
-        @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
+        @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel,
+        private dialogRef: MatDialogRef<CreateArtifactFormComponent>,
+        @Inject(MAT_DIALOG_DATA) public data2: any) {
 
         this.createForm();
         this.uploader.onAfterAddingFile = (file: FileItem) => {
@@ -199,6 +201,6 @@ export class CreateArtifactFormComponent implements OnInit {
     }
 
     close() {
-        this.dialog.closeAll();
+        this.dialogRef.close();
     }
 }
