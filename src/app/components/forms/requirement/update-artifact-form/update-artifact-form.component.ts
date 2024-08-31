@@ -8,7 +8,7 @@ import { ArtifactService } from 'src/app/services/requirements/artifacts/artifac
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 import { CapitalizeFirstPipePipe } from 'src/app/pipes/capitalize-first-pipe.pipe';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from 'src/app/services/sweetalert/alert.service';
 import { RichTextService } from 'src/app/services/richText/rich-text.service';
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
@@ -45,7 +45,9 @@ export class UpdateArtifactFormComponent implements OnInit{
       private alertService: AlertService,
       private richTextService: RichTextService,
       private spinnerService: SpinnerService,
-      @Inject(MAT_DIALOG_DATA) public data: ArtifactResponseModel) {
+      @Inject(MAT_DIALOG_DATA) public data: ArtifactResponseModel,
+      private dialogRef: MatDialogRef<UpdateArtifactFormComponent>,
+      @Inject(MAT_DIALOG_DATA) public data2: any) {
 
       this.getData(); 
       this.createForm();
@@ -79,7 +81,7 @@ export class UpdateArtifactFormComponent implements OnInit{
 
         if (artifact.file) {
           const fileItem = this.prepArtifact(artifact.file);
-          if (fileItem) {
+          if (fileItem != null) {
             this.uploader.addToQueue([fileItem._file]);
             this.simulateUploadProgress(fileItem); // Simula o progresso de upload
           } else {
@@ -120,7 +122,7 @@ export class UpdateArtifactFormComponent implements OnInit{
           };
   }
 
-  private prepArtifact(fileString: string): FileItem {
+  private prepArtifact(fileString: string){
     // Deserializar a string JSON
     let fileData;
     try {
@@ -133,36 +135,38 @@ export class UpdateArtifactFormComponent implements OnInit{
     if (!fileData.content || !fileData.name || !fileData.type) {
       console.error("Dados do arquivo estão incompletos ou mal formatados.");
     }
-  
-    // Extraindo a parte base64 do conteúdo
-    const base64Data = fileData.content.split(',')[1]; // Ignorar o prefixo "data:application/pdf;base64,"
-  
-    // Decodifica a string base64
-    const byteCharacters = atob(base64Data);
-    const byteArrays = [];
-    const sliceSize = 1024;
-  
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
-  
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-  
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
+    else{
+            // Extraindo a parte base64 do conteúdo
+        const base64Data = fileData.content.split(',')[1]; // Ignorar o prefixo "data:application/pdf;base64,"
+      
+        // Decodifica a string base64
+        const byteCharacters = atob(base64Data);
+        const byteArrays = [];
+        const sliceSize = 1024;
+      
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          const slice = byteCharacters.slice(offset, offset + sliceSize);
+      
+          const byteNumbers = new Array(slice.length);
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
+      
+          const byteArray = new Uint8Array(byteNumbers);
+          byteArrays.push(byteArray);
+        }
+      
+        // Cria o Blob a partir do array de bytes
+        const blob = new Blob(byteArrays, { type: fileData.type });
+        const file = new File([blob], fileData.name, { type: fileData.type });
+      
+        // Inicializa o FileUploader com uma URL vazia
+        const uploader: FileUploader = new FileUploader({ url: '' });
+      
+        // Cria um FileItem a partir do File
+        return new FileItem(uploader, file, { url: '' });
     }
-  
-    // Cria o Blob a partir do array de bytes
-    const blob = new Blob(byteArrays, { type: fileData.type });
-    const file = new File([blob], fileData.name, { type: fileData.type });
-  
-    // Inicializa o FileUploader com uma URL vazia
-    const uploader: FileUploader = new FileUploader({ url: '' });
-  
-    // Cria um FileItem a partir do File
-    return new FileItem(uploader, file, { url: '' });
+    return null;
   }
   
   
@@ -260,7 +264,7 @@ export class UpdateArtifactFormComponent implements OnInit{
   }
 
   close() {
-      this.dialog.closeAll();
+      this.dialogRef.close();
   }
 }
 

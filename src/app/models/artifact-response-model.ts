@@ -9,5 +9,5 @@ export interface ArtifactResponseModel {
     identifier: string;
     description: string;
     file?: string;
-    requirementId?: number;
+    requirementId?: any;
 }

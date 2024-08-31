@@ -1,43 +1,55 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatrixService } from 'src/app/services/matrix/traceability-matrix.service';
 import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 import { RequirementsService } from 'src/app/services/requirements/requirements.service';
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
+import { ModalDialogInformationRequirementComponent } from '../requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
+import { ModalDialogInformationRequirementArtifactComponent } from '../requirements/modal-dialog-information-requirement-artifact/modal-dialog-information-requirement-artifact.component';
+import { ArtifactService } from 'src/app/services/requirements/artifacts/artifact.service';
+import { RequirementsDataModel } from 'src/app/models/requirements-data-model';
+import { ArtifactResponseModel } from 'src/app/models/artifact-response-model';
+import { UsersService } from 'src/app/services/users/users.service';
+import { UserResponseModel } from 'src/app/models/user-model';
 
 @Component({
   selector: 'app-tracebility-matrix',
   templateUrl: './tracebility-matrix.component.html',
   styleUrls: ['./tracebility-matrix.component.scss']
 })
-export class TracebilityMatrixComponent implements AfterViewInit{
+export class TracebilityMatrixComponent implements AfterViewInit {
 
   dataSource = [];
   currentProject: string = '';
   highlightedRow: number | null = null;
   highlightedColumn: number | null = null;
-  relationsIdentifierAndName: any = {
-    // Mapeamento inicial existente...
-  };
+  relationsIdentifierAndName: any = {};
+  userName: any = {};
+  requirementsData: RequirementsDataModel[] = [];
+  artifactsData: ArtifactResponseModel[] = [];
+  usersData: UserResponseModel[] = [];
 
   constructor(
     private traceabilityService: MatrixService,
     private projectTableService: ProjectsTableService,
     private themeService: ThemeService,
     private spinnerService: SpinnerService,
-    private requirementsService: RequirementsService // Altere o serviço para o RequirementsService
+    private requirementsService: RequirementsService,
+    private artifactService: ArtifactService,
+    private userService: UsersService,
+    private dialog: MatDialog
   ) { }
 
   ngAfterViewInit(): void {
     this.getData();
-    this.getRequirementIdentifier();
+    this.getAllData();
   }
 
   async getData() {
     this.spinnerService.start();
     const projectId = this.projectTableService.getCurrentProjectById();
 
-    // Carregar a matriz de rastreabilidade
     this.traceabilityService.getTraceabilityMatrix(projectId)
       .subscribe(
         async (matrix: []) => {
@@ -52,26 +64,58 @@ export class TracebilityMatrixComponent implements AfterViewInit{
       );
   }
 
-  async getRequirementIdentifier() {
+  getAllData() {
+    const projectId = this.projectTableService.getCurrentProjectById();
 
-      const projectId = this.projectTableService.getCurrentProjectById();
-          try {
-            const requisitos = await this.requirementsService.getRequirementsByProjectRelated(projectId);
-            requisitos.forEach(req => {
-              this.relationsIdentifierAndName[req.identifier] = req.name
-            });
-          } catch (error) {
-            console.error('Erro ao carregar os requisitos:', error);
-          } finally {
-            console.log(this.relationsIdentifierAndName)
+    Promise.all([
+      this.requirementsService.listRequirementsByProjectId(projectId),
+      this.artifactService.getArtifactsByProjectRelated(projectId),
+      this.userService.getUsers()
+    ])
+    .then(([requirements, artifacts, users]) => {
+      this.requirementsData = requirements;
+      this.artifactsData = artifacts;
+      this.usersData = users;
+
+      this.requirementsData.forEach(req => {
+        this.relationsIdentifierAndName[req.identifier] = req.name;
+      });
+
+      this.artifactsData.forEach(art => {
+        this.relationsIdentifierAndName[art.identifier] = art.name;
+      });
+
+      this.usersData.forEach(t => {
+        this.userName[t.id] = t.name;
+      });
+
+      this.artifactsData.forEach(art => {
+        if (art.requirementId) {
+          const requirement = this.requirementsData.find(req => req.id === art.requirementId);
+  
+          if (requirement) {
+            art.requirementId = requirement.identifier + " - " + requirement.name;
           }
+        }
+      });
+
+      this.requirementsData.forEach(req => {
+        if (req.author && this.userName[req.author]) {
+          req.author = this.userName[req.author];
+        }
+      });
+
+    })
+    .catch(error => {
+      console.error('Erro ao carregar os dados:', error);
+    });
   }
 
   getCellStyles(cell: any): any {
     let backgroundColor;
     let color;
     if (cell === "X") {
-      backgroundColor = '#4CAF50'; 
+      backgroundColor = '#4CAF50';
       color = 'black';
     }
     else if (cell === '' || cell === '0') {
@@ -103,7 +147,7 @@ export class TracebilityMatrixComponent implements AfterViewInit{
 
   toggleHighlight(rowIndex: number, colIndex: number): void {
     const cellValue = this.dataSource[rowIndex][colIndex];
-  
+
     // Apenas células com "X" podem ser destacadas
     if (cellValue === "X") {
       if (this.highlightedRow === rowIndex && this.highlightedColumn === colIndex) {
@@ -116,38 +160,74 @@ export class TracebilityMatrixComponent implements AfterViewInit{
         this.highlightedColumn = colIndex;
       }
     }
+
+    // Verifique se a célula é um identificador e abra o modal
+    else if (cellValue !== null && cellValue !== '') {
+      this.openModal(cellValue);
+    }
+  }
+
+  openModal(identifier: string): void {
+    this.spinnerService.start();
   
-    console.log('Highlighted Row:', this.highlightedRow);
-    console.log('Highlighted Column:', this.highlightedColumn);
+    if (identifier.startsWith('RF') || identifier.startsWith('RNF')) {
+
+      const requirement = this.requirementsData.find(req => req.identifier === identifier);
+      if (requirement) {
+ 
+        this.spinnerService.stop();
+        this.dialog.open(ModalDialogInformationRequirementComponent, {
+          width: '1350px',
+          data: requirement,
+          disableClose: true
+        });
+      } else {
+
+        this.spinnerService.stop();
+        console.error('Requisito não encontrado:', identifier);
+      }
+    } else {
+
+      const artifact = this.artifactsData.find(art => art.identifier === identifier);
+      if (artifact) {
+   
+        this.spinnerService.stop();
+        this.dialog.open(ModalDialogInformationRequirementArtifactComponent, {
+          width: '1350px',
+          data: artifact,
+          disableClose: true
+        });
+      } else {
+     
+        this.spinnerService.stop();
+        console.error('Artefato não encontrado:', identifier);
+      }
+    }
   }
   
+
   isRelated(rowIndex: number, colIndex: number): boolean {
-    // Verificar se temos uma célula selecionada
     if (this.highlightedRow === null || this.highlightedColumn === null) {
       return false;
     }
-  
-    // Verificar se a célula está à esquerda (mesma linha) ou acima (mesma coluna)
     return (rowIndex === this.highlightedRow && colIndex < this.highlightedColumn) || 
            (colIndex === this.highlightedColumn && rowIndex < this.highlightedRow);
-  }  
-  
+  }
+
   isHeader(rowIndex: number, colIndex: number): boolean {
     if (this.highlightedRow === null || this.highlightedColumn === null) {
       return false;
     }
-  
-    // Destaque apenas o cabeçalho da coluna e linha relacionados
     return (rowIndex === 0 && colIndex === this.highlightedColumn) || 
            (colIndex === 0 && rowIndex === this.highlightedRow);
   }
-  
+
   isSpecificHighlight(rowIndex: number, colIndex: number): boolean {
     if (this.highlightedRow === null || this.highlightedColumn === null) {
       return false;
     }
-  
     return (rowIndex === this.highlightedRow && colIndex === 0) ||
            (rowIndex === 0 && colIndex === this.highlightedColumn);
   }
+
 }

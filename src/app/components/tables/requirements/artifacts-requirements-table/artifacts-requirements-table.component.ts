@@ -25,7 +25,7 @@ import { UpdateArtifactFormComponent } from 'src/app/components/forms/requiremen
   ],
 })
 export class ArtifactsRequirementsTableComponent {
-  
+
   dataSource = new MatTableDataSource<ArtifactResponseModel>();
   expandedElement: ArtifactResponseModel | null = null;
 
@@ -45,7 +45,8 @@ export class ArtifactsRequirementsTableComponent {
                 private alertService: AlertService,
                 private spinnerService: SpinnerService,
                 private sanitizer: DomSanitizer,
-                @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
+                @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) 
+    {
         this.getData().then();
     }
 

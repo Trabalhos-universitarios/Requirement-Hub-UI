@@ -34,7 +34,7 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item (click)="openDialog('information', element)">
                     <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>Informações
                 </button>
                 <button mat-menu-item class="icon" [disabled]="isPermitted()">

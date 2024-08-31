@@ -85,7 +85,7 @@ export class CreateRequirementFormComponent {
     }
 
     private async getRequirements() {
-        this.requirementService.getRequirementsByProjectRelated(this.projectsTableService.getCurrentProjectById()).then(requirements => {
+        this.requirementService.listRequirementsByProjectId(this.projectsTableService.getCurrentProjectById()).then(requirements => {
             requirements.sort((a, b) => a.identifier.localeCompare(b.identifier));
             this.requirementsDependencies = requirements;
         })

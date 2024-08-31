@@ -18,6 +18,7 @@ import {response} from "express";
 import { ArtifactsRequirementsTableComponent } from '../artifacts-requirements-table/artifacts-requirements-table.component';
 import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
+import { ModalDialogInformationRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
 
 @Component({
     selector: 'app-requirements-table',
@@ -150,7 +151,10 @@ export class RequirementsTableComponent implements AfterViewInit {
     protected openDialog(action: String, value: RequirementsDataModel) {
         switch (action) {
             case "information":
-                console.log("Aqui vai a ação a ser tomada em info")
+                this.matDialog.open(ModalDialogInformationRequirementComponent, {
+                    data: value,
+                    width: '1200px'
+                  });
                 break
             case "edit":
                 console.log("Aqui vai a ação a ser tomada em edit")

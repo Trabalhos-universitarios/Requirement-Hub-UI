@@ -1,58 +1,73 @@
-@use '@angular/material' as mat;
-  
-  .example-container {
-    height: 750px;
-    width: 1400px;
-    max-width: 100%;
-    max-height: 100%;
-    margin:  auto;  
-    border-radius: 10px;
-    padding: 30px;
-  }
+.example-container {
+  height: 750px;
+  width: 1400px;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  border-radius: 10px;
+  padding: 30px;
+  overflow: auto; /* Mantém a rolagem */
+  position: relative; /* Necessário para o posicionamento absoluto */
+}
 
-  .pointer-cursor {
-    cursor: pointer;
-  }
-  
-  .related {
-    background-color: rgba(0, 128, 0, 0.2) !important; /* Verde claro para células relacionadas */
-  }
-  
-  .highlight-header {
-    background-color: rgba(0, 128, 0, 0.4) !important; /* Verde mais escuro para cabeçalhos */
-  }
-  
-  .highlight-specific {
-    background-color: green !important; /* Verde para células específicas */
-    cursor: pointer;
-  } 
-  
-  .example-container div {
-    text-align: center;
-  }
+.example-container div {
+  text-align: center;
+  width: 100%; /* Garante que o contêiner do título ocupe toda a largura */
+}
 
-  table{
-    overflow: auto;
-  }
+table {
+  border-collapse: separate; /* Garante que a margem seja aplicada corretamente */
+  width: 100%;
+  border-spacing: 2px; /* Define o espaçamento entre as bordas das células */
+}
 
-  h1 {
-    text-align: center;
-  }
-  
-  td {
-    border: 1px solid black;
-    border-radius: 3px;
-    padding: 5px;
-    width: 50px;
-    height: 30px;
-    text-align: center;
-  }
+td, th {
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 5px;
+  text-align: center;
+  margin: 2px;
+  background-clip: padding-box; /* Garante que o background respeite o border-radius */
+  box-sizing: border-box; /* Inclui borda e padding no cálculo do tamanho total */
+  max-width: 80px; /* Limita a largura máxima das células a 100px */
+  width: 80px; /* Define largura fixa para consistência */
+  overflow: hidden; /* Esconde qualquer conteúdo que exceda os limites */
+  white-space: nowrap; /* Garante que o texto não quebre */
+}
 
-  tr {
-    border: 2px solid black;
-    padding: 5px;
-    align-items: center;
-    justify-content: center;
-  }
+.pointer-cursor {
+  cursor: pointer;
+}
 
-  
+.related {
+  background-color: rgba(0, 128, 0, 0.2) !important;
+}
+
+.highlight-header {
+  background-color: rgba(0, 128, 0, 0.4) !important;
+}
+
+.highlight-specific {
+  background-color: green !important;
+  cursor: pointer;
+}
+
+tr:first-child td {
+  position: sticky;
+  top: 0;
+  background: white; /* Cor de fundo para garantir visibilidade */
+  z-index: 2; /* Sobrepõe as células fixas da primeira coluna */
+}
+
+td:first-child {
+  position: sticky;
+  left: 0;
+  background: white; /* Cor de fundo para garantir visibilidade */
+  z-index: 1; /* Sobrepõe outras células */
+  min-width: 50px; /* Garantir largura mínima para evitar colapso */
+}
+
+.transparent-cell {
+  background-color: transparent !important;
+  border: none;
+}

@@ -59,7 +59,6 @@ import {
     ModalDialogInformationProjectComponent
 } from './components/modals/projects/modal-dialog-information-project/modal-dialog-information-project.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {AddArtifactsComponent} from './components/modals/requirements/add-artifacts/add-artifacts.component';
 import { DisplayColumnFormatPipePipe } from './pipes/display-column-format-pipe.pipe';
 import { TracebilityMatrixComponent } from './components/modals/modeal-tracebility-matrix/tracebility-matrix.component';
 import { ModalLoginComponent } from './auth/modals/modal-login/modal-login.component';
@@ -77,6 +76,9 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
 import { ModalDialogArtifactsRequirementComponent } from './components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 import { ArtifactsRequirementsTableComponent } from './components/tables/requirements/artifacts-requirements-table/artifacts-requirements-table.component';
 import { UpdateArtifactFormComponent } from './components/forms/requirement/update-artifact-form/update-artifact-form.component';
+import { ModalDialogInformationRequirementComponent } from './components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
+import { MatListModule } from '@angular/material/list';
+import { ModalDialogInformationRequirementArtifactComponent } from './components/modals/requirements/modal-dialog-information-requirement-artifact/modal-dialog-information-requirement-artifact.component';
 
 @NgModule({
     declarations: [
@@ -98,7 +100,6 @@ import { UpdateArtifactFormComponent } from './components/forms/requirement/upda
         RichTextEditorComponent,
         RequirementsTableComponent,
         ModalDialogInformationProjectComponent,
-        AddArtifactsComponent,
         DisplayColumnFormatPipePipe,
         TracebilityMatrixComponent,
         LoginComponent,
@@ -113,7 +114,9 @@ import { UpdateArtifactFormComponent } from './components/forms/requirement/upda
         CreateArtifactProjectFormComponent,
         ModalDialogArtifactsRequirementComponent,
         ArtifactsRequirementsTableComponent,
-        UpdateArtifactFormComponent
+        UpdateArtifactFormComponent,
+        ModalDialogInformationRequirementComponent,
+        ModalDialogInformationRequirementArtifactComponent
     ],
     imports: [
         BrowserModule,
@@ -150,7 +153,8 @@ import { UpdateArtifactFormComponent } from './components/forms/requirement/upda
         RichTextEditorModule,
         MatPaginatorModule,
         MatTableModule,
-        UpdateProjectUserTableComponent
+        UpdateProjectUserTableComponent,
+        MatListModule
     ],
     providers: [
         [CapitalizeFirstPipePipe],
