@@ -16,7 +16,9 @@ export class ModalDialogInformationRequirementArtifactComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: ArtifactResponseModel,
               
   private sanitizer: DomSanitizer) {
-    this.fileJson = JSON.parse(data.file);
+    if(data.file != null){
+      this.fileJson = JSON.parse(data.file);
+    }   
   }
 
   getStatusText(status: any): string {

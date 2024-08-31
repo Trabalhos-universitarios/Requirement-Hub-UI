@@ -8,6 +8,6 @@ export interface ArtifactResponseModel {
     projectId: string
     identifier: string;
     description: string;
-    file: string;
+    file?: string;
     requirementId?: any;
 }
