@@ -149,7 +149,9 @@ export class ProjectsTableComponent implements AfterViewInit {
                 this.dialog.open(ModalDialogInformationProjectComponent);
                 break;
             case 'Traceability matrix':
-                this.dialog.open(TracebilityMatrixComponent);
+                this.dialog.open(TracebilityMatrixComponent,{
+                    disableClose: true
+                });
                 break
             case 'Artifacts project':
                 this.dialog.open(ModalDialogArtifactsProjectComponent);

@@ -178,7 +178,8 @@ export class TracebilityMatrixComponent implements AfterViewInit {
         this.spinnerService.stop();
         this.dialog.open(ModalDialogInformationRequirementComponent, {
           width: '1350px',
-          data: requirement
+          data: requirement,
+          disableClose: true
         });
       } else {
 
@@ -193,7 +194,8 @@ export class TracebilityMatrixComponent implements AfterViewInit {
         this.spinnerService.stop();
         this.dialog.open(ModalDialogInformationRequirementArtifactComponent, {
           width: '1350px',
-          data: artifact
+          data: artifact,
+          disableClose: true
         });
       } else {
      
@@ -227,4 +229,5 @@ export class TracebilityMatrixComponent implements AfterViewInit {
     return (rowIndex === this.highlightedRow && colIndex === 0) ||
            (rowIndex === 0 && colIndex === this.highlightedColumn);
   }
+
 }
