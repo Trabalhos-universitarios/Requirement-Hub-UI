@@ -9,13 +9,16 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
 
-    <button mat-raised-button
-            [disabled]="!buttonDisabled"
-            (click)="close()">
-        Cancelar
-        <mat-icon>cancel</mat-icon>
-    </button>
 
+    <mat-dialog-actions align="end">
+        <button mat-raised-button
+                mat-dialog-close
+            [disabled]="!buttonDisabled">
+        Cancelar
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-dialog-actions>
+    
     <button mat-raised-button
             cdkFocusInitial
             [disabled]="!buttonDisabled"

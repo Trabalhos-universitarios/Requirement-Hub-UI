@@ -26,7 +26,8 @@ export class ModalDialogArtifactsRequirementComponent {
   
   addData(value: RequirementsDataModel) {
       this.dialog.open(CreateArtifactFormComponent, {
-        data: value
+        data: value,
+        disableClose: true
     });
   }
   
