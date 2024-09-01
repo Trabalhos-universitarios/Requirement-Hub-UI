@@ -1,0 +1,22 @@
+<mat-dialog-content>
+    <mat-toolbar class="title-toolbar">
+      <span class="title">Detalhes do Artefato Requisito - {{data.identifier}}</span>
+    </mat-toolbar>
+    <div class="requirement-details">
+      <mat-list>
+        <mat-list-item><strong>Nome:</strong> {{data.name}}</mat-list-item>
+        <mat-list-item><strong>Tipo:</strong> {{data.type}}</mat-list-item>
+        <mat-list-item><strong>Requisito Pai:</strong> {{data.requirementId}}</mat-list-item>
+        <div [hidden]="fileJson.name == null">
+          <mat-list-item>
+            <strong>Arquivo carregado:</strong> {{fileJson.name}}
+          </mat-list-item>
+        </div>
+        <p class="description-text" [innerHTML]="sanitizeHtml(data.description)">{{data.description}}</p>
+      </mat-list>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Fechar</button>
+  </mat-dialog-actions>
+  

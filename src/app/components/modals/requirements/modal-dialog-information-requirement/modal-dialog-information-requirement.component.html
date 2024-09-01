@@ -1,0 +1,27 @@
+<!-- modal-dialog-information-requirement.component.html -->
+<mat-dialog-content>
+    <mat-toolbar class="title-toolbar">
+      <span class="title">Detalhes do Requisito - {{data.identifier}}</span>
+    </mat-toolbar>
+    <div class="requirement-details">
+      <mat-list>
+        <mat-list-item><strong>Nome:</strong> {{data.name}}</mat-list-item>
+        <mat-list-item><strong>Autor:</strong> {{data.author}}</mat-list-item>
+        <!--mat-list-item><strong>Responsavel:</strong> {{data.responsible}}</mat-list-item-->
+        <!--mat-list-item><strong>Fonte:</strong> {{data.stakeholders}}</mat-list-item-->
+        <mat-list-item><strong>Data de Criação:</strong> {{data.dateCreated | slice:0:10 }}</mat-list-item>
+        <mat-list-item><strong>Prioridade:</strong> {{data.priority}}</mat-list-item>
+        <mat-list-item><strong>Risco:</strong> {{data.risk}}</mat-list-item>
+        <mat-list-item><strong>Esforço(Fibonacci):</strong> {{data.effort}}</mat-list-item>
+        <mat-list-item><strong>Tipo:</strong> {{data.type}}</mat-list-item>
+        <mat-list-item><strong>Versão:</strong> {{data.version}}</mat-list-item>
+        <mat-list-item><strong>Status:</strong> {{getStatusText(data.status)}}</mat-list-item>
+        <!--mat-list-item><strong>Relações:</strong> {{data.stakeholders}}</mat-list-item-->
+        <p class="description-text" [innerHTML]="sanitizeHtml(data.description)">{{data.description}}</p>
+      </mat-list>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Fechar</button>
+  </mat-dialog-actions>
+  

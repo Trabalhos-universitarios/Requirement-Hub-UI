@@ -3,7 +3,7 @@ export interface RequirementsDataModel {
     identifier: string;
     name: string;
     author: number;
-    createdDate?: string;
+    dateCreated?: string;
     priority: string;
     risk?: string
     type: string;
@@ -16,5 +16,4 @@ export interface RequirementsDataModel {
     dependencyIds: number[];
     projectId?: number[];
     artifactIds?: number[];
-
 }

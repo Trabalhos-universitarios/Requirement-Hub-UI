@@ -53,7 +53,7 @@ export class ModalDialogCreateRequirementComponent {
                 this.spinnerService.start();
             }
         } catch (error) {
-            this.spinnerService.stop();
+            this.spinnerService.stop()
             switch (error) {
                 case 409:
                     console.error(`CONFLICT: ${error}`);
