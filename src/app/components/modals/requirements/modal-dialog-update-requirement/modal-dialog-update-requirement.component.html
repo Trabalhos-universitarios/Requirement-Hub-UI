@@ -4,16 +4,13 @@
 
 <mat-dialog-content>
 
-
-
-<!--    <app-create-requirement-tab></app-create-requirement-tab>-->
     <app-create-requirement-form [inputRequirementDataWithUpdateRequirement]="data"></app-create-requirement-form>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
 
     <button mat-raised-button
-            *ngIf="!buttonDisabled"
+            [disabled]="!buttonDisabled"
             (click)="close()">
         Cancelar
         <mat-icon>cancel</mat-icon>
@@ -21,7 +18,7 @@
 
     <button mat-raised-button
             cdkFocusInitial
-            *ngIf="!buttonDisabled"
+            [disabled]="!buttonDisabled"
             (click)="saveData()">
         Aualizar requisito
         <mat-icon>update</mat-icon>

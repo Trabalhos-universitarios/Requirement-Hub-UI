@@ -12,15 +12,20 @@ import {environmentLocal} from "../../../environment/environment-local";
 })
 export class RequirementsService {
 
-    private formGroupSource = new BehaviorSubject<FormGroup | null>(null);
-    currentForm = this.formGroupSource.asObservable();
+    private _currentForm = new BehaviorSubject<any>({});
+    currentForm = this._currentForm.asObservable();
+    _verificationsFormValid = new BehaviorSubject<any>({});
+    verificationsFormValid = this._verificationsFormValid.asObservable();
     private baseUrl = environmentLocal.springUrl;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {}
+
+    verifierFormValid(formValid: boolean) {
+        this._verificationsFormValid.next(formValid);
     }
 
-    updateForm(formGroup: FormGroup) {
-        this.formGroupSource.next(formGroup);
+    updateForm(formValue: RequirementsDataModel | any) {
+        this._currentForm.next(formValue);
     }
 
     async getRequirementDataToUpdate(requirementId: number | undefined): Promise<RequirementsDataModel[]> {
@@ -32,22 +37,48 @@ export class RequirementsService {
     }
 
     async createRequirements(post: any): Promise<RequirementsDataModel[] | any> {
+
+        console.log('CREATE REQUIREMENT', post);
+
         return firstValueFrom(
-            this.http.post(`${this.baseUrl}/requirements/2`, post).pipe(//TODO NÃO ESQUECER DE VOLTAR A ROTA
+            this.http.post(`${this.baseUrl}/requirements`, post).pipe(
                 catchError((error: HttpErrorResponse) => {
 
-                    if (error.status === 409) {
-                        console.error('This requirement already exists!');
-                        return throwError(() => HttpStatusCode.Conflict);
+                    switch (error.status) {
+                        case 409:
+                            return throwError(() => HttpStatusCode.Conflict);
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
+                        case 503:
+                            return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
                     }
-                    if (error.status === 404 || error.status === 405) {
-                        console.error('This route not exists or not starting!');
-                        return throwError(() => HttpStatusCode.NotFound);
-                    } else if (error.status === 500 || error.status === 503) {
-                        console.error('Internal server error!');
-                        return throwError(() => HttpStatusCode.InternalServerError);
+                })
+            )
+        );
+    }
+
+    async updateRequirements(id: number | undefined, post: any): Promise<RequirementsDataModel[] | any> {
+        return firstValueFrom(this.http.put(`${this.baseUrl}/requirements/${id}`, post)
+            .pipe(catchError((error: HttpErrorResponse) => {
+
+                    switch (error.status) {
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
+                        case 503:
+                            return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
                     }
-                    return throwError(() => new Error(error.message));
                 })
             )
         );

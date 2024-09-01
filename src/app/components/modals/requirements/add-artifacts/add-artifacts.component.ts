@@ -7,7 +7,6 @@ import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
 import {Status} from "../../../../utils/util.status";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
-import {Observable} from "rxjs";
 import {RichTextService} from "../../../../services/richText/rich-text.service";
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {reloadPage} from "../../../../utils/reload.page";
@@ -50,13 +49,15 @@ export class AddArtifactsComponent implements OnInit {
 
     async saveData(): Promise<void> {
         try {
+            this.spinnerService.start();
             const response = await this.artifactService.createArtifact(this.prepareDataArtifact(this.data.id));
             if (response) {
                 await this.alertService.toSuccessAlert("Artefato Cadastrado com sucesso!");
                 this.localStorageService.removeItem('file');
                 this.dialog.closeAll();
-                this.spinnerService.start();
+                this.spinnerService.stop();
                 reloadPage();
+                this.spinnerService.start();
             }
         } catch (error) {
             switch (error) {

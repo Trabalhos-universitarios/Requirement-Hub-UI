@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {RequirementsService} from "../../../../services/requirements/requirements.service";
 import {AlertService} from "../../../../services/sweetalert/alert.service";
@@ -10,13 +10,14 @@ import {ProjectsTableService} from "../../../../services/projects/projects-table
 import {RichTextService} from "../../../../services/richText/rich-text.service";
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {reloadPage} from "../../../../utils/reload.page";
+import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 
 @Component({
     selector: 'app-modal-dialog-create-requirement',
     templateUrl: './modal-dialog-create-requirement.component.html',
     styleUrls: ['./modal-dialog-create-requirement.component.scss']
 })
-export class ModalDialogCreateRequirementComponent implements OnInit {
+export class ModalDialogCreateRequirementComponent {
 
     requirementForm?: FormGroup | null;
     artifactForm?: FormGroup | null;
@@ -31,49 +32,47 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
         private dialog: MatDialog,
         private localStorageService: LocalStorageService,
         private spinnerService: SpinnerService) {
-    }
 
-    //todo parei aqui, aplicando trataiva de erros e spinner no requisito
-
-    ngOnInit() {
         this.requirementService.currentForm.subscribe(form => {
             this.requirementForm = form;
-            this.buttonDisabled = !(form?.valid && form?.value);
-        });
-
-        this.artifactService.currentForm.subscribe(form => {
-            this.artifactForm = form;
             this.buttonDisabled = !(form?.valid && form?.value);
         });
     }
 
     async saveData(): Promise<void> {
         try {
+            this.spinnerService.start();
             const response = await this.requirementService.createRequirements(this.prepareData()).then(response => response.identifier);
 
             if (response) {
                 await this.alertService.toSuccessAlert(`Reququisito ${response} cadastrado com sucesso!`);
                 this.localStorageService.removeItem('file');
                 this.dialog.closeAll();
+                this.spinnerService.stop();
+                reloadPage();
                 this.spinnerService.start();
-                reloadPage()
             }
         } catch (error) {
+            this.spinnerService.stop();
             switch (error) {
                 case 409:
-                    console.log("ENTOU AQUI 409", error)
+                    console.error(`CONFLICT: ${error}`);
                     await this.alertService.toErrorAlert("Erro!", "Já existe um requisito com esse nome vinculado a esse projeto!");
                     break;
                 case 404:
-                    console.log("ENTOU AQUI 404", error)
+                    console.error(`NOT FOUND: ${error}`);
+                    await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
+                    break;
+                case 405:
+                    console.error(`METHOD NOT ALLOWED: ${error}`);
                     await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
                     break;
                 case 500:
-                    console.log("ENTOU AQUI 500", error)
+                    console.error(`INTERNAL SERVER ERROR: ${error}`);
                     await this.alertService.toErrorAlert("Erro!", "Erro interno do servidor!");
                     break;
                 default:
-                    console.log("ENTOU AQUI OUTROS", error)
+                    console.error(`ERROR: ${error}`);
                     await this.alertService.toErrorAlert("Erro!", "Erro ao cadastrar requisito - " + error);
             }
         }
@@ -87,7 +86,7 @@ export class ModalDialogCreateRequirementComponent implements OnInit {
             descriptionValue = content;
         })
 
-        if (this.requirementForm?.value && this.requirementForm.valid) {
+        if (this.requirementForm && this.requirementForm.valid) {
             return {
                 ...this.requirementForm.value,
                 effort: Number(this.requirementForm.value.effort),

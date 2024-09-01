@@ -53,16 +53,34 @@ export class CreateRequirementFormComponent implements OnInit {
                 private localStorageService: LocalStorageService,
                 private stakeholderService: StakeholdersService,
                 private userService: UsersService,
-                private capitalizeFirstPipe: CapitalizeFirstPipePipe) {}
+                private capitalizeFirstPipe: CapitalizeFirstPipePipe) {
+        this.validateFormValidations(this.formGroup)
+    }
 
     ngOnInit() {
         this.disableFormWithUpdateRequirement();
         this.getCurrentProject();
         this.valuesFormToService();
-        this.getCurrentStakeholders().then()
-        this.getRequirementAnalysts().then()
-        this.getRequirements().then()
+        this.getCurrentStakeholders().then();
+        this.getRequirementAnalysts().then();
+        this.getRequirements().then();
         this.autoCompleteForm().then();
+
+        this.formGroup.get('stakeholders')?.valueChanges.subscribe(value => {
+            const stakeholders = value.map((item: { id: any; }) => ({ id: item.id }));
+            this.localStorageService.setItem('stakeholders', stakeholders);
+        });
+
+        this.formGroup.get('responsible')?.valueChanges.subscribe(value => {
+            const responsible = value.map((item: { id: any; }) => ({ id: item.id }));
+            this.localStorageService.setItem('responsible', responsible);
+        });
+
+        this.formGroup.get('dependencies')?.valueChanges.subscribe(value => {
+            const dependencies = value.map((item: { id: any; }) => ({ id: item.id }));
+            this.localStorageService.setItem('dependencies', dependencies);
+        });
+
     }
 
     private disableFormWithUpdateRequirement() {
@@ -83,19 +101,38 @@ export class CreateRequirementFormComponent implements OnInit {
 
         if (this.inputRequirementDataWithUpdateRequirement) {
             await this.getDataWhenRelationshipWithRequirement();
+            this.formGroup.valueChanges.subscribe(val => {
+                this.requirementService.updateForm(this.formGroup.getRawValue());
+            });
         }
 
         this.formGroup.patchValue({
                 projectRelated: this.getCurrentProject(),
-                author: this.inputRequirementDataWithUpdateRequirement?.author ? this.inputRequirementDataWithUpdateRequirement.author : this.getCurrentAuthor(),
-                version: this.inputRequirementDataWithUpdateRequirement?.version ? this.inputRequirementDataWithUpdateRequirement.version : 1,
+                author: this.inputRequirementDataWithUpdateRequirement?.author ?
+                    this.inputRequirementDataWithUpdateRequirement.author :
+                    this.getCurrentAuthor(),
+                version: this.inputRequirementDataWithUpdateRequirement?.version ?
+                    this.inputRequirementDataWithUpdateRequirement.version :
+                    1,
                 identifier: this.inputRequirementDataWithUpdateRequirement?.identifier,
-                name: this.inputRequirementDataWithUpdateRequirement?.name ? this.inputRequirementDataWithUpdateRequirement.name : '',
-                risk: this.inputRequirementDataWithUpdateRequirement?.risk ? this.inputRequirementDataWithUpdateRequirement.risk : '',
-                priority: this.inputRequirementDataWithUpdateRequirement?.priority ? this.inputRequirementDataWithUpdateRequirement.priority : '',
-                type: this.inputRequirementDataWithUpdateRequirement?.type ? this.inputRequirementDataWithUpdateRequirement.type : '',
-                effort: this.inputRequirementDataWithUpdateRequirement?.effort ? this.inputRequirementDataWithUpdateRequirement.effort.toString() : '',
-                description: this.inputRequirementDataWithUpdateRequirement?.description ? this.inputRequirementDataWithUpdateRequirement.description : '',
+                name: this.inputRequirementDataWithUpdateRequirement?.name ?
+                    this.inputRequirementDataWithUpdateRequirement.name :
+                    '',
+                risk: this.inputRequirementDataWithUpdateRequirement?.risk ?
+                    this.inputRequirementDataWithUpdateRequirement.risk :
+                    '',
+                priority: this.inputRequirementDataWithUpdateRequirement?.priority ?
+                    this.inputRequirementDataWithUpdateRequirement.priority :
+                    '',
+                type: this.inputRequirementDataWithUpdateRequirement?.type ?
+                    this.inputRequirementDataWithUpdateRequirement.type :
+                    '',
+                effort: this.inputRequirementDataWithUpdateRequirement?.effort ?
+                    this.inputRequirementDataWithUpdateRequirement.effort.toString() :
+                    '',
+                description: this.inputRequirementDataWithUpdateRequirement?.description ?
+                    this.inputRequirementDataWithUpdateRequirement.description :
+                    ''
             }
         );
     }
@@ -103,6 +140,7 @@ export class CreateRequirementFormComponent implements OnInit {
     private async getDataWhenRelationshipWithRequirement() {
         return await this.requirementService.getRequirementDataToUpdate(this.inputRequirementDataWithUpdateRequirement?.id)
             .then(requirement => {
+
                 this.stakeholdersListToUpdate = this.fontList
                     ?.filter(item => item.id !== undefined && requirement[0].stakeholderIds
                         .includes(item.id)) || [];
@@ -113,7 +151,8 @@ export class CreateRequirementFormComponent implements OnInit {
 
                 this.dependenciesListToUpdate = this.requirementsDependencies
                     ?.filter(item => item.id !== undefined && requirement[0].dependencyIds
-                        .includes(item.id)) || [];
+                            .includes(item.id)
+                    ) || [];
 
                 this.formGroup.get('stakeholders')?.setValue(this.stakeholdersListToUpdate);
                 this.formGroup.get('responsible')?.setValue(this.responsibleListToUpdate);
@@ -145,7 +184,23 @@ export class CreateRequirementFormComponent implements OnInit {
     private async getRequirements() {
         this.requirementService.getRequirementsByProjectId(this.projectsTableService.getCurrentProjectById()).then(requirements => {
             requirements.sort((a, b) => a.identifier.localeCompare(b.identifier));
-            this.requirementsDependencies = requirements;
-        })
+
+            this.requirementsDependencies = requirements.filter(item =>
+                item.identifier !== this.inputRequirementDataWithUpdateRequirement?.identifier
+            );
+        });
+    }
+
+    private validateFormValidations(form: FormGroup): void {
+
+        const allFormFields = ['name', 'stakeholders', 'risk', 'priority', 'responsible', 'type', 'effort'];
+
+        for (let field of allFormFields) {
+            if (form.get(field)?.invalid || form.get(field)?.value === '') {
+                this.requirementService.verifierFormValid(true);
+                return;
+            }
+        }
+        this.requirementService.verifierFormValid(true);
     }
 }

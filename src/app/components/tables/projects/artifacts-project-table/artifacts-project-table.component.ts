@@ -8,6 +8,7 @@ import {ProjectsTableService} from 'src/app/services/projects/projects-table.ser
 import {AlertService} from 'src/app/services/sweetalert/alert.service';
 import {ThemeService} from 'src/app/services/theme/theme.service';
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
+import {reloadPage} from "../../../../utils/reload.page";
 
 @Component({
     selector: 'app-artifacts-project-table',
@@ -84,14 +85,14 @@ export class ArtifactsProjectTableComponent {
                     this.artifactProjectService.getArtifactById(id).then(artifact => {
                         let fileName = artifact.fileName
                         const fileType = blob.type;
-    
+
                         if (!fileType || fileType === 'application/octet-stream') {
                             const fileExtension = fileName.split('.').pop();
                             if (fileExtension) {
                                 fileName = `${fileName}.${fileExtension}`;
                             }
                         }
-    
+
                         this.download(blob, fileName);
                     });
                 },
@@ -112,8 +113,8 @@ export class ArtifactsProjectTableComponent {
         window.URL.revokeObjectURL(url);
     }
 
-    visualizarArtifact(id: number, fileName: string) {
-        this.alertService.toInfoAlert("Visualização do arquivo","O arquivo será aberto pelo navegador");
+    visualizeArtifact(id: number, fileName: string) {
+        this.alertService.toInfoAlert("Visualização do arquivo", "O arquivo será aberto pelo navegador");
         this.artifactProjectService.getDownloadArtifactById(id)
             .subscribe({
                 next: (blob) => {
@@ -133,26 +134,29 @@ export class ArtifactsProjectTableComponent {
             });
     }
 
-  async deleteArtifact(id: number) {
+    async deleteArtifact(id: number) {
 
-    const result = await this.alertService.toOptionalActionAlert(
-        "Deletar artefato projeto",
-        "Deseja realmente excluir o artefato?"
-    );
+        const result = await this.alertService.toOptionalActionAlert(
+            "Deletar artefato projeto",
+            "Deseja realmente excluir o artefato?"
+        );
 
-    if (result.isConfirmed) {
-        this.artifactProjectService.deleteArtifactById(id)
-        .subscribe({
-          next: () => {
-              this.alertService.toSuccessAlert(`Artefato ${id} deletado com sucesso.`);
-              this.dialog.closeAll();
-          },
-          error: (error) => {
-            console.error("Erro ao deletar o artefato:", error);
-          }
-        });
-      }
-   }
+        if (result.isConfirmed) {
+            this.artifactProjectService.deleteArtifactById(id)
+                .subscribe({
+                    next: () => {
+                        this.alertService.toSuccessAlert(`Artefato ${id} deletado com sucesso.`);
+                        this.dialog.closeAll();
+                        this.spinnerService.start();
+                        reloadPage()
+                    },
+                    error: (error) => {
+                        this.spinnerService.stop();
+                        console.error("Erro ao deletar o artefato:", error);
+                    }
+                });
+        }
+    }
 
 }
 
