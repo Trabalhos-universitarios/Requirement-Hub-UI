@@ -30,7 +30,7 @@
                     <button mat-menu-item class="icon" (click)="downloadArtifact(element.id)">
                         <mat-icon [ngStyle]="stylesIconColor('border_color')">download</mat-icon>Download
                     </button>
-                    <button mat-menu-item (click)="visualizarArtifact(element.id, element.fileName)">
+                    <button mat-menu-item (click)="visualizeArtifact(element.id, element.fileName)">
                         <mat-icon [ngStyle]="stylesIconColor('info')">visibility</mat-icon>Visualizar
                     </button>
                     <button [disabled]="isPermited()" mat-menu-item (click)="deleteArtifact(element.id)">

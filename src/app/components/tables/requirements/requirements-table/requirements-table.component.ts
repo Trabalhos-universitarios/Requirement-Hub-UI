@@ -14,11 +14,16 @@ import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
 import {reloadPage} from "../../../../utils/reload.page";
 import {AlertService} from "../../../../services/sweetalert/alert.service";
-import {response} from "express";
-import { ArtifactsRequirementsTableComponent } from '../artifacts-requirements-table/artifacts-requirements-table.component';
-import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
-import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
-import { ModalDialogInformationRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
+import {
+    ModalDialogArtifactsRequirementComponent
+} from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
+import {LocalStorageService} from 'src/app/services/localstorage/local-storage.service';
+import {
+    ModalDialogInformationRequirementComponent
+} from 'src/app/components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
+import {
+    ModalDialogUpdateRequirementComponent
+} from "../../../modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component";
 
 @Component({
     selector: 'app-requirements-table',
@@ -70,7 +75,7 @@ export class RequirementsTableComponent implements AfterViewInit {
     }
 
     protected async getData() {
-        this.requirementsService.listRequirementsByProjectId(this.getCurrentProjectById()).then(response => {
+        this.requirementsService.getRequirementsByProjectId(this.getCurrentProjectById()).then(response => {
             response.forEach(async requirement => {
                 requirement.author = await this.getAuthorById(requirement.author).then();
             });
@@ -157,7 +162,10 @@ export class RequirementsTableComponent implements AfterViewInit {
                   });
                 break
             case "edit":
-                console.log("Aqui vai a ação a ser tomada em edit")
+                this.matDialog.open(ModalDialogUpdateRequirementComponent, {
+                    data: value,
+                    width: '1000px',
+                })
                 break
             case "add":
                 this.matDialog.open(ModalDialogArtifactsRequirementComponent, {

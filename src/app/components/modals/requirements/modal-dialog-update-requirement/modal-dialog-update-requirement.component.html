@@ -1,0 +1,27 @@
+<mat-toolbar class="title-toolbar">
+    <span class="title">Editando o requisito - {{data.identifier}}</span>
+</mat-toolbar>
+
+<mat-dialog-content>
+
+    <app-create-requirement-form [inputRequirementDataWithUpdateRequirement]="data"></app-create-requirement-form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+    <button mat-raised-button
+            [disabled]="!buttonDisabled"
+            (click)="close()">
+        Cancelar
+        <mat-icon>cancel</mat-icon>
+    </button>
+
+    <button mat-raised-button
+            cdkFocusInitial
+            [disabled]="!buttonDisabled"
+            (click)="saveData()">
+        Aualizar requisito
+        <mat-icon>update</mat-icon>
+    </button>
+
+</mat-dialog-actions>

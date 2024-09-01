@@ -173,9 +173,11 @@ export class ProjectsTableComponent implements AfterViewInit {
             "Deseja realmente excluir o projeto?"
         );
 
-        console.log("result", result);
-
-        console.log("this.projectsTableService.getCurrentProjectById()", this.projectsTableService.getCurrentProjectById());
+        // todo lógica provisória para não deixar excluir o Requirement Hub
+        if (this.projectsTableService.getCurrentProjectById() == 50) {
+            await this.alertService.toErrorAlert("Erro!", "Não é possível excluir o Requirement Hub!");
+            return;
+        }
 
         if (result.isConfirmed) {
             await this.projectsService.deleteProject(this.projectsTableService.getCurrentProjectById());

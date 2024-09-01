@@ -5,15 +5,15 @@ export interface RequirementsDataModel {
     author: number;
     dateCreated?: string;
     priority: string;
-    risk: string,
+    risk?: string
     type: string;
     version: string;
     status?: string;
     description: string;
-    stakeholders: string[];
-    responsible: string;
+    stakeholderIds: string[];
+    responsibleIds: string[];
     effort: string;
-    dependencies: number[];
+    dependencyIds: number[];
     projectId?: number[];
     artifactIds?: number[];
 }

@@ -45,10 +45,7 @@ export class AlertService {
             showCancelButton: true,
             confirmButtonText: "Sim, deletar!"
         });
-
-        if (result.isConfirmed) {
-            await this.toSuccessAlert("Deletado com sucesso!");
-        } else if (result.isDenied) {
+        if (result.dismiss) {
             await this.toInfoAlert("Operação cancelada!", "");
         }
 

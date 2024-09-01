@@ -62,6 +62,7 @@ export class UpdateProjectUserTableComponent implements OnInit{
         console.error(`Error : ${error} -> ${error.message}`);
       });
   }
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;

@@ -68,7 +68,7 @@ export class TracebilityMatrixComponent implements AfterViewInit {
     const projectId = this.projectTableService.getCurrentProjectById();
 
     Promise.all([
-      this.requirementsService.listRequirementsByProjectId(projectId),
+      this.requirementsService.getRequirementsByProjectId(projectId),
       this.artifactService.getArtifactsByProjectRelated(projectId),
       this.userService.getUsers()
     ])
@@ -92,7 +92,7 @@ export class TracebilityMatrixComponent implements AfterViewInit {
       this.artifactsData.forEach(art => {
         if (art.requirementId) {
           const requirement = this.requirementsData.find(req => req.id === art.requirementId);
-  
+
           if (requirement) {
             art.requirementId = requirement.identifier + " - " + requirement.name;
           }
@@ -169,12 +169,12 @@ export class TracebilityMatrixComponent implements AfterViewInit {
 
   openModal(identifier: string): void {
     this.spinnerService.start();
-  
+
     if (identifier.startsWith('RF') || identifier.startsWith('RNF')) {
 
       const requirement = this.requirementsData.find(req => req.identifier === identifier);
       if (requirement) {
- 
+
         this.spinnerService.stop();
         this.dialog.open(ModalDialogInformationRequirementComponent, {
           width: '1350px',
@@ -190,7 +190,7 @@ export class TracebilityMatrixComponent implements AfterViewInit {
 
       const artifact = this.artifactsData.find(art => art.identifier === identifier);
       if (artifact) {
-   
+
         this.spinnerService.stop();
         this.dialog.open(ModalDialogInformationRequirementArtifactComponent, {
           width: '1350px',
@@ -198,13 +198,13 @@ export class TracebilityMatrixComponent implements AfterViewInit {
           disableClose: true
         });
       } else {
-     
+
         this.spinnerService.stop();
         console.error('Artefato não encontrado:', identifier);
       }
     }
   }
-  
+
 
   isRelated(rowIndex: number, colIndex: number): boolean {
     if (this.highlightedRow === null || this.highlightedColumn === null) {

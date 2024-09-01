@@ -137,6 +137,7 @@ export class CreateArtifactFormComponent implements OnInit {
                 this.dialog.closeAll();
                 this.spinnerService.start();
                 reloadPage();
+                this.spinnerService.start();
             }
         } catch (error) {
             switch (error) {

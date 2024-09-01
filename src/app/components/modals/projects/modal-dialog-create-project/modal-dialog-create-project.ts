@@ -65,19 +65,19 @@ export class ModalDialogCreateProjectComponent implements OnInit {
             this.spinnerService.stop();
             switch (error) {
                 case 409:
-                    console.log("ENTOU AQUI 409", error)
+                    console.log(error)
                     await this.alertService.toErrorAlert("Erro!", "Já existe um projeto com esse nome vinculado a esse gerente!");
                     break;
                 case 404:
-                    console.log("ENTOU AQUI 404", error)
+                    console.log(error)
                     await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
                     break;
                 case 500:
-                    console.log("ENTOU AQUI 500", error)
+                    console.log(error)
                     await this.alertService.toErrorAlert("Erro!", "Erro interno do servidor!");
                     break;
                 default:
-                    console.log("ENTOU AQUI OUTROS", error)
+                    console.log(error)
                     await this.alertService.toErrorAlert("Erro!", "Erro ao cadastrar projeto - " + error);
             }
         }

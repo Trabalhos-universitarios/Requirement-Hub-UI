@@ -10,6 +10,7 @@ import {AlertService} from 'src/app/services/sweetalert/alert.service';
 import {ThemeService} from 'src/app/services/theme/theme.service';
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {reloadPage} from "../../../../utils/reload.page";
 
 @Component({
     selector: 'app-create-artifact-project-form',
@@ -41,7 +42,6 @@ export class CreateArtifactProjectFormComponent implements OnInit {
 
         this.createForm();
         this.uploader.onAfterAddingFile = (file: FileItem) => {
-            // Se já existir um arquivo na fila, remove-o antes de adicionar um novo
             if (this.uploader.queue.length > 1) {
                 this.uploader.queue[0].remove();
             }
@@ -67,7 +67,7 @@ export class CreateArtifactProjectFormComponent implements OnInit {
     }
 
     public selectFile() {
-        this.clearFileInput(); // Limpa o campo antes de abrir o seletor de arquivos
+        this.clearFileInput();
         this.fileInput.nativeElement.click();
     }
 
@@ -110,7 +110,6 @@ export class CreateArtifactProjectFormComponent implements OnInit {
             let fileType = file.file.type;
     
             if (!fileType && file.file && file.file.name) {
-                // Se o tipo estiver vazio, obtenha a extensão do nome do arquivo
                 const fileExtension = file.file.name.split('.').pop();
                 fileType = fileExtension ? `application/${fileExtension}` : 'application/octet-stream';
             }
@@ -133,7 +132,6 @@ export class CreateArtifactProjectFormComponent implements OnInit {
 
     async saveData(): Promise<void> {
         try {
-            this.spinnerService.start();
             this.projectId = this.projectsTableService.getCurrentProjectById();
 
             const response = await this.artifactProjectService.createArtifact(this.prepareDataArtifact(this.projectId));
@@ -142,27 +140,28 @@ export class CreateArtifactProjectFormComponent implements OnInit {
                 await this.alertService.toSuccessAlert("Artefato Cadastrado com sucesso!");
                 this.localStorageService.removeItem('file');
                 this.dialog.closeAll();
+                this.spinnerService.start();
+                reloadPage()
             }
         } catch (error) {
+            this.spinnerService.stop();
             switch (error) {
                 case 409:
-                    console.error("ENTOU AQUI 409", error)
+                    console.error( error)
                     await this.alertService.toErrorAlert("Erro!", "Artefato já existe com esse nome!");
                     break;
                 case 404:
-                    console.error("ENTOU AQUI 404", error)
+                    console.error( error)
                     await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
                     break;
                 case 500:
-                    console.error("ENTOU AQUI 500", error)
+                    console.error(error)
                     await this.alertService.toErrorAlert("Erro!", "Erro interno do servidor!");
                     break;
                 default:
-                    console.error("ENTOU AQUI OUTROS", error)
+                    console.error(error)
                     await this.alertService.toErrorAlert("Erro!", "Erro ao cadastrar artefato - " + error);
             }
-        } finally {
-            this.spinnerService.stop();
         }
     }
 
@@ -186,7 +185,6 @@ export class CreateArtifactProjectFormComponent implements OnInit {
     }
 
     clearFileInput() {
-        // Limpa o campo de entrada de arquivo
         this.fileInput.nativeElement.value = '';
     }
 
