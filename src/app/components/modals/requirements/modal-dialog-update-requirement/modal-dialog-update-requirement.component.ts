@@ -7,6 +7,7 @@ import {LocalStorageService} from "../../../../services/localstorage/local-stora
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {reloadPage} from "../../../../utils/reload.page";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
+import { RichTextService } from 'src/app/services/richText/rich-text.service';
 
 @Component({
     selector: 'app-modal-dialog-update-requirement',
@@ -25,6 +26,7 @@ export class ModalDialogUpdateRequirementComponent {
         private dialog: MatDialog,
         private localStorageService: LocalStorageService,
         private spinnerService: SpinnerService,
+        private richTextService: RichTextService,
         @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
 
         this.requirementService.currentForm.subscribe(form => {
@@ -65,8 +67,15 @@ export class ModalDialogUpdateRequirementComponent {
     }
 
     private prepareData() {
+
+      let descriptionValue: string = '';
+
+      this.richTextService.currentContent.subscribe(content => {
+          descriptionValue = content;
+      })
         return  {
             ...this.requirementForm,
+            description: descriptionValue,
             author: this.localStorageService.getItem("id"),
             projectRelated: this.projectsTableService.getCurrentProjectById(),
             stakeholders: this.localStorageService.getItem("stakeholders"),

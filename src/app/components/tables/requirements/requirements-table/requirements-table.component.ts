@@ -158,18 +158,21 @@ export class RequirementsTableComponent implements AfterViewInit {
             case "information":
                 this.matDialog.open(ModalDialogInformationRequirementComponent, {
                     data: value,
-                    width: '1200px'
+                    width: '1200px',
+                    disableClose: true
                   });
                 break
             case "edit":
                 this.matDialog.open(ModalDialogUpdateRequirementComponent, {
                     data: value,
                     width: '1000px',
+                    disableClose: true
                 })
                 break
             case "add":
                 this.matDialog.open(ModalDialogArtifactsRequirementComponent, {
-                    data: value
+                    data: value,
+                    disableClose: true
                 })
                 break
 

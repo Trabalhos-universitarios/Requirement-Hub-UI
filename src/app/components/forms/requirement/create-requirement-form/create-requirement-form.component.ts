@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RequirementsService} from "../../../../services/requirements/requirements.service";
 import {ProjectsTableService} from 'src/app/services/projects/projects-table.service';
@@ -10,6 +10,8 @@ import {UsersService} from "../../../../services/users/users.service";
 import {UserResponseModel} from "../../../../models/user-model";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 import {RequirementUtil} from "../../../../utils/requirement.util";
+import { RichTextService } from 'src/app/services/richText/rich-text.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-create-requirement-form',
@@ -53,8 +55,11 @@ export class CreateRequirementFormComponent implements OnInit {
                 private localStorageService: LocalStorageService,
                 private stakeholderService: StakeholdersService,
                 private userService: UsersService,
-                private capitalizeFirstPipe: CapitalizeFirstPipePipe) {
+                private capitalizeFirstPipe: CapitalizeFirstPipePipe,
+                private richTextService: RichTextService,
+                @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
         this.validateFormValidations(this.formGroup)
+        this.autoCompleteForm().then();
     }
 
     ngOnInit() {
@@ -130,11 +135,10 @@ export class CreateRequirementFormComponent implements OnInit {
                 effort: this.inputRequirementDataWithUpdateRequirement?.effort ?
                     this.inputRequirementDataWithUpdateRequirement.effort.toString() :
                     '',
-                description: this.inputRequirementDataWithUpdateRequirement?.description ?
-                    this.inputRequirementDataWithUpdateRequirement.description :
-                    ''
+                description: this.data.description
             }
         );
+        this.richTextService.changeContent(this.data.description)
     }
 
     private async getDataWhenRelationshipWithRequirement() {
