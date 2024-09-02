@@ -6,7 +6,8 @@
 <mat-dialog-actions align="end">
 
     <button mat-raised-button
-            *ngIf="!buttonDisabled">
+            *ngIf="!buttonDisabled"
+            (click)="close()">
         Cancelar
         <mat-icon>cancel</mat-icon>
     </button>
@@ -16,7 +17,7 @@
             *ngIf="!buttonDisabled"
             (click)="saveData()">
         Criar requisito
-        <mat-icon>add</mat-icon>
+        <mat-icon>save</mat-icon>
     </button>
 
 </mat-dialog-actions>

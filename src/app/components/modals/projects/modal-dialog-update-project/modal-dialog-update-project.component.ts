@@ -14,13 +14,13 @@ import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {reloadPage} from "../../../../utils/reload.page";
 
 @Component({
-  selector: 'app-modal-dialog-update-project',
-  templateUrl: './modal-dialog-update-project.component.html',
-  styleUrls: ['./modal-dialog-update-project.component.scss']
-}) 
+    selector: 'app-modal-dialog-update-project',
+    templateUrl: './modal-dialog-update-project.component.html',
+    styleUrls: ['./modal-dialog-update-project.component.scss']
+})
 export class ModalDialogUpdateProjectComponent implements OnInit {
 
-  @ViewChild(UpdateProjectTabComponent) tabComponent!: UpdateProjectTabComponent;
+    @ViewChild(UpdateProjectTabComponent) tabComponent!: UpdateProjectTabComponent;
 
     formGroup?: FormGroup | null;
     buttonDisabled: boolean = true;
@@ -48,7 +48,7 @@ export class ModalDialogUpdateProjectComponent implements OnInit {
         });
     }
 
-    close(){
+    close() {
         this.dialog.closeAll();
     }
 
@@ -71,23 +71,48 @@ export class ModalDialogUpdateProjectComponent implements OnInit {
 
             const prepareData: ProjectDataModel = this.prepareData(businessAnalysts, commonUsers, requirementAnalysts, this.formGroup);
 
-            this.updateProjectService.updateProject(this.projectTableService.currentIdProject, prepareData).subscribe(resp => {
-                if (resp) {
-                    this.alertService.toSuccessAlert("Projeto atualizado com sucesso!");
-                    this.dialog.closeAll();
-                    reloadPage()
-                    this.spinnerService.stop();
-                }
-            });
+            this.updateProjectService.updateProject(this.projectTableService.currentIdProject, prepareData)
+                .subscribe({
+                    next: (resp) => {
+                        if (resp) {
+                            this.alertService.toSuccessAlert("Projeto atualizado com sucesso!");
+                            this.dialog.closeAll();
+                            this.spinnerService.stop();
+                            reloadPage();
+                            this.spinnerService.start();
+                        }
+                    },
+                    error: async (error) => {
+                        this.spinnerService.stop();
+                        switch (error.status) {
+                            case 404:
+                                console.error(`NOT FOUND: ${error}`);
+                                await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
+                                break;
+                            case 405:
+                                console.error(`METHOD NOT ALLOWED: ${error}`);
+                                await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
+                                break;
+                            case 500:
+                                console.error(`INTERNAL SERVER ERROR: ${error}`);
+                                await this.alertService.toErrorAlert("Erro!", "Erro interno do servidor!");
+                                break;
+                            default:
+                                console.error(`ERROR: ${error}`);
+                                await this.alertService.toErrorAlert("Erro!", "Erro ao atualizar o projeto - " + error);
+                        }
+                    }
+                });
         }
     }
+
 
     private prepareData(
         businessAnalysts: string[],
         commonUsers: string[],
         requirementAnalysts: string[],
-        formGroup:  FormGroup<any>): ProjectDataModel {
-        return  {
+        formGroup: FormGroup<any>): ProjectDataModel {
+        return {
             ...formGroup.value,
             businessAnalysts: businessAnalysts,
             commonUsers: commonUsers,

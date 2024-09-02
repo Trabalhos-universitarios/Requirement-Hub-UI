@@ -47,42 +47,39 @@ export class ModalDialogCreateProjectComponent implements OnInit {
         });
     }
 
-    async getData() {
-        console.log("vai buscar um projeto por nome para não deixar criar repetido")
+    close() {
+        this.dialog.closeAll();
     }
 
     async saveData(): Promise<void> {
         this.spinnerService.start();
         try {
             const response = await this.projectService.createProject(this.prepareData());
-
             if (response) {
                 await this.alertService.toSuccessAlert(`Projeto cadastrado com sucesso!`);
                 this.localStorageService.removeItem('file');
                 this.dialog.closeAll();
-                this.spinnerService.stop()
                 reloadPage()
             }
         } catch (error) {
+            this.spinnerService.stop();
             switch (error) {
                 case 409:
-                    console.log("ENTOU AQUI 409", error)
+                    console.log(error)
                     await this.alertService.toErrorAlert("Erro!", "Já existe um projeto com esse nome vinculado a esse gerente!");
                     break;
                 case 404:
-                    console.log("ENTOU AQUI 404", error)
+                    console.log(error)
                     await this.alertService.toErrorAlert("Erro!", "Rota não encontrada ou fora!");
                     break;
                 case 500:
-                    console.log("ENTOU AQUI 500", error)
+                    console.log(error)
                     await this.alertService.toErrorAlert("Erro!", "Erro interno do servidor!");
                     break;
                 default:
-                    console.log("ENTOU AQUI OUTROS", error)
+                    console.log(error)
                     await this.alertService.toErrorAlert("Erro!", "Erro ao cadastrar projeto - " + error);
             }
-        } finally {
-            this.spinnerService.stop();
         }
     }
 
@@ -90,10 +87,16 @@ export class ModalDialogCreateProjectComponent implements OnInit {
         if (this.formGroup && this.formGroup.valid) {
             return {
                 ...this.formGroup.value,
-                businessAnalysts: this.formGroup.value.businessAnalysts.map((v: { id: any; }) => v.id),
-                commonUsers: this.formGroup.value.commonUsers.map((v: { id: any; }) => v.id),
-                manager: this.formGroup.value.manager.name,
-                requirementAnalysts: this.formGroup.value.requirementAnalysts.map((v: { id: any; }) => v.id),
+                businessAnalysts: this.formGroup.value.businessAnalysts 
+                    ? this.formGroup.value.businessAnalysts.map((v: { id: any; }) => v.id) 
+                    : null,
+                commonUsers: this.formGroup.value.commonUsers 
+                    ? this.formGroup.value.commonUsers.map((v: { id: any; }) => v.id) 
+                    : null,
+                manager: this.formGroup.value.manager ? this.formGroup.value.manager.name : null,
+                requirementAnalysts: this.formGroup.value.requirementAnalysts 
+                    ? this.formGroup.value.requirementAnalysts.map((v: { id: any; }) => v.id) 
+                    : null,
                 description: this.descriptionProject,
                 status: Status.ACTIVE
             };

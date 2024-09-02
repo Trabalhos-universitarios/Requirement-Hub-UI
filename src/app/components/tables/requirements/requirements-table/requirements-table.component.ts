@@ -8,11 +8,22 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {Status} from "../../../../utils/util.status";
 import {MatDialog} from "@angular/material/dialog";
-import {AddArtifactsComponent} from "../../../modals/artifacts/add-artifacts/add-artifacts.component";
 import {ProjectsTableService} from "../../../../services/projects/projects-table.service";
 import {UsersService} from "../../../../services/users/users.service";
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
+import {reloadPage} from "../../../../utils/reload.page";
+import {AlertService} from "../../../../services/sweetalert/alert.service";
+import {
+    ModalDialogArtifactsRequirementComponent
+} from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
+import {LocalStorageService} from 'src/app/services/localstorage/local-storage.service';
+import {
+    ModalDialogInformationRequirementComponent
+} from 'src/app/components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
+import {
+    ModalDialogUpdateRequirementComponent
+} from "../../../modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component";
 
 @Component({
     selector: 'app-requirements-table',
@@ -28,8 +39,6 @@ import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.p
 })
 
 export class RequirementsTableComponent implements AfterViewInit {
-    @ViewChild(MatPaginator) paginator?: MatPaginator;
-    protected dataSource = new MatTableDataSource<RequirementsDataModel>;
     protected displayedColumns: string[] =
         [
             'identifier',
@@ -41,8 +50,11 @@ export class RequirementsTableComponent implements AfterViewInit {
             'version',
             'status',
         ];
+    @ViewChild(MatPaginator) paginator?: MatPaginator;
+    protected dataSource = new MatTableDataSource<RequirementsDataModel>;
     protected columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
     protected expandedElement: RequirementsDataModel | undefined;
+    private requirementId: number | undefined;
 
     constructor(private requirementsService: RequirementsService,
                 private sanitizer: DomSanitizer,
@@ -51,7 +63,9 @@ export class RequirementsTableComponent implements AfterViewInit {
                 private projectsTableService: ProjectsTableService,
                 private usersService: UsersService,
                 private spinnerService: SpinnerService,
-                private capitalizeFirstPipe: CapitalizeFirstPipePipe) {
+                private capitalizeFirstPipe: CapitalizeFirstPipePipe,
+                private alertService: AlertService,
+                private localStorage: LocalStorageService) {
         spinnerService.start()
         this.getData().then();
     }
@@ -61,11 +75,12 @@ export class RequirementsTableComponent implements AfterViewInit {
     }
 
     protected async getData() {
-        this.requirementsService.getRequirementsByProjectRelated(this.getCurrentProjectById()).then(requirements => {
-            requirements.forEach(async requirement => {
+        this.requirementsService.getRequirementsByProjectId(this.getCurrentProjectById()).then(response => {
+            response.forEach(async requirement => {
                 requirement.author = await this.getAuthorById(requirement.author).then();
             });
-            this.dataSource.data = requirements;
+            response.sort((a, b) => a.identifier.localeCompare(b.identifier));
+            this.dataSource.data = response;
             this.spinnerService.stop();
         })
     }
@@ -85,6 +100,15 @@ export class RequirementsTableComponent implements AfterViewInit {
 
     protected sanitizeHtml(html: string): SafeHtml {
         return this.sanitizer.bypassSecurityTrustHtml(html);
+    }
+
+    isPermitted() {
+        if (this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
+            this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
+            this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO") {
+            return false;
+        }
+        return true;
     }
 
     protected getStatusIcon(status: string) {
@@ -129,27 +153,48 @@ export class RequirementsTableComponent implements AfterViewInit {
         }
     }
 
-    protected openDialog(action: String, value: string) {
+    protected openDialog(action: String, value: RequirementsDataModel) {
         switch (action) {
             case "information":
-                console.log("Aqui vai a ação a ser tomada em info")
+                this.matDialog.open(ModalDialogInformationRequirementComponent, {
+                    data: value,
+                    width: '1200px',
+                    disableClose: true
+                  });
                 break
             case "edit":
-                console.log("Aqui vai a ação a ser tomada em edit")
-                break
-            case "delete":
-                console.log("Aqui vai a ação a ser tomada em delete")
+                this.matDialog.open(ModalDialogUpdateRequirementComponent, {
+                    data: value,
+                    width: '1000px',
+                    disableClose: true
+                })
                 break
             case "add":
-                this.matDialog.open(AddArtifactsComponent, {
-                    data: {
-                        identifierRequirement: value
-                    }
+                this.matDialog.open(ModalDialogArtifactsRequirementComponent, {
+                    data: value,
+                    disableClose: true
                 })
                 break
 
             default:
                 console.error("This dialog non exists!")
+        }
+    }
+
+    protected async deleteRequirement(id: number) {
+        const result = await this.alertService.toOptionalActionAlert(
+            "Deletar requisito",
+            "Deseja realmente excluir o requisito?"
+        );
+
+        if (result.isConfirmed) {
+            await this.requirementsService.deleteRequirement(id).then(response => {
+                if (response) {
+                    this.alertService.toSuccessAlert("Requisito excluído com sucesso!");
+                }
+            });
+            this.spinnerService.start();
+            reloadPage();
         }
     }
 }

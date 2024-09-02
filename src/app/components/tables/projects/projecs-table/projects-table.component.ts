@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {ThemeService} from "../../../../services/theme/theme.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -24,6 +24,8 @@ import {
 import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {ProjectsService} from "../../../../services/projects/projects.service";
 import {reloadPage} from "../../../../utils/reload.page";
+import { MatPaginator } from '@angular/material/paginator';
+import {SpinnerService} from "../../../../services/spinner/spinner.service";
 
 @Component({
     selector: 'app-projects-table',
@@ -37,7 +39,7 @@ import {reloadPage} from "../../../../utils/reload.page";
         ]),
     ],
 })
-export class ProjectsTableComponent {
+export class ProjectsTableComponent implements AfterViewInit {
 
     @Input()
     dataSource = new MatTableDataSource<ProjectDataModel>([]);
@@ -53,6 +55,8 @@ export class ProjectsTableComponent {
     columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
     expandedElement: ProjectDataModel | undefined;
 
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+
     constructor(
         private projectsTableService: ProjectsTableService,
         protected themeService: ThemeService,
@@ -60,7 +64,12 @@ export class ProjectsTableComponent {
         private sanitizer: DomSanitizer,
         private dialog: MatDialog,
         private alertService: AlertService,
-        private projectsService: ProjectsService) {
+        private projectsService: ProjectsService,
+        private spinnerService: SpinnerService) {
+    }
+
+    ngAfterViewInit() {
+        this.dataSource.paginator = this.paginator;
     }
 
     sanitizeHtml(html: string): SafeHtml {
@@ -128,7 +137,9 @@ export class ProjectsTableComponent {
     openDialog(action?: string) {
         switch (action) {
             case 'Put project':
-                this.dialog.open(ModalDialogUpdateProjectComponent);
+                this.dialog.open(ModalDialogUpdateProjectComponent,{
+                    disableClose: true
+                });
                 break;
             case 'Delete project':
                 this.deleteProject().then()
@@ -137,13 +148,19 @@ export class ProjectsTableComponent {
                 this.dialog.open(ModalDialogCreateRequirementComponent);
                 break;
             case 'Requirement list':
-                this.dialog.open(ModalDialogInformationProjectComponent);
+                this.dialog.open(ModalDialogInformationProjectComponent,{
+                    disableClose: true
+                });
                 break;
             case 'Traceability matrix':
-                this.dialog.open(TracebilityMatrixComponent);
+                this.dialog.open(TracebilityMatrixComponent,{
+                    disableClose: true
+                });
                 break
             case 'Artifacts project':
-                this.dialog.open(ModalDialogArtifactsProjectComponent);
+                this.dialog.open(ModalDialogArtifactsProjectComponent,{
+                    disableClose: true
+                });
                 break
             default:
                 console.error("This dialog non exists!")
@@ -156,12 +173,15 @@ export class ProjectsTableComponent {
             "Deseja realmente excluir o projeto?"
         );
 
-        console.log("result", result);
-
-        console.log("this.projectsTableService.getCurrentProjectById()", this.projectsTableService.getCurrentProjectById());
+        // todo lógica provisória para não deixar excluir o Requirement Hub
+        if (this.projectsTableService.getCurrentProjectById() == 50) {
+            await this.alertService.toErrorAlert("Erro!", "Não é possível excluir o Requirement Hub!");
+            return;
+        }
 
         if (result.isConfirmed) {
             await this.projectsService.deleteProject(this.projectsTableService.getCurrentProjectById());
+            this.spinnerService.start()
             reloadPage();
         }
     }

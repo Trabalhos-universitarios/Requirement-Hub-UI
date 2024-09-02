@@ -1,5 +1,5 @@
 <mat-toolbar class="title-toolbar">
-    <span class="title">Requisitos do Projeto</span>
+    <span class="title">Requisitos do Projeto - {{getCurrentProjectByName()}}</span>
 </mat-toolbar>
 
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
@@ -7,7 +7,7 @@
         <th mat-header-cell *matHeaderCellDef> {{ column | displayColumnFormatPipe }}</th>
         <td mat-cell *matCellDef="let element">
             <ng-container [ngSwitch]="column">
-                <ng-container *ngSwitchCase="'creationDate'">
+                <ng-container *ngSwitchCase="'dateCreated'">
                     {{ element[column] | dateFormat }}
                 </ng-container>
                 <ng-container *ngSwitchCase="'status'">
@@ -34,17 +34,17 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item (click)="openDialog('information', element)">
                     <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>Informações
                 </button>
-                <button mat-menu-item class="icon">
+                <button mat-menu-item class="icon" [disabled]="isPermitted()" (click)="openDialog('edit', element)">
                     <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
                 </button>
-                <button mat-menu-item>
-                    <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
+                <button mat-menu-item (click)="openDialog('add', element)">
+                    <mat-icon [ngStyle]="stylesIconColor('add_circle')">folder_open</mat-icon>Artefatos requisitos
                 </button>
-                <button mat-menu-item (click)="openDialog('add', element.identifierRequirement)" >
-                    <mat-icon [ngStyle]="stylesIconColor('add_circle')">add_circle</mat-icon>Adicionar artefatos
+                <button mat-menu-item (click)="deleteRequirement(element.id)" [disabled]="isPermitted()">
+                    <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
                 </button>
             </mat-menu>
         </td>
@@ -54,7 +54,7 @@
     <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
             <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                <div class="example-element-description" [innerHTML]="sanitizeHtml(element.requirementDescription)"></div>
+                <div class="example-element-description" [innerHTML]="sanitizeHtml(element.description)"></div>
             </div>
         </td>
     </ng-container>
@@ -68,7 +68,7 @@
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
 
-<mat-paginator [pageSizeOptions]="[5, 10, 20]"
+<mat-paginator [pageSizeOptions]="[5, 10, 20, 40]"
                showFirstLastButtons
                aria-label="Select page of periodic elements">
 </mat-paginator>

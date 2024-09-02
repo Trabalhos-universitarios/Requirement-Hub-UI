@@ -1,54 +1,73 @@
-<form [formGroup]="formGroup" novalidate>
-    <div class="container-form-create-project">
+<div class="container">
+    <form [formGroup]="formGroup" novalidate>
+        <div class="container-form-create-project">
 
-        <mat-form-field class="mat-forms-fro-project">
-            <mat-label>Identificador</mat-label>
-            <input matInput placeholder="Ex: UC1" formControlName="identifierArtifact">
-            <mat-error>Campo obrigatório!</mat-error>
+        <mat-form-field class="mat-forms-fro-project" *ngIf="dataRequirementToTableRequirement?.name">
+            <mat-label>Requisito referência</mat-label>
+            <input matInput formControlName="name">
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Autor</mat-label>
-            <input matInput placeholder="Ex: João Silva" formControlName="authorArtifact">
-            <mat-error>Campo obrigatório!</mat-error>
+            <input matInput placeholder="Ex: João Silva" formControlName="author">
+        </mat-form-field>
+
+        <mat-form-field class="mat-forms-fro-project">
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="Ex: Teste login" formControlName="name">
         </mat-form-field>
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Tipo</mat-label>
-            <input matInput placeholder="Ex: Use case" formControlName="typeArtifact">
+            <mat-select formControlName="type">
+                <mat-option *ngFor="let type of ARTIFACT_TYPE_LIST" [value]="{identifier: type.identifier, name: type.name}" [matTooltip]="type.name" matTooltipPosition="right">
+                    {{ type.identifier }}
+                </mat-option>
+            </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
         </mat-form-field>
 
-        <app-richTextEditor formControlName="artifactDescription"></app-richTextEditor>
+            <app-richTextEditor formControlName="description"></app-richTextEditor>
 
-        <div class="file-upload-container" [ngStyle]="getStyles()">
-            <div ng2FileDrop
-                 [uploader]="uploader"
-                 class="file-drop-zone"
-                 (fileOver)="fileOverBase($event)">
-                <span>Arraste e solte quantos arquivos quiser</span>
-                <span>ou</span>
-                <button class="button-update-file" mat-raised-button (click)="selectFile()">
-                    <mat-icon>upload_file</mat-icon>
-                    Upload de arquivos
-                </button>
-                <input type="file" #fileInput ng2FileSelect [uploader]="uploader" multiple hidden/>
-            </div>
+            <div class="file-upload-container" [ngStyle]="getStyles()">
+                <div ng2FileDrop
+                    [uploader]="uploader"
+                    class="file-drop-zone"
+                    (fileOver)="fileOverBase($event)">
+                    <span>Arraste e solte quantos arquivos quiser</span>
+                    <span>ou</span>
+                    <button class="button-update-file" mat-raised-button (click)="selectFile()">
+                        <mat-icon>upload_file</mat-icon>
+                        Upload de arquivos
+                    </button>
+                    <input type="file" #fileInput ng2FileSelect [uploader]="uploader" multiple hidden/>
+                </div>
 
-            <ul>
-                <li *ngFor="let item of uploader.queue">
-                    <div class="file-item" [ngStyle]="getStyles()">
-                        <div class="file-details">
-                            <strong>{{ item?.file?.name }}</strong>
-                            <mat-progress-bar mode="determinate" [value]="item.progress" color="primary"></mat-progress-bar>
-                            <span>{{ item.progress }}%</span>
+                <ul>
+                    <li *ngFor="let item of uploader.queue">
+                        <div class="file-item" [ngStyle]="getStyles()">
+                            <div class="file-details">
+                                <strong>{{ item?.file?.name }}</strong>
+                                <mat-progress-bar mode="determinate" [value]="item.progress" color="primary"></mat-progress-bar>
+                                <span>{{ item.progress }}%</span>
+                            </div>
+                            <button mat-icon-button (click)="removeFile(item)">
+                                <mat-icon>delete_forever</mat-icon>
+                            </button>
                         </div>
-                        <button mat-icon-button (click)="item.remove()">
-                            <mat-icon>delete_forever</mat-icon>
-                        </button>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</form>
+        <div class="create-artifact-button">
+            <button mat-raised-button class="mat-button" (click)="close()">
+                <mat-icon>cancel</mat-icon>Cancelar
+            </button>
+            <button mat-raised-button class="mat-button"
+                    [disabled]="formInvalid"
+                    (click)="saveData()">
+                <mat-icon>save</mat-icon>Salvar
+            </button>
+        </div>
+    </form>
+</div>

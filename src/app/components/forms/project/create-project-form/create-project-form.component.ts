@@ -20,8 +20,8 @@ export class CreateProjectFormComponent implements OnInit {
         name: new FormControl('', Validators.required),
         manager: new FormControl('', Validators.required),
         requirementAnalysts: new FormControl('', Validators.required),
-        businessAnalysts: new FormControl('', Validators.required),
-        commonUsers: new FormControl('', Validators.required),
+        businessAnalysts: new FormControl('',),
+        commonUsers: new FormControl('',),
         version: new FormControl('', Validators.required),
         description: new FormControl('')
     })

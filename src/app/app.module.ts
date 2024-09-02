@@ -59,7 +59,6 @@ import {
     ModalDialogInformationProjectComponent
 } from './components/modals/projects/modal-dialog-information-project/modal-dialog-information-project.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {AddArtifactsComponent} from './components/modals/artifacts/add-artifacts/add-artifacts.component';
 import { DisplayColumnFormatPipePipe } from './pipes/display-column-format-pipe.pipe';
 import { TracebilityMatrixComponent } from './components/modals/modeal-tracebility-matrix/tracebility-matrix.component';
 import { ModalLoginComponent } from './auth/modals/modal-login/modal-login.component';
@@ -74,6 +73,14 @@ import { CapitalizeFirstPipePipe } from './pipes/capitalize-first-pipe.pipe';
 import { ArtifactsProjectTableComponent } from './components/tables/projects/artifacts-project-table/artifacts-project-table.component';
 import { ModalDialogArtifactsProjectComponent } from './components/modals/projects/modal-dialog-artifacts-project/modal-dialog-artifacts-project.component';
 import { CreateArtifactProjectFormComponent } from './components/forms/project/create-artifact-project-form/create-artifact-project-form.component';
+import { ModalDialogArtifactsRequirementComponent } from './components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
+import { ArtifactsRequirementsTableComponent } from './components/tables/requirements/artifacts-requirements-table/artifacts-requirements-table.component';
+import { ModalDialogUpdateRequirementComponent } from './components/modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component';
+import { UpdateArtifactFormComponent } from './components/forms/requirement/update-artifact-form/update-artifact-form.component';
+import { ModalDialogInformationRequirementComponent } from './components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
+import { MatListModule } from '@angular/material/list';
+import { ModalDialogInformationRequirementArtifactComponent } from './components/modals/requirements/modal-dialog-information-requirement-artifact/modal-dialog-information-requirement-artifact.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -95,7 +102,6 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
         RichTextEditorComponent,
         RequirementsTableComponent,
         ModalDialogInformationProjectComponent,
-        AddArtifactsComponent,
         DisplayColumnFormatPipePipe,
         TracebilityMatrixComponent,
         LoginComponent,
@@ -108,6 +114,12 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
         ArtifactsProjectTableComponent,
         ModalDialogArtifactsProjectComponent,
         CreateArtifactProjectFormComponent,
+        ModalDialogArtifactsRequirementComponent,
+        ModalDialogUpdateRequirementComponent,
+        ArtifactsRequirementsTableComponent,
+        UpdateArtifactFormComponent,
+        ModalDialogInformationRequirementComponent,
+        ModalDialogInformationRequirementArtifactComponent
     ],
     imports: [
         BrowserModule,
@@ -128,23 +140,21 @@ import { CreateArtifactProjectFormComponent } from './components/forms/project/c
         MatTabsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
-        MatSelectModule,
         FormsModule,
-        ReactiveFormsModule,
         NgIf,
         NgFor,
         HttpClientModule,
         MatProgressSpinnerModule,
         MatMenuModule,
         MatProgressBarModule,
-        MatButtonModule,
         NgxFileDropModule,
         FileUploadModule,
         QuillModule.forRoot(),
         RichTextEditorModule,
         MatPaginatorModule,
-        MatTableModule,
-        UpdateProjectUserTableComponent
+        UpdateProjectUserTableComponent,
+        MatCheckboxModule,
+        MatListModule
     ],
     providers: [
         [CapitalizeFirstPipePipe],

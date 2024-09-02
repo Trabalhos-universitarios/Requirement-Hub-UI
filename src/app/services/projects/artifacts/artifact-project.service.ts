@@ -24,14 +24,10 @@ export class ArtifactProjectService {
     this.formGroupSource.next(formGroup);
   }
 
-  createArtifact(post: any): Promise<any> {
+  async createArtifact(post: any): Promise<any> {
     return firstValueFrom(
         this.http.post(`${this.baseUrl}/project-artifacts`, post).pipe(
             catchError((error: HttpErrorResponse) => {
-
-              console.log("SERVICE ERROR: ", error.status)
-              console.log("SERVICE ERROR MESSAGE: ", error.message)
-
               if (error.status === 409) {
                 console.error('This requirement already exists!');
                 return throwError(() => HttpStatusCode.Conflict);
