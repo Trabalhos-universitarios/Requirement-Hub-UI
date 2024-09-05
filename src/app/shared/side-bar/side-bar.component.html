@@ -30,7 +30,7 @@
                 <span class="description">Projetos</span>
             </button>
 
-            <button mat-button [hidden]="isManager()" (click)="openModalDialogComponent()">
+            <button mat-button [hidden]="isManager()" (click)="openModalDialogComponent('Create project')">
                 <mat-icon class="icons">format_list_bulleted_add</mat-icon>
                 <span class="description">Criar Projeto</span>
             </button>
@@ -40,9 +40,14 @@
                 <span class="description">Pendências de Aprovações</span>
             </button>
 
-            <button mat-button [hidden]="isAdmin()">
+            <button mat-button [hidden]="isAdmin()" (click)="openModalDialogComponent('Add user')">
                 <mat-icon class="icons">person_add</mat-icon>
-                <span>Cadastrar Membros</span>
+                <span>Cadastrar Usuários</span>
+            </button>
+
+            <button mat-button [hidden]="isAdmin()" (click)="openModalDialogComponent('delete user')">
+              <mat-icon class="icons">delete</mat-icon>
+              <span>Deletar Usuários</span>
             </button>
 
             <button mat-button [hidden]="isAdmin()">

@@ -12,6 +12,8 @@ import {
 } from "../../components/modals/projects/modal-dialog-create-project/modal-dialog-create-project";
 import { ProjectDataModel } from 'src/app/models/project-data-model';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
+import { ModalDialogCreateUserComponent } from 'src/app/components/modals/user/modal-dialog-create-user/modal-dialog-create-user.component';
+import { ModalDialogDeleteUserComponent } from 'src/app/components/modals/user/modal-dialog-delete-user/modal-dialog-delete-user.component';
 
 @Component({
     selector: 'app-side-bar',
@@ -50,8 +52,26 @@ export class SideBarComponent implements AfterViewInit {
             })
     }
 
-    openModalDialogComponent() {
-        this.dialog.open(ModalDialogCreateProjectComponent);
+    openModalDialogComponent(action: string) {
+        switch (action) {
+            case 'Create project':
+                this.dialog.open(ModalDialogCreateProjectComponent,{
+                    disableClose: false
+                });
+                break;
+            case 'Add user':
+                this.dialog.open(ModalDialogCreateUserComponent,{
+                    disableClose: false
+                });
+                break;
+                case 'delete user':
+                    this.dialog.open(ModalDialogDeleteUserComponent,{
+                        disableClose: true
+                    });
+                    break;
+            default:
+                console.error("This dialog non exists!")
+        }
     }
 
     isManager() {
@@ -60,7 +80,7 @@ export class SideBarComponent implements AfterViewInit {
     }
 
     isAdmin() {
-        return this.localStorage.getItem('role') != "ADMINISTRADOR";
+        return this.localStorage.getItem('role') != "ADMIN";
 
     }
 
