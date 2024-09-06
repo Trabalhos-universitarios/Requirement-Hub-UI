@@ -153,7 +153,9 @@ export class ProjectsTableComponent implements AfterViewInit {
                 this.deleteProject().then()
                 break;
             case 'Create requirement':
-                this.dialog.open(ModalDialogCreateRequirementComponent);
+                this.dialog.open(ModalDialogCreateRequirementComponent,{
+                    disableClose: true
+                });
                 break;
             case 'Requirement list':
                 this.dialog.open(ModalDialogInformationProjectComponent,{

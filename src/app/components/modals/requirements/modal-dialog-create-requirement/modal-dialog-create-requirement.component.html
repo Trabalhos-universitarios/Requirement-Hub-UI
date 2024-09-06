@@ -6,14 +6,13 @@
 <mat-dialog-actions align="end">
 
     <button mat-raised-button
-            *ngIf="!buttonDisabled"
+            cdkFocusInitial
             (click)="close()">
         Cancelar
         <mat-icon>cancel</mat-icon>
     </button>
 
     <button mat-raised-button
-            cdkFocusInitial
             *ngIf="!buttonDisabled"
             (click)="saveData()">
         Criar requisito

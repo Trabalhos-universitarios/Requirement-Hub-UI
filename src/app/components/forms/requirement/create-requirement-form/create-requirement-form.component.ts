@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RequirementsService} from "../../../../services/requirements/requirements.service";
 import {ProjectsTableService} from 'src/app/services/projects/projects-table.service';
@@ -9,23 +9,18 @@ import {StakeholdersModel} from "../../../../models/stakeholders-model";
 import {UsersService} from "../../../../services/users/users.service";
 import {UserResponseModel} from "../../../../models/user-model";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
-import {RequirementUtil} from "../../../../utils/requirement.util";
-import { RichTextService } from 'src/app/services/richText/rich-text.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-create-requirement-form',
     templateUrl: './create-requirement-form.component.html',
     styleUrls: ['./create-requirement-form.component.scss']
 })
-export class CreateRequirementFormComponent implements OnInit {
+export class CreateRequirementFormComponent {
 
-    @Input() inputRequirementDataWithUpdateRequirement: RequirementsDataModel | undefined;
-    protected formGroup: FormGroup = this.formBuilder.group({
+    public formGroup: FormGroup = this.formBuilder.group({
         projectRelated: new FormControl({value: "", disabled: true}),
         version: new FormControl({value: "", disabled: true}),
         author: new FormControl({value: "", disabled: true}),
-        identifier: new FormControl({value: "", disabled: true}),
         name: new FormControl('', Validators.required),
         stakeholders: new FormControl('', Validators.required),
         risk: new FormControl('', Validators.required),
@@ -36,18 +31,13 @@ export class CreateRequirementFormComponent implements OnInit {
         dependencies: new FormControl(''),
         description: new FormControl(''),
     })
-    protected fontList: StakeholdersModel[] | undefined;
-    protected responsibleList: UserResponseModel[] | undefined;
-    protected requirementsDependencies: RequirementsDataModel[] | undefined;
-    protected riskList: string[] = RequirementUtil.riskList;
-    protected priorityList: string[] = RequirementUtil.priorityList;
-    protected typeList: string[] = RequirementUtil.typeList;
-    protected effortList: string[] = RequirementUtil.effortList;
-
-    private valuesFormToDisableList: string[] = RequirementUtil.valuesFormToDisableList;
-    private stakeholdersListToUpdate: StakeholdersModel[] = [];
-    private dependenciesListToUpdate: RequirementsDataModel[] = [];
-    private responsibleListToUpdate: UserResponseModel[] = [];
+    public fontList: StakeholdersModel[] | undefined;
+    public responsibleList: UserResponseModel[] | undefined;
+    public requirementsDependencies: RequirementsDataModel[] | undefined;
+    public riskList: string[] = ['Low', 'Medium', 'High'];
+    public priorityList: string[] = ['Highest', 'High', 'Medium', 'Low', 'Lowest'];
+    public typeList: string[] = ['Funcional', 'Não Funcional']
+    public effortList: string[] = ['2', '3', '8', '13', '21', '34', '55'];
 
     constructor(private formBuilder: FormBuilder,
                 private requirementService: RequirementsService,
@@ -55,122 +45,29 @@ export class CreateRequirementFormComponent implements OnInit {
                 private localStorageService: LocalStorageService,
                 private stakeholderService: StakeholdersService,
                 private userService: UsersService,
-                private capitalizeFirstPipe: CapitalizeFirstPipePipe,
-                private richTextService: RichTextService,
-                @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
-        this.validateFormValidations(this.formGroup)
-        this.autoCompleteForm().then();
-    }
-
-    ngOnInit() {
-        this.disableFormWithUpdateRequirement();
+                private capitalizeFirstPipe: CapitalizeFirstPipePipe) 
+    {
         this.getCurrentProject();
-        this.valuesFormToService();
-        this.getCurrentStakeholders().then();
-        this.getRequirementAnalysts().then();
-        this.getRequirements().then();
-        this.autoCompleteForm().then();
-
-        this.formGroup.get('stakeholders')?.valueChanges.subscribe(value => {
-            const stakeholders = value.map((item: { id: any; }) => ({ id: item.id }));
-            this.localStorageService.setItem('stakeholders', stakeholders);
-        });
-
-        this.formGroup.get('responsible')?.valueChanges.subscribe(value => {
-            const responsible = value.map((item: { id: any; }) => ({ id: item.id }));
-            this.localStorageService.setItem('responsible', responsible);
-        });
-
-        this.formGroup.get('dependencies')?.valueChanges.subscribe(value => {
-            const dependencies = value.map((item: { id: any; }) => ({ id: item.id }));
-            this.localStorageService.setItem('dependencies', dependencies);
-        });
-
+        this.createForm();
+        this.getCurrentStakeholders().then()
+        this.getRequirementAnalysts().then()
+        this.getRequirements().then()
+        this.autoCompleteForm().then()
     }
 
-    private disableFormWithUpdateRequirement() {
-        for (let value of this.valuesFormToDisableList) {
-            if (this.inputRequirementDataWithUpdateRequirement) {
-                this.formGroup.get(`${value}`)?.disable();
-            }
-        }
-    }
-
-    private valuesFormToService() {
+    private createForm() {
         this.formGroup.valueChanges.subscribe(val => {
             this.requirementService.updateForm(this.formGroup);
         });
     }
 
     private async autoCompleteForm() {
-
-        if (this.inputRequirementDataWithUpdateRequirement) {
-            await this.getDataWhenRelationshipWithRequirement();
-            this.formGroup.valueChanges.subscribe(val => {
-                this.requirementService.updateForm(this.formGroup.getRawValue());
-            });
-        }
-
         this.formGroup.patchValue({
                 projectRelated: this.getCurrentProject(),
-                author: this.inputRequirementDataWithUpdateRequirement?.author ?
-                    this.inputRequirementDataWithUpdateRequirement.author :
-                    this.getCurrentAuthor(),
-                version: this.inputRequirementDataWithUpdateRequirement?.version ?
-                    this.inputRequirementDataWithUpdateRequirement.version :
-                    1,
-                identifier: this.inputRequirementDataWithUpdateRequirement?.identifier,
-                name: this.inputRequirementDataWithUpdateRequirement?.name ?
-                    this.inputRequirementDataWithUpdateRequirement.name :
-                    '',
-                risk: this.inputRequirementDataWithUpdateRequirement?.risk ?
-                    this.inputRequirementDataWithUpdateRequirement.risk :
-                    '',
-                priority: this.inputRequirementDataWithUpdateRequirement?.priority ?
-                    this.inputRequirementDataWithUpdateRequirement.priority :
-                    '',
-                type: this.inputRequirementDataWithUpdateRequirement?.type ?
-                    this.inputRequirementDataWithUpdateRequirement.type :
-                    '',
-                effort: this.inputRequirementDataWithUpdateRequirement?.effort ?
-                    this.inputRequirementDataWithUpdateRequirement.effort.toString() :
-                    '',
-                description: this.data.description
+                author: this.getCurrentAuthor(),
+                version: 1,
             }
         );
-        this.richTextService.changeContent(this.data.description)
-    }
-
-    private async getDataWhenRelationshipWithRequirement() {
-        return await this.requirementService.getRequirementDataToUpdate(this.inputRequirementDataWithUpdateRequirement?.id)
-            .then(requirement => {
-
-                this.stakeholdersListToUpdate = this.fontList
-                    ?.filter(item => item.id !== undefined && requirement[0].stakeholderIds
-                        .includes(item.id)) || [];
-
-                this.responsibleListToUpdate = this.responsibleList
-                    ?.filter(item => item.id !== undefined && requirement[0].responsibleIds
-                        .includes(item.id)) || [];
-
-                this.dependenciesListToUpdate = this.requirementsDependencies
-                    ?.filter(item => item.id !== undefined && requirement[0].dependencyIds
-                            .includes(item.id)
-                    ) || [];
-
-                this.formGroup.get('stakeholders')?.setValue(this.stakeholdersListToUpdate);
-                this.formGroup.get('responsible')?.setValue(this.responsibleListToUpdate);
-                this.formGroup.get('dependencies')?.setValue(this.dependenciesListToUpdate);
-            });
-    }
-
-    private getCurrentProject() {
-        return this.projectsTableService.getCurrentProjectByName();
-    }
-
-    protected getCurrentAuthor() {
-        const author = this.localStorageService.getItem('name');
-        return this.capitalizeFirstPipe.transform(author);
     }
 
     private async getCurrentStakeholders() {
@@ -188,23 +85,16 @@ export class CreateRequirementFormComponent implements OnInit {
     private async getRequirements() {
         this.requirementService.getRequirementsByProjectId(this.projectsTableService.getCurrentProjectById()).then(requirements => {
             requirements.sort((a, b) => a.identifier.localeCompare(b.identifier));
-
-            this.requirementsDependencies = requirements.filter(item =>
-                item.identifier !== this.inputRequirementDataWithUpdateRequirement?.identifier
-            );
-        });
+            this.requirementsDependencies = requirements;
+        })
     }
 
-    private validateFormValidations(form: FormGroup): void {
+    private getCurrentProject() {
+        return this.projectsTableService.getCurrentProjectByName();
+    }
 
-        const allFormFields = ['name', 'stakeholders', 'risk', 'priority', 'responsible', 'type', 'effort'];
-
-        for (let field of allFormFields) {
-            if (form.get(field)?.invalid || form.get(field)?.value === '') {
-                this.requirementService.verifierFormValid(true);
-                return;
-            }
-        }
-        this.requirementService.verifierFormValid(true);
+    protected getCurrentAuthor() {
+        const author = this.localStorageService.getItem('name');
+        return this.capitalizeFirstPipe.transform(author);
     }
 }

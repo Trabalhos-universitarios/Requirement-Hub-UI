@@ -56,7 +56,7 @@ export class SideBarComponent implements AfterViewInit {
         switch (action) {
             case 'Create project':
                 this.dialog.open(ModalDialogCreateProjectComponent,{
-                    disableClose: false
+                    disableClose: true
                 });
                 break;
             case 'Add user':

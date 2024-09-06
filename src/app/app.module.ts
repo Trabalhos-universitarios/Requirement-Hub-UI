@@ -41,9 +41,6 @@ import {
 } from './components/modals/requirements/modal-dialog-create-requirement/modal-dialog-create-requirement.component';
 import {CreateRequirementTabComponent} from './components/tabs/create-requirement-tab/create-requirement-tab.component';
 import {
-    CreateRequirementFormComponent
-} from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
-import {
     CreateArtifactFormComponent
 } from './components/forms/requirement/create-artifact-form/create-artifact-form.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
@@ -88,6 +85,8 @@ import { ModalDialogDeleteUserComponent } from './components/modals/user/modal-d
 import {MatBadgeModule} from "@angular/material/badge";
 import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 import { ImageCropperComponent } from './components/user-avatar/image-cropper/image-cropper.component';
+import { UpdateRequirementFormComponent } from './components/forms/requirement/update-requirement-form/update-requirement-form.component';
+import { CreateRequirementFormComponent } from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
 
 @NgModule({
     declarations: [
@@ -104,7 +103,7 @@ import { ImageCropperComponent } from './components/user-avatar/image-cropper/im
         DateFormatPipe,
         ModalDialogCreateRequirementComponent,
         CreateRequirementTabComponent,
-        CreateRequirementFormComponent,
+        UpdateRequirementFormComponent,
         CreateArtifactFormComponent,
         RichTextEditorComponent,
         RequirementsTableComponent,
@@ -132,7 +131,8 @@ import { ImageCropperComponent } from './components/user-avatar/image-cropper/im
         DeleteUserTableComponent,
         ModalDialogDeleteUserComponent,
         UserAvatarComponent,
-        ImageCropperComponent
+        ImageCropperComponent,
+        CreateRequirementFormComponent
     ],
     imports: [
         BrowserModule,
