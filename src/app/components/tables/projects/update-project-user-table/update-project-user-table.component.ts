@@ -80,7 +80,8 @@ export class UpdateProjectUserTableComponent implements OnInit{
     const selectedData: UserResponseModel[] = this.selection.selected.map(item => ({
         id: item.id,
         name: item.name,
-        role: item.role
+        role: item.role,
+        image: item.image
     }));
     this.updateProjectService.setCurrentProjectTeam(selectedData);
 }

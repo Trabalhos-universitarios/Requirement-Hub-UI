@@ -39,6 +39,7 @@ export class LoginComponent {
                     this.localStorageService.setItem('token', response.token);
                     this.localStorageService.setItem('role', response.role);
                     this.localStorageService.setItem('name', response.name);
+                    this.localStorageService.setItem('image', response.image);
                     this.localStorageService.setItem('userLogged', true);
                     this.router.navigate(['/home']).then();
                     this.spinnerService.stop();
