@@ -41,9 +41,6 @@ import {
 } from './components/modals/requirements/modal-dialog-create-requirement/modal-dialog-create-requirement.component';
 import {CreateRequirementTabComponent} from './components/tabs/create-requirement-tab/create-requirement-tab.component';
 import {
-    CreateRequirementFormComponent
-} from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
-import {
     CreateArtifactFormComponent
 } from './components/forms/requirement/create-artifact-form/create-artifact-form.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
@@ -85,6 +82,8 @@ import { ModalDialogCreateUserComponent } from './components/modals/user/modal-d
 import { CreateUserFormComponent } from './components/forms/user/create-user-form/create-user-form.component';
 import { DeleteUserTableComponent } from './components/tables/user/delete-user-table/delete-user-table.component';
 import { ModalDialogDeleteUserComponent } from './components/modals/user/modal-dialog-delete-user/modal-dialog-delete-user.component';
+import { UpdateRequirementFormComponent } from './components/forms/requirement/update-requirement-form/update-requirement-form.component';
+import { CreateRequirementFormComponent } from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
 
 @NgModule({
     declarations: [
@@ -101,7 +100,7 @@ import { ModalDialogDeleteUserComponent } from './components/modals/user/modal-d
         DateFormatPipe,
         ModalDialogCreateRequirementComponent,
         CreateRequirementTabComponent,
-        CreateRequirementFormComponent,
+        UpdateRequirementFormComponent,
         CreateArtifactFormComponent,
         RichTextEditorComponent,
         RequirementsTableComponent,
@@ -127,7 +126,8 @@ import { ModalDialogDeleteUserComponent } from './components/modals/user/modal-d
         ModalDialogCreateUserComponent,
         CreateUserFormComponent,
         DeleteUserTableComponent,
-        ModalDialogDeleteUserComponent
+        ModalDialogDeleteUserComponent,
+        CreateRequirementFormComponent
     ],
     imports: [
         BrowserModule,
