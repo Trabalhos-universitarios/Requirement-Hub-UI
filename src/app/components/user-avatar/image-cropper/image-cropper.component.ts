@@ -5,6 +5,8 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {UsersService} from "../../../services/users/users.service";
 import {AlertService} from "../../../services/sweetalert/alert.service";
 import {SpinnerService} from "../../../services/spinner/spinner.service";
+import {reloadPage} from "../../../utils/reload.page";
+import {LocalStorageService} from "../../../services/localstorage/local-storage.service";
 
 @Component({
   selector: 'app-image-cropper',
@@ -22,7 +24,8 @@ export class ImageCropperComponent {
       private sanitizer: DomSanitizer,
       private usersService: UsersService,
       private alertService: AlertService,
-      private spinnerService: SpinnerService
+      private spinnerService: SpinnerService,
+      private localStorageService: LocalStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -72,6 +75,10 @@ export class ImageCropperComponent {
           await this.usersService.updateUserImage(this.userId, croppedImage.toString());
           await this.alertService.toSuccessAlert('Imagem atualizada com sucesso!');
           this.dialogRef.close(croppedImage);
+          await this.usersService.getUserById(this.userId).then((response) => {
+            this.localStorageService.setItem('image', response.image);
+          });
+          reloadPage();
         } else {
           throw new Error("ID do usuário não encontrado.");
         }
