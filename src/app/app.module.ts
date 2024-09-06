@@ -82,6 +82,9 @@ import { ModalDialogCreateUserComponent } from './components/modals/user/modal-d
 import { CreateUserFormComponent } from './components/forms/user/create-user-form/create-user-form.component';
 import { DeleteUserTableComponent } from './components/tables/user/delete-user-table/delete-user-table.component';
 import { ModalDialogDeleteUserComponent } from './components/modals/user/modal-dialog-delete-user/modal-dialog-delete-user.component';
+import {MatBadgeModule} from "@angular/material/badge";
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
+import { ImageCropperComponent } from './components/user-avatar/image-cropper/image-cropper.component';
 import { UpdateRequirementFormComponent } from './components/forms/requirement/update-requirement-form/update-requirement-form.component';
 import { CreateRequirementFormComponent } from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
 
@@ -127,6 +130,8 @@ import { CreateRequirementFormComponent } from './components/forms/requirement/c
         CreateUserFormComponent,
         DeleteUserTableComponent,
         ModalDialogDeleteUserComponent,
+        UserAvatarComponent,
+        ImageCropperComponent,
         CreateRequirementFormComponent
     ],
     imports: [
@@ -162,7 +167,8 @@ import { CreateRequirementFormComponent } from './components/forms/requirement/c
         MatPaginatorModule,
         UpdateProjectUserTableComponent,
         MatCheckboxModule,
-        MatListModule
+        MatListModule,
+        MatBadgeModule
     ],
     providers: [
         [CapitalizeFirstPipePipe],
