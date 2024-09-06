@@ -91,6 +91,10 @@ export class ProjectsTableComponent implements AfterViewInit {
         return this.localStorage.getItem('role') != "ADMIN";
     }
 
+    isManager() {
+        return this.localStorage.getItem('role') != "GERENTE_DE_PROJETOS";
+    }
+
     stylesStatusIcon(status: string) {
         let colorIcon: string = '#616161';
         if (this.themeService.isDarkMode()) {
