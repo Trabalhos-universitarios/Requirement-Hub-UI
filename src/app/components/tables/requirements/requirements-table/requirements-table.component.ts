@@ -1,12 +1,10 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {RequirementsService} from "../../../../services/requirements/requirements.service";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
+import {RequirementsService} from "../../../../services/requirements/requirements.service";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
-import {Status} from "../../../../utils/util.status";
 import {MatDialog} from "@angular/material/dialog";
 import {ProjectsTableService} from "../../../../services/projects/projects-table.service";
 import {UsersService} from "../../../../services/users/users.service";
@@ -14,187 +12,196 @@ import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.pipe";
 import {reloadPage} from "../../../../utils/reload.page";
 import {AlertService} from "../../../../services/sweetalert/alert.service";
-import {
-    ModalDialogArtifactsRequirementComponent
-} from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 import {LocalStorageService} from 'src/app/services/localstorage/local-storage.service';
-import {
-    ModalDialogInformationRequirementComponent
-} from 'src/app/components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
-import {
-    ModalDialogUpdateRequirementComponent
-} from "../../../modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component";
+import {ModalDialogInformationRequirementComponent} from 'src/app/components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
+import {ModalDialogArtifactsRequirementComponent} from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
+import {ModalDialogUpdateRequirementComponent} from "../../../modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component";
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
-    selector: 'app-requirements-table',
-    templateUrl: './requirements-table.component.html',
-    styleUrls: ['./requirements-table.component.scss'],
-    animations: [
-        trigger('detailExpand', [
-            state('collapsed', style({height: '0px', minHeight: '0'})),
-            state('expanded', style({height: '*'})),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
-    ],
+  selector: 'app-requirements-table',
+  templateUrl: './requirements-table.component.html',
+  styleUrls: ['./requirements-table.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
-
 export class RequirementsTableComponent implements AfterViewInit {
-    protected displayedColumns: string[] =
-        [
-            'identifier',
-            'name',
-            'author',
-            'dateCreated',
-            'priority',
-            'type',
-            'version',
-            'status',
-        ];
-    @ViewChild(MatPaginator) paginator?: MatPaginator;
-    protected dataSource = new MatTableDataSource<RequirementsDataModel>;
-    protected columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
-    protected expandedElement: RequirementsDataModel | undefined;
-    private requirementId: number | undefined;
+  protected displayedColumns: string[] = [
+    'identifier', 'name', 'author', 'dateCreated', 'priority', 'type', 'version', 'status'
+  ];
+  protected columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  protected dataSource = new MatTableDataSource<RequirementsDataModel>([]);
+  protected expandedElement: RequirementsDataModel | undefined;
 
-    constructor(private requirementsService: RequirementsService,
-                private sanitizer: DomSanitizer,
-                private themeService: ThemeService,
-                private matDialog: MatDialog,
-                private projectsTableService: ProjectsTableService,
-                private usersService: UsersService,
-                private spinnerService: SpinnerService,
-                private capitalizeFirstPipe: CapitalizeFirstPipePipe,
-                private alertService: AlertService,
-                private localStorage: LocalStorageService) {
-        spinnerService.start()
-        this.getData().then();
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+
+  constructor(private requirementsService: RequirementsService,
+              private sanitizer: DomSanitizer,
+              private themeService: ThemeService,
+              private matDialog: MatDialog,
+              private projectsTableService: ProjectsTableService,
+              private usersService: UsersService,
+              private spinnerService: SpinnerService,
+              private capitalizeFirstPipe: CapitalizeFirstPipePipe,
+              private alertService: AlertService,
+              private localStorage: LocalStorageService) {
+    spinnerService.start();
+    this.getData().then();
+    this.setupCustomFilter();
+  }
+
+  ngAfterViewInit() {
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
     }
+  }
 
-    ngAfterViewInit() {
-        this.paginator ? this.dataSource.paginator = this.paginator : null;
+  protected async getData() {
+    this.requirementsService.getRequirementsByProjectId(this.getCurrentProjectById()).then(response => {
+      response.forEach(async requirement => {
+        requirement.author = await this.getAuthorById(requirement.author).then();
+      });
+      response.sort((a, b) => a.identifier.localeCompare(b.identifier));
+      this.dataSource.data = response;
+      this.spinnerService.stop();
+    });
+  }
+
+  private getCurrentProjectById() {
+    return this.projectsTableService.getCurrentProjectById();
+  }
+
+  protected getCurrentProjectByName() {
+    return this.projectsTableService.getCurrentProjectByName();
+  }
+
+  private async getAuthorById(id: number | undefined) {
+    let author = await this.usersService.getUserById(id).then(user => user.name);
+    return this.capitalizeFirstPipe.transform(author);
+  }
+
+   applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  private setupCustomFilter() {
+    this.dataSource.filterPredicate = (data: RequirementsDataModel, filter: string): boolean => {
+      const filterValue = filter.trim().toLowerCase();
+
+      return (
+        (data.identifier ? data.identifier.toLowerCase().includes(filterValue) : false) ||
+        (data.name ? data.name.toLowerCase().includes(filterValue) : false) ||
+        (data.author ? data.author.toString().includes(filterValue) : false) ||
+        (data.dateCreated ? data.dateCreated.toString().includes(filterValue) : false) ||
+        (data.priority ? data.priority.toLowerCase().includes(filterValue) : false) ||
+        (data.type ? data.type.toLowerCase().includes(filterValue) : false) ||
+        (data.version ? data.version.toLowerCase().includes(filterValue) : false) ||
+        (data.status ? data.status.toLowerCase().includes(filterValue) : false)
+      );
+    };
+  }
+
+  protected sanitizeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  isPermitted() {
+    return !(
+      this.localStorage.getItem('role') === "GERENTE_DE_PROJETOS" ||
+      this.localStorage.getItem('role') === "ANALISTA_DE_REQUISITOS" ||
+      this.localStorage.getItem('role') === "ANALISTA_DE_NEGOCIO"
+    );
+  }
+
+  protected getStatusIcon(status: string) {
+    switch (status) {
+      case "ACTIVE":
+        return {icon: 'verified', name: 'ACTIVE'};
+      case "DRAFT":
+        return {icon: 'pending_actions', name: 'DRAFT'};
+      case "PENDING":
+        return {icon: 'schedule', name: 'PENDING'};
+      case "APPROVE":
+        return {icon: 'preliminary', name: 'APPROVE'};
+      case "CREATED":
+        return {icon: 'pending', name: 'CREATED'};
+      case "REFUSE":
+        return {icon: 'brightness_alert', name: 'REFUSE'};
+      default:
+        return {icon: 'help', name: 'UNKNOWN'};
     }
+  }
 
-    protected async getData() {
-        this.requirementsService.getRequirementsByProjectId(this.getCurrentProjectById()).then(response => {
-            response.forEach(async requirement => {
-                requirement.author = await this.getAuthorById(requirement.author).then();
-            });
-            response.sort((a, b) => a.identifier.localeCompare(b.identifier));
-            this.dataSource.data = response;
-            this.spinnerService.stop();
-        })
+  protected stylesIconColor(iconName: string) {
+    let colorIcon: string = '#616161';
+    if (this.themeService.isDarkMode()) {
+      colorIcon = '#e0e0e0';
     }
-
-    private getCurrentProjectById() {
-        return this.projectsTableService.getCurrentProjectById();
+    switch (iconName) {
+      case 'verified':
+        return {color: '#4CAF50'};
+      case 'pending_actions':
+        return {color: `${colorIcon}`};
+      case 'schedule':
+        return {color: '#FFD54F'};
+      case 'preliminary':
+        return {color: '#4CAF50'};
+      case 'pending':
+        return {color: '#A5D6A7'};
+      case 'brightness_alert':
+        return {color: `${colorIcon}`};
+      default:
+        return {color: `${colorIcon}`};
     }
+  }
 
-    protected getCurrentProjectByName() {
-        return this.projectsTableService.getCurrentProjectByName();
+  protected openDialog(action: String, value: RequirementsDataModel) {
+    switch (action) {
+      case "information":
+        this.matDialog.open(ModalDialogInformationRequirementComponent, {
+          data: value,
+          width: '1200px',
+          disableClose: true
+        });
+        break;
+      case "edit":
+        this.matDialog.open(ModalDialogUpdateRequirementComponent, {
+          data: value,
+          width: '1000px',
+          disableClose: true
+        });
+        break;
+      case "add":
+        this.matDialog.open(ModalDialogArtifactsRequirementComponent, {
+          data: value,
+          disableClose: true
+        });
+        break;
+      default:
+        console.error("This dialog non exists!");
     }
+  }
 
-    private async getAuthorById(id: number | undefined) {
-        let author = await this.usersService.getUserById(id).then(user => user.name);
-        return this.capitalizeFirstPipe.transform(author);
-    }
+  protected async deleteRequirement(id: number) {
+    const result = await this.alertService.toOptionalActionAlert(
+      "Deletar requisito",
+      "Deseja realmente excluir o requisito?"
+    );
 
-    protected sanitizeHtml(html: string): SafeHtml {
-        return this.sanitizer.bypassSecurityTrustHtml(html);
-    }
-
-    isPermitted() {
-        if (this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
-            this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
-            this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO") {
-            return false;
+    if (result.isConfirmed) {
+      await this.requirementsService.deleteRequirement(id).then(response => {
+        if (response) {
+          this.alertService.toSuccessAlert("Requisito excluído com sucesso!");
         }
-        return true;
+      });
+      this.spinnerService.start();
+      reloadPage();
     }
-
-    protected getStatusIcon(status: string) {
-        switch (status) {
-            case Status.ACTIVE:
-                return {icon: 'verified', name: 'Ativo'};
-            case Status.DRAFT:
-                return {icon: 'pending_actions', name: 'Rascunho'};
-            case Status.PENDING:
-                return {icon: 'schedule', name: 'Pendente'};
-            case Status.APPROVE:
-                return {icon: 'preliminary', name: 'Aprovado'};
-            case Status.CREATED:
-                return {icon: 'pending', name: 'Criado'};
-            case Status.REFUSE:
-                return {icon: 'brightness_alert', name: 'Recusado'};
-            default:
-                return {icon: 'help', name: 'Status desconhecido'};
-        }
-    }
-
-    protected stylesIconColor(iconName: string) {
-        let colorIcon: string = '#616161';
-        if (this.themeService.isDarkMode()) {
-            colorIcon = '#e0e0e0';
-        }
-        switch (iconName) {
-            case 'verified':
-                return {color: '#4CAF50'};
-            case 'pending_actions':
-                return {color: `${colorIcon}`};
-            case 'schedule':
-                return {color: '#FFD54F'};
-            case 'preliminary':
-                return {color: '#4CAF50'};
-            case 'pending':
-                return {color: '#A5D6A7'};
-            case 'brightness_alert':
-                return {color: `${colorIcon}`};
-            default:
-                return {color: `${colorIcon}`};
-        }
-    }
-
-    protected openDialog(action: String, value: RequirementsDataModel) {
-        switch (action) {
-            case "information":
-                this.matDialog.open(ModalDialogInformationRequirementComponent, {
-                    data: value,
-                    width: '1200px',
-                    disableClose: true
-                  });
-                break
-            case "edit":
-                this.matDialog.open(ModalDialogUpdateRequirementComponent, {
-                    data: value,
-                    width: '1000px',
-                    disableClose: true
-                })
-                break
-            case "add":
-                this.matDialog.open(ModalDialogArtifactsRequirementComponent, {
-                    data: value,
-                    disableClose: true
-                })
-                break
-
-            default:
-                console.error("This dialog non exists!")
-        }
-    }
-
-    protected async deleteRequirement(id: number) {
-        const result = await this.alertService.toOptionalActionAlert(
-            "Deletar requisito",
-            "Deseja realmente excluir o requisito?"
-        );
-
-        if (result.isConfirmed) {
-            await this.requirementsService.deleteRequirement(id).then(response => {
-                if (response) {
-                    this.alertService.toSuccessAlert("Requisito excluído com sucesso!");
-                }
-            });
-            this.spinnerService.start();
-            reloadPage();
-        }
-    }
+  }
 }
