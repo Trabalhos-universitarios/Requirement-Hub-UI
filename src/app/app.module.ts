@@ -81,6 +81,10 @@ import { ModalDialogInformationRequirementComponent } from './components/modals/
 import { MatListModule } from '@angular/material/list';
 import { ModalDialogInformationRequirementArtifactComponent } from './components/modals/requirements/modal-dialog-information-requirement-artifact/modal-dialog-information-requirement-artifact.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ModalDialogCreateUserComponent } from './components/modals/user/modal-dialog-create-user/modal-dialog-create-user.component';
+import { CreateUserFormComponent } from './components/forms/user/create-user-form/create-user-form.component';
+import { DeleteUserTableComponent } from './components/tables/user/delete-user-table/delete-user-table.component';
+import { ModalDialogDeleteUserComponent } from './components/modals/user/modal-dialog-delete-user/modal-dialog-delete-user.component';
 
 @NgModule({
     declarations: [
@@ -119,7 +123,11 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         ArtifactsRequirementsTableComponent,
         UpdateArtifactFormComponent,
         ModalDialogInformationRequirementComponent,
-        ModalDialogInformationRequirementArtifactComponent
+        ModalDialogInformationRequirementArtifactComponent,
+        ModalDialogCreateUserComponent,
+        CreateUserFormComponent,
+        DeleteUserTableComponent,
+        ModalDialogDeleteUserComponent
     ],
     imports: [
         BrowserModule,
