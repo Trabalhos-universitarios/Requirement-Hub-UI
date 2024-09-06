@@ -20,11 +20,6 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     const userLogged = this.localStorage.getItem('userLogged');
-    if (userLogged === true) {
-      return true;
-    } else {
-      return false;
-    }
+    return userLogged === true;
   }
 }
-

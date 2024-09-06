@@ -85,6 +85,9 @@ import { ModalDialogCreateUserComponent } from './components/modals/user/modal-d
 import { CreateUserFormComponent } from './components/forms/user/create-user-form/create-user-form.component';
 import { DeleteUserTableComponent } from './components/tables/user/delete-user-table/delete-user-table.component';
 import { ModalDialogDeleteUserComponent } from './components/modals/user/modal-dialog-delete-user/modal-dialog-delete-user.component';
+import {MatBadgeModule} from "@angular/material/badge";
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
+import { ImageCropperComponent } from './components/user-avatar/image-cropper/image-cropper.component';
 
 @NgModule({
     declarations: [
@@ -127,7 +130,9 @@ import { ModalDialogDeleteUserComponent } from './components/modals/user/modal-d
         ModalDialogCreateUserComponent,
         CreateUserFormComponent,
         DeleteUserTableComponent,
-        ModalDialogDeleteUserComponent
+        ModalDialogDeleteUserComponent,
+        UserAvatarComponent,
+        ImageCropperComponent
     ],
     imports: [
         BrowserModule,
@@ -162,7 +167,8 @@ import { ModalDialogDeleteUserComponent } from './components/modals/user/modal-d
         MatPaginatorModule,
         UpdateProjectUserTableComponent,
         MatCheckboxModule,
-        MatListModule
+        MatListModule,
+        MatBadgeModule
     ],
     providers: [
         [CapitalizeFirstPipePipe],

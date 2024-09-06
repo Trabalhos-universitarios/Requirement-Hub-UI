@@ -7,7 +7,7 @@
       <div class="project-tab" *ngIf="this.dataSource.data.length; else viewTableProjects">
         <app-projects-table [dataSource]="dataSource"></app-projects-table>
       </div>
-      
+
       <ng-template #viewTableProjects>
         <app-no-content></app-no-content>
       </ng-template>
@@ -19,7 +19,7 @@
       <ng-container *ngIf="currentRoute === 'traceability'">
         <app-tracebility-matrix></app-tracebility-matrix>
       </ng-container-->
-      
+
 
     <mat-drawer #drawer class="sidenav mat-elevation-z8" mode="side">
 
