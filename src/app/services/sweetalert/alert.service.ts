@@ -52,21 +52,19 @@ export class AlertService {
         return result;
     }
 
-    async toOptionalWith3Buttons(title: string, confirmButton: string, actionFromYesButton: any): Promise<SweetAlertResult> {
+    async toOptionalWith3Buttons(title: string, confirmButton: string, denyButton: any): Promise<SweetAlertResult> {
         let resultReturn: SweetAlertResult = {} as SweetAlertResult;
         await Swal.fire({
             title: title,
             showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: confirmButton,
-            denyButtonText: actionFromYesButton
+            denyButtonText: denyButton,
+            confirmButtonColor: "#437222",
+            denyButtonColor: "#595858",
+            cancelButtonColor: "#d33",
         }).then((result) => {
             resultReturn = result;
-            if (result.isConfirmed) {
-                this.toSuccessAlert("Deletado com sucesso!");
-            } else if (result.isDenied) {
-                this.toInfoAlert("Operação cancelada!", "");
-            }
         });
         return resultReturn;
     }

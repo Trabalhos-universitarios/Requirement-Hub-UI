@@ -26,20 +26,17 @@ export class RequirementsService {
         this._currentForm.next(formValue);
     }
 
-    async getRequirementDataToUpdate(requirementId: number | undefined): Promise<RequirementsDataModel[]> {
+    async getRequirementById(requirementId: number | undefined): Promise<RequirementsDataModel[]> {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/requirement-id/${requirementId}`))
+    }
+
+    async getRequirementsByIdsList(ids: number[]): Promise<RequirementsDataModel[]> {
+        return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/requirement-id`,
+            { params: { ids: ids.join(',') } }));
     }
 
     async getRequirementsByProjectId(projectId: number): Promise<RequirementsDataModel[]> {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/byproject/${projectId}`))
-    }
-
-    getRequirementByIdentifierAndProjectRelated(identifier: string, projectId: number): Observable<ArtifactResponseModel> {
-        return this.http.get<ArtifactResponseModel>(`${this.baseUrl}/requirements/requirementByProjectRelated/${identifier}/${projectId}`);
-    }
-
-    getArtifactRequirementByIdentifierAndProjectRelated(identifier: string, projectId: number): Observable<RequirementsDataModel> {
-        return this.http.get<RequirementsDataModel>(`${this.baseUrl}/requirements/artifactRequirementByProjectRelated/${identifier}/${projectId}`);
     }
 
     async createRequirements(post: any): Promise<RequirementsDataModel[] | any> {

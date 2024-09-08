@@ -39,7 +39,32 @@ export class ModalDialogCreateRequirementComponent {
         });
     }
 
-    async saveData(): Promise<void> {
+    optionalSaveData() {
+        this.alertService.toOptionalWith3Buttons("Deseja enviar para fluxo de aprovação?", "Sim, enviar!", "Não, apensas salvar")
+            .then(resp => {
+                if (resp.isConfirmed) {
+                    console.log("Sim, enviar!");
+                } else if (resp.isDenied) {
+                    console.log("Não, apensas salvar");
+                } else {
+                    console.log("Cancelar");
+                }
+            });
+    }
+
+    private async sendToApprovalFlow() {
+        const response = await this.requirementService.createRequirements(this.prepareData()).then(response => response.identifier);
+        if (response) {
+            await this.alertService.toSuccessAlert(`Reququisito ${response} enviado com sucesso!`);
+            this.localStorageService.removeItem('file');
+            this.dialog.closeAll();
+            this.spinnerService.stop();
+            reloadPage();
+            this.spinnerService.start();
+        }
+    }
+
+    private async saveData(): Promise<void> {
         try {
             this.spinnerService.start();
             const response = await this.requirementService.createRequirements(this.prepareData()).then(response => response.identifier);
@@ -118,7 +143,7 @@ export class ModalDialogCreateRequirementComponent {
                 creationDate: new Date().toISOString(),
                 status: Status.CREATED,
                 files: fileData,
-                requirementId: requirementId // Inclui o ID do requisito
+                requirementId: requirementId
             };
         }
     }
