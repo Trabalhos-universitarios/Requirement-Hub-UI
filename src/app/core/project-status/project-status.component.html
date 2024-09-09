@@ -1,0 +1,43 @@
+<app-header></app-header>
+
+<div class="select-project">
+  <mat-form-field appearance="fill">
+    <mat-label>Selecione um Projeto</mat-label>
+    <mat-select [(value)]="selectedProjectId" (selectionChange)="onProjectChange($event.value)">
+      <mat-option *ngFor="let project of projects" [value]="project.id">
+        {{ project.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="chart-container">
+  <div>
+    <h2>Status dos Requisitos</h2>
+    <ngx-charts-pie-chart
+      [view]="[1000, 280]"
+      [results]="pieChartData"
+      [scheme]="colorScheme"
+      [legend]="true"
+      [explodeSlices]="false"
+      [labels]="true">
+    </ngx-charts-pie-chart>
+  </div>
+
+  <div>
+    <h2>Quantidade de Requisitos por Responsável</h2>
+    <ngx-charts-bar-vertical
+      [view]="[1000, 280]"
+      [results]="barChartData"
+      [scheme]="colorScheme"
+      [legend]="true"
+      [xAxis]="true"
+      [yAxis]="true"
+      [yAxisLabel]="'Quantidade'"
+      [xAxisLabel]="'Responsável'">
+    </ngx-charts-bar-vertical>
+  </div>
+</div>
+
+
+

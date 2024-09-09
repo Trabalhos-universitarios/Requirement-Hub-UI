@@ -24,6 +24,7 @@ export class SideBarComponent implements AfterViewInit {
 
     @ViewChild('drawer') drawer!: MatDrawer;
     dataSource = new MatTableDataSource<ProjectDataModel>([]);
+    currentRoute: string = '';
 
     constructor(
         private localStorage: LocalStorageService,
@@ -87,5 +88,9 @@ export class SideBarComponent implements AfterViewInit {
     async logout() {
         this.localStorage.clearAll()
         await this.router.navigate(['/login']);
+    }
+
+    navigateToProjectStatus() {
+        this.router.navigate(['/project-status']);  // Substitua 'project-status' pela rota correta
     }
 }
