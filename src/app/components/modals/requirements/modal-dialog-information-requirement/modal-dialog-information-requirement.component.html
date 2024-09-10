@@ -19,9 +19,61 @@
         <!--mat-list-item><strong>Relações:</strong> {{data.stakeholders}}</mat-list-item-->
         <p class="description-text" [innerHTML]="sanitizeHtml(data.description)">{{data.description}}</p>
       </mat-list>
+
+        <div class="messages-container">
+            <div *ngFor="let message of messages; let i = index" class="message-wrapper">
+                <!-- Botões de Ação ao Lado -->
+                <div class="message-actions">
+<!--                    &lt;!&ndash; Botão de curtir &ndash;&gt;-->
+<!--                    <button mat-icon-button (click)="likeMessage(i)">-->
+<!--                        <mat-icon *ngIf="!message.liked">thumb_up_off_alt</mat-icon>-->
+<!--                        <mat-icon *ngIf="message.liked" color="primary">thumb_up</mat-icon>-->
+<!--                    </button>-->
+
+                    <!-- Botão para abrir a janela de emojis -->
+                    <button mat-icon-button [matMenuTriggerFor]="emojiMenu" (click)="selectedMessageIndex = i">
+                        <mat-icon>emoji_emotions</mat-icon>
+                    </button>
+                </div>
+
+                <!-- Balão de Mensagem -->
+                <div class="message-bubble">
+                    {{ message.text }}
+                    <!-- Exibe emoji selecionado -->
+                    <span *ngIf="message.emoji" class="emoji">{{ message.emoji }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu de Emojis -->
+        <mat-menu #emojiMenu="matMenu">
+            <button mat-menu-item *ngFor="let emoji of ['😀', '😂', '😍', '😎', '👍']" (click)="addEmoji(selectedMessageIndex, emoji)">
+                {{ emoji }}
+            </button>
+        </mat-menu>
+
+
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <mat-form-field class="comment-input" appearance="fill">
+                <mat-label>Comentário</mat-label>
+                <textarea matInput placeholder="Adicione um comentário..." formControlName="comment"></textarea>
+                <button mat-icon-button matSuffix *ngIf="(!formGroup.get('comment')?.hasError('minlength')) &&
+                formGroup.get('comment')?.touched &&
+                formGroup.get('comment')?.value">
+                    <mat-icon>send</mat-icon>
+                </button>
+
+                <!-- Exibe o erro apenas se o controle for inválido e tiver sido tocado -->
+                <mat-error *ngIf="formGroup.get('comment')?.hasError('minlength') && formGroup.get('comment')?.touched">
+                    No mínimo 20 caracteres!
+                </mat-error>
+            </mat-form-field>
+        </form>
+
+
     </div>
+
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Fechar</button>
   </mat-dialog-actions>
-  

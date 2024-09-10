@@ -1,21 +1,72 @@
 .title-toolbar {
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-  
-    .title {
-      font-size: 24px;
-    }
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .title {
+    font-size: 24px;
   }
-  
-  .requirement-details {
-    max-height: 1000px;
-  }
-  
-  .description-text {
-    white-space: pre-wrap; /* Mantém as quebras de linha */
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-top: 8px;
-  }
-  
+}
+
+.requirement-details {
+  max-height: 1000px;
+}
+
+.description-text {
+  white-space: pre-wrap; /* Mantém as quebras de linha */
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-top: 8px;
+}
+
+
+.comment-input {
+  width: 100%;
+}
+
+
+//BALÃO
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.message-wrapper {
+  display: flex;
+  align-items: center; /* Alinha os itens verticalmente no centro */
+  gap: 8px; /* Espaço entre o balão de mensagem e os botões */
+}
+
+.message-actions {
+  display: flex;
+  flex-direction: column; /* Posiciona os botões um em cima do outro */
+  align-items: center; /* Centraliza os botões */
+}
+
+.message-bubble {
+  background-color: #8521e0; /* Cor de fundo do balão */
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 300px;
+  position: relative;
+  display: inline-block; /* Garante que o balão tenha largura apenas do conteúdo */
+}
+
+.message-bubble::before {
+  content: "";
+  position: absolute;
+  left: 232px; /* Posição horizontal da pontinha */
+  top: 20px; /* Posição vertical da pontinha */
+  width: 0;
+  height: 0;
+  border: 8px solid transparent; /* Cria o triângulo com bordas transparentes */
+  border-left-color: #8521e0; /* Cor da pontinha do balão */
+}
+
+.emoji {
+  margin-left: 5px; /* Espaçamento entre o texto da mensagem e o emoji */
+}

@@ -25,7 +25,6 @@ export class ModalDialogCreateRequirementComponent {
 
     constructor(
         private requirementService: RequirementsService,
-        private artifactService: ArtifactService,
         private projectsTableService: ProjectsTableService,
         private richTextService: RichTextService,
         private alertService: AlertService,
