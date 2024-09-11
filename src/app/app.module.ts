@@ -87,6 +87,7 @@ import { UserAvatarComponent } from './components/user-avatar/user-avatar.compon
 import { ImageCropperComponent } from './components/user-avatar/image-cropper/image-cropper.component';
 import { UpdateRequirementFormComponent } from './components/forms/requirement/update-requirement-form/update-requirement-form.component';
 import { CreateRequirementFormComponent } from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
+import {PickerComponent} from "@ctrl/ngx-emoji-mart";
 
 @NgModule({
     declarations: [
@@ -168,7 +169,8 @@ import { CreateRequirementFormComponent } from './components/forms/requirement/c
         UpdateProjectUserTableComponent,
         MatCheckboxModule,
         MatListModule,
-        MatBadgeModule
+        MatBadgeModule,
+        PickerComponent
     ],
     providers: [
         [CapitalizeFirstPipePipe],
