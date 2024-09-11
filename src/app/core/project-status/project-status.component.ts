@@ -56,11 +56,14 @@ export class ProjectStatusComponent implements OnInit {
 
   setChartColors(): void {
     const isDarkMode = this.themeService.isDarkMode();
+    
     this.colorScheme = {
       name: isDarkMode ? 'dark' : 'light',
       selectable: true,
       group: ScaleType.Ordinal,
-      domain: isDarkMode ? ['#90caf9', '#f48fb1', '#ffb74d'] : ['#1E88E5', '#D32F2F', '#FFC107', '#43A047']
+      domain: isDarkMode 
+        ? ['#90caf9', '#f48fb1', '#ffb74d', '#4caf50', '#ff7043', '#b39ddb'] // Cores para o modo escuro
+        : ['#1E88E5', '#D32F2F', '#FFC107', '#43A047', '#FB8C00', '#8E24AA']  // Cores para o modo claro
     };
   }
 
