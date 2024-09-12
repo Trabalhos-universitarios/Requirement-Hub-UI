@@ -132,7 +132,7 @@ export class RequirementsTableComponent implements AfterViewInit {
       case "CREATED":
         return {icon: 'pending', name: 'CREATED'};
       case "REFUSE":
-        return {icon: 'highlight_off', name: 'REFUSE'};
+        return {icon: 'brightness_alert', name: 'REFUSE'};
       default:
         return {icon: 'help', name: 'UNKNOWN'};
     }
@@ -154,8 +154,8 @@ export class RequirementsTableComponent implements AfterViewInit {
         return {color: '#4CAF50'};
       case 'pending':
         return {color: '#A5D6A7'};
-      case 'highlight_off':
-        return {color: `#f44336`};
+      case 'brightness_alert':
+        return {color: `${colorIcon}`};
       default:
         return {color: `${colorIcon}`};
     }
