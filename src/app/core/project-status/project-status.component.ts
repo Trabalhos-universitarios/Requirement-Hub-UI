@@ -20,6 +20,7 @@ export class ProjectStatusComponent implements OnInit {
   allResponsiblesCache: any[] = [];  // Cache para os responsáveis
   pieChartData: any[] = [];  
   barChartData: any[] = [];  
+  totalRequirements: number = 0;  // Total de requisitos para o gráfico de pizza
   colorScheme: Color = {
     name: this.themeService.isDarkMode() ? 'dark' : 'light',
     selectable: true,
@@ -128,8 +129,12 @@ export class ProjectStatusComponent implements OnInit {
         name: `${status}`,
         value: statusCount[status]
       }));
+
+      // Calcula o total de requisitos
+      this.totalRequirements = requirements.length;
     } else {
       this.pieChartData = [];
+      this.totalRequirements = 0;
     }
   }
 
