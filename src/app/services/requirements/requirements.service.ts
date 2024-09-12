@@ -87,4 +87,20 @@ export class RequirementsService {
     async deleteRequirement(id: number): Promise<any> {
         return firstValueFrom(this.http.delete(`${this.baseUrl}/requirements/${id}`));
     }
+
+    // Novo método para buscar todos os responsáveis de todos os requisitos
+    async getAllRequirementResponsibles(): Promise<any> {
+        return firstValueFrom(this.http.get(`${this.baseUrl}/requirements/all-responsibles`).pipe(
+            catchError((error: HttpErrorResponse) => {
+                switch (error.status) {
+                    case 404:
+                        return throwError(() => HttpStatusCode.NotFound);
+                    case 500:
+                        return throwError(() => HttpStatusCode.InternalServerError);
+                    default:
+                        return throwError(() => new Error(error.message));
+                }
+            })
+        ));
+    }
 }

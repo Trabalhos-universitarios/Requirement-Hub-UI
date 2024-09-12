@@ -31,6 +31,11 @@
                 <span class="description">Pendências de Aprovações</span>
             </button>
 
+            <button mat-button [hidden]="isManager()" (click)="navigateToProjectStatus()">
+              <mat-icon class="icons">analytics</mat-icon>
+              <span class="description">Status Projetos</span>
+            </button>
+
             <button mat-button [hidden]="isAdmin()" (click)="openModalDialogComponent('Add user')">
                 <mat-icon class="icons">person_add</mat-icon>
                 <span>Cadastrar Usuários</span>

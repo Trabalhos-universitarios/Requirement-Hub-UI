@@ -88,6 +88,8 @@ import { ImageCropperComponent } from './components/user-avatar/image-cropper/im
 import { UpdateRequirementFormComponent } from './components/forms/requirement/update-requirement-form/update-requirement-form.component';
 import { CreateRequirementFormComponent } from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
 import {PickerComponent} from "@ctrl/ngx-emoji-mart";
+import { ProjectStatusComponent } from './core/project-status/project-status.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
     declarations: [
@@ -133,7 +135,8 @@ import {PickerComponent} from "@ctrl/ngx-emoji-mart";
         ModalDialogDeleteUserComponent,
         UserAvatarComponent,
         ImageCropperComponent,
-        CreateRequirementFormComponent
+        CreateRequirementFormComponent,
+        ProjectStatusComponent
     ],
     imports: [
         BrowserModule,
@@ -169,6 +172,8 @@ import {PickerComponent} from "@ctrl/ngx-emoji-mart";
         UpdateProjectUserTableComponent,
         MatCheckboxModule,
         MatListModule,
+        MatBadgeModule,
+        NgxChartsModule,
         MatBadgeModule,
         PickerComponent
     ],

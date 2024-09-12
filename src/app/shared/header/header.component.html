@@ -1,8 +1,11 @@
 <mat-toolbar class="mat-toolbar">
-    <span class="logo">RHB</span>
-    <button mat-icon-button (click)="openSidebar()">
-        <mat-icon>menu</mat-icon>
-    </button>
+    <span class="logo">
+        RHB
+      </span>
+      <button mat-icon-button (click)="handleButtonClick()">
+        <mat-icon *ngIf="!isHomeRoute()">home</mat-icon>
+        <mat-icon *ngIf="isHomeRoute()">menu</mat-icon>
+      </button>
 
     <span class="span-spacer"></span>
     <button mat-icon-button matTooltip="Notificações" [matMenuTriggerFor]="menu" (click)="getRequirementsById()">

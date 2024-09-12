@@ -11,6 +11,7 @@ import {UsersService} from "../../services/users/users.service";
 import {RequirementsService} from "../../services/requirements/requirements.service";
 import {RequirementsDataModel} from "../../models/requirements-data-model";
 import {SpinnerService} from "../../services/spinner/spinner.service";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -36,7 +37,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private cdr: ChangeDetectorRef,
         private userService: UsersService,
         private requirementsService: RequirementsService,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private router: Router,
     ) {
         this.pageLoadTime = new Date();
     }
@@ -97,6 +99,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     openSidebar() {
         this.sidebarService.toggle();
+    }
+
+    handleButtonClick() {
+        if (this.router.url !== '/home') {
+            this.router.navigate(['/home']);
+        } else {
+            this.openSidebar();
+        }
+    }
+
+    isHomeRoute(): boolean {
+        return this.router.url === '/home';
     }
 
     toggleTheme() {
