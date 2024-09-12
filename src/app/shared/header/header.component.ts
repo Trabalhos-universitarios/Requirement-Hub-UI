@@ -8,6 +8,7 @@ import {UsersService} from "../../services/users/users.service";
 import {AlertService} from "../../services/sweetalert/alert.service";
 import {reloadPage} from "../../utils/reload.page";
 import {SpinnerService} from "../../services/spinner/spinner.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -24,12 +25,26 @@ export class HeaderComponent implements OnInit {
       private dialog: MatDialog,
       private alertService: AlertService,
       private localStorageService: LocalStorageService,
+      private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.userProfilePicture = this.localStorageService.getItem('image');
 
     this.hasUserProfilePicture = !!this.userProfilePicture;
+  }
+
+ 
+  handleButtonClick() {
+    if (this.router.url !== '/home') {
+      this.router.navigate(['/home']);
+    } else {
+      this.openSidebar();
+    }
+  }
+
+  isHomeRoute(): boolean {
+    return this.router.url === '/home';
   }
 
   openSidebar() {
