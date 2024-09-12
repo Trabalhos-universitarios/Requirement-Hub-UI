@@ -21,12 +21,24 @@ export class ProjectStatusComponent implements OnInit {
   pieChartData: any[] = [];  
   barChartData: any[] = [];  
   totalRequirements: number = 0;  // Total de requisitos para o gráfico de pizza
+
+  // Mapa de cores para os diferentes status
+  statusColorMap: { [key: string]: string } = {
+    'REFUSE': '#F44336',  // Vermelho
+    'PENDING': '#FF9800',  // Laranja
+    'CREATED': '#2196F3',  // Azul
+    'ACTIVE': '#4CAF50',  // Verde
+    'BLOCKED': '#9E9E9E'  // Cinza
+  };
+
+  // Definimos o esquema de cores com o domínio vazio, pois será preenchido dinamicamente
   colorScheme: Color = {
-    name: this.themeService.isDarkMode() ? 'dark' : 'light',
+    name: 'dynamic',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['#1E88E5', '#D32F2F', '#FFC107', '#43A047']
+    domain: []  // Será preenchido dinamicamente
   };
+
   isLoading: boolean = false;
   themeSubscription: Subscription | undefined;
 
@@ -69,9 +81,7 @@ export class ProjectStatusComponent implements OnInit {
       name: isDarkMode ? 'dark' : 'light',
       selectable: true,
       group: ScaleType.Ordinal,
-      domain: isDarkMode 
-        ? ['#90caf9', '#f48fb1', '#ffb74d', '#4caf50', '#ff7043', '#b39ddb']
-        : ['#1E88E5', '#D32F2F', '#FFC107', '#43A047', '#FB8C00', '#8E24AA']
+      domain: Object.values(this.statusColorMap)  // Preenche com as cores do mapa
     };
   }
 
@@ -97,16 +107,22 @@ export class ProjectStatusComponent implements OnInit {
       this.spinnerService.stop();
     } else {
       this.selectedProjectId = null;
-      this.pieChartData = [];
-      this.barChartData = [];
+      this.resetData();  // Limpa os dados se não houver projetos
       this.spinnerService.stop();
     }
   }
 
   onProjectChange(projectId: number) {
+    this.resetData(); // Reseta os dados antes de carregar novos
     if (this.requirementsCache[projectId]) {
       this.updateCharts(projectId);
     }
+  }
+
+  resetData() {
+    this.pieChartData = [];
+    this.barChartData = [];
+    this.totalRequirements = 0;
   }
 
   updateCharts(projectId: number) {
@@ -125,16 +141,20 @@ export class ProjectStatusComponent implements OnInit {
         return acc;
       }, {});
 
+      // Monta os dados do gráfico de pizza e mapeia a cor para cada status
       this.pieChartData = Object.keys(statusCount).map(status => ({
         name: `${status}`,
-        value: statusCount[status]
+        value: statusCount[status],
+        color: this.statusColorMap[status]  // Atribui a cor do mapa
       }));
+
+      // Atualiza o esquema de cores dinamicamente
+      this.colorScheme.domain = Object.keys(statusCount).map(status => this.statusColorMap[status]);
 
       // Calcula o total de requisitos
       this.totalRequirements = requirements.length;
     } else {
-      this.pieChartData = [];
-      this.totalRequirements = 0;
+      this.resetData();
     }
   }
 
