@@ -215,7 +215,7 @@ body.light-theme ngx-charts g text {
 
 // Para o tema escuro
 body.dark-theme {
-  background-color: mat.get-color-from-palette($app-dark-primary, 700); // Defina uma cor mais escura para o tema dark
+  background-color: mat.get-color-from-palette($app-dark-primary, 800); // Defina uma cor mais escura para o tema dark
   color: mat.get-color-from-palette($app-dark-primary, 100); // Defina a cor do texto
 }
 

@@ -23,11 +23,19 @@ export class ProjectStatusComponent implements OnInit {
   totalRequirements: number = 0;  // Total de requisitos para o gráfico de pizza
 
   // Mapa de cores para os diferentes status
-  statusColorMap: { [key: string]: string } = {
+  statusColorMapLight: { [key: string]: string } = {
     'REFUSE': '#F44336',  // Vermelho
     'PENDING': '#FF9800',  // Laranja
     'CREATED': '#2196F3',  // Azul
     'ACTIVE': '#4CAF50',  // Verde
+    'BLOCKED': '#9E9E9E'  // Cinza
+  };
+
+  statusColorMapDark: { [key: string]: string } = {
+    'REFUSE': '#D32F2F',  // Vermelho um pouco mais escuro
+    'PENDING': '#F57C00',  // Laranja mais escuro
+    'CREATED': '#1976D2',  // Azul mais profundo
+    'ACTIVE': '#388E3C',  // Verde mais fechado
     'BLOCKED': '#9E9E9E'  // Cinza
   };
 
@@ -74,15 +82,23 @@ export class ProjectStatusComponent implements OnInit {
     }
   }
 
+  // Função para definir as cores do gráfico com base no tema
   setChartColors(): void {
     const isDarkMode = this.themeService.isDarkMode();
     
+    const colorMap = isDarkMode ? this.statusColorMapDark : this.statusColorMapLight;
+
     this.colorScheme = {
-      name: isDarkMode ? 'dark' : 'light',
+      name: 'dynamic',
       selectable: true,
       group: ScaleType.Ordinal,
-      domain: Object.values(this.statusColorMap)  // Preenche com as cores do mapa
+      domain: Object.values(colorMap)  // Preenche com as cores do mapa
     };
+
+    // Atualiza o gráfico com as novas cores
+    if (this.selectedProjectId) {
+      this.updateCharts(this.selectedProjectId);
+    }
   }
 
   async loadProjects() {
@@ -141,15 +157,19 @@ export class ProjectStatusComponent implements OnInit {
         return acc;
       }, {});
 
+      // Verifica o tema e usa o mapa de cores adequado
+      const isDarkMode = this.themeService.isDarkMode();
+      const colorMap = isDarkMode ? this.statusColorMapDark : this.statusColorMapLight;
+
       // Monta os dados do gráfico de pizza e mapeia a cor para cada status
       this.pieChartData = Object.keys(statusCount).map(status => ({
         name: `${status}`,
         value: statusCount[status],
-        color: this.statusColorMap[status]  // Atribui a cor do mapa
+        color: colorMap[status]  // Atribui a cor do mapa de acordo com o tema
       }));
 
       // Atualiza o esquema de cores dinamicamente
-      this.colorScheme.domain = Object.keys(statusCount).map(status => this.statusColorMap[status]);
+      this.colorScheme.domain = Object.keys(statusCount).map(status => colorMap[status]);
 
       // Calcula o total de requisitos
       this.totalRequirements = requirements.length;
