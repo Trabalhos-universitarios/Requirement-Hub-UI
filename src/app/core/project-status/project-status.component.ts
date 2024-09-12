@@ -21,6 +21,8 @@ export class ProjectStatusComponent implements OnInit {
   pieChartData: any[] = [];  
   barChartData: any[] = [];  
   totalRequirements: number = 0;  // Total de requisitos para o gráfico de pizza
+  isDataLoaded: boolean = false;  // Controle para carregar dados do projeto
+  isChartsLoaded: boolean = false;  // Controle para carregar os gráficos
 
   // Mapa de cores para os diferentes status
   statusColorMapLight: { [key: string]: string } = {
@@ -102,6 +104,8 @@ export class ProjectStatusComponent implements OnInit {
   }
 
   async loadProjects() {
+    this.isDataLoaded = false;
+    this.isChartsLoaded = false;  // Inicia como falso
     const allProjects = await this.projectsService.getProjects();
 
     const projectsWithRequirements = await Promise.all(
@@ -115,11 +119,16 @@ export class ProjectStatusComponent implements OnInit {
       })
     );
 
-    this.projects = projectsWithRequirements.filter(project => project !== null) as ProjectDataModel[];
+      // Filtra projetos nulos e ordena os projetos por nome
+    this.projects = projectsWithRequirements
+    .filter(project => project !== null)  // Remove os projetos nulos
+    .sort((a, b) => a!.name.localeCompare(b!.name)) as ProjectDataModel[];
 
     if (this.projects.length > 0) {
       this.selectedProjectId = this.projects[0].id;
-      this.updateCharts(this.selectedProjectId);
+      await this.updateCharts(this.selectedProjectId);;
+      this.isDataLoaded = true;  // Dados foram carregados
+      this.isChartsLoaded = true;  // Gráficos foram carregados
       this.spinnerService.stop();
     } else {
       this.selectedProjectId = null;
