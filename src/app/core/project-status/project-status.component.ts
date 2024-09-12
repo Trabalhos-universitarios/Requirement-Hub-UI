@@ -16,18 +16,18 @@ import { Subscription } from 'rxjs';
 export class ProjectStatusComponent implements OnInit {
   projects: ProjectDataModel[] = [];
   selectedProjectId: number | null = null;
-  pieChartData: any[] = [];  // Para status dos requisitos
-  barChartData: any[] = [];  // Para quantidade de requisitos por responsável
+  requirementsCache: { [projectId: number]: RequirementsDataModel[] } = {};  // Cache para os requisitos por projeto
+  allResponsiblesCache: any[] = [];  // Cache para os responsáveis
+  pieChartData: any[] = [];  
+  barChartData: any[] = [];  
   colorScheme: Color = {
-    name: this.themeService.isDarkMode() ? 'dark': 'light', 
+    name: this.themeService.isDarkMode() ? 'dark' : 'light',
     selectable: true,
     group: ScaleType.Ordinal,
     domain: ['#1E88E5', '#D32F2F', '#FFC107', '#43A047']
   };
-
-  // Variável de controle para o estado de carregamento
   isLoading: boolean = false;
-  themeSubscription: Subscription |undefined;
+  themeSubscription: Subscription | undefined;
 
   constructor(
     private requirementsService: RequirementsService,
@@ -38,17 +38,24 @@ export class ProjectStatusComponent implements OnInit {
 
   ngOnInit() {
     this.spinnerService.start();
-    this.setChartColors();  // Define as cores iniciais
+    this.setChartColors(); 
     this.loadProjects();
+    this.loadResponsibles();  // Carrega os responsáveis uma única vez
 
-    // Subscreve às mudanças no tema para atualizar o esquema de cores dos gráficos dinamicamente
     this.themeSubscription = this.themeService.getColorThemeObservable().subscribe(() => {
       this.setChartColors();
     });
   }
 
+  // Função para carregar todos os responsáveis apenas uma vez
+  async loadResponsibles() {
+    if (this.allResponsiblesCache.length === 0) {
+      const responsiblesData = await this.requirementsService.getAllRequirementResponsibles();
+      this.allResponsiblesCache = responsiblesData;
+    }
+  }
+
   ngOnDestroy() {
-    // Cancela a subscrição ao trocar de componente
     if (this.themeSubscription) {
       this.themeSubscription.unsubscribe();
     }
@@ -62,50 +69,55 @@ export class ProjectStatusComponent implements OnInit {
       selectable: true,
       group: ScaleType.Ordinal,
       domain: isDarkMode 
-        ? ['#90caf9', '#f48fb1', '#ffb74d', '#4caf50', '#ff7043', '#b39ddb'] // Cores para o modo escuro
-        : ['#1E88E5', '#D32F2F', '#FFC107', '#43A047', '#FB8C00', '#8E24AA']  // Cores para o modo claro
+        ? ['#90caf9', '#f48fb1', '#ffb74d', '#4caf50', '#ff7043', '#b39ddb']
+        : ['#1E88E5', '#D32F2F', '#FFC107', '#43A047', '#FB8C00', '#8E24AA']
     };
   }
 
   async loadProjects() {
     const allProjects = await this.projectsService.getProjects();
-    
+
     const projectsWithRequirements = await Promise.all(
       allProjects.map(async (project) => {
         const requirements = await this.requirementsService.getRequirementsByProjectId(project.id);
-        return requirements.length > 0 ? project : null;
+        if (requirements.length > 0) {
+          this.requirementsCache[project.id] = requirements; // Armazena os requisitos em cache
+          return project;
+        }
+        return null;
       })
     );
 
     this.projects = projectsWithRequirements.filter(project => project !== null) as ProjectDataModel[];
-  
+
     if (this.projects.length > 0) {
       this.selectedProjectId = this.projects[0].id;
-      await this.loadProjectData(this.selectedProjectId);
+      this.updateCharts(this.selectedProjectId);
       this.spinnerService.stop();
     } else {
       this.selectedProjectId = null;
       this.pieChartData = [];
       this.barChartData = [];
-      console.log('Nenhum projeto com requisitos encontrado.');
       this.spinnerService.stop();
     }
   }
 
-  async onProjectChange(projectId: number) {
-    await this.loadProjectData(projectId);
+  onProjectChange(projectId: number) {
+    if (this.requirementsCache[projectId]) {
+      this.updateCharts(projectId);
+    }
   }
 
-  async loadProjectData(projectId: number) {
-    await this.getRequirementsStatusByProject(projectId);
-    await this.getRequirementsByResponsible(projectId);
+  updateCharts(projectId: number) {
+    if (this.requirementsCache[projectId]) {
+      this.getRequirementsStatusByProject(this.requirementsCache[projectId]);
+      this.getRequirementsByResponsible(this.requirementsCache[projectId]);
+    }
   }
 
-  async getRequirementsStatusByProject(projectId: number) {
-    const data: RequirementsDataModel[] = await this.requirementsService.getRequirementsByProjectId(projectId);
-    
-    if (data && data.length > 0) {
-      const statusCount: { [key: string]: number } = data.reduce((acc: { [key: string]: number }, requirement) => {
+  getRequirementsStatusByProject(requirements: RequirementsDataModel[]) {
+    if (requirements && requirements.length > 0) {
+      const statusCount: { [key: string]: number } = requirements.reduce((acc: { [key: string]: number }, requirement) => {
         if (requirement.status) {
           acc[requirement.status] = (acc[requirement.status] || 0) + 1;
         }
@@ -117,39 +129,33 @@ export class ProjectStatusComponent implements OnInit {
         value: statusCount[status]
       }));
     } else {
-      this.pieChartData = []; 
+      this.pieChartData = [];
     }
   }
 
-  async getRequirementsByResponsible(projectId: number) {
-    const data: RequirementsDataModel[] = await this.requirementsService.getRequirementsByProjectId(projectId);
-  
-    if (data && data.length > 0) {
-      const requirementIds = data.map(req => req.id);
-      const responsiblesData = await this.requirementsService.getAllRequirementResponsibles();
+  getRequirementsByResponsible(requirements: RequirementsDataModel[]) {
+    if (requirements && requirements.length > 0) {
+      const requirementIds = requirements.map(req => req.id);
 
-      if (responsiblesData && responsiblesData.length > 0) {
-        const filteredResponsibles = responsiblesData.filter((responsible: any) => 
-          requirementIds.includes(responsible[0])
-        );
+      // Usar o cache dos responsáveis carregado uma vez
+      const filteredResponsibles = this.allResponsiblesCache.filter((responsible: any) => 
+        requirementIds.includes(responsible[0])
+      );
 
-        const responsibleCount: { [key: string]: { name: string, count: number } } = filteredResponsibles.reduce((acc: { [key: string]: { name: string, count: number } }, responsible: any) => {
-          const userId = responsible[1]; 
-          const userName = responsible[2];
-          if (!acc[userId]) {
-            acc[userId] = { name: userName, count: 0 };
-          }
-          acc[userId].count += 1;
-          return acc;
-        }, {});
+      const responsibleCount: { [key: string]: { name: string, count: number } } = filteredResponsibles.reduce((acc: { [key: string]: { name: string, count: number } }, responsible: any) => {
+        const userId = responsible[1];
+        const userName = responsible[2];
+        if (!acc[userId]) {
+          acc[userId] = { name: userName, count: 0 };
+        }
+        acc[userId].count += 1;
+        return acc;
+      }, {});
 
-        this.barChartData = Object.keys(responsibleCount).map(userId => ({
-          name: responsibleCount[userId].name,
-          value: responsibleCount[userId].count
-        }));
-      } else {
-        this.barChartData = [];
-      }
+      this.barChartData = Object.keys(responsibleCount).map(userId => ({
+        name: responsibleCount[userId].name,
+        value: responsibleCount[userId].count
+      }));
     } else {
       this.barChartData = [];
     }
