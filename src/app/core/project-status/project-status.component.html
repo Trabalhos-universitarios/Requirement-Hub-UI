@@ -1,0 +1,51 @@
+<app-header></app-header>
+
+<div class="select-project" *ngIf="isChartsLoaded">
+  <mat-form-field appearance="fill">
+    <mat-label>Selecione um Projeto</mat-label>
+    <mat-select [(value)]="selectedProjectId" (selectionChange)="onProjectChange($event.value)">
+      <mat-option *ngFor="let project of projects" [value]="project.id">
+        {{ project.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<!-- Gráficos aparecem apenas quando isChartsLoaded é true -->
+<div class="chart-container" *ngIf="isChartsLoaded">
+  <div class="pie-chart-wrapper">
+    <h2>Status dos Requisitos</h2>
+    <ngx-charts-pie-chart
+      [view]="[1000, 280]"
+      [results]="pieChartData"
+      [scheme]="colorScheme"
+      [legend]="true"
+      [explodeSlices]="false"
+      [labels]="true">
+    </ngx-charts-pie-chart>
+    <!-- Exibe o total de requisitos no centro do gráfico -->
+    <div class="pie-chart-total">
+      <span>{{ totalRequirements }}</span>
+      <p>Total de Requisitos</p>
+    </div>
+  </div>
+
+  <div>
+    <h2>Quantidade de Requisitos por Responsável</h2>
+    <ngx-charts-bar-vertical
+      [view]="[1000, 280]"
+      [results]="barChartData"
+      [scheme]="colorScheme"
+      [legend]="true"
+      [xAxis]="true"
+      [yAxis]="true"
+      [yAxisLabel]="'Quantidade'"
+      [xAxisLabel]="'Responsável'">
+    </ngx-charts-bar-vertical>
+  </div>
+</div>
+
+<!-- Spinner permanece até os gráficos serem carregados -->
+<div *ngIf="!isChartsLoaded">
+  <p></p>
+</div>
