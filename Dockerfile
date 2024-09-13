@@ -1,5 +1,5 @@
 # Ajustar o Dockerfile para usar o caminho correto
-FROM node:21 as builder
+FROM node:20 as builder
 WORKDIR /app
 COPY . .
 RUN npm install
