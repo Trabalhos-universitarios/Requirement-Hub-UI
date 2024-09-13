@@ -3,7 +3,7 @@ name: Deploy Application Requirement Hub Frontend
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "master" ]
 
 jobs:
   build:
