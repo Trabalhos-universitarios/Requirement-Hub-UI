@@ -46,7 +46,7 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button [disabled]="isPermitted()" mat-menu-item class="icon" (click)="setDataProjectTable(element.id, element.name); openDialog('Put project')">
+                    <button [disabled]="isManager()" mat-menu-item class="icon" (click)="setDataProjectTable(element.id, element.name); openDialog('Put project')">
                         <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
                     </button>
 
@@ -64,7 +64,7 @@
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">folder_open</mat-icon>Artefatos do Projeto
                     </button>
 
-                    <button [disabled]="isPermitted()" mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Delete project')">
+                    <button [disabled]="isAdmin()" mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Delete project')">
                         <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
                     </button>
                 </mat-menu>

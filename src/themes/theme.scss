@@ -102,6 +102,16 @@ mat-tab-group {
   color: #616161 !important; /* Cor do placeholder no tema escuro */
 }
 
+body.light-theme {
+  background-color: mat.get-color-from-palette($app-light-primary, 50); // Defina uma cor clara para o tema light
+  color: mat.get-color-from-palette($app-light-primary, 900); // Defina a cor do texto
+}
+
+body.light-theme ngx-charts text,
+body.light-theme ngx-charts g text {
+  fill: #000 !important; /* Cor preta para o texto */
+}
+
 // DARK THEME
 .dark-theme {
   @include mat.all-component-themes($app-dark-theme);
@@ -200,4 +210,19 @@ mat-tab-group {
     font-size: 15px;
     color: #e0e0e0 !important; /* Cor do placeholder no tema escuro */
   }
+
 }
+
+// Para o tema escuro
+body.dark-theme {
+  background-color: mat.get-color-from-palette($app-dark-primary, 800); // Defina uma cor mais escura para o tema dark
+  color: mat.get-color-from-palette($app-dark-primary, 100); // Defina a cor do texto
+}
+
+/* Estilos para os textos dos gráficos no tema escuro */
+body.dark-theme ngx-charts text,
+body.dark-theme ngx-charts g text {
+  fill: #fff !important; /* Cor branca para o texto */
+}
+
+

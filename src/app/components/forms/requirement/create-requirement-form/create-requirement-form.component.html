@@ -7,12 +7,6 @@
             <input matInput formControlName="projectRelated">
         </mat-form-field>
 
-        <mat-form-field class="mat-forms-fro-project" *ngIf="inputRequirementDataWithUpdateRequirement?.identifier">
-            <mat-label>Identificador</mat-label>
-            <input matInput formControlName="identifier">
-            <mat-error>Campo obrigatório!</mat-error>
-        </mat-form-field>
-
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Versão</mat-label>
             <input matInput placeholder="Ex: 1.0.0" formControlName="version">
@@ -49,7 +43,7 @@
             <mat-label>Risco</mat-label>
             <mat-select formControlName="risk">
                 <mat-option *ngFor="let data of riskList" [value]="data">
-                    {{ data }}
+                    {{data}}
                 </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
@@ -59,7 +53,7 @@
             <mat-label>Prioridade</mat-label>
             <mat-select formControlName="priority">
                 <mat-option *ngFor="let data of priorityList" [value]="data">
-                    {{ data }}
+                    {{data}}
                 </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
@@ -74,7 +68,7 @@
                           class="mat-select-for-project">
                 (+{{ (formGroup.get('responsible')?.value?.length || 0) - 1 }}
                         {{ formGroup.get('responsible')?.value?.length === 2 ? 'other' : 'others' }})
-                    </span>
+            </span>
                 </mat-select-trigger>
                 <mat-option *ngFor="let analyst of responsibleList" [value]="analyst">{{ analyst.name }}</mat-option>
             </mat-select>
@@ -85,7 +79,7 @@
             <mat-label>Tipo</mat-label>
             <mat-select formControlName="type">
                 <mat-option *ngFor="let data of typeList" [value]="data">
-                    {{ data }}
+                    {{data}}
                 </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
@@ -112,9 +106,8 @@
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Esforço</mat-label>
             <mat-select formControlName="effort">
-                <mat-option *ngFor="let data of effortList" [value]="data" [matTooltip]="'Sequência de Fibonacci'"
-                            matTooltipPosition="right">
-                    {{ data }}
+                <mat-option *ngFor="let data of effortList" [value]="data" [matTooltip]="'Sequência de Fibonacci'" matTooltipPosition="right">
+                    {{data}}
                 </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>

@@ -87,6 +87,14 @@ export class ProjectsTableComponent implements AfterViewInit {
             this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO");
     }
 
+    isAdmin() {
+        return this.localStorage.getItem('role') != "ADMIN";
+    }
+
+    isManager() {
+        return this.localStorage.getItem('role') != "GERENTE_DE_PROJETOS";
+    }
+
     stylesStatusIcon(status: string) {
         let colorIcon: string = '#616161';
         if (this.themeService.isDarkMode()) {
@@ -145,7 +153,9 @@ export class ProjectsTableComponent implements AfterViewInit {
                 this.deleteProject().then()
                 break;
             case 'Create requirement':
-                this.dialog.open(ModalDialogCreateRequirementComponent);
+                this.dialog.open(ModalDialogCreateRequirementComponent,{
+                    disableClose: true
+                });
                 break;
             case 'Requirement list':
                 this.dialog.open(ModalDialogInformationProjectComponent,{

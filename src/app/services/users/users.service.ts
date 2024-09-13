@@ -13,6 +13,16 @@ export class UsersService {
 
   constructor(private http: HttpClient) {}
 
+  async createUser(userData: any): Promise<UserResponseModel> {
+    return firstValueFrom(
+      this.http.post<UserResponseModel>(`${this.baseUrl}/auth/register`, userData)
+    );
+  }
+
+  async deleteUser(id: string): Promise<any> {
+    return firstValueFrom(this.http.delete(`${this.baseUrl}/auth/${id}`));
+}
+
   async getManager(): Promise<UserResponseModel[]> {
     return firstValueFrom(this.http.get<UserResponseModel[]>(`${this.baseUrl}/user/managers`));
   }
@@ -39,5 +49,9 @@ export class UsersService {
 
   async getTeam(id: number): Promise<TeamResponseModel[]> {
     return firstValueFrom(this.http.get<TeamResponseModel[]>(`${this.baseUrl}/team/${id}`))
+  }
+
+  async updateUserImage(id: number | undefined, imageBase64: string): Promise<any> {
+    return firstValueFrom(this.http.patch<any>(`${this.baseUrl}/user/${id}/image`, imageBase64));
   }
 }

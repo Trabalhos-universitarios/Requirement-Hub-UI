@@ -1,0 +1,19 @@
+<mat-dialog-content>
+  <app-create-user-form (formValidityChange)="onFormValidityChange($event)"></app-create-user-form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button
+          *ngIf="!buttonDisabled"
+          (click)="close()">
+      Cancelar
+      <mat-icon>cancel</mat-icon>
+  </button>
+
+  <button mat-raised-button
+          cdkFocusInitial
+          *ngIf="!buttonDisabled"
+          (click)="saveData()">
+      Criar usuário
+      <mat-icon>save</mat-icon>
+  </button>
+</mat-dialog-actions>

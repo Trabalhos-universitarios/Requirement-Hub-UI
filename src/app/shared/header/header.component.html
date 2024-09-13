@@ -1,8 +1,11 @@
 <mat-toolbar class="mat-toolbar">
-    <span class="logo">RHB</span>
-    <button mat-icon-button (click)="openSidebar()">
-        <mat-icon>menu</mat-icon>
-    </button>
+    <span class="logo">
+        RHB
+      </span>
+      <button mat-icon-button (click)="handleButtonClick()">
+        <mat-icon *ngIf="!isHomeRoute()">home</mat-icon>
+        <mat-icon *ngIf="isHomeRoute()">menu</mat-icon>
+      </button>
 
     <span class="span-spacer"></span>
     <button (click)="toggleTheme()" mat-icon-button matTooltip="Alter Theme">
@@ -11,11 +14,21 @@
             <mat-icon >dark_mode</mat-icon>
         </ng-template>
     </button>
-    <button mat-icon-button>
-        <mat-icon>notifications</mat-icon>
+    <button mat-icon-button matTooltip="Notificações">
+        <mat-icon matBadge="8" matBadgePosition="above" matBadgeColor="warn">notifications</mat-icon>
     </button>
-    <button class="person">
-        <mat-icon class="icon">account_circle</mat-icon>
-    </button>
-</mat-toolbar>
 
+    <button mat-icon-button matTooltip="Configurações">
+        <mat-icon>settings</mat-icon>
+    </button>
+
+    <button class="person" (click)="openAvatarUploader()" matTooltip="On-line">
+        <mat-icon *ngIf="!hasUserProfilePicture" class="icon">account_circle</mat-icon>
+
+        <img *ngIf="hasUserProfilePicture"
+             class="icon example-header-image"
+             [src]="userProfilePicture"
+             alt="User Avatar">
+    </button>
+
+</mat-toolbar>

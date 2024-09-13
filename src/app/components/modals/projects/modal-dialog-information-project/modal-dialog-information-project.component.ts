@@ -21,7 +21,9 @@ export class ModalDialogInformationProjectComponent {
 
   async openCreateRequirement(): Promise<void> {
     this.dialog.closeAll();
-    this.dialog.open(ModalDialogCreateRequirementComponent);
+    this.dialog.open(ModalDialogCreateRequirementComponent,{
+      disableClose: true,
+    });
   }
 
   isPermited() {

@@ -41,9 +41,6 @@ import {
 } from './components/modals/requirements/modal-dialog-create-requirement/modal-dialog-create-requirement.component';
 import {CreateRequirementTabComponent} from './components/tabs/create-requirement-tab/create-requirement-tab.component';
 import {
-    CreateRequirementFormComponent
-} from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
-import {
     CreateArtifactFormComponent
 } from './components/forms/requirement/create-artifact-form/create-artifact-form.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
@@ -81,6 +78,17 @@ import { ModalDialogInformationRequirementComponent } from './components/modals/
 import { MatListModule } from '@angular/material/list';
 import { ModalDialogInformationRequirementArtifactComponent } from './components/modals/requirements/modal-dialog-information-requirement-artifact/modal-dialog-information-requirement-artifact.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ModalDialogCreateUserComponent } from './components/modals/user/modal-dialog-create-user/modal-dialog-create-user.component';
+import { CreateUserFormComponent } from './components/forms/user/create-user-form/create-user-form.component';
+import { DeleteUserTableComponent } from './components/tables/user/delete-user-table/delete-user-table.component';
+import { ModalDialogDeleteUserComponent } from './components/modals/user/modal-dialog-delete-user/modal-dialog-delete-user.component';
+import {MatBadgeModule} from "@angular/material/badge";
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
+import { ImageCropperComponent } from './components/user-avatar/image-cropper/image-cropper.component';
+import { UpdateRequirementFormComponent } from './components/forms/requirement/update-requirement-form/update-requirement-form.component';
+import { CreateRequirementFormComponent } from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
+import { ProjectStatusComponent } from './core/project-status/project-status.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
     declarations: [
@@ -97,7 +105,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         DateFormatPipe,
         ModalDialogCreateRequirementComponent,
         CreateRequirementTabComponent,
-        CreateRequirementFormComponent,
+        UpdateRequirementFormComponent,
         CreateArtifactFormComponent,
         RichTextEditorComponent,
         RequirementsTableComponent,
@@ -119,7 +127,15 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         ArtifactsRequirementsTableComponent,
         UpdateArtifactFormComponent,
         ModalDialogInformationRequirementComponent,
-        ModalDialogInformationRequirementArtifactComponent
+        ModalDialogInformationRequirementArtifactComponent,
+        ModalDialogCreateUserComponent,
+        CreateUserFormComponent,
+        DeleteUserTableComponent,
+        ModalDialogDeleteUserComponent,
+        UserAvatarComponent,
+        ImageCropperComponent,
+        CreateRequirementFormComponent,
+        ProjectStatusComponent
     ],
     imports: [
         BrowserModule,
@@ -154,7 +170,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatPaginatorModule,
         UpdateProjectUserTableComponent,
         MatCheckboxModule,
-        MatListModule
+        MatListModule,
+        MatBadgeModule,
+        NgxChartsModule
     ],
     providers: [
         [CapitalizeFirstPipePipe],

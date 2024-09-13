@@ -4,7 +4,7 @@
 
 <mat-dialog-content>
 
-    <app-create-requirement-form [inputRequirementDataWithUpdateRequirement]="data"></app-create-requirement-form>
+    <app-update-requirement-form [inputRequirementDataWithUpdateRequirement]="data"></app-update-requirement-form>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
@@ -13,14 +13,13 @@
     <mat-dialog-actions align="end">
         <button mat-raised-button
                 mat-dialog-close
-            [disabled]="!buttonDisabled">
+                cdkFocusInitial>
         Cancelar
             <mat-icon>cancel</mat-icon>
         </button>
     </mat-dialog-actions>
     
     <button mat-raised-button
-            cdkFocusInitial
             [disabled]="!buttonDisabled"
             (click)="saveData()">
         Aualizar requisito

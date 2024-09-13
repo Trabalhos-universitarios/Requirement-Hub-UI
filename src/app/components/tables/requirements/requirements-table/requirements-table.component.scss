@@ -1,5 +1,11 @@
+
 .title-toolbar {
-  height: 100px;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 80px;
   justify-content: center;
   align-items: center;
 
@@ -89,6 +95,10 @@ mat-paginator {
   margin-bottom: 20px;
   box-sizing: border-box;
   background-color: transparent;
+}
+
+.filter-input{
+  margin-top: 10px;
 }
 
 
