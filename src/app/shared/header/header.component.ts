@@ -12,7 +12,6 @@ import {RequirementsService} from "../../services/requirements/requirements.serv
 import {RequirementsDataModel} from "../../models/requirements-data-model";
 import {SpinnerService} from "../../services/spinner/spinner.service";
 import { Router } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -35,7 +34,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private alertService: AlertService,
         private localStorageService: LocalStorageService,
-      private router: Router,
         private cdr: ChangeDetectorRef,
         private userService: UsersService,
         private requirementsService: RequirementsService,

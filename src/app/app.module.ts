@@ -138,6 +138,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         ImageCropperComponent,
         CreateRequirementFormComponent,
         ProjectStatusComponent,
+        
     ],
     imports: [
         BrowserModule,
@@ -174,7 +175,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         MatCheckboxModule,
         MatListModule,
         MatBadgeModule,
-        NgxChartsModule
+        NgxChartsModule,
+        PickerComponent
     ],
     providers: [
         [CapitalizeFirstPipePipe],
