@@ -90,7 +90,7 @@ import { CreateRequirementFormComponent } from './components/forms/requirement/c
 import {PickerComponent} from "@ctrl/ngx-emoji-mart";
 import { ProjectStatusComponent } from './core/project-status/project-status.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 @NgModule({
     declarations: [
@@ -138,7 +138,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         ImageCropperComponent,
         CreateRequirementFormComponent,
         ProjectStatusComponent,
-        ProjectStatusComponent
     ],
     imports: [
         BrowserModule,
@@ -176,9 +175,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         MatListModule,
         MatBadgeModule,
         NgxChartsModule
-        MatBadgeModule,
-        NgxChartsModule,
-        MatBadgeModule,
     ],
     providers: [
         [CapitalizeFirstPipePipe],
