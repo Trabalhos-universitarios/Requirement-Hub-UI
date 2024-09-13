@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environmentLocal} from "../../../environment/environment-local";
 import {HttpClient} from "@angular/common/http";
-import {firstValueFrom} from "rxjs";
+import {firstValueFrom, Observable} from "rxjs";
 import {UserResponseModel} from "../../models/user-model";
 import { TeamResponseModel } from 'src/app/models/user-team-model';
 
@@ -53,5 +53,9 @@ export class UsersService {
 
   async updateUserImage(id: number | undefined, imageBase64: string): Promise<any> {
     return firstValueFrom(this.http.patch<any>(`${this.baseUrl}/user/${id}/image`, imageBase64));
+  }
+
+  getNotifications(id: number): Observable<number[]> {
+    return this.http.get<any>(`${this.baseUrl}/user/notifications/${id}`);
   }
 }

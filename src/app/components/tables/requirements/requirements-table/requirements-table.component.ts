@@ -123,16 +123,16 @@ export class RequirementsTableComponent implements AfterViewInit {
     switch (status) {
       case "ACTIVE":
         return {icon: 'verified', name: 'ACTIVE'};
-      case "DRAFT":
-        return {icon: 'pending_actions', name: 'DRAFT'};
+      case "REJECTED":
+        return {icon: 'do_not_disturb_on', name: 'REJECTED'};
       case "PENDING":
         return {icon: 'schedule', name: 'PENDING'};
       case "APPROVE":
         return {icon: 'preliminary', name: 'APPROVE'};
       case "CREATED":
         return {icon: 'pending', name: 'CREATED'};
-      case "REFUSE":
-        return {icon: 'brightness_alert', name: 'REFUSE'};
+      case "BLOCKED":
+        return {icon: 'block', name: 'BLOCKED'};
       default:
         return {icon: 'help', name: 'UNKNOWN'};
     }
@@ -154,8 +154,10 @@ export class RequirementsTableComponent implements AfterViewInit {
         return {color: '#4CAF50'};
       case 'pending':
         return {color: '#A5D6A7'};
-      case 'brightness_alert':
-        return {color: `${colorIcon}`};
+      case 'do_not_disturb_on':
+        return {color: 'rgba(253,0,0,0.74)'};
+      case 'block':
+        return {color: 'rgba(253,0,0,0.74)'};
       default:
         return {color: `${colorIcon}`};
     }

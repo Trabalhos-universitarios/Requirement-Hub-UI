@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
     "@swimlane/ngx-charts": "^20.5.0",
+    "@ctrl/ngx-emoji-mart": "^9.2.0",
+    "@swimlane/ngx-charts": "^20.5.0",
     "@syncfusion/ej2-angular-richtexteditor": "^26.1.35",
     "@types/jwt-decode": "^3.1.0",
     "body-parser": "^1.20.2",
