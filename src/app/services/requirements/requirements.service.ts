@@ -63,6 +63,30 @@ export class RequirementsService {
         );
     }
 
+    async createAndSendToApprovalFlow(post: any): Promise<RequirementsDataModel[] | any> {
+        return firstValueFrom(
+            this.http.post(`${this.baseUrl}/requirements/flow`, post).pipe(
+                catchError((error: HttpErrorResponse) => {
+
+                    switch (error.status) {
+                        case 409:
+                            return throwError(() => HttpStatusCode.Conflict);
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
+                        case 503:
+                            return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
+                    }
+                })
+            )
+        );
+    }
+
     async updateRequirements(id: number | undefined, post: any): Promise<RequirementsDataModel[] | any> {
         return firstValueFrom(this.http.put(`${this.baseUrl}/requirements/${id}`, post)
             .pipe(catchError((error: HttpErrorResponse) => {
@@ -76,6 +100,25 @@ export class RequirementsService {
                             return throwError(() => HttpStatusCode.InternalServerError);
                         case 503:
                             return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
+                    }
+                })
+            )
+        );
+    }
+
+    async sendToApprovalFlowRequirementId(id?: number): Promise<any> {
+        return firstValueFrom(
+            this.http.patch(`${this.baseUrl}/requirements/flow/${id}`, null).pipe(
+                catchError((error: HttpErrorResponse) => {
+                    switch (error.status) {
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
                         default:
                             return throwError(() => new Error(error.message));
                     }

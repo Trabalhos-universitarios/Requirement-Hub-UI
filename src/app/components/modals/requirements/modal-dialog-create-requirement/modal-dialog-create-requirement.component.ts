@@ -42,9 +42,9 @@ export class ModalDialogCreateRequirementComponent {
         this.alertService.toOptionalWith3Buttons("Deseja enviar para fluxo de aprovação?", "Sim, enviar!", "Não, apensas salvar")
             .then(resp => {
                 if (resp.isConfirmed) {
-                    console.log("Sim, enviar!");
+                    this.sendToApprovalFlow();
                 } else if (resp.isDenied) {
-                    console.log("Não, apensas salvar");
+                    this.saveData();
                 } else {
                     console.log("Cancelar");
                 }
@@ -52,7 +52,8 @@ export class ModalDialogCreateRequirementComponent {
     }
 
     private async sendToApprovalFlow() {
-        const response = await this.requirementService.createRequirements(this.prepareData()).then(response => response.identifier);
+        this.spinnerService.start();
+        const response = await this.requirementService.createAndSendToApprovalFlow(this.prepareData()).then(response => response.identifier);
         if (response) {
             await this.alertService.toSuccessAlert(`Reququisito ${response} enviado com sucesso!`);
             this.localStorageService.removeItem('file');

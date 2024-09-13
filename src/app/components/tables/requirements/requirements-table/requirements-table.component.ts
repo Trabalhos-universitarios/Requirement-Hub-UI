@@ -163,7 +163,7 @@ export class RequirementsTableComponent implements AfterViewInit {
     }
   }
 
-  protected openDialog(action: String, value: RequirementsDataModel) {
+  protected async openDialog(action: String, value: RequirementsDataModel) {
     switch (action) {
       case "information":
         this.matDialog.open(ModalDialogInformationRequirementComponent, {
@@ -185,8 +185,27 @@ export class RequirementsTableComponent implements AfterViewInit {
           disableClose: true
         });
         break;
+        case "send-approval":
+          this.sendApproval(value.id)
+        break;
       default:
         console.error("This dialog non exists!");
+    }
+  }
+
+  protected async sendApproval(id? : number){
+    const result = await this.alertService.toOptionalActionAlertSend(
+      "Aprovação requisito",
+      "Deseja Enviar para aprovação?"
+    );
+    if (result.isConfirmed) {
+      await this.requirementsService.sendToApprovalFlowRequirementId(id).then(response => {
+        if (response) {
+          this.alertService.toSuccessAlert("Enviado com sucesso!");
+        }
+      });
+      this.spinnerService.start();
+      reloadPage();
     }
   }
 

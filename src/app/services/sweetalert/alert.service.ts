@@ -52,6 +52,23 @@ export class AlertService {
         return result;
     }
 
+    async toOptionalActionAlertSend(title: string, text: string): Promise<SweetAlertResult> {
+        const result = await Swal.fire({
+            title: title,
+            text: text,
+            icon: "warning",
+            confirmButtonColor: "#437222",
+            cancelButtonColor: "#d33",
+            showCancelButton: true,
+            confirmButtonText: "Sim, enviar!"
+        });
+        if (result.dismiss) {
+            await this.toInfoAlert("Operação cancelada!", "");
+        }
+
+        return result;
+    }
+
     async toOptionalWith3Buttons(title: string, confirmButton: string, denyButton: any): Promise<SweetAlertResult> {
         let resultReturn: SweetAlertResult = {} as SweetAlertResult;
         await Swal.fire({
