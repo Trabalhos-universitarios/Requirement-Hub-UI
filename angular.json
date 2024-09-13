@@ -52,7 +52,13 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "allowedCommonJsDependencies": [
+                "rfdc",
+                "quill",
+                "cropperjs",
+                "sweetalert2"
+              ]
             },
             "development": {
               "buildOptimizer": false,
