@@ -1,11 +1,12 @@
 import {Component, HostListener, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {RequirementsDataModel} from 'src/app/models/requirements-data-model';
 import {Status} from 'src/app/utils/util.status';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
 import {CommentsService} from "../../../../services/comments-service/comments-service.service";
+import { RequirementHistoryTableComponent } from 'src/app/components/tables/requirements/requirement-history-table/requirement-history-table.component';
 
 @Component({
     selector: 'app-modal-dialog-information-requirement',
@@ -30,7 +31,8 @@ export class ModalDialogInformationRequirementComponent {
                 private formBuilder: FormBuilder,
                 private sanitizer: DomSanitizer,
                 private localStorageService: LocalStorageService,
-                private commentService: CommentsService) {}
+                private commentService: CommentsService,
+                private matDialog: MatDialog) {}
     showEmojiPickerForCommentInput = false; // Variável para o novo picker de emoji no campo de comentário
 
     toggleEmojiPickerForCommentInput(event: Event) {
@@ -130,5 +132,13 @@ export class ModalDialogInformationRequirementComponent {
     // Função para carregar mais comentários
     loadMoreComments() {
         this.commentsToShow += 5; // Incrementa o número de comentários a serem exibidos em 5
+    }
+
+    openHistory(){
+        this.matDialog.open(RequirementHistoryTableComponent, {
+            data: this.data,
+            width: '1200px',
+            disableClose: true
+          });
     }
 }

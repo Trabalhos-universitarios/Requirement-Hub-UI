@@ -106,5 +106,6 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Fechar</button>
+    <button mat-button mat-dialog-close (click)="openHistory()">Histórico Requisito</button>
+    <button cdkFocusInitial mat-button mat-dialog-close>Fechar</button>
 </mat-dialog-actions>

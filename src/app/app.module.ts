@@ -90,7 +90,7 @@ import { CreateRequirementFormComponent } from './components/forms/requirement/c
 import {PickerComponent} from "@ctrl/ngx-emoji-mart";
 import { ProjectStatusComponent } from './core/project-status/project-status.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-
+import { RequirementHistoryTableComponent } from './components/tables/requirements/requirement-history-table/requirement-history-table.component';
 
 @NgModule({
     declarations: [
@@ -138,7 +138,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         ImageCropperComponent,
         CreateRequirementFormComponent,
         ProjectStatusComponent,
-        
+        RequirementHistoryTableComponent
     ],
     imports: [
         BrowserModule,
