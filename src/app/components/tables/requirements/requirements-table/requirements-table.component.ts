@@ -132,7 +132,7 @@ export class RequirementsTableComponent implements AfterViewInit {
       case "CREATED":
         return {icon: 'pending', name: 'CREATED'};
       case "BLOCKED":
-        return {icon: 'block', name: 'REFUSE'};
+        return {icon: 'block', name: 'BLOCKED'};
       default:
         return {icon: 'help', name: 'UNKNOWN'};
     }

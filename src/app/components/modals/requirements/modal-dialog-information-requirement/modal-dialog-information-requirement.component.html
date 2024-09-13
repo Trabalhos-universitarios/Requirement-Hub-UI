@@ -16,6 +16,42 @@
             <p class="description-text" [innerHTML]="sanitizeHtml(data.description)">{{ data.description }}</p>
         </mat-list>
 
+        <form [formGroup]="formGroup">
+            <mat-form-field class="comment-input" appearance="fill">
+                <mat-label>Comentário</mat-label>
+
+                <textarea matInput [placeholder]="placeholderDynamic" formControlName="comment"></textarea>
+
+                <!-- Botão de Emoji ao lado direito -->
+                <button mat-icon-button matSuffix (click)="toggleEmojiPickerForCommentInput($event)">
+                    <mat-icon>emoji_emotions</mat-icon>
+                </button>
+
+                <!-- Botão Send, exibido quando o comentário é válido -->
+                <button mat-icon-button matSuffix *ngIf="isSendButtonVisible()" (click)="onSubmit()">
+                    <mat-icon>send</mat-icon>
+                </button>
+
+                <mat-error *ngIf="formGroup.get('comment')?.hasError('minlength') && formGroup.get('comment')?.touched">
+                    No mínimo 20 caracteres!
+                </mat-error>
+            </mat-form-field>
+        </form>
+
+        <!-- Novo Componente Emoji Picker -->
+        <div *ngIf="showEmojiPickerForCommentInput" class="emoji-picker-input">
+            <emoji-mart
+                    set="facebook"
+                    [skin]="2"
+                    [emojiSize]="24"
+                    [perLine]="7"
+                    [i18n]="{ search: 'Buscar emoji', categories: { search: 'Resultados de busca', recent: 'Recente' } }"
+                    (emojiClick)="addEmojiToCommentInput($event.emoji.native)">
+            </emoji-mart>
+        </div>
+
+
+
         <div class="messages-container">
             <div *ngFor="let message of messages; let i = index" class="message-wrapper">
 
@@ -62,23 +98,11 @@
             </div>
         </div>
 
+        <!-- Botão "Mostrar mais" -->
+        <button *ngIf="messages.length > commentsToShow" (click)="loadMoreComments()" mat-button>
+            Mostrar mais
+        </button>
 
-
-        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-            <mat-form-field class="comment-input" appearance="fill">
-                <mat-label>Comentário</mat-label>
-                <textarea matInput placeholder="Adicione um comentário..." formControlName="comment"></textarea>
-                <button mat-icon-button matSuffix *ngIf="(!formGroup.get('comment')?.hasError('minlength')) &&
-                formGroup.get('comment')?.touched &&
-                formGroup.get('comment')?.value">
-                    <mat-icon>send</mat-icon>
-                </button>
-
-                <mat-error *ngIf="formGroup.get('comment')?.hasError('minlength') && formGroup.get('comment')?.touched">
-                    No mínimo 20 caracteres!
-                </mat-error>
-            </mat-form-field>
-        </form>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

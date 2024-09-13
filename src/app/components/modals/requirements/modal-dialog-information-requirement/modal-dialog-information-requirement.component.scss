@@ -140,3 +140,19 @@
 }
 
 
+.comment-input .mat-suffix {
+  margin-left: 4px; /* Espaço entre o campo de texto e os ícones de emoji e send */
+}
+
+.emoji-picker-input {
+  position: absolute;
+  right: 0; /* Ajusta o emoji picker para aparecer ao lado direito */
+  top: 50px;
+  z-index: 100;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  border: none;
+}
+
+
