@@ -1,21 +1,158 @@
 .title-toolbar {
-    justify-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .title {
+    font-size: 24px;
+  }
+}
+
+.requirement-details {
+  max-height: 1000px;
+}
+
+.description-text {
+  white-space: pre-wrap;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-top: 8px;
+}
+
+.comment-input {
+  width: 100%;
+}
+
+//BALÃO
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.message-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.message-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.message-bubble {
+  background-color: #8521e0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 700px;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.message-bubble::before {
+  content: "";
+  position: absolute;
+  left: 232px;
+  top: 20px;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-left-color: #8521e0;
+}
+
+.emoji {
+  position: absolute;
+  right: -2px;
+  bottom: -8px;
+  font-size: 1.2em;
+  background-color: transparent;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.message-info {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.message-time {
+  font-size: 0.8em;
+  color: #888;
+  margin-right: 4px;
+}
+
+.confirmation-icon {
+  font-size: 1em;
+  color: #4fc3f7;
+}
+
+.emoji-picker {
+  position: absolute;
+  left: -290px;
+  top: -350px;
+  z-index: 100;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  border: none;
+}
+
+
+.user-avatar {
+  position: absolute;
+  top: -20px; /* Posição vertical do avatar ajustada para o topo */
+  left: -15px; /* Posição horizontal do avatar ajustada para a esquerda */
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white; /* Fundo branco para melhor visualização */
+  border-radius: 50%; /* Torna o avatar circular */
+  border: 3px solid #424242; /* Borda para combinar com o balão */
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-icon {
+  display: flex;
     align-items: center;
-    margin-bottom: 20px;
-  
-    .title {
-      font-size: 24px;
-    }
-  }
-  
-  .requirement-details {
-    max-height: 1000px;
-  }
-  
-  .description-text {
-    white-space: pre-wrap; /* Mantém as quebras de linha */
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-top: 8px;
-  }
-  
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  //font-size: 25px;
+  color: #888;
+}
+
+
+.comment-input .mat-suffix {
+  margin-left: 4px; /* Espaço entre o campo de texto e os ícones de emoji e send */
+}
+
+.emoji-picker-input {
+  position: absolute;
+  right: 0; /* Ajusta o emoji picker para aparecer ao lado direito */
+  top: 50px;
+  z-index: 100;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  border: none;
+}
+
+

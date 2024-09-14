@@ -112,6 +112,16 @@ body.light-theme ngx-charts g text {
   fill: #000 !important; /* Cor preta para o texto */
 }
 
+body.light-theme {
+  background-color: mat.get-color-from-palette($app-light-primary, 50); // Defina uma cor clara para o tema light
+  color: mat.get-color-from-palette($app-light-primary, 900); // Defina a cor do texto
+}
+
+body.light-theme ngx-charts text,
+body.light-theme ngx-charts g text {
+  fill: #000 !important; /* Cor preta para o texto */
+}
+
 // DARK THEME
 .dark-theme {
   @include mat.all-component-themes($app-dark-theme);

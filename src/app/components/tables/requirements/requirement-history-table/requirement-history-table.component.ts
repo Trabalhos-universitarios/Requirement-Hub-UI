@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 import {RequirementsService} from "../../../../services/requirements/requirements.service";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ThemeService} from "../../../../services/theme/theme.service";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {ProjectsTableService} from "../../../../services/projects/projects-table.service";
 import {UsersService} from "../../../../services/users/users.service";
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
@@ -14,14 +14,13 @@ import {reloadPage} from "../../../../utils/reload.page";
 import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {LocalStorageService} from 'src/app/services/localstorage/local-storage.service';
 import {ModalDialogInformationRequirementComponent} from 'src/app/components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
-import {ModalDialogArtifactsRequirementComponent} from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
-import {ModalDialogUpdateRequirementComponent} from "../../../modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component";
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { RequirementsHistoryService } from 'src/app/services/requirements/requirement-history.service';
 
 @Component({
-  selector: 'app-requirements-table',
-  templateUrl: './requirements-table.component.html',
-  styleUrls: ['./requirements-table.component.scss'],
+  selector: 'app-requirement-history-table',
+  templateUrl: './requirement-history-table.component.html',
+  styleUrls: ['./requirement-history-table.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -30,9 +29,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ]),
   ],
 })
-export class RequirementsTableComponent implements AfterViewInit {
+export class RequirementHistoryTableComponent{
   protected displayedColumns: string[] = [
-    'identifier', 'name', 'author', 'dateCreated', 'priority', 'type', 'version', 'status'
+    'version', 'modification_date', 'priority', 'risk', 'effort', 'status'
   ];
   protected columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   protected dataSource = new MatTableDataSource<RequirementsDataModel>([]);
@@ -41,6 +40,7 @@ export class RequirementsTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
   constructor(private requirementsService: RequirementsService,
+              private requirementsHistoryService : RequirementsHistoryService,
               private sanitizer: DomSanitizer,
               private themeService: ThemeService,
               private matDialog: MatDialog,
@@ -49,25 +49,18 @@ export class RequirementsTableComponent implements AfterViewInit {
               private spinnerService: SpinnerService,
               private capitalizeFirstPipe: CapitalizeFirstPipePipe,
               private alertService: AlertService,
-              private localStorage: LocalStorageService) {
+              private localStorage: LocalStorageService,
+              @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
     spinnerService.start();
-    this.getData().then();
+    this.getData(data.identifier).then();
     this.setupCustomFilter();
   }
 
-  ngAfterViewInit() {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
-  }
-
-  protected async getData() {
-    this.requirementsService.getRequirementsByProjectId(this.getCurrentProjectById()).then(response => {
-      response.forEach(async requirement => {
-        requirement.author = await this.getAuthorById(requirement.author).then();
-      });
-      response.sort((a, b) => a.identifier.localeCompare(b.identifier));
+  protected async getData(identifier: string) {
+    this.requirementsHistoryService.getRequirementHistoryByIdentifier(identifier, this.getCurrentProjectById()).then(response => {
+      response.sort((a, b) => parseFloat(b.version) - parseFloat(a.version));
       this.dataSource.data = response;
+
       this.spinnerService.stop();
     });
   }
@@ -76,14 +69,6 @@ export class RequirementsTableComponent implements AfterViewInit {
     return this.projectsTableService.getCurrentProjectById();
   }
 
-  protected getCurrentProjectByName() {
-    return this.projectsTableService.getCurrentProjectByName();
-  }
-
-  private async getAuthorById(id: number | undefined) {
-    let author = await this.usersService.getUserById(id).then(user => user.name);
-    return this.capitalizeFirstPipe.transform(author);
-  }
 
    applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -113,9 +98,7 @@ export class RequirementsTableComponent implements AfterViewInit {
 
   isPermitted() {
     return !(
-      this.localStorage.getItem('role') === "GERENTE_DE_PROJETOS" ||
-      this.localStorage.getItem('role') === "ANALISTA_DE_REQUISITOS" ||
-      this.localStorage.getItem('role') === "ANALISTA_DE_NEGOCIO"
+      this.localStorage.getItem('role') === "GERENTE_DE_PROJETOS"    
     );
   }
 
@@ -172,57 +155,28 @@ export class RequirementsTableComponent implements AfterViewInit {
           disableClose: true
         });
         break;
-      case "edit":
-        this.matDialog.open(ModalDialogUpdateRequirementComponent, {
-          data: value,
-          width: '1000px',
-          disableClose: true
-        });
-        break;
-      case "add":
-        this.matDialog.open(ModalDialogArtifactsRequirementComponent, {
-          data: value,
-          disableClose: true
-        });
-        break;
-        case "send-approval":
-          this.sendApproval(value.id)
-        break;
       default:
         console.error("This dialog non exists!");
     }
   }
 
-  protected async sendApproval(id? : number){
-    const result = await this.alertService.toOptionalActionAlertSend(
-      "Aprovação requisito",
-      "Deseja Enviar para aprovação?"
-    );
-    if (result.isConfirmed) {
-      await this.requirementsService.sendToApprovalFlowRequirementId(id).then(response => {
-        if (response) {
-          this.alertService.toSuccessAlert("Enviado com sucesso!");
-        }
-      });
-      this.spinnerService.start();
-      reloadPage();
-    }
-  }
-
   protected async deleteRequirement(id: number) {
     const result = await this.alertService.toOptionalActionAlert(
-      "Deletar requisito",
-      "Deseja realmente excluir o requisito?"
+      "Deletar historico",
+      "Deseja realmente excluir o historico requisito?"
     );
-
+    this.spinnerService.start();
+  
     if (result.isConfirmed) {
-      await this.requirementsService.deleteRequirement(id).then(response => {
+      await this.requirementsHistoryService.deleteHistory(id).then(response => {
         if (response) {
-          this.alertService.toSuccessAlert("Requisito excluído com sucesso!");
+          setTimeout(() => {
+            this.alertService.toSuccessAlert("Historico requisito excluído com sucesso!");
+          }, 2000);
         }
       });
-      this.spinnerService.start();
       reloadPage();
     }
   }
 }
+

@@ -1,4 +1,11 @@
 
+.container {
+  max-height: 800px; /* Define o limite máximo de altura */
+  overflow-y: auto; /* Adiciona scroll vertical se o conteúdo ultrapassar 800px */
+  display: flex;
+  flex-direction: column;
+}
+
 .title-toolbar {
   justify-content: center;
   align-items: center;

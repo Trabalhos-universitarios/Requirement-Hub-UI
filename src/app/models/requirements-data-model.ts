@@ -2,8 +2,9 @@ export interface RequirementsDataModel {
     id?: number
     identifier: string;
     name: string;
-    author: number;
+    author?: number;
     dateCreated?: string;
+    modification_date?: string;
     priority: string;
     risk?: string
     type: string;

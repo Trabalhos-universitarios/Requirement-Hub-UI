@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div class="select-project" *ngIf="isChartsLoaded">
+<div class="select-project">
   <mat-form-field appearance="fill">
     <mat-label>Selecione um Projeto</mat-label>
     <mat-select [(value)]="selectedProjectId" (selectionChange)="onProjectChange($event.value)">
@@ -11,8 +11,7 @@
   </mat-form-field>
 </div>
 
-<!-- Gráficos aparecem apenas quando isChartsLoaded é true -->
-<div class="chart-container" *ngIf="isChartsLoaded">
+<div class="chart-container">
   <div class="pie-chart-wrapper">
     <h2>Status dos Requisitos</h2>
     <ngx-charts-pie-chart
@@ -43,9 +42,4 @@
       [xAxisLabel]="'Responsável'">
     </ngx-charts-bar-vertical>
   </div>
-</div>
-
-<!-- Spinner permanece até os gráficos serem carregados -->
-<div *ngIf="!isChartsLoaded">
-  <p></p>
 </div>

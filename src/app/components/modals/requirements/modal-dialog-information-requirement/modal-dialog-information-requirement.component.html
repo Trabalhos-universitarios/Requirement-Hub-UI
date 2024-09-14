@@ -1,27 +1,111 @@
-<!-- modal-dialog-information-requirement.component.html -->
 <mat-dialog-content>
     <mat-toolbar class="title-toolbar">
-      <span class="title">Detalhes do Requisito - {{data.identifier}}</span>
+        <span class="title">Detalhes do Requisito - {{ data.identifier }}</span>
     </mat-toolbar>
     <div class="requirement-details">
-      <mat-list>
-        <mat-list-item><strong>Nome:</strong> {{data.name}}</mat-list-item>
-        <mat-list-item><strong>Autor:</strong> {{data.author}}</mat-list-item>
-        <!--mat-list-item><strong>Responsavel:</strong> {{data.responsible}}</mat-list-item-->
-        <!--mat-list-item><strong>Fonte:</strong> {{data.stakeholders}}</mat-list-item-->
-        <mat-list-item><strong>Data de Criação:</strong> {{data.dateCreated | slice:0:10 }}</mat-list-item>
-        <mat-list-item><strong>Prioridade:</strong> {{data.priority}}</mat-list-item>
-        <mat-list-item><strong>Risco:</strong> {{data.risk}}</mat-list-item>
-        <mat-list-item><strong>Esforço(Fibonacci):</strong> {{data.effort}}</mat-list-item>
-        <mat-list-item><strong>Tipo:</strong> {{data.type}}</mat-list-item>
-        <mat-list-item><strong>Versão:</strong> {{data.version}}</mat-list-item>
-        <mat-list-item><strong>Status:</strong> {{getStatusText(data.status)}}</mat-list-item>
-        <!--mat-list-item><strong>Relações:</strong> {{data.stakeholders}}</mat-list-item-->
-        <p class="description-text" [innerHTML]="sanitizeHtml(data.description)">{{data.description}}</p>
-      </mat-list>
+        <mat-list>
+            <mat-list-item><strong>Nome:</strong> {{ data.name }}</mat-list-item>
+            <mat-list-item><strong>Autor:</strong> {{ data.author }}</mat-list-item>
+            <mat-list-item><strong>Data de Criação:</strong> {{ data.dateCreated | slice: 0:10 }}</mat-list-item>
+            <mat-list-item><strong>Prioridade:</strong> {{ data.priority }}</mat-list-item>
+            <mat-list-item><strong>Risco:</strong> {{ data.risk }}</mat-list-item>
+            <mat-list-item><strong>Esforço(Fibonacci):</strong> {{ data.effort }}</mat-list-item>
+            <mat-list-item><strong>Tipo:</strong> {{ data.type }}</mat-list-item>
+            <mat-list-item><strong>Versão:</strong> {{ data.version }}</mat-list-item>
+            <mat-list-item><strong>Status:</strong> {{ getStatusText(data.status) }}</mat-list-item>
+            <p class="description-text" [innerHTML]="sanitizeHtml(data.description)">{{ data.description }}</p>
+        </mat-list>
+
+        <form [formGroup]="formGroup">
+            <mat-form-field class="comment-input" appearance="fill">
+                <mat-label>Comentário</mat-label>
+
+                <textarea matInput [placeholder]="placeholderDynamic" formControlName="comment"></textarea>
+
+                <!-- Botão de Emoji ao lado direito -->
+                <button mat-icon-button matSuffix (click)="toggleEmojiPickerForCommentInput($event)">
+                    <mat-icon>emoji_emotions</mat-icon>
+                </button>
+
+                <!-- Botão Send, exibido quando o comentário é válido -->
+                <button mat-icon-button matSuffix *ngIf="isSendButtonVisible()" (click)="onSubmit()">
+                    <mat-icon>send</mat-icon>
+                </button>
+
+                <mat-error *ngIf="formGroup.get('comment')?.hasError('minlength') && formGroup.get('comment')?.touched">
+                    No mínimo 20 caracteres!
+                </mat-error>
+            </mat-form-field>
+        </form>
+
+        <!-- Novo Componente Emoji Picker -->
+        <div *ngIf="showEmojiPickerForCommentInput" class="emoji-picker-input">
+            <emoji-mart
+                    set="facebook"
+                    [skin]="2"
+                    [emojiSize]="24"
+                    [perLine]="7"
+                    [i18n]="{ search: 'Buscar emoji', categories: { search: 'Resultados de busca', recent: 'Recente' } }"
+                    (emojiClick)="addEmojiToCommentInput($event.emoji.native)">
+            </emoji-mart>
+        </div>
+
+
+
+        <div class="messages-container">
+            <div *ngFor="let message of messages; let i = index" class="message-wrapper">
+
+                <div class="message-bubble">
+                    <!-- Imagem do Usuário ou Ícone Padrão -->
+                    <div class="user-avatar">
+                        <img *ngIf="message.user?.profilePicture; else defaultIcon"
+                             [src]="message.user?.profilePicture"
+                             alt="User Avatar"
+                             class="avatar-image"
+                             [matTooltip]="getUserInformation() | capitalizeFirstPipe">
+                        <ng-template #defaultIcon>
+                            <mat-icon class="avatar-icon">account_circle</mat-icon>
+                        </ng-template>
+                    </div>
+
+                    {{ message.text }}
+                    <span *ngIf="message.emoji" class="emoji">{{ message.emoji }}</span>
+
+                    <div class="message-info">
+                        <span class="message-time">{{ horario }}</span>
+                        <mat-icon class="confirmation-icon">done_all</mat-icon>
+                    </div>
+                </div>
+
+                <!-- Botão de Emoji -->
+                <div class="message-actions">
+                    <button mat-icon-button (click)="toggleEmojiPicker(i)">
+                        <mat-icon>emoji_emotions</mat-icon>
+                    </button>
+                </div>
+
+                <!-- Componente Emoji Picker -->
+                <div *ngIf="showEmojiPicker && selectedMessageIndex === i" class="emoji-picker">
+                    <emoji-mart
+                            set="facebook"
+                            [skin]="2"
+                            [emojiSize]="24"
+                            [perLine]="7"
+                            [i18n]="{ search: 'Buscar emoji', categories: { search: 'Resultados de busca', recent: 'Recente' } }"
+                            (emojiClick)="addEmoji(selectedMessageIndex, $event.emoji.native)">
+                    </emoji-mart>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botão "Mostrar mais" -->
+        <button *ngIf="messages.length > commentsToShow" (click)="loadMoreComments()" mat-button>
+            Mostrar mais
+        </button>
+
     </div>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Fechar</button>
-  </mat-dialog-actions>
-  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="openHistory()">Histórico Requisito</button>
+    <button cdkFocusInitial mat-button mat-dialog-close>Fechar</button>
+</mat-dialog-actions>
