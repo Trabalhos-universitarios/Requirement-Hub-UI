@@ -25,7 +25,6 @@ export class ModalDialogCreateRequirementComponent {
 
     constructor(
         private requirementService: RequirementsService,
-        private artifactService: ArtifactService,
         private projectsTableService: ProjectsTableService,
         private richTextService: RichTextService,
         private alertService: AlertService,
@@ -39,7 +38,33 @@ export class ModalDialogCreateRequirementComponent {
         });
     }
 
-    async saveData(): Promise<void> {
+    optionalSaveData() {
+        this.alertService.toOptionalWith3Buttons("Deseja enviar para fluxo de aprovação?", "Sim, enviar!", "Não, apensas salvar")
+            .then(resp => {
+                if (resp.isConfirmed) {
+                    this.sendToApprovalFlow();
+                } else if (resp.isDenied) {
+                    this.saveData();
+                } else {
+                    console.log("Cancelar");
+                }
+            });
+    }
+
+    private async sendToApprovalFlow() {
+        this.spinnerService.start();
+        const response = await this.requirementService.createAndSendToApprovalFlow(this.prepareData()).then(response => response.identifier);
+        if (response) {
+            await this.alertService.toSuccessAlert(`Reququisito ${response} enviado com sucesso!`);
+            this.localStorageService.removeItem('file');
+            this.dialog.closeAll();
+            this.spinnerService.stop();
+            reloadPage();
+            this.spinnerService.start();
+        }
+    }
+
+    private async saveData(): Promise<void> {
         try {
             this.spinnerService.start();
             const response = await this.requirementService.createRequirements(this.prepareData()).then(response => response.identifier);
@@ -118,7 +143,7 @@ export class ModalDialogCreateRequirementComponent {
                 creationDate: new Date().toISOString(),
                 status: Status.CREATED,
                 files: fileData,
-                requirementId: requirementId // Inclui o ID do requisito
+                requirementId: requirementId
             };
         }
     }

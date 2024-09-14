@@ -20,8 +20,15 @@
   font-size: 48px;
   height: 48px;
   width: 48px;
-
-  border: solid 3px green;
   border-radius: 50%;
   object-fit: cover; /* Para garantir que a imagem se ajuste ao contêiner */
 }
+
+.border-green {
+  border: solid 3px green;
+}
+
+.border-red {
+  border: solid 3px red;
+}
+

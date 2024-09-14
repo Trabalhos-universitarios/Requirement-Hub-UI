@@ -6,6 +6,7 @@ import {UserResponseModel} from 'src/app/models/user-model';
 import {ReactiveFormServices} from 'src/app/services/forms/reactive-form-services.service';
 import {UpdateProjectsService} from 'src/app/services/projects/update-projects.service';
 import {RichTextService} from 'src/app/services/richText/rich-text.service';
+import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 import {UsersService} from 'src/app/services/users/users.service';
 
 @Component({
@@ -30,11 +31,13 @@ export class UpdateProjectFormComponent implements OnInit{
         private updateFormService: ReactiveFormServices,
         private updateProjectService : UpdateProjectsService,
         private userService: UsersService,
-        private richTextService: RichTextService) {
+        private richTextService: RichTextService,
+        private spinnerService: SpinnerService) {
         this.formValueSubscriber();
     }
-    ngOnInit(): void {
-        this.getManager();
+    async ngOnInit(): Promise<void> {
+        this.spinnerService.start();
+        await this.getManager();
         this.getData();
     }
 
@@ -52,8 +55,8 @@ export class UpdateProjectFormComponent implements OnInit{
         return this.formGroup.value;
     }
 
-    getManager(): void {
-        this.userService.getManager()
+    getManager(): Promise<void> {
+        return this.userService.getManager()
             .then(resp => {
                 this.managers = resp;
             })
@@ -74,6 +77,7 @@ export class UpdateProjectFormComponent implements OnInit{
             });
 
             this.richTextService.changeContent(project.description);
+            this.spinnerService.stop();
         });
     }
 }

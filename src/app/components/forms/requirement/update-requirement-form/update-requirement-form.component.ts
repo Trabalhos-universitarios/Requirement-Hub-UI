@@ -142,7 +142,7 @@ export class UpdateRequirementFormComponent implements OnInit {
     }
 
     private async getDataWhenRelationshipWithRequirement() {
-        return await this.requirementService.getRequirementDataToUpdate(this.inputRequirementDataWithUpdateRequirement?.id)
+        return await this.requirementService.getRequirementById(this.inputRequirementDataWithUpdateRequirement?.id)
             .then(requirement => {
 
                 this.stakeholdersListToUpdate = this.fontList

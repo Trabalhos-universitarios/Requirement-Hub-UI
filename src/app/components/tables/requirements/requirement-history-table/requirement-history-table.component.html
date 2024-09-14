@@ -1,24 +1,14 @@
 <div class="container">
     <mat-toolbar class="title-toolbar">
-        <span class="title">Requisitos do Projeto - {{getCurrentProjectByName()}}</span>
+        <span class="title">Historico Requisito: {{ data.name }} - {{ data.identifier }} </span>
     </mat-toolbar>
-    
-    <!-- Campo de filtro -->
-    <mat-form-field appearance="outline" class="filter-input">
-        <mat-label>Filtrar requisitos</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Digite para filtrar" />
-        <button mat-icon-button matSuffix disabled>
-            <mat-icon>search</mat-icon>
-        </button>
-    </mat-form-field>
-
     
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
         <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
             <th mat-header-cell *matHeaderCellDef> {{ column | displayColumnFormatPipe }}</th>
             <td mat-cell *matCellDef="let element">
                 <ng-container [ngSwitch]="column">
-                    <ng-container *ngSwitchCase="'dateCreated'">
+                    <ng-container *ngSwitchCase="'modification_date'">
                         {{ element[column] | dateFormat }}
                     </ng-container>
                     <ng-container *ngSwitchCase="'status'">
@@ -46,19 +36,7 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="openDialog('information', element)">
-                        <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>Informações
-                    </button>
-                    <button mat-menu-item [disabled]="isPermitted()|| element.status == 'BLOCKED'" (click)="openDialog('edit', element)">
-                        <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
-                    </button>
-                    <button mat-menu-item [disabled]="isPermitted() || element.status != 'CREATED'" (click)="openDialog('send-approval', element)">
-                        <mat-icon [ngStyle]="stylesIconColor('border_color')">send</mat-icon>Enviar aprovação
-                    </button>
-                    <button mat-menu-item (click)="openDialog('add', element)">
-                        <mat-icon [ngStyle]="stylesIconColor('add_circle')">folder_open</mat-icon>Artefatos requisitos
-                    </button>
-                    <button mat-menu-item [disabled]="isPermitted() || element.status == 'BLOCKED'" (click)="deleteRequirement(element.id)">
+                    <button mat-menu-item [disabled]="isPermitted()" (click)="deleteRequirement(element.id)">
                         <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
                     </button>
                 </mat-menu>
@@ -81,7 +59,8 @@
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>
-    
-    <mat-paginator [pageSizeOptions]="[5, 10, 20, 40]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
-    
+
+    <mat-dialog-actions align="end">
+        <button cdkFocusInitial mat-button mat-dialog-close>Fechar</button>
+    </mat-dialog-actions>
 </div>

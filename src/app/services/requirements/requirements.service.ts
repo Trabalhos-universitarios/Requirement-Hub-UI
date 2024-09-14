@@ -26,25 +26,46 @@ export class RequirementsService {
         this._currentForm.next(formValue);
     }
 
-    async getRequirementDataToUpdate(requirementId: number | undefined): Promise<RequirementsDataModel[]> {
+    async getRequirementById(requirementId: number | undefined): Promise<RequirementsDataModel[]> {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/requirement-id/${requirementId}`))
+    }
+
+    async getRequirementsByIdsList(ids: number[]): Promise<RequirementsDataModel[]> {
+        return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/requirement-id`,
+            { params: { ids: ids.join(',') } }));
     }
 
     async getRequirementsByProjectId(projectId: number): Promise<RequirementsDataModel[]> {
         return firstValueFrom(this.http.get<RequirementsDataModel[]>(`${this.baseUrl}/requirements/byproject/${projectId}`))
     }
 
-    getRequirementByIdentifierAndProjectRelated(identifier: string, projectId: number): Observable<ArtifactResponseModel> {
-        return this.http.get<ArtifactResponseModel>(`${this.baseUrl}/requirements/requirementByProjectRelated/${identifier}/${projectId}`);
-    }
-
-    getArtifactRequirementByIdentifierAndProjectRelated(identifier: string, projectId: number): Observable<RequirementsDataModel> {
-        return this.http.get<RequirementsDataModel>(`${this.baseUrl}/requirements/artifactRequirementByProjectRelated/${identifier}/${projectId}`);
-    }
-
     async createRequirements(post: any): Promise<RequirementsDataModel[] | any> {
         return firstValueFrom(
             this.http.post(`${this.baseUrl}/requirements`, post).pipe(
+                catchError((error: HttpErrorResponse) => {
+
+                    switch (error.status) {
+                        case 409:
+                            return throwError(() => HttpStatusCode.Conflict);
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
+                        case 503:
+                            return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
+                    }
+                })
+            )
+        );
+    }
+
+    async createAndSendToApprovalFlow(post: any): Promise<RequirementsDataModel[] | any> {
+        return firstValueFrom(
+            this.http.post(`${this.baseUrl}/requirements/flow`, post).pipe(
                 catchError((error: HttpErrorResponse) => {
 
                     switch (error.status) {
@@ -79,6 +100,25 @@ export class RequirementsService {
                             return throwError(() => HttpStatusCode.InternalServerError);
                         case 503:
                             return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
+                    }
+                })
+            )
+        );
+    }
+
+    async sendToApprovalFlowRequirementId(id?: number): Promise<any> {
+        return firstValueFrom(
+            this.http.patch(`${this.baseUrl}/requirements/flow/${id}`, null).pipe(
+                catchError((error: HttpErrorResponse) => {
+                    switch (error.status) {
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
                         default:
                             return throwError(() => new Error(error.message));
                     }
