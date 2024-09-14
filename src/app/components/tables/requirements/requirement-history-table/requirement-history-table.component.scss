@@ -1,4 +1,3 @@
-
 .container {
   max-height: 800px; /* Define o limite máximo de altura */
   overflow-y: auto; /* Adiciona scroll vertical se o conteúdo ultrapassar 800px */
@@ -15,45 +14,54 @@
   height: 80px;
   justify-content: center;
   align-items: center;
-
-  .title {
-    font-size: 40px;
-  }
 }
 
+.table-container {
+  flex: 1;
+  overflow-y: auto; /* Apenas o conteúdo da tabela irá rolar */
+  max-height: 600px; /* Limite de altura da tabela */
+}
+
+.mat-dialog-actions {
+  position: sticky;
+  bottom: 0; /* Mantém o botão fixo no final */
+  z-index: 1000;
+  background-color: white; /* Adiciona fundo branco para garantir visibilidade */
+  padding: 10px;
+}
+
+.title {
+  font-size: 40px;
+}
 
 table {
   width: 100%;
+}
 
-  th {
-    text-align: center;
-    width: 300px;
-    font-weight: bold;
-    font-size: 16px;
-  }
+th {
+  text-align: center;
+  width: 300px;
+  font-weight: bold;
+  font-size: 16px;
+}
 
-  td {
-    text-align: center;
-    //width: 300px;
-    //height: 55px;
-  }
+td {
+  text-align: center;
 }
 
 .column-status {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  mat-icon {
-    margin-right: 8px; // Ajuste a margem conforme necessário
-  }
-
-  .status-text {
-    display: inline-block;
-  }
 }
 
+mat-icon {
+  margin-right: 8px; 
+}
 
+.status-text {
+  display: inline-block;
+}
 
 tr.example-detail-row {
   height: 0;
@@ -98,12 +106,11 @@ mat-paginator {
   display: flex;
   justify-content: end;
   align-items: end;
-  //margin-top: -39px;
   margin-bottom: 20px;
   box-sizing: border-box;
   background-color: transparent;
 }
 
-.filter-input{
+.filter-input {
   margin-top: 10px;
 }
