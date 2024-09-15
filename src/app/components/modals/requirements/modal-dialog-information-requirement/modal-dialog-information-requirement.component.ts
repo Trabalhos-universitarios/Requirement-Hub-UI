@@ -137,7 +137,7 @@ export class ModalDialogInformationRequirementComponent {
     openHistory(){
         this.matDialog.open(RequirementHistoryTableComponent, {
             data: this.data,
-            width: '1200px',
+            width: '1400px',
             disableClose: true
           });
     }
