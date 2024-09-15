@@ -22,13 +22,14 @@ import {isExceptionType} from "../../../../utils/exceptions-utils";
 export class ModalDialogInformationRequirementComponent implements OnInit {
 
     protected formGroup = this.formBuilder.group({
-        comment: new FormControl('', [Validators.minLength(20), Validators.maxLength(2000), Validators.required]),
+        comment: new FormControl('', [
+            Validators.minLength(20),
+            Validators.maxLength(2000), Validators.required
+        ]),
     });
     protected getCommentsList: SearchCommentsMessagesModel[] = [];
     protected getCommentsUsersInformation: any;
     protected selectedMessageIndex: number = -1;
-    protected hour = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
-    protected date = new Date().toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'});
     protected showEmojiPicker = false;
     protected userInformation: any;
     protected placeholderDynamic: string = `Olá, ${this.localStorageService.getItem("name")}! Deixe seu comentário aqui...`;

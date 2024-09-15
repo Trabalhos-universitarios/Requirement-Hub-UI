@@ -26,7 +26,7 @@ export class ProjectStatusComponent implements OnInit {
 
   // Mapa de cores para os diferentes status
   statusColorMapLight: { [key: string]: string } = {
-    'REFUSE': '#F44336',  // Vermelho
+    'REJECTED': '#F44336',  // Vermelho
     'PENDING': '#FF9800',  // Laranja
     'CREATED': '#2196F3',  // Azul
     'ACTIVE': '#4CAF50',  // Verde
@@ -34,7 +34,7 @@ export class ProjectStatusComponent implements OnInit {
   };
 
   statusColorMapDark: { [key: string]: string } = {
-    'REFUSE': '#D32F2F',  // Vermelho um pouco mais escuro
+    'REJECTED': '#D32F2F',  // Vermelho um pouco mais escuro
     'PENDING': '#F57C00',  // Laranja mais escuro
     'CREATED': '#1976D2',  // Azul mais profundo
     'ACTIVE': '#388E3C',  // Verde mais fechado
