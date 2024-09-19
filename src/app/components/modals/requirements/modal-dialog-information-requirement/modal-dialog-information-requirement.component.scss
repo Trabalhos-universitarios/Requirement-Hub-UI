@@ -42,9 +42,8 @@
 }
 
 .message-bubble {
-  background-color: #8521e0;
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: 20px; /* Mantendo bordas arredondadas */
   max-width: 700px;
   position: relative;
   display: inline-block;
@@ -53,16 +52,18 @@
   overflow-wrap: break-word;
   white-space: pre-wrap;
   margin-top: 30px;
-}
+  color: #FAFAFA;
 
-.message-bubble::before {
-  content: "";
-  position: absolute;
-  left: 232px;
-  top: 20px;
-  width: 0;
-  height: 0;
-  border: 8px solid transparent;
+  /* Adicionando sombras para o efeito 3D */
+  box-shadow:
+          inset -2px -2px 5px rgba(255, 255, 255, 0.2),
+          inset 2px 2px 5px rgba(0, 0, 0, 0.2),
+          5px 5px 15px rgba(0, 0, 0, 0.3);
+
+  /* Gradiente sutil para simular iluminação */
+  background: #46008a linear-gradient(145deg, #46008a, #46008a 50%, #46008a 50%, #46008a 100%);
+
+  background-clip: padding-box;
 }
 
 .message-info {
@@ -75,7 +76,7 @@
 .message-time {
   font-size: 0.8em;
   margin-right: 4px;
-    color: #888;
+  color: #bdbdbd;
 }
 
 .message-actions {
@@ -85,11 +86,25 @@
   align-items: center;
 }
 
+.react-emoji-button:hover .mat-icon {
+  color: transparent; /* Remover a cor padrão do ícone */
+  background: radial-gradient(circle at 30% 30%, #F0F0F0, #ffd700, #ffa500, #d90b0b); /* Gradiente das cores do emoji */
+  -webkit-background-clip: text; /* Aplicar gradiente apenas no ícone */
+  background-clip: text;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.react-emoji-button:hover {
+  background-color: transparent; /* Garante que o fundo do botão também não apareça */
+}
+
 .emoji-picker {
   position: absolute;
   left: 0;
   top: 40px;
-  z-index: 100;
+  z-index: 10;
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
@@ -105,9 +120,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
   border-radius: 50%;
-  border: 3px solid #424242;
+}
+
+.user-avatar-to-dark {
+  background-color: #E0E0E0;
+  border: 2px solid #424242;
+}
+
+.user-avatar-to-light {
+  background-color: #616161;
+  border: 2px solid #FAFAFA;
 }
 
 .avatar-image {
@@ -144,7 +167,7 @@
   border: none;
 }
 
-button.send-button:disabled {
+:host button.send-button:disabled mat-icon {
   color: #888 !important;
   cursor: not-allowed !important;
   opacity: 0.5;
@@ -156,11 +179,31 @@ button.send-button:disabled {
   bottom: -20px;
   display: inline-flex;
   align-items: center;
-  background-color: #333;
   border-radius: 16px;
-  color: #fff;
   font-size: 14px;
+  padding: 4px 8px;
+  box-shadow:
+          inset -2px -2px 5px rgba(255, 255, 255, 0.2),
+          inset 2px 2px 5px rgba(0, 0, 0, 0.2),
+          5px 5px 15px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
 }
+
+/* Tema escuro */
+.reactions-container-to-dark {
+  //border: 0.5px solid #FAFAFA;
+  background-color: #333;
+  color: #FAFAFA;
+}
+
+/* Tema claro */
+.reactions-container-to-light {
+  //border: 1px solid #424242;
+  background-color: #333;
+  color: #FAFAFA;
+}
+
+
 
 .reaction {
   margin-right: 4px;
@@ -193,4 +236,14 @@ button.send-button:disabled {
 textarea {
   overflow: hidden;
   resize: none;
+}
+
+:host button.delete-button:hover .mat-icon {
+  color: #e17777;
+}
+
+button.react-emoji-button {
+  background-color: transparent; /* Remover fundo do botão */
+  border: none;
+  outline: none;
 }

@@ -67,4 +67,28 @@ export class CommentsService {
     async getCommentsByRequirement(requirementId: number | undefined): Promise<SearchCommentsMessagesModel[]> {
         return firstValueFrom(this.http.get<any[]>(`${this.baseUrl}/${requirementId}`));
     }
+
+    async deleteCommentById(id: number): Promise<HttpErrorResponse> {
+        return firstValueFrom(
+            this.http.delete<HttpErrorResponse>(`${this.baseUrl}/${id}`).pipe(
+                catchError((error: HttpErrorResponse) => {
+
+                    switch (error.status) {
+                        case 409:
+                            return throwError(() => HttpStatusCode.Conflict);
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
+                        case 503:
+                            return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
+                    }
+                })
+            )
+        );
+    }
 }

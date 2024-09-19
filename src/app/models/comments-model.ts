@@ -21,7 +21,14 @@ export interface SearchCommentsMessagesModel {
     userName: string,
     userImage: string,
     userRole: string,
-    reactions: { userId: string; emoji: string }[];
+    reactions: ReactionsResponseModel[];
+}
+
+export interface ReactionsResponseModel {
+    id?: number,
+    commentId: number,
+    userId: string,
+    emoji: string
 }
 
 export interface CommentsReactionsModel {

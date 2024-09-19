@@ -9,10 +9,15 @@ import {CommentsService} from "../../../../services/comments-service/comments-se
 import {
     RequirementHistoryTableComponent
 } from 'src/app/components/tables/requirements/requirement-history-table/requirement-history-table.component';
-import {CommentsReactionsModel, SearchCommentsMessagesModel} from "../../../../models/comments-model";
+import {
+    CommentsReactionsModel,
+    ReactionsResponseModel,
+    SearchCommentsMessagesModel
+} from "../../../../models/comments-model";
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {isExceptionType} from "../../../../utils/exceptions-utils";
+import {ThemeService} from "../../../../services/theme/theme.service";
 
 @Component({
     selector: 'app-modal-dialog-information-requirement',
@@ -46,7 +51,8 @@ export class ModalDialogInformationRequirementComponent implements OnInit {
                 private commentService: CommentsService,
                 private matDialog: MatDialog,
                 private spinnerService: SpinnerService,
-                private alertService: AlertService) {
+                private alertService: AlertService,
+                private themeService: ThemeService) {
     }
 
     ngOnInit(): void {
@@ -54,6 +60,10 @@ export class ModalDialogInformationRequirementComponent implements OnInit {
         this.formGroup.valueChanges.subscribe(() => {
             this.isSendButtonDisable = !this.formGroup.valid;
         });
+    }
+
+    isDarkTheme() {
+        return this.themeService.isDarkMode();
     }
 
     @HostListener('document:click', ['$event'])
@@ -71,10 +81,7 @@ export class ModalDialogInformationRequirementComponent implements OnInit {
 
         if (response.length > 0) {
             response.forEach(comment => {
-                const reactions = comment.reactions.map((reaction: any) => ({
-                    userId: comment.userId.toString(),
-                    emoji: reaction
-                }));
+
                 const dateCreated = comment.dateCreated ? new Date(comment.dateCreated) : null;
 
                 const hour = dateCreated ? dateCreated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
@@ -86,7 +93,7 @@ export class ModalDialogInformationRequirementComponent implements OnInit {
                     requirementId: comment.requirementId,
                     dateCreated: date,
                     hourCreated: hour,
-                    reactions: reactions,
+                    reactions: comment.reactions,
                     userId: comment.userId,
                     userImage: comment.userImage,
                     userName: comment.userName,
@@ -169,7 +176,22 @@ export class ModalDialogInformationRequirementComponent implements OnInit {
         };
     }
 
-    protected getUniqueEmojis(reactions: { userId: string; emoji: string }[]): string[] {
+    protected getUsersByReaction(emoji: string, reactions: any[]): string {
+        const users = reactions
+            .filter((reaction) => reaction.emoji === emoji)
+            .map((reaction) => {
+                if (typeof reaction.userId === 'number') {
+                    const userName = this.localStorageService.getItem('name');
+                    return userName ? userName : 'Usuário desconhecido';
+                }
+                return reaction.userId ? reaction.userId : 'Usuário desconhecido';
+            });
+
+        return users.join(' - ');
+    }
+
+
+    protected getUniqueEmojis(reactions: ReactionsResponseModel[]): string[] {
         const emojis = reactions.map(reaction => reaction.emoji);
         return Array.from(new Set(emojis));
     }
@@ -227,9 +249,17 @@ export class ModalDialogInformationRequirementComponent implements OnInit {
 
         if (existingReaction) {
             this.getCommentsList[index].reactions
-                .splice(0, 1, {userId: currentUserId, emoji});
+                .splice(0, 1, {
+                    commentId: existingReaction.commentId,
+                    userId: currentUserId,
+                    emoji: emoji
+                });
         } else {
-            this.getCommentsList[index].reactions.push({userId: currentUserId, emoji});
+            this.getCommentsList[index].reactions.push({
+                commentId: this.getCommentsList[index].id,
+                userId: currentUserId,
+                emoji
+            });
         }
     }
 
@@ -278,5 +308,26 @@ export class ModalDialogInformationRequirementComponent implements OnInit {
     protected updateCharacterCount(): void {
         const commentControl = this.formGroup.get('comment');
         this.characterCount = commentControl?.value?.length ?? 0;
+    }
+
+    async deleteComment(i: any) {
+        const result = await this.alertService.toOptionalActionAlert(
+            "Deletar comentário",
+            "Deseja realmente excluir o comentário?"
+        );
+
+        if (result.isConfirmed) {
+            this.spinnerService.start();
+            let response = await this.commentService.deleteCommentById(this.getCommentsList[i].id).then();
+                if (response) {
+                    await this.alertService.toSuccessAlert("Comentário excluído com sucesso!");
+                }
+            this.getCommentsList.splice(i, 1);
+            this.spinnerService.stop();
+        }
+    }
+
+    verifyRole() {
+        return !(this.localStorageService.getItem("role") === "GERENTE_DE_PROJETOS" || this.localStorageService.getItem("role") === "ADMIN");
     }
 }
