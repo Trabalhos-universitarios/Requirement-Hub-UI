@@ -17,4 +17,5 @@ export interface RequirementsDataModel {
     dependencyIds: number[];
     projectId?: number[];
     artifactIds?: number[];
+    relationsData?: string;
 }

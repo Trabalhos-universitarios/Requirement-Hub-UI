@@ -13,9 +13,9 @@ import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.p
 import {reloadPage} from "../../../../utils/reload.page";
 import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {LocalStorageService} from 'src/app/services/localstorage/local-storage.service';
-import {ModalDialogInformationRequirementComponent} from 'src/app/components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { RequirementsHistoryService } from 'src/app/services/requirements/requirement-history.service';
+import { ModalDialogInformationRequirementHistoryComponent } from 'src/app/components/modals/requirements/modal-dialog-information-requirement-history/modal-dialog-information-requirement-history.component';
 
 @Component({
   selector: 'app-requirement-history-table',
@@ -149,7 +149,7 @@ export class RequirementHistoryTableComponent{
   protected async openDialog(action: String, value: RequirementsDataModel) {
     switch (action) {
       case "information":
-        this.matDialog.open(ModalDialogInformationRequirementComponent, {
+        this.matDialog.open(ModalDialogInformationRequirementHistoryComponent, {
           data: value,
           width: '1200px',
           disableClose: true

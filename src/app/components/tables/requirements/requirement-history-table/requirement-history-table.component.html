@@ -37,6 +37,9 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openDialog('information', element)">
+                            <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>Informações
+                        </button>
                         <button mat-menu-item [disabled]="isPermitted()" (click)="deleteRequirement(element.id)">
                             <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>
                             Deletar
