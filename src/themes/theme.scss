@@ -155,6 +155,11 @@ body.light-theme ngx-charts g text {
     background-image: url("../assets/dark-theme/no-content-project.svg");
   }
 
+  div.table-container2 {
+    background-color: mat.get-color-from-palette($app-dark-primary, 700);
+    color: mat.get-color-from-palette($app-dark-primary, 300);
+  }
+
   mat-toolbar.mat-toolbar {
     background-color: mat.get-color-from-palette($app-dark-primary, 900);
     color: mat.get-color-from-palette($app-dark-primary, 300);
