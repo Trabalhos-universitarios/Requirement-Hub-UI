@@ -67,7 +67,7 @@ export class UpdateProjectFormComponent implements OnInit{
 
     getData() {
         this.updateProjectService.getProject().subscribe((project: CreateProjectDataModel) => {
-            const selectedManager = this.managers.find(manager => manager.name === project.manager);
+            const selectedManager = this.managers.find(manager => String(manager.id) === String(project.manager));
             
             this.formGroup.patchValue({
                 name: project.name,
