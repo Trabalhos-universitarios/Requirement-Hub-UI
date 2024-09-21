@@ -91,8 +91,8 @@ export class ProjectsTableComponent implements AfterViewInit {
         return this.localStorage.getItem('role') != "ADMIN";
     }
 
-    isManager() {
-        return this.localStorage.getItem('role') != "GERENTE_DE_PROJETOS";
+    isManagerOrAdmin() {
+        return !(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" || this.localStorage.getItem('role') == "ADMIN");
     }
 
     stylesStatusIcon(status: string) {

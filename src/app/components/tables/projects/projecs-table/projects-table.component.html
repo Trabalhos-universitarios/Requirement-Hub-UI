@@ -46,7 +46,7 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button [disabled]="isManager()" mat-menu-item class="icon" (click)="setDataProjectTable(element.id, element.name); openDialog('Put project')">
+                    <button [disabled]="isManagerOrAdmin()" mat-menu-item class="icon" (click)="setDataProjectTable(element.id, element.name); openDialog('Put project')">
                         <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
                     </button>
 

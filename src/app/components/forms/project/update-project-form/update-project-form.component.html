@@ -2,7 +2,7 @@
 
     <div class="container-form-create-project">
 
-         <mat-form-field class="mat-forms-fro-project">
+        <mat-form-field class="mat-forms-fro-project">
             <mat-label>Nome do projeto</mat-label>
             <input matInput placeholder="Ex: Requirement Hub" formControlName="name">
             <mat-error>Campo obrigatório!</mat-error>
@@ -10,9 +10,9 @@
 
         <mat-form-field class="mat-forms-fro-project">
             <mat-label>Gerente do projeto</mat-label>
-            <mat-select formControlName="manager">
+            <mat-select formControlName="manager" [disabled]="!isAdmin()">
                 <mat-option *ngFor="let manager of managers" [value]="manager">
-                    {{manager.name}}
+                    {{ manager.name }}
                 </mat-option>
             </mat-select>
             <mat-error>Campo obrigatório!</mat-error>
