@@ -41,7 +41,7 @@ export class SideBarComponent implements AfterViewInit {
         private userService: UsersService,
         private spinnerService: SpinnerService) {
         this.themeService.initTheme();
-        this.loadData();  // Carrega os dados em ordem
+        this.loadData();
     }
 
     ngAfterViewInit() {
@@ -51,9 +51,7 @@ export class SideBarComponent implements AfterViewInit {
     async loadData() {
         this.spinnerService.start();
         try {
-            // Primeiro aguarde os managers serem carregados
             await this.getManagers();
-            // Depois carregue os projetos
             await this.getData();
             this.spinnerService.stop();
         } catch (error) {
@@ -74,8 +72,6 @@ export class SideBarComponent implements AfterViewInit {
 
         try {
             const projects = await this.projectsService.getProjectsByUserId(this.localStorageService.getItem('id'));
-
-            // Verifica e substitui o ID do manager pelo nome correspondente
             projects.forEach(project => {
                 const manager = this.managers.find(m => String(m.id) === String(project.manager));
                 if (manager) {
