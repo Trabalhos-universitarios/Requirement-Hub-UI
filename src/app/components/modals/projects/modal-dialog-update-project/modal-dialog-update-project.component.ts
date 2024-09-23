@@ -116,7 +116,7 @@ export class ModalDialogUpdateProjectComponent implements OnInit {
             ...formGroup.value,
             businessAnalysts: businessAnalysts,
             commonUsers: commonUsers,
-            manager: formGroup.value.manager.id,
+            manager: formGroup.value.idManager,
             requirementAnalysts: requirementAnalysts,
             description: this.descriptionProject,
             status: Status.ACTIVE
