@@ -22,6 +22,7 @@ export class UpdateProjectFormComponent implements OnInit{
 
     public formGroup: FormGroup = this.formBuilder.group({
         name: new FormControl('', Validators.required),
+        idManager: new FormControl(''),
         manager: new FormControl('', Validators.required),
         version: new FormControl('', Validators.required),
         description: new FormControl('')
@@ -45,6 +46,18 @@ export class UpdateProjectFormComponent implements OnInit{
         if (this.isAdmin()) {
             this.formGroup.get('manager')?.disable();
         }
+
+        this.formGroup.get('manager')?.valueChanges.subscribe(manager => {
+        if (manager) {
+            this.formGroup.patchValue({
+                idManager: manager.id
+            });
+        } else {
+            this.formGroup.patchValue({
+                idManager: ''
+            });
+        }
+        });
     }
 
     compareObjects(obj1: any, obj2: any): boolean {
