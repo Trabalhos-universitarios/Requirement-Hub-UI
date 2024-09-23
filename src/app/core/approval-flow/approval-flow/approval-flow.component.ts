@@ -93,6 +93,7 @@ export class ApprovalFlowComponent implements AfterViewInit {
 
     this.spinnerService.start();
     try {
+      this.setDataProjectTable(this.selectedProjectId, this.selectedProjectName)
       if (this.requirementsCache[this.selectedProjectId]) {
         // Usar cache se os dados já estiverem disponíveis para o projeto selecionado
         this.dataSource.data = this.requirementsCache[this.selectedProjectId];
