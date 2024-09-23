@@ -1,0 +1,42 @@
+<mat-dialog-content>
+    <mat-toolbar class="title-toolbar">
+      <span class="title">Detalhes do Historico Requisito - {{data.identifier}}</span>
+    </mat-toolbar>
+    <div class="requirement-details">
+      <mat-list>
+        <mat-list-item><strong>Nome:</strong> {{data.name}}</mat-list-item>
+        <mat-list-item><strong>Data de Modificação:</strong> {{data.modification_date | slice:0:10 }}</mat-list-item>
+        <mat-list-item><strong>Tipo:</strong> {{data.type}}</mat-list-item>
+        <mat-list-item><strong>Versão:</strong> {{data.version}}</mat-list-item>
+        <mat-list-item><strong>Status:</strong> {{getStatusText(data.status)}}</mat-list-item>
+  
+        <mat-list-item><strong>Stakeholders:</strong></mat-list-item>
+        <mat-list *ngIf="parsedRelationsData?.stakeholders?.length > 0">
+        <mat-list-item *ngFor="let stakeholder of parsedRelationsData.stakeholders">
+            - {{stakeholder.name}}
+        </mat-list-item>
+        </mat-list>
+
+        <mat-list-item><strong>Dependências:</strong></mat-list-item>
+        <mat-list *ngIf="parsedRelationsData?.dependencies?.length > 0">
+        <mat-list-item *ngFor="let dependency of parsedRelationsData.dependencies">
+            - {{dependency.name}} ({{dependency.identifier}})
+        </mat-list-item>
+        </mat-list>
+
+        <mat-list-item><strong>Responsáveis:</strong></mat-list-item>
+        <mat-list *ngIf="parsedRelationsData?.responsibilities?.length > 0">
+        <mat-list-item *ngFor="let responsible of parsedRelationsData.responsibilities">
+            - {{responsible.name}} (ID: {{responsible.id}})
+        </mat-list-item>
+        </mat-list>
+  
+        <p class="description-text" [innerHTML]="sanitizeHtml(data.description)">{{data.description}}</p>
+      </mat-list>
+    </div>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Fechar</button>
+  </mat-dialog-actions>
+  

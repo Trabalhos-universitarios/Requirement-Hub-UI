@@ -22,9 +22,12 @@ export class ProjectsService {
         return firstValueFrom(this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all`));
     }
 
-
     async getProjectsByUserId(userId : number): Promise<ProjectDataModel[]> {
         return firstValueFrom(this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all/${userId}`));
+    }
+
+    async getProjectsByManagerId(managerId : number): Promise<ProjectDataModel[]> {
+        return firstValueFrom(this.http.get<ProjectDataModel[]>(`${this.baseUrl}/project/all-manager/${managerId}`));
     }
 
     //SERVIÇOS DO FORMULÁRIO

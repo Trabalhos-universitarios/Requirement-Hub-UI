@@ -91,6 +91,8 @@ import {PickerComponent} from "@ctrl/ngx-emoji-mart";
 import { ProjectStatusComponent } from './core/project-status/project-status.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { RequirementHistoryTableComponent } from './components/tables/requirements/requirement-history-table/requirement-history-table.component';
+import { ModalDialogInformationRequirementHistoryComponent } from './components/modals/requirements/modal-dialog-information-requirement-history/modal-dialog-information-requirement-history.component';
+import { ApprovalFlowComponent } from './core/approval-flow/approval-flow/approval-flow.component';
 
 @NgModule({
     declarations: [
@@ -138,7 +140,9 @@ import { RequirementHistoryTableComponent } from './components/tables/requiremen
         ImageCropperComponent,
         CreateRequirementFormComponent,
         ProjectStatusComponent,
-        RequirementHistoryTableComponent
+        RequirementHistoryTableComponent,
+        ModalDialogInformationRequirementHistoryComponent,
+        ApprovalFlowComponent
     ],
     imports: [
         BrowserModule,

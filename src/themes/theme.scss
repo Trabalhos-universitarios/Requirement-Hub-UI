@@ -50,6 +50,11 @@ mat-toolbar.title-toolbar {
   color: mat.get-color-from-palette($app-light-primary, 700);
 }
 
+div.table-container2 {
+  background-color: mat.get-color-from-palette($app-light-primary, 300);
+  color: mat.get-color-from-palette($app-light-primary, 700);
+}
+
 table.mat-elevation-z8 {
   background-color: mat.get-color-from-palette($app-light-primary, 200);
   color: mat.get-color-from-palette($app-light-primary, 700);
@@ -153,6 +158,11 @@ body.light-theme ngx-charts g text {
   .element-no-content {
     background-color: mat.get-color-from-palette($app-dark-primary, 800);
     background-image: url("../assets/dark-theme/no-content-project.svg");
+  }
+
+  div.table-container2 {
+    background-color: mat.get-color-from-palette($app-dark-primary, 900);
+    color: mat.get-color-from-palette($app-dark-primary, 300);
   }
 
   mat-toolbar.mat-toolbar {
