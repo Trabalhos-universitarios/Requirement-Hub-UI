@@ -124,6 +124,10 @@ export class SideBarComponent implements AfterViewInit {
     }
 
     navigateToProjectStatus() {
-        this.router.navigate(['/project-status']);  // Substitua 'project-status' pela rota correta
+        this.router.navigate(['/project-status']); 
+    }
+
+    navigateToApprovalFlow() {
+        this.router.navigate(['/approval-flow']);  
     }
 }

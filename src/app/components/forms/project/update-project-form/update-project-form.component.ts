@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {CreateProjectDataModel} from 'src/app/models/create-project-data-model';
 import {UserResponseModel} from 'src/app/models/user-model';
 import {ReactiveFormServices} from 'src/app/services/forms/reactive-form-services.service';
+import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 import {UpdateProjectsService} from 'src/app/services/projects/update-projects.service';
 import {RichTextService} from 'src/app/services/richText/rich-text.service';
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
@@ -32,13 +33,18 @@ export class UpdateProjectFormComponent implements OnInit{
         private updateProjectService : UpdateProjectsService,
         private userService: UsersService,
         private richTextService: RichTextService,
-        private spinnerService: SpinnerService) {
+        private spinnerService: SpinnerService,
+        private localStorage: LocalStorageService) {
         this.formValueSubscriber();
     }
     async ngOnInit(): Promise<void> {
         this.spinnerService.start();
         await this.getManager();
         this.getData();
+
+        if (this.isAdmin()) {
+            this.formGroup.get('manager')?.disable();
+        }
     }
 
     compareObjects(obj1: any, obj2: any): boolean {
@@ -79,5 +85,9 @@ export class UpdateProjectFormComponent implements OnInit{
             this.richTextService.changeContent(project.description);
             this.spinnerService.stop();
         });
+    }
+
+    isAdmin() {
+        return this.localStorage.getItem('role') != "ADMIN";
     }
 }

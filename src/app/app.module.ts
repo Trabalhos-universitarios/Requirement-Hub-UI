@@ -92,6 +92,7 @@ import { ProjectStatusComponent } from './core/project-status/project-status.com
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { RequirementHistoryTableComponent } from './components/tables/requirements/requirement-history-table/requirement-history-table.component';
 import { ModalDialogInformationRequirementHistoryComponent } from './components/modals/requirements/modal-dialog-information-requirement-history/modal-dialog-information-requirement-history.component';
+import { ApprovalFlowComponent } from './core/approval-flow/approval-flow/approval-flow.component';
 
 @NgModule({
     declarations: [
@@ -140,7 +141,8 @@ import { ModalDialogInformationRequirementHistoryComponent } from './components/
         CreateRequirementFormComponent,
         ProjectStatusComponent,
         RequirementHistoryTableComponent,
-        ModalDialogInformationRequirementHistoryComponent
+        ModalDialogInformationRequirementHistoryComponent,
+        ApprovalFlowComponent
     ],
     imports: [
         BrowserModule,
