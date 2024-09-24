@@ -56,6 +56,9 @@
                         <button mat-menu-item (click)="openDialog('information', element)">
                             <mat-icon>info</mat-icon>Informações
                         </button>
+                        <button mat-menu-item (click)="openDialog('artifacts', element)">
+                            <mat-icon>folder_open</mat-icon>Artefatos requisito
+                        </button>
                         <button mat-menu-item [disabled]="isPermitted()" (click)="openDialog('approval', element)">
                             <mat-icon>task</mat-icon>Aprovação
                         </button>

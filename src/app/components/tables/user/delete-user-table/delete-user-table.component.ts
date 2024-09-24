@@ -32,12 +32,15 @@ export class DeleteUserTableComponent implements OnInit {
   }
 
   getUsers(): void {
+    this.spinnerService.start();
     this.userService.getUsers()
       .then(resp => {
         this.users = resp.filter(user => user.role.trim().toUpperCase() !== "ADMIN");
         this.dataSource.data = this.users;
+        this.spinnerService.stop();
       })
       .catch(error => {
+        this.spinnerService.stop();
         console.error(`Error : ${error} -> ${error.message}`);
       });
   }

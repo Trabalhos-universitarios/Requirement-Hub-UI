@@ -1,19 +1,31 @@
-.container {
-  max-height: 800px; /* Define o limite máximo de altura */
-  overflow-y: auto; /* Adiciona scroll vertical se o conteúdo ultrapassar 800px */
-  display: flex;
-  flex-direction: column;
-}
-
 .title-toolbar {
   justify-content: center;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 1000;
-  height: 80px;
-  justify-content: center;
-  align-items: center;
+  min-height: 100px; /* Aumentar a altura mínima */
+  padding: 10px;
+  background-color: white;
+  word-break: break-word; /* Garante a quebra do título longo */
+  text-align: center; /* Centraliza o título */
+  display: flex;
+  flex-wrap: wrap; /* Permite que o conteúdo quebre em várias linhas */
+}
+
+.title {
+  font-size: 36px;
+  white-space: normal; /* Permite a quebra de linha */
+  text-align: center; /* Certifica-se de que o título fique centralizado */
+  max-width: 100%; /* Limita a largura máxima do título */
+  line-height: 1.2; /* Ajuste de altura da linha para melhor leitura */
+}
+
+.container {
+  max-height: 800px; 
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .table-container {
@@ -28,10 +40,6 @@
   z-index: 1000;
   background-color: white; /* Adiciona fundo branco para garantir visibilidade */
   padding: 10px;
-}
-
-.title {
-  font-size: 40px;
 }
 
 table {
