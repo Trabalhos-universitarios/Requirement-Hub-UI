@@ -17,6 +17,7 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
+import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 
 @Component({
   selector: 'app-approval-flow',
@@ -202,6 +203,12 @@ export class ApprovalFlowComponent implements AfterViewInit {
         break;
       case "history":
         this.matDialog.open(RequirementHistoryTableComponent, {
+          data: value,
+          disableClose: true
+        });
+        break;
+        case "artifacts":
+        this.matDialog.open(ModalDialogArtifactsRequirementComponent, {
           data: value,
           disableClose: true
         });
