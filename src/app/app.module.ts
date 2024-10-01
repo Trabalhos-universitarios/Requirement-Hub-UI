@@ -94,7 +94,6 @@ import { RequirementHistoryTableComponent } from './components/tables/requiremen
 import { ModalDialogInformationRequirementHistoryComponent } from './components/modals/requirements/modal-dialog-information-requirement-history/modal-dialog-information-requirement-history.component';
 import { ApprovalFlowComponent } from './core/approval-flow/approval-flow/approval-flow.component';
 import { ModalDialogInformationRequirementNotificationComponent } from './components/modals/requirements/modal-dialog-information-requirement-notification/modal-dialog-information-requirement-notification.component';
-import { CommentsComponent } from './components/comments/comments.component';
 
 @NgModule({
     declarations: [
@@ -147,7 +146,6 @@ import { CommentsComponent } from './components/comments/comments.component';
         ApprovalFlowComponent,
         ModalDialogInformationRequirementHistoryComponent,
         ModalDialogInformationRequirementNotificationComponent,
-        CommentsComponent
     ],
     imports: [
         BrowserModule,
