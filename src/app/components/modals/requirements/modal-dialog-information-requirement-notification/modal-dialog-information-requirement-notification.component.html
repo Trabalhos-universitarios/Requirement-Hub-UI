@@ -1,0 +1,165 @@
+<mat-dialog-content>
+    <mat-toolbar class="title-toolbar">
+        <span class="title">Detalhes do Requisito - {{ dataRequirement.identifier }}</span>
+    </mat-toolbar>
+    <div class="requirement-details">
+        <mat-list>
+            <mat-list-item><strong>Nome:</strong> {{ dataRequirement.name }}</mat-list-item>
+            <mat-list-item><strong>Autor:</strong> {{ dataRequirement.author }}</mat-list-item>
+            <mat-list-item><strong>Data de Criação:</strong> {{ dataRequirement.dateCreated | slice: 0:10 }}</mat-list-item>
+            <mat-list-item><strong>Prioridade:</strong> {{ dataRequirement.priority }}</mat-list-item>
+            <mat-list-item><strong>Risco:</strong> {{ dataRequirement.risk }}</mat-list-item>
+            <mat-list-item><strong>Esforço(Fibonacci):</strong> {{ dataRequirement.effort }}</mat-list-item>
+            <mat-list-item><strong>Tipo:</strong> {{ dataRequirement.type }}</mat-list-item>
+            <mat-list-item><strong>Versão:</strong> {{ dataRequirement.version }}</mat-list-item>
+            <mat-list-item><strong>Status:</strong> {{ getStatusText(dataRequirement.status) }}</mat-list-item>
+            <p class="description-text" [innerHTML]="sanitizeHtml(dataRequirement.description)">{{ dataRequirement.description }}</p>
+        </mat-list>
+
+        <form [formGroup]="formGroup">
+            <mat-form-field class="comment-input" appearance="fill">
+                <mat-label>Comentário</mat-label>
+
+                <textarea matInput
+                          cdkTextareaAutosize
+                          matAutosizeMinRows="1"
+                          matAutosizeMaxRows="5"
+                          [placeholder]="placeholderDynamic"
+                          formControlName="comment"
+                          (input)="updateCharacterCount()"
+                          [maxLength]="2000">
+                </textarea>
+
+                <div class="count-text-length">
+                    {{ characterCount }}/2000
+                </div>
+
+                <!-- Botão de Emoji ao lado direito -->
+                <button mat-icon-button matSuffix (click)="toggleEmojiPickerForCommentInput($event)">
+                    <mat-icon>emoji_emotions</mat-icon>
+                </button>
+
+                <button mat-icon-button matSuffix class="send-button" [disabled]="isSendButtonDisable"
+                        (click)="saveData()">
+                    <mat-icon>send</mat-icon>
+                </button>
+
+                <mat-error *ngIf="formGroup.get('comment')?.hasError('minlength') && formGroup.get('comment')?.touched">
+                    Nº mínimo 20 caracteres!
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('comment')?.hasError('maxlength') && formGroup.get('comment')?.touched">
+                    Nº máximo 2000 caracteres!
+                </mat-error>
+            </mat-form-field>
+        </form>
+
+        <div *ngIf="showEmojiPickerForCommentInput" class="emoji-picker-input">
+            <emoji-mart
+                    set="facebook"
+                    [skin]="2"
+                    [emojiSize]="24"
+                    [perLine]="7"
+                    [i18n]="{ search: 'Buscar emoji', categories: { search: 'Resultados de busca', recent: 'Recente' } }"
+                    (emojiClick)="addEmojiToCommentInput($event.emoji.native)">
+            </emoji-mart>
+        </div>
+
+        <div class="messages-container">
+            <div *ngFor="let comment of getCommentsList; let i = index" class="message-wrapper">
+
+                <button mat-icon-button
+                        class="delete-button"
+                        [hidden]="verifyRole()"
+                        (click)="deleteComment(i)">
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
+
+                <div class="message-bubble">
+                    <!-- Imagem do Usuário ou Ícone Padrão -->
+                    <div class="user-avatar"
+                         [ngClass]="{
+                         'user-avatar-to-dark': isDarkTheme(),
+                         'user-avatar-to-light': !isDarkTheme()
+                         }">
+                        <img *ngIf="comment.userImage; else defaultIcon"
+                             [src]="comment.userImage"
+                             alt="User Avatar"
+                             class="avatar-image"
+                             [matTooltip]="getCommentsUsersInformation | capitalizeFirstPipe"
+                             matTooltipClass="custom-tooltip">
+                        <ng-template #defaultIcon>
+                            <mat-icon class="avatar-icon">account_circle</mat-icon>
+                        </ng-template>
+                    </div>
+                    <span class="message-username">{{ comment.userName | capitalizeFirstPipe }} - {{ comment.userRole | capitalizeFirstPipe }}</span> <br>
+
+                    {{ comment.description }}
+
+                    <div class="reactions-container"
+                         [ngClass]="{
+                         'reactions-container-to-dark': isDarkTheme(),
+                         'reactions-container-to-light': !isDarkTheme()
+                         }">
+                        <!-- Agrupa os emojis por tipo -->
+                        <ng-container *ngFor="let emojis of getUniqueEmojis(comment.reactions)">
+                            <span
+                                    class="reaction"
+                                    [matTooltip]="getUsersByReaction(emojis, comment.reactions) | capitalizeFirstPipe"
+                                    matTooltipClass="custom-tooltip">
+                                {{ emojis }}
+                            </span>
+
+                            <span class="reaction-count">
+                                {{ countReactionsByEmoji(emojis, comment.reactions) }}
+                            </span>
+
+                        </ng-container>
+
+                    </div>
+
+                    <div class="message-info">
+                        <div class="message-info">
+                            <span class="message-time">{{ comment.hourCreated }} - {{ comment.dateCreated }}</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Botão de Emoji -->
+                <div class="message-actions">
+                    <button class="react-emoji-button"
+                            (click)="addReactionInMessage(i)">
+                        <mat-icon>emoji_emotions</mat-icon>
+                    </button>
+                </div>
+
+                <!-- Componente Emoji Picker -->
+                <div *ngIf="showEmojiPicker && selectedMessageIndex === i" class="emoji-picker">
+                    <emoji-mart
+                            set="facebook"
+                            [skin]="2"
+                            [emojiSize]="24"
+                            [perLine]="7"
+                            [i18n]="{ search: 'Buscar emoji', categories: { search: 'Resultados de busca', recent: 'Recente' } }"
+                            (emojiClick)="addEmoji(selectedMessageIndex, $event.emoji.native)">
+                    </emoji-mart>
+                </div>
+            </div>
+        </div>
+
+        <!--<mat-dialog-actions align="end">-->
+        <!--    <button mat-raised-button mat-dialog-close (click)="openHistory()">Histórico Requisito</button>-->
+        <!--    <button cdkFocusInitial mat-raised-button mat-dialog-close>Fechar</button>-->
+        <!--</mat-dialog-actions>-->
+
+
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button (click)="refuseRequirement()">Recusar requisito
+        <mat-icon>cancel</mat-icon>
+    </button>
+    <button cdkFocusInitial mat-raised-button mat-dialog-close (click)="approveRequirement()">Aprovar requisito
+        <mat-icon>task_alt</mat-icon>
+    </button>
+</mat-dialog-actions>

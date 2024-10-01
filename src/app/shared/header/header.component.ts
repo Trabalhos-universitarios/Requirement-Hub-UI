@@ -12,6 +12,15 @@ import {RequirementsService} from "../../services/requirements/requirements.serv
 import {RequirementsDataModel} from "../../models/requirements-data-model";
 import {SpinnerService} from "../../services/spinner/spinner.service";
 import { Router } from '@angular/router';
+import {
+    RequirementHistoryTableComponent
+} from "../../components/tables/requirements/requirement-history-table/requirement-history-table.component";
+import {
+    ModalDialogInformationRequirementNotificationComponent
+} from "../../components/modals/requirements/modal-dialog-information-requirement-notification/modal-dialog-information-requirement-notification.component";
+import {
+    ModalDialogInformationRequirementComponent
+} from "../../components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component";
 
 @Component({
     selector: 'app-header',
@@ -153,9 +162,36 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     getRequirementsById() {
         this.requirementsService.getRequirementsByIdsList(this.requirementIds).then(resp => {
-            this.spinnerService.start();
+            //this.spinnerService.start();
             this.requirementList = resp;
-            this.spinnerService.stop();
+            //this.spinnerService.stop();
         });
+    }
+
+    async openInformationNotification(requirement: RequirementsDataModel[] | undefined) {
+
+        if (requirement) {
+            const userId = this.localStorageService.getItem('id');
+            const requirementId = requirement[0].id
+
+            await this.deleteNotificationByUser(userId, requirementId);
+
+            if (this.localStorageService.getItem("role") === 'GERENTE_DE_PROJETOS' ||
+                this.localStorageService.getItem("role") === 'ANALISTA_DE_REQUISITOS') {
+                this.dialog.open(ModalDialogInformationRequirementNotificationComponent, {
+                    width: '1200px',
+                    data: requirement[0]
+                })
+            } else {
+                this.dialog.open(ModalDialogInformationRequirementComponent, {
+                    width: '1200px',
+                    data: requirement[0]
+                })
+            }
+        }
+    }
+
+    private async deleteNotificationByUser(userId: number, requirementId: number | undefined) {
+        await this.userService.deleteNotifications(userId, requirementId).then();
     }
 }

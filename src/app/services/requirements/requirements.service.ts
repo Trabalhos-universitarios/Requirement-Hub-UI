@@ -131,8 +131,7 @@ export class RequirementsService {
         return firstValueFrom(this.http.delete(`${this.baseUrl}/requirements/${id}`));
     }
 
-    // Novo método para buscar todos os responsáveis de todos os requisitos
-    async getAllRequirementResponsibles(): Promise<any> {
+    async getAllRequirementResponsible(): Promise<any> {
         return firstValueFrom(this.http.get(`${this.baseUrl}/requirements/all-responsibles`).pipe(
             catchError((error: HttpErrorResponse) => {
                 switch (error.status) {
@@ -145,5 +144,50 @@ export class RequirementsService {
                 }
             })
         ));
+    }
+
+    async refuseRequirement(id: number | undefined, comment: any): Promise<any> {
+        return firstValueFrom(
+            this.http.patch<any>(`${this.baseUrl}/requirements/refuse/${id}`, comment).pipe(
+                catchError((error: HttpErrorResponse) => {
+
+                    switch (error.status) {
+                        case 409:
+                            return throwError(() => HttpStatusCode.Conflict);
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
+                        case 503:
+                            return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
+                    }
+                })
+            )
+        );
+    }
+
+    async senUpdateRequirementsToFlow(id: number | undefined, post: any): Promise<RequirementsDataModel[] | any> {
+        return firstValueFrom(this.http.put(`${this.baseUrl}/requirements/update-flow/${id}`, post)
+            .pipe(catchError((error: HttpErrorResponse) => {
+
+                    switch (error.status) {
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
+                        case 503:
+                            return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
+                    }
+                })
+            )
+        );
     }
 }
