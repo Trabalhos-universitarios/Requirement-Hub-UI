@@ -32,7 +32,8 @@ export class ModalDialogArtifactsRequirementComponent {
   }
   
   isPermited() {
-      return this.localStorage.getItem('role') != "GERENTE_DE_PROJETOS";
+      return !(this.localStorage.getItem('role') == "GERENTE_DE_PROJETOS" ||
+      this.localStorage.getItem('role') == "ANALISTA_DE_REQUISITOS" ||
+      this.localStorage.getItem('role') == "ANALISTA_DE_NEGOCIO");
   }
-
 }

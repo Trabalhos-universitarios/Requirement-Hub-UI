@@ -12,6 +12,7 @@ import {RequirementsDataModel} from "../../../../models/requirements-data-model"
 import {RequirementUtil} from "../../../../utils/requirement.util";
 import { RichTextService } from 'src/app/services/richText/rich-text.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 
 @Component({
     selector: 'app-update-requirement-form',
@@ -57,19 +58,20 @@ export class UpdateRequirementFormComponent implements OnInit {
                 private userService: UsersService,
                 private capitalizeFirstPipe: CapitalizeFirstPipePipe,
                 private richTextService: RichTextService,
+                private spinnerService: SpinnerService,
                 @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
         this.validateFormValidations(this.formGroup)
         this.autoCompleteForm().then();
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         this.disableFormWithUpdateRequirement();
         this.getCurrentProject();
         this.valuesFormToService();
         this.getCurrentStakeholders().then();
         this.getRequirementAnalysts().then();
         this.getRequirements().then();
-        this.autoCompleteForm().then();
+        await this.autoCompleteForm().then();
 
         this.formGroup.get('stakeholders')?.valueChanges.subscribe(value => {
             const stakeholders = value.map((item: { id: any; }) => ({ id: item.id }));
@@ -142,27 +144,45 @@ export class UpdateRequirementFormComponent implements OnInit {
     }
 
     private async getDataWhenRelationshipWithRequirement() {
-        return await this.requirementService.getRequirementById(this.inputRequirementDataWithUpdateRequirement?.id)
-            .then(requirement => {
+        this.spinnerService.start();
+        if (this.inputRequirementDataWithUpdateRequirement) {
+            // Aguarde a resposta de getRequirementById e, em seguida, continue com o processamento
+            return await this.requirementService.getRequirementById(this.inputRequirementDataWithUpdateRequirement?.id)
+                .then(requirement => {
+                    // Verificar se os dados de stakeholders, responsible e dependencies já estão disponíveis antes de continuar
+                    const stakeholdersPromise = this.stakeholderService.getStakeholders().then(stakeholders => {
+                        this.fontList = stakeholders;
+                        this.stakeholdersListToUpdate = this.fontList
+                            ?.filter(item => item.id !== undefined && requirement[0].stakeholderIds.includes(item.id)) || [];
+                    });
+    
+                    const responsiblePromise = this.userService.getRequirementAnalysts().then(analysts => {
+                        this.responsibleList = analysts;
+                        this.responsibleListToUpdate = this.responsibleList
+                            ?.filter(item => item.id !== undefined && requirement[0].responsibleIds.includes(item.id)) || [];
+                    });
+    
+                    const dependenciesPromise = this.requirementService.getRequirementsByProjectId(this.projectsTableService.getCurrentProjectById()).then(requirements => {
+                        this.requirementsDependencies = requirements.filter(item => item.identifier !== this.inputRequirementDataWithUpdateRequirement?.identifier);
+                        this.dependenciesListToUpdate = this.requirementsDependencies
+                            ?.filter(item => item.id !== undefined && requirement[0].dependencyIds.includes(item.id)) || [];
+                    });
+    
+                    // Aguarde todas as promessas serem resolvidas
+                    return Promise.all([stakeholdersPromise, responsiblePromise, dependenciesPromise]).then(() => {
+                        console.log(requirement[0].responsibleIds);
+    
+                        // Definir os valores no formulário
+                        this.formGroup.get('stakeholders')?.setValue(this.stakeholdersListToUpdate);
+                        this.formGroup.get('responsible')?.setValue(this.responsibleListToUpdate);
+                        this.formGroup.get('dependencies')?.setValue(this.dependenciesListToUpdate);
 
-                this.stakeholdersListToUpdate = this.fontList
-                    ?.filter(item => item.id !== undefined && requirement[0].stakeholderIds
-                        .includes(item.id)) || [];
-
-                this.responsibleListToUpdate = this.responsibleList
-                    ?.filter(item => item.id !== undefined && requirement[0].responsibleIds
-                        .includes(item.id)) || [];
-
-                this.dependenciesListToUpdate = this.requirementsDependencies
-                    ?.filter(item => item.id !== undefined && requirement[0].dependencyIds
-                            .includes(item.id)
-                    ) || [];
-
-                this.formGroup.get('stakeholders')?.setValue(this.stakeholdersListToUpdate);
-                this.formGroup.get('responsible')?.setValue(this.responsibleListToUpdate);
-                this.formGroup.get('dependencies')?.setValue(this.dependenciesListToUpdate);
-            });
+                        this.spinnerService.stop();
+                    });
+                });
+        }
     }
+    
 
     private getCurrentProject() {
         return this.projectsTableService.getCurrentProjectByName();
