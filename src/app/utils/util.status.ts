@@ -6,13 +6,9 @@ export enum Status {
     REFUSE = "REFUSE",
     ACTIVE = "ACTIVE",
     NOT_FOUND = "NOT_FOUND",
-    BLOCKED = "BLOCKED"
+    BLOCKED = "BLOCKED",
+    DELETED = "DELETED",
+    APPROVING = "APPROVING",
+    REJECTED = "REJECTED",
 
-// BLOCKED,
-//     ACTIVE,
-//     PENDING,
-//     DELETED,
-//     APPROVING,
-//     CREATED,
-//     REJECTED,
 }

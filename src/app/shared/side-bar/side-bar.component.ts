@@ -27,7 +27,7 @@ export class SideBarComponent implements AfterViewInit {
 
     @ViewChild('drawer') drawer!: MatDrawer;
     dataSource = new MatTableDataSource<ProjectDataModel>([]);
-    currentRoute: string = ''; 
+    currentRoute: string = '';
     managers : UserResponseModel[] = [];
 
     constructor(
@@ -41,7 +41,7 @@ export class SideBarComponent implements AfterViewInit {
         private userService: UsersService,
         private spinnerService: SpinnerService) {
         this.themeService.initTheme();
-        this.loadData();
+        this.loadData().then();
     }
 
     ngAfterViewInit() {
@@ -82,6 +82,9 @@ export class SideBarComponent implements AfterViewInit {
             });
 
             projects.sort((a, b) => a.name.localeCompare(b.name));
+
+            console.log('Projects:', projects);
+            //todo implementar um filtro para mostrar somente os projetos relacionados a pessoal que está logada, salvo admin.
             this.dataSource.data = projects;
         } catch (error) {
             console.error(`Error loading projects: ${error}`);
@@ -124,10 +127,10 @@ export class SideBarComponent implements AfterViewInit {
     }
 
     navigateToProjectStatus() {
-        this.router.navigate(['/project-status']); 
+        this.router.navigate(['/project-status']);
     }
 
     navigateToApprovalFlow() {
-        this.router.navigate(['/approval-flow']);  
+        this.router.navigate(['/approval-flow']);
     }
 }

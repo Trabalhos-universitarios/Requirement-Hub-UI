@@ -18,8 +18,8 @@ export class ProjectStatusComponent implements OnInit {
   selectedProjectId: number | null = null;
   requirementsCache: { [projectId: number]: RequirementsDataModel[] } = {};  // Cache para os requisitos por projeto
   allResponsiblesCache: any[] = [];  // Cache para os responsáveis
-  pieChartData: any[] = [];  
-  barChartData: any[] = [];  
+  pieChartData: any[] = [];
+  barChartData: any[] = [];
   totalRequirements: number = 0;  // Total de requisitos para o gráfico de pizza
   isDataLoaded: boolean = false;  // Controle para carregar dados do projeto
   isChartsLoaded: boolean = false;  // Controle para carregar os gráficos
@@ -61,7 +61,7 @@ export class ProjectStatusComponent implements OnInit {
 
   ngOnInit() {
     this.spinnerService.start();
-    this.setChartColors(); 
+    this.setChartColors();
     this.loadProjects();
     this.loadResponsibles();  // Carrega os responsáveis uma única vez
 
@@ -73,7 +73,7 @@ export class ProjectStatusComponent implements OnInit {
   // Função para carregar todos os responsáveis apenas uma vez
   async loadResponsibles() {
     if (this.allResponsiblesCache.length === 0) {
-      const responsiblesData = await this.requirementsService.getAllRequirementResponsibles();
+      const responsiblesData = await this.requirementsService.getAllRequirementResponsible();
       this.allResponsiblesCache = responsiblesData;
     }
   }
@@ -87,7 +87,7 @@ export class ProjectStatusComponent implements OnInit {
   // Função para definir as cores do gráfico com base no tema
   setChartColors(): void {
     const isDarkMode = this.themeService.isDarkMode();
-    
+
     const colorMap = isDarkMode ? this.statusColorMapDark : this.statusColorMapLight;
 
     this.colorScheme = {
@@ -192,7 +192,7 @@ export class ProjectStatusComponent implements OnInit {
       const requirementIds = requirements.map(req => req.id);
 
       // Usar o cache dos responsáveis carregado uma vez
-      const filteredResponsibles = this.allResponsiblesCache.filter((responsible: any) => 
+      const filteredResponsibles = this.allResponsiblesCache.filter((responsible: any) =>
         requirementIds.includes(responsible[0])
       );
 

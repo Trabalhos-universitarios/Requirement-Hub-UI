@@ -98,7 +98,7 @@ export class RequirementHistoryTableComponent{
 
   isPermitted() {
     return !(
-      this.localStorage.getItem('role') === "GERENTE_DE_PROJETOS"    
+      this.localStorage.getItem('role') === "GERENTE_DE_PROJETOS"
     );
   }
 
@@ -166,7 +166,7 @@ export class RequirementHistoryTableComponent{
       "Deseja realmente excluir o historico requisito?"
     );
     this.spinnerService.start();
-  
+
     if (result.isConfirmed) {
       await this.requirementsHistoryService.deleteHistory(id).then(response => {
         if (response) {
@@ -179,4 +179,3 @@ export class RequirementHistoryTableComponent{
     }
   }
 }
-
