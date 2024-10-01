@@ -17,6 +17,10 @@ import {ModalDialogInformationRequirementComponent} from 'src/app/components/mod
 import {ModalDialogArtifactsRequirementComponent} from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 import {ModalDialogUpdateRequirementComponent} from "../../../modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component";
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  ModalDialogInformationRequirementHistoryComponent
+} from "../../../modals/requirements/modal-dialog-information-requirement-history/modal-dialog-information-requirement-history.component";
+import {RequirementHistoryTableComponent} from "../requirement-history-table/requirement-history-table.component";
 
 @Component({
   selector: 'app-requirements-table',
@@ -155,9 +159,9 @@ export class RequirementsTableComponent implements AfterViewInit {
       case 'pending':
         return {color: '#A5D6A7'};
       case 'do_not_disturb_on':
-        return {color: 'rgba(253,0,0,0.74)'};
+        return {color: 'rgb(220,60,60)'};
       case 'block':
-        return {color: 'rgba(253,0,0,0.74)'};
+        return {color: 'rgb(220,60,60)'};
       default:
         return {color: `${colorIcon}`};
     }
@@ -182,6 +186,13 @@ export class RequirementsTableComponent implements AfterViewInit {
       case "add":
         this.matDialog.open(ModalDialogArtifactsRequirementComponent, {
           data: value,
+          disableClose: true
+        });
+        break;
+      case "historic":
+        this.matDialog.open(RequirementHistoryTableComponent, {
+          data: value,
+          width: '1200px',
           disableClose: true
         });
         break;

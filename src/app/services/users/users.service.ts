@@ -58,4 +58,8 @@ export class UsersService {
   getNotifications(id: number): Observable<number[]> {
     return this.http.get<any>(`${this.baseUrl}/user/notifications/${id}`);
   }
+
+  async deleteNotifications(userId: number, requirementId: number | undefined): Promise<void> {
+    return firstValueFrom(this.http.delete<any>(`${this.baseUrl}/user/notifications/${userId}/${requirementId}`));
+  }
 }

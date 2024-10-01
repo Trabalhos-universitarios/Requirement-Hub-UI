@@ -1,7 +1,7 @@
 import {HttpClient, HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {catchError, firstValueFrom, Observable, throwError} from 'rxjs';
-import { environmentLocal } from 'src/environment/environment-local';
+import {environmentLocal} from 'src/environment/environment-local';
 import {
     CommentsReactionsModel,
     CreateCommentsMessagesResponseModel,
@@ -14,7 +14,8 @@ import {
 export class CommentsService {
     private baseUrl = environmentLocal.springUrl + '/comments';
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+    }
 
     async addComment(comment: any): Promise<CreateCommentsMessagesResponseModel> {
         return firstValueFrom(

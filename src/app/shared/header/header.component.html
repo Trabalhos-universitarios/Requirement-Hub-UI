@@ -13,7 +13,7 @@
     </button>
 
     <mat-menu #menu="matMenu">
-        <button mat-menu-item *ngFor="let requirement of requirementList">
+        <button mat-menu-item *ngFor="let requirement of requirementList" (click)="openInformationNotification(requirementList)">
             <mat-icon [ngStyle]="stylesIconColor('notifications_active')">notifications_active</mat-icon>
             {{ requirement.identifier }} - {{ requirement.name }}
         </button>

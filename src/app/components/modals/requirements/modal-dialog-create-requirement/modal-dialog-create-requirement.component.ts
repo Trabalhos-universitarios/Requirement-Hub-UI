@@ -42,9 +42,9 @@ export class ModalDialogCreateRequirementComponent {
         this.alertService.toOptionalWith3Buttons("Deseja enviar para fluxo de aprovação?", "Sim, enviar!", "Não, apensas salvar")
             .then(resp => {
                 if (resp.isConfirmed) {
-                    this.sendToApprovalFlow();
+                    this.sendToApprovalFlow().then();
                 } else if (resp.isDenied) {
-                    this.saveData();
+                    this.saveData().then();
                 } else {
                     console.log("Cancelar");
                 }

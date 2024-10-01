@@ -93,6 +93,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { RequirementHistoryTableComponent } from './components/tables/requirements/requirement-history-table/requirement-history-table.component';
 import { ModalDialogInformationRequirementHistoryComponent } from './components/modals/requirements/modal-dialog-information-requirement-history/modal-dialog-information-requirement-history.component';
 import { ApprovalFlowComponent } from './core/approval-flow/approval-flow/approval-flow.component';
+import { ModalDialogInformationRequirementNotificationComponent } from './components/modals/requirements/modal-dialog-information-requirement-notification/modal-dialog-information-requirement-notification.component';
 
 @NgModule({
     declarations: [
@@ -142,7 +143,9 @@ import { ApprovalFlowComponent } from './core/approval-flow/approval-flow/approv
         ProjectStatusComponent,
         RequirementHistoryTableComponent,
         ModalDialogInformationRequirementHistoryComponent,
-        ApprovalFlowComponent
+        ApprovalFlowComponent,
+        ModalDialogInformationRequirementHistoryComponent,
+        ModalDialogInformationRequirementNotificationComponent,
     ],
     imports: [
         BrowserModule,
