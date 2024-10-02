@@ -43,73 +43,65 @@ export class TracebilityMatrixComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    this.getAllData();
-    this.getData();
+    this.getAllDataAndMatrix();
   }
 
-  getData() {
+  getAllDataAndMatrix() {
     this.spinnerService.start();
     const projectId = this.projectTableService.getCurrentProjectById();
   
-    firstValueFrom(this.traceabilityService.getTraceabilityMatrix(projectId))
-      .then((matrix: []) => {
-        this.dataSource = matrix;
-        this.currentProject = this.projectTableService.getCurrentProjectByName();
-      })
-      .catch((error) => {
-        console.error('Erro ao carregar a matriz de rastreabilidade:', error);
-      })
-      .finally(() => {
-        this.spinnerService.stop();
-      });
-  }
-
-  getAllData() {
-    const projectId = this.projectTableService.getCurrentProjectById();
-
     Promise.all([
+      firstValueFrom(this.traceabilityService.getTraceabilityMatrix(projectId)),
       this.requirementsService.getRequirementsByProjectId(projectId),
       this.artifactService.getArtifactsByProjectRelated(projectId),
       this.userService.getUsers()
     ])
-    .then(([requirements, artifacts, users]) => {
+    .then(([matrix, requirements, artifacts, users]) => {
+      this.dataSource = matrix;
+      this.currentProject = this.projectTableService.getCurrentProjectByName();
+      
       this.requirementsData = requirements;
       this.artifactsData = artifacts;
       this.usersData = users;
-
+  
+      // Processamento dos dados para relationsIdentifierAndName e userName
       this.requirementsData.forEach(req => {
         this.relationsIdentifierAndName[req.identifier] = req.name;
       });
-
+  
       this.artifactsData.forEach(art => {
         this.relationsIdentifierAndName[art.identifier] = art.name;
       });
-
+  
       this.usersData.forEach(t => {
         this.userName[t.id] = t.name;
       });
-
+  
+      // Atualizando o requirementId com os dados dos requisitos
       this.artifactsData.forEach(art => {
         if (art.requirementId) {
           const requirement = this.requirementsData.find(req => req.id === art.requirementId);
-
           if (requirement) {
             art.requirementId = requirement.identifier + " - " + requirement.name;
           }
         }
       });
+  
+      // Atualizando o author dos requisitos com o nome do usuário
       this.requirementsData.forEach(req => {
         if (req.author && this.userName[req.author]) {
           req.author = this.userName[req.author];
         }
       });
-
     })
     .catch(error => {
       console.error('Erro ao carregar os dados:', error);
+    })
+    .finally(() => {
+      // Só para o spinner quando todos os dados foram carregados e processados
       this.spinnerService.stop();
     });
-  }
+  }  
 
   getCellStyles(cell: any): any {
     let backgroundColor;
