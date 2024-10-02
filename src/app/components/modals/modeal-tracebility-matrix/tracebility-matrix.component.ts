@@ -12,6 +12,7 @@ import { RequirementsDataModel } from 'src/app/models/requirements-data-model';
 import { ArtifactResponseModel } from 'src/app/models/artifact-response-model';
 import { UsersService } from 'src/app/services/users/users.service';
 import { UserResponseModel } from 'src/app/models/user-model';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-tracebility-matrix',
@@ -41,27 +42,26 @@ export class TracebilityMatrixComponent implements AfterViewInit {
     private dialog: MatDialog
   ) { }
 
-  ngAfterViewInit(): void {
-    this.getData();
+  ngAfterViewInit() {
     this.getAllData();
+    this.getData();
   }
 
-  async getData() {
+  getData() {
     this.spinnerService.start();
     const projectId = this.projectTableService.getCurrentProjectById();
-
-    this.traceabilityService.getTraceabilityMatrix(projectId)
-      .subscribe(
-        async (matrix: []) => {
-          this.dataSource = matrix;
-          this.currentProject = this.projectTableService.getCurrentProjectByName();
-          this.spinnerService.stop();
-        },
-        (error) => {
-          console.error('Erro ao carregar a matriz de rastreabilidade:', error);
-          this.spinnerService.stop();
-        }
-      );
+  
+    firstValueFrom(this.traceabilityService.getTraceabilityMatrix(projectId))
+      .then((matrix: []) => {
+        this.dataSource = matrix;
+        this.currentProject = this.projectTableService.getCurrentProjectByName();
+      })
+      .catch((error) => {
+        console.error('Erro ao carregar a matriz de rastreabilidade:', error);
+      })
+      .finally(() => {
+        this.spinnerService.stop();
+      });
   }
 
   getAllData() {
@@ -98,7 +98,6 @@ export class TracebilityMatrixComponent implements AfterViewInit {
           }
         }
       });
-
       this.requirementsData.forEach(req => {
         if (req.author && this.userName[req.author]) {
           req.author = this.userName[req.author];
@@ -108,6 +107,7 @@ export class TracebilityMatrixComponent implements AfterViewInit {
     })
     .catch(error => {
       console.error('Erro ao carregar os dados:', error);
+      this.spinnerService.stop();
     });
   }
 
