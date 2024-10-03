@@ -64,14 +64,11 @@ export class UpdateRequirementFormComponent implements OnInit {
         this.autoCompleteForm().then();
     }
 
-    async ngOnInit() {
+    ngOnInit() {
         this.disableFormWithUpdateRequirement();
         this.getCurrentProject();
         this.valuesFormToService();
-        this.getCurrentStakeholders().then();
-        this.getRequirementAnalysts().then();
-        this.getRequirements().then();
-        await this.autoCompleteForm().then();
+        this.autoCompleteForm().then();
 
         this.formGroup.get('stakeholders')?.valueChanges.subscribe(value => {
             const stakeholders = value.map((item: { id: any; }) => ({ id: item.id }));
