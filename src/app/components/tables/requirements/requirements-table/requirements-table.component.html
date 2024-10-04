@@ -58,10 +58,10 @@
                     <button mat-menu-item (click)="openDialog('add', element)">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">folder_open</mat-icon>Artefatos requisito
                     </button>
-                    <button mat-menu-item (click)="openDialog('historic', element)">
+                    <button mat-menu-item [disabled]="element.version == '1.0'" (click)="openDialog('historic', element)">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">history</mat-icon>Histórico requisitos
                     </button>
-                    <button mat-menu-item [disabled]="isPermitted() || element.status == 'BLOCKED'" (click)="deleteRequirement(element.id)">
+                    <button mat-menu-item [disabled]="isPermitted() || element.status == 'BLOCKED'" (click)="blockedRequirement(element.id)">
                         <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
                     </button>
                 </mat-menu>
