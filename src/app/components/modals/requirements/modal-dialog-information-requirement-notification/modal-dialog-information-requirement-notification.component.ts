@@ -165,9 +165,9 @@ export class ModalDialogInformationRequirementNotificationComponent implements O
     }
   }
 
-  private prepareData(comment: string) {
+  private prepareData(comment?: string | null): any {
     return {
-      description: comment,
+      description: comment ? comment : null,
       requirement: {id: this.dataRequirement.id},
       user: {id: this.localStorageService.getItem("id")},
       avatarUser: this.getUserProfilePicture() || '',
@@ -329,7 +329,7 @@ export class ModalDialogInformationRequirementNotificationComponent implements O
 
       if (result.isConfirmed) {
         this.spinnerService.start();
-        let response = await this.requirementService.approveRequirement(this.dataRequirement.id, this.prepareData(this.newComment[0].description)).then();
+        let response = await this.requirementService.approveRequirement(this.dataRequirement.id, null).then();
         if (response) {
           await this.alertService.toSuccessAlert("Requisito aprovado com sucesso!");
           await this.deleteNotificationByUser(this.localStorageService.getItem("id"), this.dataRequirement.id);
