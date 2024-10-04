@@ -20,7 +20,7 @@ import { ProjectsTableService } from 'src/app/services/projects/projects-table.s
 import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
 import {
   ModalDialogInformationRequirementNotificationComponent
-} from "../../../components/modals/requirements/modal-dialog-information-requirement-notification/modal-dialog-information-requirement-notification.component";
+} from "../../components/modals/requirements/modal-dialog-information-requirement-notification/modal-dialog-information-requirement-notification.component";
 
 @Component({
   selector: 'app-approval-flow',

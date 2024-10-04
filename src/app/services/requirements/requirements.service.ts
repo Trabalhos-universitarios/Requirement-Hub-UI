@@ -170,8 +170,8 @@ export class RequirementsService {
         );
     }
 
-    async senUpdateRequirementsToFlow(id: number | undefined, post: any): Promise<RequirementsDataModel[] | any> {
-        return firstValueFrom(this.http.put(`${this.baseUrl}/requirements/update-flow/${id}`, post)
+    async approveRequirement(id: number | undefined, post: any): Promise<RequirementsDataModel[] | any> {
+        return firstValueFrom(this.http.patch(`${this.baseUrl}/requirements/approve/${id}`, post)
             .pipe(catchError((error: HttpErrorResponse) => {
 
                     switch (error.status) {

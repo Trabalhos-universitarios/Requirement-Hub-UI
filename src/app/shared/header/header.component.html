@@ -9,12 +9,13 @@
 
     <span class="span-spacer"></span>
     <button mat-icon-button matTooltip="Notificações" [matMenuTriggerFor]="menu" (click)="getRequirementsById()">
-        <mat-icon [matBadge]="this.userNotification" matBadgePosition="above" matBadgeColor="warn">notifications</mat-icon>
+        <mat-icon *ngIf="this.userNotification > 0" [matBadge]="this.userNotification" matBadgePosition="above" matBadgeColor="warn">notifications</mat-icon>
+        <mat-icon *ngIf="this.userNotification === 0">notifications</mat-icon>
     </button>
 
     <mat-menu #menu="matMenu">
         <button mat-menu-item *ngFor="let requirement of requirementList" (click)="openInformationNotification(requirementList)">
-            <mat-icon [ngStyle]="stylesIconColor('notifications_active')">notifications_active</mat-icon>
+            <mat-icon [ngStyle]="stylesIconColor(requirement.status)">notifications_active</mat-icon>
             {{ requirement.identifier }} - {{ requirement.name }}
         </button>
     </mat-menu>
