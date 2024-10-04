@@ -170,7 +170,7 @@ export class RequirementsService {
         );
     }
 
-    async approveRequirement(id: number | undefined, post: any): Promise<RequirementsDataModel[] | any> {
+    async approveRequirement(id: number | undefined, post: any | null): Promise<RequirementsDataModel[] | any> {
         return firstValueFrom(this.http.patch(`${this.baseUrl}/requirements/approve/${id}`, post)
             .pipe(catchError((error: HttpErrorResponse) => {
 

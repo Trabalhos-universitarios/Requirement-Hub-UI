@@ -178,7 +178,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     protected async openInformationNotification(requirement: RequirementsDataModel[] | undefined) {
 
         if (requirement) {
-            this.userNotification -= 1;
             const userId = this.localStorageService.getItem('id');
             const requirementId = requirement[0].id
 
