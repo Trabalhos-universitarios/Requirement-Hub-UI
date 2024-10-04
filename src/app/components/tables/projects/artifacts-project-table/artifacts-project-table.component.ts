@@ -136,7 +136,8 @@ export class ArtifactsProjectTableComponent {
 
         const result = await this.alertService.toOptionalActionAlert(
             "Deletar artefato projeto",
-            "Deseja realmente excluir o artefato?"
+            "Deseja realmente excluir o artefato?",
+            "Sim, deletar!"
         );
 
         if (result.isConfirmed) {
@@ -157,4 +158,3 @@ export class ArtifactsProjectTableComponent {
     }
 
 }
-

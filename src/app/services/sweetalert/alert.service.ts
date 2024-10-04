@@ -35,7 +35,7 @@ export class AlertService {
         });
     }
 
-    async toOptionalActionAlert(title: string, text: string): Promise<SweetAlertResult> {
+    async toOptionalActionAlert(title: string, text: string, confirmButtonName: string): Promise<SweetAlertResult> {
         const result = await Swal.fire({
             title: title,
             text: text,
@@ -43,7 +43,7 @@ export class AlertService {
             confirmButtonColor: "#437222",
             cancelButtonColor: "#d33",
             showCancelButton: true,
-            confirmButtonText: "Sim, deletar!"
+            confirmButtonText: confirmButtonName
         });
         if (result.dismiss) {
             await this.toInfoAlert("Operação cancelada!", "");

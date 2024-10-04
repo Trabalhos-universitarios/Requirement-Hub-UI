@@ -143,33 +143,29 @@ export class UpdateRequirementFormComponent implements OnInit {
     private async getDataWhenRelationshipWithRequirement() {
         this.spinnerService.start();
         if (this.inputRequirementDataWithUpdateRequirement) {
-            // Aguarde a resposta de getRequirementById e, em seguida, continue com o processamento
             return await this.requirementService.getRequirementById(this.inputRequirementDataWithUpdateRequirement?.id)
                 .then(requirement => {
-                    // Verificar se os dados de stakeholders, responsible e dependencies já estão disponíveis antes de continuar
                     const stakeholdersPromise = this.stakeholderService.getStakeholders().then(stakeholders => {
                         this.fontList = stakeholders;
                         this.stakeholdersListToUpdate = this.fontList
                             ?.filter(item => item.id !== undefined && requirement[0].stakeholderIds.includes(item.id)) || [];
                     });
-    
+
                     const responsiblePromise = this.userService.getRequirementAnalysts().then(analysts => {
                         this.responsibleList = analysts;
                         this.responsibleListToUpdate = this.responsibleList
                             ?.filter(item => item.id !== undefined && requirement[0].responsibleIds.includes(item.id)) || [];
                     });
-    
+
                     const dependenciesPromise = this.requirementService.getRequirementsByProjectId(this.projectsTableService.getCurrentProjectById()).then(requirements => {
                         this.requirementsDependencies = requirements.filter(item => item.identifier !== this.inputRequirementDataWithUpdateRequirement?.identifier);
                         this.dependenciesListToUpdate = this.requirementsDependencies
                             ?.filter(item => item.id !== undefined && requirement[0].dependencyIds.includes(item.id)) || [];
                     });
-    
-                    // Aguarde todas as promessas serem resolvidas
+
                     return Promise.all([stakeholdersPromise, responsiblePromise, dependenciesPromise]).then(() => {
                         console.log(requirement[0].responsibleIds);
-    
-                        // Definir os valores no formulário
+
                         this.formGroup.get('stakeholders')?.setValue(this.stakeholdersListToUpdate);
                         this.formGroup.get('responsible')?.setValue(this.responsibleListToUpdate);
                         this.formGroup.get('dependencies')?.setValue(this.dependenciesListToUpdate);
@@ -179,7 +175,6 @@ export class UpdateRequirementFormComponent implements OnInit {
                 });
         }
     }
-    
 
     private getCurrentProject() {
         return this.projectsTableService.getCurrentProjectByName();
@@ -188,28 +183,6 @@ export class UpdateRequirementFormComponent implements OnInit {
     protected getCurrentAuthor() {
         const author = this.localStorageService.getItem('name');
         return this.capitalizeFirstPipe.transform(author);
-    }
-
-    private async getCurrentStakeholders() {
-        this.stakeholderService.getStakeholders().then(stakeholders => {
-            this.fontList = stakeholders
-        })
-    }
-
-    private async getRequirementAnalysts() {
-        this.userService.getRequirementAnalysts().then(analysts => {
-            this.responsibleList = analysts
-        })
-    }
-
-    private async getRequirements() {
-        this.requirementService.getRequirementsByProjectId(this.projectsTableService.getCurrentProjectById()).then(requirements => {
-            requirements.sort((a, b) => a.identifier.localeCompare(b.identifier));
-
-            this.requirementsDependencies = requirements.filter(item =>
-                item.identifier !== this.inputRequirementDataWithUpdateRequirement?.identifier
-            );
-        });
     }
 
     private validateFormValidations(form: FormGroup): void {
