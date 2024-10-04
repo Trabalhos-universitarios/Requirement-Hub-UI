@@ -4,7 +4,7 @@
         <span class="title">Projetos</span>
       </mat-toolbar>
       
-      <div class="project-tab" *ngIf="this.dataSource.data.length; else viewTableProjects">
+      <div class="project-tab" *ngIf="this.dataSource.data.length > 0; else viewTableProjects">
         <app-projects-table [dataSource]="dataSource"></app-projects-table>
       </div>
 
