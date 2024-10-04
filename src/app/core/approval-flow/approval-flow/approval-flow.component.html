@@ -62,7 +62,7 @@
                         <button mat-menu-item [disabled]="isPermitted()" (click)="openDialog('approval', element)">
                             <mat-icon>task</mat-icon>Aprovação
                         </button>
-                        <button mat-menu-item (click)="openDialog('history', element)">
+                        <button mat-menu-item [disabled]="element.version == '1.0'" (click)="openDialog('history', element)">
                             <mat-icon>history</mat-icon>Histórico
                         </button>
                     </mat-menu>
