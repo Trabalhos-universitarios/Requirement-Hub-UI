@@ -163,7 +163,8 @@ export class RequirementHistoryTableComponent{
   protected async deleteRequirement(id: number) {
     const result = await this.alertService.toOptionalActionAlert(
       "Deletar historico",
-      "Deseja realmente excluir o historico requisito?"
+      "Deseja realmente excluir o historico requisito?",
+        "Sim, deletar!"
     );
     this.spinnerService.start();
 

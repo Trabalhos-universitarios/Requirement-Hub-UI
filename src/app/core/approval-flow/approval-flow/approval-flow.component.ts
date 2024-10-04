@@ -18,6 +18,9 @@ import { UsersService } from 'src/app/services/users/users.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
+import {
+  ModalDialogInformationRequirementNotificationComponent
+} from "../../../components/modals/requirements/modal-dialog-information-requirement-notification/modal-dialog-information-requirement-notification.component";
 
 @Component({
   selector: 'app-approval-flow',
@@ -41,8 +44,7 @@ export class ApprovalFlowComponent implements AfterViewInit {
   protected projects = new MatTableDataSource<ProjectDataModel>([]);
   protected selectedProjectId: number | undefined;
   protected selectedProjectName: string = '';
-  
-  // Cache para armazenar dados de requisitos por projeto
+
   protected requirementsCache: { [projectId: number]: RequirementsDataModel[] } = {};
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
@@ -56,7 +58,6 @@ export class ApprovalFlowComponent implements AfterViewInit {
     private usersService: UsersService,
     private spinnerService: SpinnerService,
     private capitalizeFirstPipe: CapitalizeFirstPipePipe,
-    private alertService: AlertService,
     private localStorage: LocalStorageService,
     private projectsTableService: ProjectsTableService
   ) {
@@ -96,28 +97,25 @@ export class ApprovalFlowComponent implements AfterViewInit {
     try {
       this.setDataProjectTable(this.selectedProjectId, this.selectedProjectName)
       if (this.requirementsCache[this.selectedProjectId]) {
-        // Usar cache se os dados já estiverem disponíveis para o projeto selecionado
         this.dataSource.data = this.requirementsCache[this.selectedProjectId];
       } else {
-        // Buscar dados do backend se não estiver no cache
         const requirements = await this.requirementsService.getRequirementsByProjectId(this.selectedProjectId);
         const filteredRequirements = requirements.filter(req =>
           req.status === 'PENDING' || req.status === 'BLOCKED'
         );
 
         this.dataSource.data = filteredRequirements;
-        this.requirementsCache[this.selectedProjectId] = filteredRequirements;  // Armazenar no cache
+        this.requirementsCache[this.selectedProjectId] = filteredRequirements;
 
-        // Atualizar autores dos requisitos, se necessário
-        filteredRequirements.forEach(async (requirement) => {
+        for (const requirement of filteredRequirements) {
           if (requirement.author) {
             const requirementIndex = this.dataSource.data.findIndex(r => r.identifier === requirement.identifier);
             if (requirementIndex > -1) {
               this.dataSource.data[requirementIndex].author = await this.getAuthorById(requirement.author).then();
-              this.dataSource._updateChangeSubscription();  // Atualizar tabela
+              this.dataSource._updateChangeSubscription();
             }
           }
-        });
+        }
 
         this.dataSource.data.sort((a, b) => a.identifier.localeCompare(b.identifier));
       }
@@ -142,7 +140,7 @@ export class ApprovalFlowComponent implements AfterViewInit {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  isPermitted() {
+  protected isPermitted() {
     return !(this.localStorage.getItem('role') === "GERENTE_DE_PROJETOS");
   }
 
@@ -199,7 +197,11 @@ export class ApprovalFlowComponent implements AfterViewInit {
         });
         break;
       case "approval":
-        // Código para abrir o diálogo de aprovação
+        this.matDialog.open(ModalDialogInformationRequirementNotificationComponent, {
+          data: value,
+          width: '1200px',
+          disableClose: false
+        });
         break;
       case "history":
         this.matDialog.open(RequirementHistoryTableComponent, {
@@ -218,7 +220,7 @@ export class ApprovalFlowComponent implements AfterViewInit {
     }
   }
 
-  setDataProjectTable(id: number, currentProject: string) {
+  private setDataProjectTable(id: number, currentProject: string) {
     this.projectsTableService.setCurrentProjectById(id);
     this.projectsTableService.setCurrentProjectByName(currentProject);
   }

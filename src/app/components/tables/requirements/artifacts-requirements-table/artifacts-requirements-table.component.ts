@@ -45,7 +45,7 @@ export class ArtifactsRequirementsTableComponent {
                 private alertService: AlertService,
                 private spinnerService: SpinnerService,
                 private sanitizer: DomSanitizer,
-                @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) 
+                @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel)
     {
         this.getData().then();
     }
@@ -64,8 +64,8 @@ export class ArtifactsRequirementsTableComponent {
                   });
                 this.spinnerService.stop();
             });
-            
-            
+
+
     }
 
     formatSize(sizeInBytes: number): string {
@@ -175,7 +175,7 @@ export class ArtifactsRequirementsTableComponent {
 
                     const fileType = file.name.split('.').pop()?.toLowerCase();
                     const url = window.URL.createObjectURL(blob);
-                    
+
                     if (fileType === 'pdf' || ['png', 'jpg', 'jpeg', 'gif'].includes(fileType!)) {
                         window.open(url, '_blank');
                     } else {
@@ -194,7 +194,8 @@ export class ArtifactsRequirementsTableComponent {
 
     const result = await this.alertService.toOptionalActionAlert(
         "Deletar artefato requisito",
-        "Deseja realmente excluir o artefato?"
+        "Deseja realmente excluir o artefato?",
+        "Sim, deletar!"
     );
 
     if (result.isConfirmed) {
@@ -214,7 +215,6 @@ export class ArtifactsRequirementsTableComponent {
     async updateArtifact(value: ArtifactResponseModel) {
             this.dialog.open(UpdateArtifactFormComponent, {
               data: value
-          }); 
+          });
     }
 }
-

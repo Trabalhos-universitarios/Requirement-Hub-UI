@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, Input} from '@angular/core';
+import {Component, HostListener, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
@@ -17,18 +17,16 @@ import {
 import {LocalStorageService} from "../../../../services/localstorage/local-storage.service";
 import {CommentsService} from "../../../../services/comments-service/comments-service.service";
 import {ThemeService} from "../../../../services/theme/theme.service";
-import {
-  RequirementHistoryTableComponent
-} from "../../../tables/requirements/requirement-history-table/requirement-history-table.component";
+import {UsersService} from "../../../../services/users/users.service";
 
 @Component({
   selector: 'app-modal-dialog-information-requirement-notification',
   templateUrl: './modal-dialog-information-requirement-notification.component.html',
   styleUrls: ['./modal-dialog-information-requirement-notification.component.scss']
 })
-export class ModalDialogInformationRequirementNotificationComponent {
-
+export class ModalDialogInformationRequirementNotificationComponent implements OnInit{
   protected formGroup = this.formBuilder.group({
+
     comment: new FormControl('', [
       Validators.minLength(20),
       Validators.maxLength(2000), Validators.required
@@ -40,7 +38,6 @@ export class ModalDialogInformationRequirementNotificationComponent {
   protected showEmojiPicker = false;
   protected userInformation: any;
   protected placeholderDynamic: string = `Olá, ${this.localStorageService.getItem("name")}! Deixe seu comentário aqui...`;
-  protected commentsToShow: number = 5;
   protected isSendButtonDisable: boolean = true;
   protected showEmojiPickerForCommentInput = false;
   protected characterCount: number = 0;
@@ -51,11 +48,11 @@ export class ModalDialogInformationRequirementNotificationComponent {
               private sanitizer: DomSanitizer,
               private localStorageService: LocalStorageService,
               private commentService: CommentsService,
-              private matDialog: MatDialog,
               private spinnerService: SpinnerService,
               private alertService: AlertService,
               private themeService: ThemeService,
-              private requirementService: RequirementsService) {}
+              private requirementService: RequirementsService,
+              private userService: UsersService) {}
 
   ngOnInit(): void {
     this.getCommentsAddBubbles().then();
@@ -64,7 +61,7 @@ export class ModalDialogInformationRequirementNotificationComponent {
     });
   }
 
-  isDarkTheme() {
+  protected isDarkTheme() {
     return this.themeService.isDarkMode();
   }
 
@@ -192,7 +189,6 @@ export class ModalDialogInformationRequirementNotificationComponent {
     return users.join(' - ');
   }
 
-
   protected getUniqueEmojis(reactions: ReactionsResponseModel[]): string[] {
     const emojis = reactions.map(reaction => reaction.emoji);
     return Array.from(new Set(emojis));
@@ -295,27 +291,16 @@ export class ModalDialogInformationRequirementNotificationComponent {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  protected loadMoreComments() {
-    this.commentsToShow += 5;
-  }
-
-  protected openHistory() {
-    this.matDialog.open(RequirementHistoryTableComponent, {
-      data: this.dataRequirement,
-      width: '1200px',
-      disableClose: true
-    });
-  }
-
   protected updateCharacterCount(): void {
     const commentControl = this.formGroup.get('comment');
     this.characterCount = commentControl?.value?.length ?? 0;
   }
 
-  async deleteComment(i: any) {
+  protected async deleteComment(i: any) {
     const result = await this.alertService.toOptionalActionAlert(
         "Deletar comentário",
-        "Deseja realmente excluir o comentário?"
+        "Deseja realmente excluir o comentário?",
+        "Sim, deletar!"
     );
 
     if (result.isConfirmed) {
@@ -329,15 +314,15 @@ export class ModalDialogInformationRequirementNotificationComponent {
     }
   }
 
-  verifyRole() {
+  protected verifyRole() {
     return !(this.localStorageService.getItem("role") === "GERENTE_DE_PROJETOS" || this.localStorageService.getItem("role") === "ADMIN");
   }
 
-  approveRequirement() {
+  protected approveRequirement() {
 
   }
 
-  async refuseRequirement() {
+  protected async refuseRequirement() {
 
     try {
 
@@ -348,7 +333,8 @@ export class ModalDialogInformationRequirementNotificationComponent {
 
       const result = await this.alertService.toOptionalActionAlert(
           "Recusar requisito",
-          "Deseja realmente recusar o requisito?"
+          "Deseja realmente recusar o requisito?",
+            "Sim, recusar!"
       );
 
       if (result.isConfirmed) {
@@ -356,6 +342,7 @@ export class ModalDialogInformationRequirementNotificationComponent {
         let response = await this.requirementService.refuseRequirement(this.dataRequirement.id, this.prepareData(this.newComment[0].description)).then();
         if (response) {
           await this.alertService.toSuccessAlert("Requisito recusado com sucesso!");
+          await this.deleteNotificationByUser(this.localStorageService.getItem("id"), this.dataRequirement.id);
         }
         reloadPage();
       }
@@ -364,5 +351,9 @@ export class ModalDialogInformationRequirementNotificationComponent {
       this.spinnerService.stop();
       await isExceptionType(this.alertService, error, "Esse requisito já foi recusado!", "alert");
     }
+  }
+
+  private async deleteNotificationByUser(userId: number, requirementId: number | undefined) {
+    await this.userService.deleteNotifications(userId, requirementId).then();
   }
 }

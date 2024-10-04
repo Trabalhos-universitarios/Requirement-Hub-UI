@@ -13,13 +13,16 @@ import {CapitalizeFirstPipePipe} from "../../../../pipes/capitalize-first-pipe.p
 import {reloadPage} from "../../../../utils/reload.page";
 import {AlertService} from "../../../../services/sweetalert/alert.service";
 import {LocalStorageService} from 'src/app/services/localstorage/local-storage.service';
-import {ModalDialogInformationRequirementComponent} from 'src/app/components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
-import {ModalDialogArtifactsRequirementComponent} from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
-import {ModalDialogUpdateRequirementComponent} from "../../../modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component";
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import {
-  ModalDialogInformationRequirementHistoryComponent
-} from "../../../modals/requirements/modal-dialog-information-requirement-history/modal-dialog-information-requirement-history.component";
+  ModalDialogInformationRequirementComponent
+} from 'src/app/components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component';
+import {
+  ModalDialogArtifactsRequirementComponent
+} from 'src/app/components/modals/requirements/modal-dialog-artifacts-requirement/modal-dialog-artifacts-requirement.component';
+import {
+  ModalDialogUpdateRequirementComponent
+} from "../../../modals/requirements/modal-dialog-update-requirement/modal-dialog-update-requirement.component";
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import {RequirementHistoryTableComponent} from "../requirement-history-table/requirement-history-table.component";
 
 @Component({
@@ -89,7 +92,7 @@ export class RequirementsTableComponent implements AfterViewInit {
     return this.capitalizeFirstPipe.transform(author);
   }
 
-   applyFilter(event: Event) {
+  protected applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -115,7 +118,7 @@ export class RequirementsTableComponent implements AfterViewInit {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  isPermitted() {
+  protected isPermitted() {
     return !(
       this.localStorage.getItem('role') === "GERENTE_DE_PROJETOS" ||
       this.localStorage.getItem('role') === "ANALISTA_DE_REQUISITOS" ||
@@ -223,7 +226,8 @@ export class RequirementsTableComponent implements AfterViewInit {
   protected async deleteRequirement(id: number) {
     const result = await this.alertService.toOptionalActionAlert(
       "Deletar requisito",
-      "Deseja realmente excluir o requisito?"
+      "Deseja realmente excluir o requisito?",
+        "Sim, deletar!"
     );
 
     if (result.isConfirmed) {

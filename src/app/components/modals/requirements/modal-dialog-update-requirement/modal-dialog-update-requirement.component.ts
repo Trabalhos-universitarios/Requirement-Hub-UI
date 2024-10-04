@@ -8,6 +8,7 @@ import {SpinnerService} from "../../../../services/spinner/spinner.service";
 import {reloadPage} from "../../../../utils/reload.page";
 import {RequirementsDataModel} from "../../../../models/requirements-data-model";
 import { RichTextService } from 'src/app/services/richText/rich-text.service';
+import {UsersService} from "../../../../services/users/users.service";
 
 @Component({
     selector: 'app-modal-dialog-update-requirement',
@@ -16,8 +17,8 @@ import { RichTextService } from 'src/app/services/richText/rich-text.service';
 })
 export class ModalDialogUpdateRequirementComponent {
 
-  requirementForm?: RequirementsDataModel | null;
-  buttonDisabled: boolean = true;
+  private requirementForm?: RequirementsDataModel | null;
+  protected buttonDisabled: boolean = true;
 
     constructor(
         private requirementService: RequirementsService,
@@ -27,6 +28,7 @@ export class ModalDialogUpdateRequirementComponent {
         private localStorageService: LocalStorageService,
         private spinnerService: SpinnerService,
         private richTextService: RichTextService,
+        private userService: UsersService,
         @Inject(MAT_DIALOG_DATA) public data: RequirementsDataModel) {
 
         this.requirementService.currentForm.subscribe(form => {
@@ -35,13 +37,17 @@ export class ModalDialogUpdateRequirementComponent {
         });
     }
 
-    async saveData(): Promise<void> {
+    protected async saveData(): Promise<void> {
         try {
             this.spinnerService.start();
+            console.log("this.prepareData(): ", this.prepareData());
+            console.log("this.data.id: ", this.data.id);
+
             const response = await this.requirementService.updateRequirements(this.data.id, this.prepareData()).then(response => response.identifier);
 
             if (response) {
                 await this.alertService.toSuccessAlert(`Reququisito ${response} atualizado com sucesso!`);
+                await this.deleteNotificationByUser(this.localStorageService.getItem("id"), this.data.id);
                 this.clearLocalStorage()
                 this.spinnerService.stop();
                 this.dialog.closeAll();
@@ -84,9 +90,8 @@ export class ModalDialogUpdateRequirementComponent {
         }
     }
 
-    close() {
-        this.clearLocalStorage();
-        this.dialog.closeAll();
+    private async deleteNotificationByUser(userId: number, requirementId: number | undefined) {
+        await this.userService.deleteNotifications(userId, requirementId).then();
     }
 
     private clearLocalStorage() {
