@@ -21,6 +21,7 @@ import {
 import {
     ModalDialogInformationRequirementComponent
 } from "../../components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component";
+import {Status} from "../../utils/util.status";
 
 @Component({
     selector: 'app-header',
@@ -28,25 +29,24 @@ import {
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-    userProfilePicture: string | null = null;
-    hasUserProfilePicture: boolean = false;
-    tokenExpirationDate: Date | null = null;
-    userNotification: number = 0;
-    pageLoadTime: Date;
-    intervalId: any;
-    requirementIds: number[] = [];
-    requirementList: RequirementsDataModel[] | undefined;
+    protected userProfilePicture: string | null = null;
+    protected hasUserProfilePicture: boolean = false;
+    protected requirementList: RequirementsDataModel[] | undefined;
+    protected userNotification: number = 0;
+    protected pageLoadTime: Date;
+    private tokenExpirationDate: Date | null = null;
+    private intervalId: any;
+    private requirementIds: number[] = [];
+
 
     constructor(
         protected themeService: ThemeService,
         private sidebarService: SidebarService,
         private dialog: MatDialog,
-        private alertService: AlertService,
         private localStorageService: LocalStorageService,
         private cdr: ChangeDetectorRef,
         private userService: UsersService,
         private requirementsService: RequirementsService,
-        private spinnerService: SpinnerService,
         private router: Router,
     ) {
         this.pageLoadTime = new Date();
@@ -83,7 +83,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
     }
 
-    getNotifications(): void {
+    private getNotifications(): void {
         const userId = this.localStorageService.getItem('id');
         this.userService.getNotifications(userId).subscribe(resp => {
                 this.userNotification = resp.length;
@@ -93,7 +93,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         )
     }
 
-    isWithinTokenValid(): boolean {
+    protected isWithinTokenValid(): boolean {
         if (!this.tokenExpirationDate) {
             return false;
         }
@@ -102,27 +102,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
         return hoursDifference > 0 && hoursDifference <= 8;
     }
 
-    getTooltipMessage(): string {
+    protected getTooltipMessage(): string {
         return this.isWithinTokenValid() ? 'On-line' : 'Off-line';
     }
 
-    openSidebar() {
+    private openSidebar() {
         this.sidebarService.toggle();
     }
 
-    handleButtonClick() {
+    protected handleButtonClick() {
         if (this.router.url !== '/home') {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/home']).then();
         } else {
             this.openSidebar();
         }
     }
 
-    isHomeRoute(): boolean {
+    protected isHomeRoute(): boolean {
         return this.router.url === '/home';
     }
 
-    toggleTheme() {
+    protected toggleTheme() {
         if (this.themeService.isDarkMode()) {
             this.themeService.update('light-theme');
         } else {
@@ -130,7 +130,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
     }
 
-    openAvatarUploader(): void {
+    protected openAvatarUploader(): void {
         const dialogRef = this.dialog.open(UserAvatarComponent, {
             width: '400px',
             height: '400px',
@@ -146,29 +146,36 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
     }
 
-    stylesIconColor(iconName: string) {
+    protected stylesIconColor(requirementStatus: string | undefined) {
 
         let colorIcon: string = '#616161';
         if (this.themeService.isDarkMode()) {
             colorIcon = '#e0e0e0';
         }
-        switch (iconName) {
-            case "notifications_active":
+
+        if (requirementStatus === 'APROVADO') {
+
+        }
+
+        switch (requirementStatus) {
+            case Status.REJECTED:
                 return {color: '#e17777'};
+            case Status.PENDING:
+                return {color: '#FFD54F'};
+            case Status.ACTIVE:
+                return {color: '#4CAF50'};
             default:
                 return {color: colorIcon};
         }
     }
 
-    getRequirementsById() {
+    protected getRequirementsById() {
         this.requirementsService.getRequirementsByIdsList(this.requirementIds).then(resp => {
-            //this.spinnerService.start();
             this.requirementList = resp;
-            //this.spinnerService.stop();
         });
     }
 
-    async openInformationNotification(requirement: RequirementsDataModel[] | undefined) {
+    protected async openInformationNotification(requirement: RequirementsDataModel[] | undefined) {
 
         if (requirement) {
             const userId = this.localStorageService.getItem('id');
@@ -176,8 +183,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
             await this.deleteNotificationByUser(userId, requirementId);
 
-            if (this.localStorageService.getItem("role") === 'GERENTE_DE_PROJETOS' ||
-                this.localStorageService.getItem("role") === 'ANALISTA_DE_REQUISITOS') {
+            if (this.localStorageService.getItem("role") === 'GERENTE_DE_PROJETOS') {
                 this.dialog.open(ModalDialogInformationRequirementNotificationComponent, {
                     width: '1200px',
                     data: requirement[0]

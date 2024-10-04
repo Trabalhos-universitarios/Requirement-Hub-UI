@@ -180,7 +180,8 @@ export class ProjectsTableComponent implements AfterViewInit {
     private async deleteProject() {
         const result = await this.alertService.toOptionalActionAlert(
             "Deletar projeto",
-            "Deseja realmente excluir o projeto?"
+            "Deseja realmente excluir o projeto?",
+            "Sim, deletar!"
         );
 
         // todo lógica provisória para não deixar excluir o Requirement Hub
