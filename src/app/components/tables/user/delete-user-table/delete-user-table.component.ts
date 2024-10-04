@@ -26,7 +26,7 @@ export class DeleteUserTableComponent implements OnInit {
               private spinnerService: SpinnerService,
               private projectsService: ProjectsService,
               private localStorageService: LocalStorageService) {}
-  
+
   ngOnInit(): void {
     this.getUsers();
   }
@@ -48,7 +48,8 @@ export class DeleteUserTableComponent implements OnInit {
   async deleteUser(element: UserResponseModel) {
     const result = await this.alertService.toOptionalActionAlert(
       "Deletar usuario",
-      "Deseja realmente deletar o usuário?"
+      "Deseja realmente deletar o usuário?",
+        "Sim, deletar!"
     );
 
     if (result.isConfirmed) {
@@ -75,7 +76,7 @@ export class DeleteUserTableComponent implements OnInit {
           this.alertService.toErrorAlert('Erro', `Erro ao deletar o usuário: ${error}`);
         });
 
-      reloadPage(); 
+      reloadPage();
     }
   }
 
@@ -91,7 +92,7 @@ export class DeleteUserTableComponent implements OnInit {
   }
 
   async isUserManagerOfAnyProject(element: UserResponseModel): Promise<boolean> {
-    const userIdAsNumber = Number(element.id); 
+    const userIdAsNumber = Number(element.id);
     const projects = await this.projectsService.getProjectsByUserId(userIdAsNumber);
     return projects.some(project => project.manager === element.name);
   }
