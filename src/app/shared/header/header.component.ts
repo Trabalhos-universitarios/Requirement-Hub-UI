@@ -21,6 +21,7 @@ import {
 import {
     ModalDialogInformationRequirementComponent
 } from "../../components/modals/requirements/modal-dialog-information-requirement/modal-dialog-information-requirement.component";
+import {Status} from "../../utils/util.status";
 
 @Component({
     selector: 'app-header',
@@ -145,15 +146,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
     }
 
-    protected stylesIconColor(iconName: string) {
+    protected stylesIconColor(requirementStatus: string | undefined) {
 
         let colorIcon: string = '#616161';
         if (this.themeService.isDarkMode()) {
             colorIcon = '#e0e0e0';
         }
-        switch (iconName) {
-            case "notifications_active":
+
+        if (requirementStatus === 'APROVADO') {
+
+        }
+
+        switch (requirementStatus) {
+            case Status.REJECTED:
                 return {color: '#e17777'};
+            case Status.PENDING:
+                return {color: '#FFD54F'};
+            case Status.ACTIVE:
+                return {color: '#4CAF50'};
             default:
                 return {color: colorIcon};
         }
@@ -168,6 +178,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     protected async openInformationNotification(requirement: RequirementsDataModel[] | undefined) {
 
         if (requirement) {
+            this.userNotification -= 1;
             const userId = this.localStorageService.getItem('id');
             const requirementId = requirement[0].id
 

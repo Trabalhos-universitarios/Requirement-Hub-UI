@@ -318,8 +318,29 @@ export class ModalDialogInformationRequirementNotificationComponent implements O
     return !(this.localStorageService.getItem("role") === "GERENTE_DE_PROJETOS" || this.localStorageService.getItem("role") === "ADMIN");
   }
 
-  protected approveRequirement() {
+  protected async approveRequirement() {
 
+    try {
+      const result = await this.alertService.toOptionalActionAlert(
+          "Aprovar requisito",
+          "Deseja realmente aprovar o requisito?",
+          "Sim, aprovar!"
+      );
+
+      if (result.isConfirmed) {
+        this.spinnerService.start();
+        let response = await this.requirementService.approveRequirement(this.dataRequirement.id, this.prepareData(this.newComment[0].description)).then();
+        if (response) {
+          await this.alertService.toSuccessAlert("Requisito aprovado com sucesso!");
+          await this.deleteNotificationByUser(this.localStorageService.getItem("id"), this.dataRequirement.id);
+        }
+        reloadPage();
+      }
+
+    } catch (error) {
+      this.spinnerService.stop();
+      await isExceptionType(this.alertService, error, "Esse requisito já foi aprovado!", "alert");
+    }
   }
 
   protected async refuseRequirement() {
