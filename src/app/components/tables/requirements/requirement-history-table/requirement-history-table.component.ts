@@ -178,5 +178,6 @@ export class RequirementHistoryTableComponent{
       });
       reloadPage();
     }
+    this.spinnerService.stop();
   }
 }

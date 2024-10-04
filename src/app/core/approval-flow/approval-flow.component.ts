@@ -21,6 +21,7 @@ import { ModalDialogArtifactsRequirementComponent } from 'src/app/components/mod
 import {
   ModalDialogInformationRequirementNotificationComponent
 } from "../../components/modals/requirements/modal-dialog-information-requirement-notification/modal-dialog-information-requirement-notification.component";
+import { reloadPage } from 'src/app/utils/reload.page';
 
 @Component({
   selector: 'app-approval-flow',
@@ -59,7 +60,8 @@ export class ApprovalFlowComponent implements AfterViewInit {
     private spinnerService: SpinnerService,
     private capitalizeFirstPipe: CapitalizeFirstPipePipe,
     private localStorage: LocalStorageService,
-    private projectsTableService: ProjectsTableService
+    private projectsTableService: ProjectsTableService,
+    private alertService: AlertService
   ) {
     spinnerService.start();
     this.getProjects().then();
@@ -103,9 +105,11 @@ export class ApprovalFlowComponent implements AfterViewInit {
         const filteredRequirements = requirements.filter(req =>
           req.status === 'PENDING' || req.status === 'BLOCKED'
         );
-
+        
+        filteredRequirements.sort((a, b) => a.identifier.localeCompare(b.identifier));
         this.dataSource.data = filteredRequirements;
         this.requirementsCache[this.selectedProjectId] = filteredRequirements;
+        this.spinnerService.stop();
 
         for (const requirement of filteredRequirements) {
           if (requirement.author) {
@@ -115,9 +119,7 @@ export class ApprovalFlowComponent implements AfterViewInit {
               this.dataSource._updateChangeSubscription();
             }
           }
-        }
-
-        this.dataSource.data.sort((a, b) => a.identifier.localeCompare(b.identifier));
+        }        
       }
     } catch (error) {
       console.error(`Error loading requirements for project ${this.selectedProjectId}: ${error}`);
@@ -200,7 +202,7 @@ export class ApprovalFlowComponent implements AfterViewInit {
         this.matDialog.open(ModalDialogInformationRequirementNotificationComponent, {
           data: value,
           width: '1200px',
-          disableClose: false
+          disableClose: true
         });
         break;
       case "history":
@@ -224,4 +226,23 @@ export class ApprovalFlowComponent implements AfterViewInit {
     this.projectsTableService.setCurrentProjectById(id);
     this.projectsTableService.setCurrentProjectByName(currentProject);
   }
+
+  protected async deleteRequirement(id: number) {
+    const result = await this.alertService.toOptionalActionAlert(
+      "Deletar requisito",
+      "Deseja realmente excluir o requisito?",
+        "Sim, deletar!"
+    );
+
+    if (result.isConfirmed) {
+      await this.requirementsService.deleteRequirement(id).then(response => {
+        if (response) {
+          this.alertService.toSuccessAlert("Requisito excluído com sucesso!");
+        }
+      });
+      this.spinnerService.start();
+      reloadPage();
+    }
+  }
+  
 }

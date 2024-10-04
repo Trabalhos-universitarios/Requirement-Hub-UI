@@ -150,6 +150,6 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close (click)="openHistory()">Histórico Requisito</button>
+    <button mat-raised-button mat-dialog-close [disabled]="dataRequirement.version == '1.0'" (click)="openHistory()">Histórico Requisito</button>
     <button cdkFocusInitial mat-raised-button mat-dialog-close>Fechar</button>
 </mat-dialog-actions>
