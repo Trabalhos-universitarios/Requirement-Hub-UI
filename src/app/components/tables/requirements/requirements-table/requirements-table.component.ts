@@ -223,7 +223,7 @@ export class RequirementsTableComponent implements AfterViewInit {
     }
   }
 
-  protected async deleteRequirement(id: number) {
+  protected async blockedRequirement(id: number) {
     const result = await this.alertService.toOptionalActionAlert(
       "Deletar requisito",
       "Deseja realmente excluir o requisito?",
@@ -231,9 +231,9 @@ export class RequirementsTableComponent implements AfterViewInit {
     );
 
     if (result.isConfirmed) {
-      await this.requirementsService.deleteRequirement(id).then(response => {
+      await this.requirementsService.blockedRequirement(id).then(response => {
         if (response) {
-          this.alertService.toSuccessAlert("Requisito excluído com sucesso!");
+          this.alertService.toSuccessAlert("Requisito Bloqueado, aguarda aprovação gerente para exclusão!");
         }
       });
       this.spinnerService.start();

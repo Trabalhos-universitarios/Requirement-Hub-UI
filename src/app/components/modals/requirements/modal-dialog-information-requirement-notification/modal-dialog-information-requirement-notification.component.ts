@@ -282,6 +282,8 @@ export class ModalDialogInformationRequirementNotificationComponent implements O
         return 'Criado';
       case Status.REJECTED:
         return 'Recusado';
+      case Status.BLOCKED:
+          return 'Bloqueado';
       default:
         return 'Status desconhecido';
     }
@@ -320,26 +322,51 @@ export class ModalDialogInformationRequirementNotificationComponent implements O
 
   protected async approveRequirement() {
 
-    try {
-      const result = await this.alertService.toOptionalActionAlert(
-          "Aprovar requisito",
-          "Deseja realmente aprovar o requisito?",
-          "Sim, aprovar!"
-      );
-
-      if (result.isConfirmed) {
-        this.spinnerService.start();
-        let response = await this.requirementService.approveRequirement(this.dataRequirement.id, null).then();
-        if (response) {
-          await this.alertService.toSuccessAlert("Requisito aprovado com sucesso!");
-          await this.deleteNotificationByUser(this.localStorageService.getItem("id"), this.dataRequirement.id);
+    if (this.dataRequirement.status == "PENDING"){
+      try {
+        const result = await this.alertService.toOptionalActionAlert(
+            "Aprovar requisito",
+            "Deseja realmente aprovar o requisito?",
+            "Sim, aprovar!"
+        );
+  
+        if (result.isConfirmed) {
+          this.spinnerService.start();
+          let response = await this.requirementService.approveRequirement(this.dataRequirement.id, null).then();
+          if (response) {
+            await this.alertService.toSuccessAlert("Requisito aprovado com sucesso!");
+            await this.deleteNotificationByUser(this.localStorageService.getItem("id"), this.dataRequirement.id);
+          }
+          reloadPage();
         }
-        reloadPage();
+  
+      } catch (error) {
+        this.spinnerService.stop();
+        await isExceptionType(this.alertService, error, "Esse requisito já foi aprovado!", "alert");
       }
-
-    } catch (error) {
-      this.spinnerService.stop();
-      await isExceptionType(this.alertService, error, "Esse requisito já foi aprovado!", "alert");
+    }
+    else {
+      try {
+        const result = await this.alertService.toOptionalActionAlert(
+            "Aprovar exclusão requisito",
+            "Deseja realmente aprovar a exclusão do requisito?",
+            "Sim, aprovar exclusão!"
+        );
+  
+        if (result.isConfirmed) {
+          this.spinnerService.start();
+          let response = await this.requirementService.deleteRequirement(Number(this.dataRequirement.id)).then();
+          if (response) {
+            await this.alertService.toSuccessAlert("Requisito excluido com sucesso!");
+            await this.deleteNotificationByUser(this.localStorageService.getItem("id"), this.dataRequirement.id);
+          }
+          reloadPage();
+        }
+  
+      } catch (error) {
+        this.spinnerService.stop();
+        await isExceptionType(this.alertService, error, "Erro ao excluir!", "alert");
+      }
     }
   }
 
