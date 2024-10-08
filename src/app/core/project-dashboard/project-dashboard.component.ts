@@ -10,10 +10,10 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-status',
-  templateUrl: './project-status.component.html',
-  styleUrls: ['./project-status.component.scss']
+  templateUrl: './project-dashboard.component.html',
+  styleUrls: ['./project-dashboard.component.scss']
 })
-export class ProjectStatusComponent implements OnInit {
+export class ProjectDashboardComponent implements OnInit {
   projects: ProjectDataModel[] = [];
   selectedProjectId: number | null = null;
   requirementsCache: { [projectId: number]: RequirementsDataModel[] } = {};  // Cache para os requisitos por projeto
