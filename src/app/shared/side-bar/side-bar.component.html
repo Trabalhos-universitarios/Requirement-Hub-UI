@@ -3,7 +3,7 @@
     <mat-toolbar class="title-toolbar">
         <span class="title">Projetos</span>
       </mat-toolbar>
-      
+
       <div class="project-tab" *ngIf="this.dataSource.data.length > 0; else viewTableProjects">
         <app-projects-table [dataSource]="dataSource"></app-projects-table>
       </div>
@@ -33,7 +33,7 @@
 
             <button mat-button [hidden]="isManager()" (click)="navigateToProjectStatus()">
               <mat-icon class="icons">analytics</mat-icon>
-              <span class="description">Status Projetos</span>
+              <span class="description">Dashboard Projetos</span>
             </button>
 
             <button mat-button [hidden]="isAdmin()" (click)="openModalDialogComponent('Add user')">

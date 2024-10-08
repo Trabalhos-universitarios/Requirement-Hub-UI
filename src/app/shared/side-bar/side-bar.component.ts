@@ -127,7 +127,7 @@ export class SideBarComponent implements AfterViewInit {
     }
 
     navigateToProjectStatus() {
-        this.router.navigate(['/project-status']);
+        this.router.navigate(['/project-dashboard']);
     }
 
     navigateToApprovalFlow() {

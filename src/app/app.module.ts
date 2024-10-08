@@ -88,7 +88,7 @@ import { ImageCropperComponent } from './components/user-avatar/image-cropper/im
 import { UpdateRequirementFormComponent } from './components/forms/requirement/update-requirement-form/update-requirement-form.component';
 import { CreateRequirementFormComponent } from './components/forms/requirement/create-requirement-form/create-requirement-form.component';
 import {PickerComponent} from "@ctrl/ngx-emoji-mart";
-import { ProjectStatusComponent } from './core/project-status/project-status.component';
+import { ProjectDashboardComponent } from './core/project-dashboard/project-dashboard.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { RequirementHistoryTableComponent } from './components/tables/requirements/requirement-history-table/requirement-history-table.component';
 import { ModalDialogInformationRequirementHistoryComponent } from './components/modals/requirements/modal-dialog-information-requirement-history/modal-dialog-information-requirement-history.component';
@@ -140,7 +140,7 @@ import { ModalDialogInformationRequirementNotificationComponent } from './compon
         UserAvatarComponent,
         ImageCropperComponent,
         CreateRequirementFormComponent,
-        ProjectStatusComponent,
+        ProjectDashboardComponent,
         RequirementHistoryTableComponent,
         ModalDialogInformationRequirementHistoryComponent,
         ApprovalFlowComponent,
