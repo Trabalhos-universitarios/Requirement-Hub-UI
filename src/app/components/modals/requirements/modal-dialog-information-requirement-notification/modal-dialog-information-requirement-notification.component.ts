@@ -345,7 +345,7 @@ export class ModalDialogInformationRequirementNotificationComponent implements O
         await isExceptionType(this.alertService, error, "Esse requisito já foi aprovado!", "alert");
       }
     }
-    else {
+    else if (this.dataRequirement.status == "BLOCKED"){
       try {
         const result = await this.alertService.toOptionalActionAlert(
             "Aprovar exclusão requisito",
@@ -371,7 +371,7 @@ export class ModalDialogInformationRequirementNotificationComponent implements O
   }
 
   protected async refuseRequirement() {
-
+  
     try {
 
       if (!this.newComment.length) {
@@ -379,17 +379,27 @@ export class ModalDialogInformationRequirementNotificationComponent implements O
         return;
       }
 
-      const result = await this.alertService.toOptionalActionAlert(
-          "Recusar requisito",
-          "Deseja realmente recusar o requisito?",
-            "Sim, recusar!"
-      );
+      let result = await this.alertService.toOptionalActionAlert(
+        "Recusar requisito",
+        "Deseja realmente recusar o requisito?",
+          "Sim, recusar!"
+    );
 
+      if (this.dataRequirement.status == "BLOCKED"){
+          result = await this.alertService.toOptionalActionAlert(
+            "Recusar exclusão",
+            "Deseja realmente recusar o pedido de exclusão do requisito?",
+              "Sim, recusar!"
+          );
+      }
+      
       if (result.isConfirmed) {
         this.spinnerService.start();
         let response = await this.requirementService.refuseRequirement(this.dataRequirement.id, this.prepareData(this.newComment[0].description)).then();
         if (response) {
-          await this.alertService.toSuccessAlert("Requisito recusado com sucesso!");
+          if (this.dataRequirement.status == "PENDING"){ await this.alertService.toSuccessAlert("Requisito recusado com sucesso!");}
+          if (this.dataRequirement.status == "BLOCKED"){ await this.alertService.toSuccessAlert("Recusa de exclusão com sucesso!");}
+
           await this.deleteNotificationByUser(this.localStorageService.getItem("id"), this.dataRequirement.id);
         }
         reloadPage();
