@@ -134,4 +134,4 @@ Queremos também deixar nosso agradecimento a banca que avaliou nosso trabalho
 * Doutora Regina Fábia Lopes de Albuquerque [Currículo Lattes](http://lattes.cnpq.br/1874995247816757)
 * Mestre Tiago Adelino Navarro [Currículo Lattes](http://lattes.cnpq.br/9454143758427870)
 
-![img.png](img.png)
+![img.png](src/assets/readme/logo_pucpr.png)
