@@ -153,10 +153,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
             colorIcon = '#e0e0e0';
         }
 
-        if (requirementStatus === 'APROVADO') {
-
-        }
-
         switch (requirementStatus) {
             case Status.REJECTED:
                 return {color: '#e17777'};
@@ -164,6 +160,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 return {color: '#FFD54F'};
             case Status.ACTIVE:
                 return {color: '#4CAF50'};
+            case Status.BLOCKED:
+                    return {color: '#e17777'};
             default:
                 return {color: colorIcon};
         }
@@ -175,23 +173,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
     }
 
-    protected async openInformationNotification(requirement: RequirementsDataModel[] | undefined) {
+    protected async openInformationNotification(requirement: RequirementsDataModel| undefined) {
 
         if (requirement) {
             const userId = this.localStorageService.getItem('id');
-            const requirementId = requirement[0].id
+            const requirementId = requirement.id
 
             await this.deleteNotificationByUser(userId, requirementId);
 
             if (this.localStorageService.getItem("role") === 'GERENTE_DE_PROJETOS') {
                 this.dialog.open(ModalDialogInformationRequirementNotificationComponent, {
                     width: '1200px',
-                    data: requirement[0]
+                    data: requirement
                 })
             } else {
                 this.dialog.open(ModalDialogInformationRequirementComponent, {
                     width: '1200px',
-                    data: requirement[0]
+                    data: requirement
                 })
             }
         }
