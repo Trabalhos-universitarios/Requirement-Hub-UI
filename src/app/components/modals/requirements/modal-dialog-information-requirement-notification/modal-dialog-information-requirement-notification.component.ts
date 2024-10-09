@@ -379,19 +379,23 @@ export class ModalDialogInformationRequirementNotificationComponent implements O
         return;
       }
 
-      let result = await this.alertService.toOptionalActionAlert(
+      let result;
+
+      if (this.dataRequirement.status == "PENDING"){
+      result = await this.alertService.toOptionalActionAlert(
         "Recusar requisito",
         "Deseja realmente recusar o requisito?",
           "Sim, recusar!"
-    );
+      );
+    }
 
-      if (this.dataRequirement.status == "BLOCKED"){
-          result = await this.alertService.toOptionalActionAlert(
-            "Recusar exclusão",
-            "Deseja realmente recusar o pedido de exclusão do requisito?",
-              "Sim, recusar!"
-          );
-      }
+    else {
+      result = await this.alertService.toOptionalActionAlert(
+        "Recusar exclusão",
+        "Deseja realmente recusar o pedido de exclusão do requisito?",
+          "Sim, recusar!"
+      );
+    }
       
       if (result.isConfirmed) {
         this.spinnerService.start();
