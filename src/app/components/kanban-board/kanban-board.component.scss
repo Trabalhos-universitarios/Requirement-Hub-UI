@@ -1,0 +1,128 @@
+/* Container principal */
+.table-container {
+  position: relative;
+  display: flex;
+  max-height: calc(100vh - 65px);
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Barra de título */
+.title-toolbar {
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 80px;
+  max-height: calc(100vh - 80px);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 40px;
+}
+
+/* Layout do Kanban Board */
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f5f6fa;
+  overflow-x: auto;
+  min-height: 90vh;
+  height: auto; /* Ajuste de altura conforme o conteúdo */
+}
+
+/* Estilo das colunas */
+.kanban-column-card {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  height: auto; /* Ajuste de altura conforme o conteúdo */
+  max-height: 85vh; /* Limite de altura para ativar o scroll */
+  background-color: #ffffff;
+  overflow-y: auto; /* Ativa o scroll vertical quando necessário */
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+/* Lista de Kanban (cards) */
+.kanban-list {
+  display: flex;
+  flex-direction: column; /* Organiza os cards em coluna */
+  gap: 10px; /* Espaçamento entre os cards */
+  overflow-y: auto; /* Ativa o scroll vertical */
+  max-height: 100%; /* Altura máxima para permitir o crescimento dos cards */
+}
+
+/* Estilo dos cards */
+.kanban-card {
+  margin-bottom: 10px; /* Espaçamento entre os cards */
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  cursor: grab;
+  transition: background-color 0.3s ease;
+}
+
+.kanban-card:hover {
+  background-color: #f7f7f7; /* Cor mais clara ao passar o mouse */
+}
+
+/* Cores para diferentes status de requisito */
+.mat-card.backlog {
+  border-left-color: #3498db; /* Azul para backlog */
+  background-color: #eaf2f8;
+}
+
+.mat-card.development {
+  border-left-color: #f39c12; /* Amarelo para desenvolvimento */
+  background-color: #fef9e7;
+}
+
+.mat-card.test {
+  border-left-color: #2ecc71; /* Verde para teste */
+  background-color: #e9f7ef;
+}
+
+.mat-card.approval {
+  border-left-color: #e74c3c; /* Vermelho para aprovação */
+  background-color: #fceae6;
+}
+
+.mat-card.implantation {
+  border-left-color: #8e44ad; /* Roxo para implantação */
+  background-color: #f4e1f2;
+}
+
+/* Títulos dos cards */
+.mat-card-title {
+  font-weight: bold;
+}
+
+/* Ações e status no card */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.status-badge {
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* Scroll personalizado */
+.kanban-column-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.kanban-column-card::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}

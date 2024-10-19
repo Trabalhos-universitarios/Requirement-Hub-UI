@@ -60,6 +60,10 @@
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">table_view</mat-icon>Matriz de Rastreabilidade
                     </button>
 
+                    <button mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('kanban')">
+                        <mat-icon [ngStyle]="stylesIconColor('add_circle')">view_kanban</mat-icon>Kanban
+                    </button>
+
                     <button mat-menu-item (click)="setDataProjectTable(element.id, element.name); openDialog('Artifacts project')">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">folder_open</mat-icon>Artefatos do Projeto
                     </button>

@@ -1,0 +1,39 @@
+<div class="table-container">
+
+  <mat-toolbar class="title-toolbar">
+    <span class="title">Kanban Board</span>
+  </mat-toolbar>
+
+  <div class="kanban-board">
+    <div class="kanban-column" *ngFor="let column of columns" 
+    cdkDropList 
+    [cdkDropListData]="column.requisitos"
+    [cdkDropListConnectedTo]="connectedTo"
+    [id]="column.id"
+    (cdkDropListDropped)="drop($event, column)">
+  <mat-card class="kanban-column-card">
+    <mat-card-header>
+      <mat-card-title>{{ column.name }}</mat-card-title>
+      <mat-card-subtitle>Máx.: {{ column.maxItems }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="kanban-list">
+        <div class="kanban-card" *ngFor="let requisito of column.requisitos" cdkDrag>
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{ requisito.identifier }} - {{ requisito.name }}</mat-card-title>
+              <!--mat-card-subtitle>Status: {{ requisito.status }}</mat-card-subtitle-->
+            </mat-card-header>
+            <mat-card-content>
+              <p><strong>Versão:</strong> {{ requisito.version }}</p>
+              <p><strong>Prioridade:</strong> {{ requisito.priority }}</p>
+              <p><strong>Esforço:</strong> {{ requisito.effort }}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+</div>

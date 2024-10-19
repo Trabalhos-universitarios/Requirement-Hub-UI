@@ -26,6 +26,7 @@ import {ProjectsService} from "../../../../services/projects/projects.service";
 import {reloadPage} from "../../../../utils/reload.page";
 import { MatPaginator } from '@angular/material/paginator';
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-projects-table',
@@ -65,7 +66,8 @@ export class ProjectsTableComponent implements AfterViewInit {
         private dialog: MatDialog,
         private alertService: AlertService,
         private projectsService: ProjectsService,
-        private spinnerService: SpinnerService) {
+        private spinnerService: SpinnerService,
+        private router: Router) {
     }
 
     ngAfterViewInit() {
@@ -172,6 +174,9 @@ export class ProjectsTableComponent implements AfterViewInit {
                     disableClose: true
                 });
                 break
+            case 'kanban':
+                this.navKan();
+                break
             default:
                 console.error("This dialog non exists!")
         }
@@ -195,5 +200,9 @@ export class ProjectsTableComponent implements AfterViewInit {
             this.spinnerService.start()
             reloadPage();
         }
+    }
+
+    navKan() {
+        this.router.navigate(['/kanban']);
     }
 }
