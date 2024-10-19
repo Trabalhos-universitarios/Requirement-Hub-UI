@@ -22,15 +22,59 @@
         <mat-card-content>
           <div class="kanban-list">
             <div class="kanban-card" *ngFor="let requisito of column.requisitos" cdkDrag>
-              <!-- A classe é aplicada dinamicamente com base no status -->
               <mat-card [ngClass]="getCardClass(requisito.status)">
                 <mat-card-header>
                   <mat-card-title><strong>{{ requisito.identifier }}</strong> - {{ requisito.name }}</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                  <p><strong>Prioridade:</strong> {{ requisito.priority }}</p>
-                  <p><strong>Esforço:</strong> {{ requisito.effort }}</p>
-                  <div [hidden]="!requisito.developerAssigned">
+
+                  <!-- Container para esforço e prioridade juntos -->
+                  <div class="effort-priority-container">
+                    <!-- Esforço com círculo -->
+                    <div class="effort-circle" matTooltip="Fibonacci">
+                      {{ requisito.effort }}
+                    </div>
+
+                    <!-- Prioridade com ícone -->
+                    <div class="priority-icon-container">
+                      <mat-icon
+                        *ngIf="requisito.priority === 'Highest'"
+                        class="priority-icon"
+                        matTooltip="Highest"
+                      >
+                        keyboard_double_arrow_up
+                      </mat-icon>
+                      <mat-icon
+                        *ngIf="requisito.priority === 'High'"
+                        class="priority-icon"
+                        matTooltip="High"
+                      >
+                        keyboard_arrow_up
+                      </mat-icon>
+                      <mat-icon
+                        *ngIf="requisito.priority === 'Medium'"
+                        class="priority-icon"
+                        matTooltip="Medium"
+                      >
+                        keyboard_arrow_right
+                      </mat-icon>
+                      <mat-icon
+                        *ngIf="requisito.priority === 'Low'"
+                        class="priority-icon"
+                        matTooltip="Low"
+                      >
+                        keyboard_arrow_down
+                      </mat-icon>
+                      <mat-icon
+                        *ngIf="requisito.priority === 'Lowest'"
+                        class="priority-icon"
+                        matTooltip="Lowest"
+                      >
+                        keyboard_double_arrow_down
+                      </mat-icon>
+                    </div>
+                  </div>
+
                     <ng-container *ngIf="users.length">
                       <mat-form-field appearance="fill">
                         <mat-label>Responsável</mat-label>
@@ -39,11 +83,13 @@
                           [disabled]="isPermitted(requisito.developerAssigned)"
                           (selectionChange)="assignDeveloper(requisito.id, requisito.developerAssigned)"
                         >
+
+                          <mat-option [value]="0">Nenhum</mat-option>
                           <mat-option *ngFor="let user of users" [value]="user.userId">{{ user.userName }}</mat-option>
                         </mat-select>
                       </mat-form-field>
                     </ng-container>
-                  </div>
+
                 </mat-card-content>
               </mat-card>
             </div>
@@ -53,7 +99,6 @@
     </div>
   </div>
 </div>
-
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close cdkFocusInitial>Fechar</button>
 </mat-dialog-actions>

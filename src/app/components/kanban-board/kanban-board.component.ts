@@ -112,7 +112,7 @@ export class KanbanBoardComponent implements OnInit {
   
       // Se o requisito foi movido da coluna de BACKLOG, atribuir o ID do desenvolvedor
       const activeUserId = this.localStorageService.getItem('id');
-      if (event.previousContainer.id === 'backlog' && activeUserId && movedRequirement.developerAssigned == null) {
+      if (event.previousContainer.id === 'backlog' && activeUserId && movedRequirement.developerAssigned == null && !(this.localStorageService.getItem('role') == "GERENTE_DE_PROJETOS")) {
         movedRequirement.developerAssigned = activeUserId;
   
         // Chama o novo método assignDeveloper para salvar o developerAssigned

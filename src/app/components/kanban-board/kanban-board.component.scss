@@ -126,3 +126,47 @@ mat-form-field {
   display: flex;
   flex-direction: column;
 }
+
+.priority {
+  display: flex;
+  align-items: center;
+}
+
+/* Container principal para o esforço e prioridade juntos */
+.effort-priority-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px; /* Espaçamento entre o círculo de esforço e o ícone de prioridade */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+/* Estilo para o círculo de esforço */
+.effort-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e0e0e0; /* Cor de fundo do círculo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #424242;
+  cursor: pointer; /* Mostra que o item é interativo */
+}
+
+/* Estilo para o ícone de prioridade */
+.priority-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ff5722; /* Ajuste a cor conforme necessário */
+}
+
+/* Certifique-se de que o mat-card tenha uma posição relativa */
+.kanban-card mat-card {
+  position: relative;
+  padding-bottom: 40px; /* Para garantir que haja espaço no rodapé do card para esforço e prioridade */
+}
