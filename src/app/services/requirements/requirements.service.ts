@@ -239,7 +239,7 @@ export class RequirementsService {
         );
     }
 
-    async assignDeveloper(id: number | undefined, developerAssigned: string): Promise<any> {
+    async assignDeveloper(id: number | undefined, developerAssigned: number): Promise<any> {
         return firstValueFrom(
             this.http.patch(`${this.baseUrl}/requirements/assign-developer/${id}/${developerAssigned}`, { developerAssigned }).pipe(
                 catchError((error: HttpErrorResponse) => {

@@ -5,6 +5,8 @@ import { RequirementsService } from 'src/app/services/requirements/requirements.
 import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
+import { UsersService } from 'src/app/services/users/users.service';
+import { UserResponseModel } from 'src/app/models/user-model';
 
 interface Column {
   name: string;
@@ -23,6 +25,7 @@ export class KanbanBoardComponent implements OnInit {
   connectedTo: string[] = [];
   backlog: RequirementsDataModel[] = [];
   currentProject: string = '';
+  users: UserResponseModel[] = [];  // Nova variável para armazenar os usuários
 
   columns: Column[] = [
     { name: 'BACKLOG', requisitos: this.backlog, maxItems: 10, id: 'backlog' },
@@ -37,24 +40,34 @@ export class KanbanBoardComponent implements OnInit {
     private projectsTableService: ProjectsTableService,
     private spinnerService: SpinnerService,
     private localStorageService: LocalStorageService,
-  ) {this.currentProject = this.projectsTableService.getCurrentProjectByName();}
+    private usersService: UsersService  // Adicionar o serviço de usuários
+  ) { 
+    this.currentProject = this.projectsTableService.getCurrentProjectByName(); 
+  }
 
   ngOnInit() {
     this.spinnerService.start();
     this.connectedTo = this.columns.map(column => column.id);
     this.loadBacklog();
+    this.loadUsers();  // Carregar a lista de usuários
   }
 
-   // Carregar os requisitos e distribuí-los nas colunas com base no status
+  // Carregar a lista de usuários
+  async loadUsers() {
+    this.users = await this.usersService.getUsers();
+    this.spinnerService.stop();
+  }
+
+  // Carregar os requisitos e distribuí-los nas colunas com base no status
   async loadBacklog() {
     const currentProjectId = this.projectsTableService.getCurrentProjectById();
-  
+
     if (currentProjectId) {
       const allRequirements = await this.requirementsService.getRequirementsByProjectId(currentProjectId);
-  
+
       // Limpar todas as colunas antes de adicionar novos requisitos
       this.columns.forEach(column => column.requisitos = []);
-  
+
       // Filtrar e distribuir os requisitos com base no status e no identifier 'RF'
       allRequirements.forEach(req => {
         if (req.identifier.startsWith('RF')) { // Filtrar pelos requisitos funcionais (RF)
@@ -75,22 +88,18 @@ export class KanbanBoardComponent implements OnInit {
               this.columns[4].requisitos.push(req); // IMPLANTATION
               break;
             default:
-              // Você pode adicionar um caso padrão se necessário
               break;
           }
         }
       });
     }
-    this.spinnerService.stop();
   }
 
   // Método para lidar com o evento de drag and drop
   drop(event: CdkDragDrop<RequirementsDataModel[]>, column: Column): void {
     if (event.previousContainer === event.container) {
-      // Movendo o item dentro da mesma coluna
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      // Movendo o item para outra coluna
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -98,46 +107,38 @@ export class KanbanBoardComponent implements OnInit {
         event.currentIndex
       );
 
-      // Atualize o status do requisito de acordo com a nova coluna
       const movedRequirement = column.requisitos[event.currentIndex];
 
-       // Se o requisito foi movido da coluna de BACKLOG, atribuir o ID do desenvolvedor
-       const activeUserId = this.localStorageService.getItem('id'); // Recupera o ID do usuário do localStorage
-       if (event.previousContainer.id === 'backlog' && activeUserId) {
-           movedRequirement.developerAssigned = activeUserId; // Atribui o ID do usuário ao requisito
-           
-           // Chama o novo método assignDeveloper para salvar o developerAssigned
-           this.assignDeveloper(movedRequirement.id, activeUserId);
-       }
-  
-      const newStatus = this.getStatusFromColumn(column);
+      // Se o requisito foi movido da coluna de BACKLOG, atribuir o ID do desenvolvedor
+      const activeUserId = this.localStorageService.getItem('id');
+      if (event.previousContainer.id === 'backlog' && activeUserId && movedRequirement.developerAssigned == null) {
+        movedRequirement.developerAssigned = activeUserId;
 
-      // Use async/await dentro do bloco try/catch para atualizar o status
+        // Chama o novo método assignDeveloper para salvar o developerAssigned
+        this.assignDeveloper(movedRequirement.id, activeUserId);
+      }
+
+      const newStatus = this.getStatusFromColumn(column);
       this.updateRequirementStatus(movedRequirement, newStatus);
     }
   }
 
-    // Novo método para chamar o PATCH assign-developer
-  async assignDeveloper(requirementId: number | undefined, developerAssigned: string): Promise<void> {
+  async assignDeveloper(requirementId: number | undefined, developerAssigned: number): Promise<void> {
     try {
-        await this.requirementsService.assignDeveloper(requirementId, developerAssigned);
-        console.log(`Developer ${developerAssigned} atribuído ao requisito ${requirementId}`);
+      await this.requirementsService.assignDeveloper(requirementId, developerAssigned);
     } catch (error) {
-        console.error('Erro ao atribuir o desenvolvedor', error);
+      console.error('Erro ao atribuir o desenvolvedor', error);
     }
   }
 
-  // Função separada para atualizar o status do requisito
   async updateRequirementStatus(requirement: RequirementsDataModel, newStatus: string): Promise<void> {
     try {
       await this.requirementsService.updateRequirementStatus(requirement.id, newStatus);
-      console.log(`Status do requisito ${requirement.id} atualizado para ${newStatus}`);
     } catch (error) {
       console.error('Erro ao atualizar o status do requisito', error);
     }
   }
 
-  // Mapeia a coluna para o status correspondente
   getStatusFromColumn(column: Column): string {
     switch (column.id) {
       case 'backlog':
@@ -151,7 +152,12 @@ export class KanbanBoardComponent implements OnInit {
       case 'implantation':
         return 'DONE';
       default:
-        return 'ACTIVE'; // Status padrão
+        return 'ACTIVE'; 
     }
   }
+
+  isPermitted(userId: number | undefined) {
+    return !(this.localStorageService.getItem('role') == "GERENTE_DE_PROJETOS" ||
+        this.localStorageService.getItem('role') == "COMUM_USER" && userId == this.localStorageService.getItem('id'))
+}
 }
