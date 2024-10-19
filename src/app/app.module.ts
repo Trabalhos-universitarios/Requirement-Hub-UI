@@ -96,7 +96,6 @@ import { ApprovalFlowComponent } from './core/approval-flow/approval-flow.compon
 import { ModalDialogInformationRequirementNotificationComponent } from './components/modals/requirements/modal-dialog-information-requirement-notification/modal-dialog-information-requirement-notification.component';
 import { KanbanBoardComponent } from './components/kanban-board/kanban-board.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { KanbanComponent } from './core/kanban/kanban.component';
 
 @NgModule({
     declarations: [
@@ -150,7 +149,6 @@ import { KanbanComponent } from './core/kanban/kanban.component';
         ModalDialogInformationRequirementHistoryComponent,
         ModalDialogInformationRequirementNotificationComponent,
         KanbanBoardComponent,
-        KanbanComponent,
     ],
     imports: [
         BrowserModule,

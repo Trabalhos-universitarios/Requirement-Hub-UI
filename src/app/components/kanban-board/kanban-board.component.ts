@@ -3,6 +3,8 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { RequirementsDataModel } from 'src/app/models/requirements-data-model';
 import { RequirementsService } from 'src/app/services/requirements/requirements.service';
 import { ProjectsTableService } from 'src/app/services/projects/projects-table.service';
+import { SpinnerService } from 'src/app/services/spinner/spinner.service';
+import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 
 interface Column {
   name: string;
@@ -20,6 +22,7 @@ export class KanbanBoardComponent implements OnInit {
 
   connectedTo: string[] = [];
   backlog: RequirementsDataModel[] = [];
+  currentProject: string = '';
 
   columns: Column[] = [
     { name: 'BACKLOG', requisitos: this.backlog, maxItems: 10, id: 'backlog' },
@@ -31,10 +34,13 @@ export class KanbanBoardComponent implements OnInit {
 
   constructor(
     private requirementsService: RequirementsService,
-    private projectsTableService: ProjectsTableService
-  ) {}
+    private projectsTableService: ProjectsTableService,
+    private spinnerService: SpinnerService,
+    private localStorageService: LocalStorageService,
+  ) {this.currentProject = this.projectsTableService.getCurrentProjectByName();}
 
   ngOnInit() {
+    this.spinnerService.start();
     this.connectedTo = this.columns.map(column => column.id);
     this.loadBacklog();
   }
@@ -75,6 +81,7 @@ export class KanbanBoardComponent implements OnInit {
         }
       });
     }
+    this.spinnerService.stop();
   }
 
   // Método para lidar com o evento de drag and drop
@@ -93,10 +100,30 @@ export class KanbanBoardComponent implements OnInit {
 
       // Atualize o status do requisito de acordo com a nova coluna
       const movedRequirement = column.requisitos[event.currentIndex];
+
+       // Se o requisito foi movido da coluna de BACKLOG, atribuir o ID do desenvolvedor
+       const activeUserId = this.localStorageService.getItem('id'); // Recupera o ID do usuário do localStorage
+       if (event.previousContainer.id === 'backlog' && activeUserId) {
+           movedRequirement.developerAssigned = activeUserId; // Atribui o ID do usuário ao requisito
+           
+           // Chama o novo método assignDeveloper para salvar o developerAssigned
+           this.assignDeveloper(movedRequirement.id, activeUserId);
+       }
+  
       const newStatus = this.getStatusFromColumn(column);
 
       // Use async/await dentro do bloco try/catch para atualizar o status
       this.updateRequirementStatus(movedRequirement, newStatus);
+    }
+  }
+
+    // Novo método para chamar o PATCH assign-developer
+  async assignDeveloper(requirementId: number | undefined, developerAssigned: string): Promise<void> {
+    try {
+        await this.requirementsService.assignDeveloper(requirementId, developerAssigned);
+        console.log(`Developer ${developerAssigned} atribuído ao requisito ${requirementId}`);
+    } catch (error) {
+        console.error('Erro ao atribuir o desenvolvedor', error);
     }
   }
 
