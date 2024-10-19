@@ -16,12 +16,14 @@
   top: 0;
   z-index: 1000;
   height: 80px;
-  max-height: calc(100vh - 80px);
+  color: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .title {
   font-size: 40px;
+  font-weight: bold;
+  text-align: center;
 }
 
 /* Layout do Kanban Board */
@@ -37,7 +39,7 @@
 
 /* Estilo das colunas */
 .kanban-column-card {
-  width: 280px;
+  width: 320px;
   display: flex;
   flex-direction: column;
   height: auto; /* Ajuste de altura conforme o conteúdo */
@@ -74,47 +76,35 @@
 }
 
 /* Cores para diferentes status de requisito */
-.mat-card.backlog {
-  border-left-color: #3498db; /* Azul para backlog */
+.backlog {
+  border-left: 5px solid #3498db; /* Azul para backlog */
   background-color: #eaf2f8;
 }
 
-.mat-card.development {
-  border-left-color: #f39c12; /* Amarelo para desenvolvimento */
+.development {
+  border-left: 5px solid #f39c12; /* Amarelo para desenvolvimento */
   background-color: #fef9e7;
 }
 
-.mat-card.test {
-  border-left-color: #2ecc71; /* Verde para teste */
+.test {
+  border-left: 5px solid #2ecc71; /* Verde para teste */
   background-color: #e9f7ef;
 }
 
-.mat-card.approval {
-  border-left-color: #e74c3c; /* Vermelho para aprovação */
+.approval {
+  border-left: 5px solid #e74c3c; /* Vermelho para aprovação */
   background-color: #fceae6;
 }
 
-.mat-card.implantation {
-  border-left-color: #8e44ad; /* Roxo para implantação */
+.implantation {
+  border-left: 5px solid #8e44ad; /* Roxo para implantação */
   background-color: #f4e1f2;
 }
 
-/* Títulos dos cards */
-.mat-card-title {
-  font-weight: bold;
-}
-
-/* Ações e status no card */
-.actions {
-  display: flex;
-  justify-content: flex-end;
+/* Estilo do mat-form-field */
+mat-form-field {
+  width: 100%;
   margin-top: 10px;
-}
-
-.status-badge {
-  font-size: 12px;
-  padding: 5px;
-  border-radius: 4px;
 }
 
 /* Scroll personalizado */
@@ -125,4 +115,14 @@
 .kanban-column-card::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
+}
+
+.mat-form-field {
+  width: 100%; /* Garante que o campo preencha a largura do container */
+  margin-bottom: 10px; /* Espaçamento entre os campos */
+}
+
+.mat-card-content {
+  display: flex;
+  flex-direction: column;
 }

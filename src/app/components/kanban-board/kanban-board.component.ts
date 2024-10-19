@@ -6,7 +6,7 @@ import { ProjectsTableService } from 'src/app/services/projects/projects-table.s
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { UserResponseModel } from 'src/app/models/user-model';
+import { TeamResponseModel } from 'src/app/models/user-team-model';
 
 interface Column {
   name: string;
@@ -25,7 +25,7 @@ export class KanbanBoardComponent implements OnInit {
   connectedTo: string[] = [];
   backlog: RequirementsDataModel[] = [];
   currentProject: string = '';
-  users: UserResponseModel[] = [];  // Nova variável para armazenar os usuários
+  users: TeamResponseModel[] = [];  // Nova variável para armazenar os usuários
 
   columns: Column[] = [
     { name: 'BACKLOG', requisitos: this.backlog, maxItems: 10, id: 'backlog' },
@@ -54,7 +54,7 @@ export class KanbanBoardComponent implements OnInit {
 
   // Carregar a lista de usuários
   async loadUsers() {
-    this.users = await this.usersService.getUsers();
+    this.users = await this.usersService.getTeam(this.projectsTableService.getCurrentProjectById());
     this.spinnerService.stop();
   }
 
@@ -95,31 +95,37 @@ export class KanbanBoardComponent implements OnInit {
     }
   }
 
-  // Método para lidar com o evento de drag and drop
   drop(event: CdkDragDrop<RequirementsDataModel[]>, column: Column): void {
     if (event.previousContainer === event.container) {
+      // Movendo o item dentro da mesma coluna
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      // Movendo o item para outra coluna
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
-
+  
       const movedRequirement = column.requisitos[event.currentIndex];
-
+  
       // Se o requisito foi movido da coluna de BACKLOG, atribuir o ID do desenvolvedor
       const activeUserId = this.localStorageService.getItem('id');
       if (event.previousContainer.id === 'backlog' && activeUserId && movedRequirement.developerAssigned == null) {
         movedRequirement.developerAssigned = activeUserId;
-
+  
         // Chama o novo método assignDeveloper para salvar o developerAssigned
         this.assignDeveloper(movedRequirement.id, activeUserId);
       }
-
+  
       const newStatus = this.getStatusFromColumn(column);
-      this.updateRequirementStatus(movedRequirement, newStatus);
+      // Atualize a classe após a atualização do status
+      movedRequirement.status = newStatus;  // Atualize o status localmente também para refletir a mudança visual
+      
+      // Atualize o status no backend e na interface
+      this.updateRequirementStatus(movedRequirement, newStatus).then(() => {
+      });
     }
   }
 
@@ -156,8 +162,24 @@ export class KanbanBoardComponent implements OnInit {
     }
   }
 
+  getCardClass(status: string): string {
+    switch (status) {
+      case 'ACTIVE':
+        return 'backlog';
+      case 'IN_PROGRESS':
+        return 'development';
+      case 'IN_TEST':
+        return 'test';
+      case 'IN_APPROVAL':
+        return 'approval';
+      case 'DONE':
+        return 'implantation';
+      default:
+        return '';  // Classe padrão se necessário
+    }
+  }
+ 
   isPermitted(userId: number | undefined) {
-    return !(this.localStorageService.getItem('role') == "GERENTE_DE_PROJETOS" ||
-        this.localStorageService.getItem('role') == "COMUM_USER" && userId == this.localStorageService.getItem('id'))
+    return !(this.localStorageService.getItem('role') == "GERENTE_DE_PROJETOS" || userId == this.localStorageService.getItem('id'))
 }
 }

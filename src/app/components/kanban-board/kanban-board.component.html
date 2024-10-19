@@ -1,16 +1,18 @@
 <div class="table-container">
-
   <mat-toolbar class="title-toolbar">
-    <span class="title">Kanban Board - {{ currentProject }} </span>
+    <span class="title">Kanban Board - {{ currentProject }}</span>
   </mat-toolbar>
 
   <div class="kanban-board">
-    <div class="kanban-column" *ngFor="let column of columns" 
-      cdkDropList 
+    <div
+      class="kanban-column"
+      *ngFor="let column of columns"
+      cdkDropList
       [cdkDropListData]="column.requisitos"
       [cdkDropListConnectedTo]="connectedTo"
       [id]="column.id"
-      (cdkDropListDropped)="drop($event, column)">
+      (cdkDropListDropped)="drop($event, column)"
+    >
       <mat-card class="kanban-column-card">
         <mat-card-header>
           <mat-card-title>{{ column.name }}</mat-card-title>
@@ -20,21 +22,28 @@
         <mat-card-content>
           <div class="kanban-list">
             <div class="kanban-card" *ngFor="let requisito of column.requisitos" cdkDrag>
-              <mat-card>
+              <!-- A classe é aplicada dinamicamente com base no status -->
+              <mat-card [ngClass]="getCardClass(requisito.status)">
                 <mat-card-header>
-                  <mat-card-title>{{ requisito.identifier }} - {{ requisito.name }}</mat-card-title>
+                  <mat-card-title><strong>{{ requisito.identifier }}</strong> - {{ requisito.name }}</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                  <p><strong>Versão:</strong> {{ requisito.version }}</p>
                   <p><strong>Prioridade:</strong> {{ requisito.priority }}</p>
                   <p><strong>Esforço:</strong> {{ requisito.effort }}</p>
-
-                  <ng-container *ngIf="users.length">
-                    <label [hidden]="!requisito.developerAssigned" for="developerAssigned">Desenvolvedor:</label>
-                    <select [disabled]="isPermitted(requisito.developerAssigned)" [hidden]="!requisito.developerAssigned" id="developerAssigned" [(ngModel)]="requisito.developerAssigned" (change)="assignDeveloper(requisito.id, requisito.developerAssigned)">
-                      <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
-                    </select>
-                  </ng-container>
+                  <div [hidden]="!requisito.developerAssigned">
+                    <ng-container *ngIf="users.length">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Responsável</mat-label>
+                        <mat-select
+                          [(value)]="requisito.developerAssigned"
+                          [disabled]="isPermitted(requisito.developerAssigned)"
+                          (selectionChange)="assignDeveloper(requisito.id, requisito.developerAssigned)"
+                        >
+                          <mat-option *ngFor="let user of users" [value]="user.userId">{{ user.userName }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </ng-container>
+                  </div>
                 </mat-card-content>
               </mat-card>
             </div>
