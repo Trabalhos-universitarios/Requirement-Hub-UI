@@ -177,7 +177,7 @@ export class ProjectsTableComponent implements AfterViewInit {
                 break
             case 'kanban':
                 this.dialog.open(KanbanBoardComponent,{
-                    disableClose: false
+                    disableClose: true
                 });
                 break
             default:
