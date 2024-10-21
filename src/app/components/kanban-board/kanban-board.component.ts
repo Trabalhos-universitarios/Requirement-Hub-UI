@@ -7,6 +7,7 @@ import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 import { LocalStorageService } from 'src/app/services/localstorage/local-storage.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { TeamResponseModel } from 'src/app/models/user-team-model';
+import { AlertService } from 'src/app/services/sweetalert/alert.service';
 
 interface Column {
   name: string;
@@ -40,7 +41,8 @@ export class KanbanBoardComponent implements OnInit {
     private projectsTableService: ProjectsTableService,
     private spinnerService: SpinnerService,
     private localStorageService: LocalStorageService,
-    private usersService: UsersService  // Adicionar o serviço de usuários
+    private usersService: UsersService,
+    private alertService: AlertService,
   ) { 
     this.currentProject = this.projectsTableService.getCurrentProjectByName(); 
   }
@@ -106,6 +108,7 @@ export class KanbanBoardComponent implements OnInit {
       // Se não for o developerAssigned ou não for um GERENTE_DE_PROJETOS, impedir a movimentação
       if (movedRequirement.developerAssigned !== activeUserId && userRole !== 'GERENTE_DE_PROJETOS') {
         console.error('Apenas o responsável ou um gerente pode mover este card.');
+        this.alertService.toErrorAlert('Erro', "Apenas o responsável ou um gerente pode mover este card.");
         return;
       }
     }
