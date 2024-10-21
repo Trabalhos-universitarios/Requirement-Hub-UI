@@ -28,7 +28,7 @@ export class KanbanBoardComponent implements OnInit {
   users: TeamResponseModel[] = [];  // Nova variável para armazenar os usuários
 
   columns: Column[] = [
-    { name: 'BACKLOG', requisitos: this.backlog, maxItems: 10, id: 'backlog' },
+    { name: 'BACKLOG', requisitos: this.backlog, maxItems: 30, id: 'backlog' },
     { name: 'DEVELOPMENT', requisitos: [], maxItems: 6, id: 'development' },
     { name: 'TEST', requisitos: [], maxItems: 6, id: 'test' },
     { name: 'APPROVAL', requisitos: [], maxItems: 6, id: 'approval' },
@@ -70,6 +70,7 @@ export class KanbanBoardComponent implements OnInit {
 
       // Filtrar e distribuir os requisitos com base no status e no identifier 'RF'
       allRequirements.forEach(req => {
+        console.log('Developer Assigned:', req.developerAssigned);
         if (req.identifier.startsWith('RF')) { // Filtrar pelos requisitos funcionais (RF)
           switch (req.status) {
             case 'ACTIVE':
