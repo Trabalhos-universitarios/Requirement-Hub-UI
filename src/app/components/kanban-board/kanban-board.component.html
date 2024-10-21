@@ -84,7 +84,7 @@
                           (selectionChange)="assignDeveloper(requisito.id, requisito.developerAssigned)"
                         >
 
-                          <mat-option [value]="0">Nenhum</mat-option>
+                          <mat-option [value]=0>Nenhum</mat-option>
                           <mat-option *ngFor="let user of users" [value]="user.userId">{{ user.userName }}</mat-option>
                         </mat-select>
                       </mat-form-field>

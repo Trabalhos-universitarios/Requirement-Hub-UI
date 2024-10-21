@@ -97,6 +97,19 @@ export class KanbanBoardComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<RequirementsDataModel[]>, column: Column): void {
+    const movedRequirement = event.previousContainer.data[event.previousIndex];
+    const activeUserId = this.localStorageService.getItem('id');
+    const userRole = this.localStorageService.getItem('role');
+  
+    // Verifica se o card já tem um developerAssigned
+    if (movedRequirement.developerAssigned) {
+      // Se não for o developerAssigned ou não for um GERENTE_DE_PROJETOS, impedir a movimentação
+      if (movedRequirement.developerAssigned !== activeUserId && userRole !== 'GERENTE_DE_PROJETOS') {
+        console.error('Apenas o responsável ou um gerente pode mover este card.');
+        return;
+      }
+    }
+  
     if (event.previousContainer === event.container) {
       // Movendo o item dentro da mesma coluna
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -109,26 +122,23 @@ export class KanbanBoardComponent implements OnInit {
         event.currentIndex
       );
   
-      const movedRequirement = column.requisitos[event.currentIndex];
-  
-      // Se o requisito foi movido da coluna de BACKLOG, atribuir o ID do desenvolvedor
-      const activeUserId = this.localStorageService.getItem('id');
-      if (event.previousContainer.id === 'backlog' && activeUserId && movedRequirement.developerAssigned == null && !(this.localStorageService.getItem('role') == "GERENTE_DE_PROJETOS")) {
-        movedRequirement.developerAssigned = activeUserId;
-  
-        // Chama o novo método assignDeveloper para salvar o developerAssigned
-        this.assignDeveloper(movedRequirement.id, activeUserId);
-      }
-  
       const newStatus = this.getStatusFromColumn(column);
-      // Atualize a classe após a atualização do status
       movedRequirement.status = newStatus;  // Atualize o status localmente também para refletir a mudança visual
       
       // Atualize o status no backend e na interface
       this.updateRequirementStatus(movedRequirement, newStatus).then(() => {
+        // Se o requisito foi movido da coluna de BACKLOG, atribuir o ID do desenvolvedor
+        if (event.previousContainer.id === 'backlog' && activeUserId 
+          && (movedRequirement.developerAssigned == null || movedRequirement.developerAssigned == 0) 
+          && !(userRole === 'GERENTE_DE_PROJETOS')) {
+          movedRequirement.developerAssigned = activeUserId;
+  
+          // Chama o método assignDeveloper para salvar o developerAssigned
+          this.assignDeveloper(movedRequirement.id, activeUserId);
+        }
       });
     }
-  }
+  }  
 
   async assignDeveloper(requirementId: number | undefined, developerAssigned: number): Promise<void> {
     try {
@@ -182,5 +192,5 @@ export class KanbanBoardComponent implements OnInit {
  
   isPermitted(userId: number | undefined) {
     return !(this.localStorageService.getItem('role') == "GERENTE_DE_PROJETOS" || userId == this.localStorageService.getItem('id'))
-}
+  }
 }
