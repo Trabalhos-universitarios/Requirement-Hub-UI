@@ -94,6 +94,8 @@ import { RequirementHistoryTableComponent } from './components/tables/requiremen
 import { ModalDialogInformationRequirementHistoryComponent } from './components/modals/requirements/modal-dialog-information-requirement-history/modal-dialog-information-requirement-history.component';
 import { ApprovalFlowComponent } from './core/approval-flow/approval-flow.component';
 import { ModalDialogInformationRequirementNotificationComponent } from './components/modals/requirements/modal-dialog-information-requirement-notification/modal-dialog-information-requirement-notification.component';
+import { KanbanBoardComponent } from './components/kanban-board/kanban-board.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     declarations: [
@@ -146,6 +148,7 @@ import { ModalDialogInformationRequirementNotificationComponent } from './compon
         ApprovalFlowComponent,
         ModalDialogInformationRequirementHistoryComponent,
         ModalDialogInformationRequirementNotificationComponent,
+        KanbanBoardComponent,
     ],
     imports: [
         BrowserModule,
@@ -183,7 +186,8 @@ import { ModalDialogInformationRequirementNotificationComponent } from './compon
         MatListModule,
         MatBadgeModule,
         NgxChartsModule,
-        PickerComponent
+        PickerComponent,
+        DragDropModule
     ],
     providers: [
         [CapitalizeFirstPipePipe],

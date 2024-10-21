@@ -1,0 +1,104 @@
+<div class="table-container">
+  <mat-toolbar class="title-toolbar">
+    <span class="title">Kanban Board - {{ currentProject }}</span>
+  </mat-toolbar>
+
+  <div class="kanban-board">
+    <div
+      class="kanban-column"
+      *ngFor="let column of columns"
+      cdkDropList
+      [cdkDropListData]="column.requisitos"
+      [cdkDropListConnectedTo]="connectedTo"
+      [id]="column.id"
+      (cdkDropListDropped)="drop($event, column)"
+    >
+      <mat-card class="kanban-column-card">
+        <mat-card-header>
+          <mat-card-title>{{ column.name }}</mat-card-title>
+          <mat-card-subtitle>Máx.: {{ column.maxItems }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="kanban-list">
+            <div class="kanban-card" *ngFor="let requisito of column.requisitos" cdkDrag>
+              <mat-card [ngClass]="getCardClass(requisito.status)">
+                <mat-card-header>
+                  <mat-card-title><strong>{{ requisito.identifier }}</strong> - {{ requisito.name }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+
+                  <!-- Container para esforço e prioridade juntos -->
+                  <div class="effort-priority-container">
+                    <!-- Esforço com círculo -->
+                    <div class="effort-circle" matTooltip="Fibonacci">
+                      {{ requisito.effort }}
+                    </div>
+
+                    <!-- Prioridade com ícone -->
+                    <div class="priority-icon-container">
+                      <mat-icon
+                        *ngIf="requisito.priority === 'Highest'"
+                        class="priority-icon"
+                        matTooltip="Highest"
+                      >
+                        keyboard_double_arrow_up
+                      </mat-icon>
+                      <mat-icon
+                        *ngIf="requisito.priority === 'High'"
+                        class="priority-icon"
+                        matTooltip="High"
+                      >
+                        keyboard_arrow_up
+                      </mat-icon>
+                      <mat-icon
+                        *ngIf="requisito.priority === 'Medium'"
+                        class="priority-icon"
+                        matTooltip="Medium"
+                      >
+                        keyboard_arrow_right
+                      </mat-icon>
+                      <mat-icon
+                        *ngIf="requisito.priority === 'Low'"
+                        class="priority-icon"
+                        matTooltip="Low"
+                      >
+                        keyboard_arrow_down
+                      </mat-icon>
+                      <mat-icon
+                        *ngIf="requisito.priority === 'Lowest'"
+                        class="priority-icon"
+                        matTooltip="Lowest"
+                      >
+                        keyboard_double_arrow_down
+                      </mat-icon>
+                    </div>
+                  </div>
+
+                    <ng-container *ngIf="users.length">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Responsável</mat-label>
+                        <mat-select
+                          [(value)]="requisito.developerAssigned"
+                          [disabled]="isPermitted(requisito.developerAssigned)"
+                          (selectionChange)="assignDeveloper(requisito.id, requisito.developerAssigned)"
+                        >
+
+                          <mat-option [value]=0>Nenhum</mat-option>
+                          <mat-option *ngFor="let user of users" [value]="user.userId">{{ user.userName }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </ng-container>
+
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close cdkFocusInitial>Fechar</button>
+</mat-dialog-actions>

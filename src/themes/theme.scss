@@ -231,6 +231,15 @@ body.light-theme ngx-charts g text {
     color: #e0e0e0 !important; /* Cor do placeholder no tema escuro */
   }
 
+  .mat-mdc-card-title, .mat-mdc-card-subtitle {
+    color: mat.get-color-from-palette($app-dark-primary, 300);
+}
+
+  .kanban-board
+  {
+    background-color: mat.get-color-from-palette($app-dark-primary, 600);
+  }
+
 }
 
 // Para o tema escuro

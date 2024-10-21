@@ -1,0 +1,172 @@
+/* Container principal */
+.table-container {
+  position: relative;
+  display: flex;
+  max-height: calc(100vh - 65px);
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Barra de título */
+.title-toolbar {
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 80px;
+  color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Layout do Kanban Board */
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f5f6fa;
+  overflow-x: auto;
+  min-height: 90vh;
+  height: auto; /* Ajuste de altura conforme o conteúdo */
+}
+
+/* Estilo das colunas */
+.kanban-column-card {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  height: auto; /* Ajuste de altura conforme o conteúdo */
+  max-height: 85vh; /* Limite de altura para ativar o scroll */
+  background-color: #ffffff;
+  overflow-y: auto; /* Ativa o scroll vertical quando necessário */
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+/* Lista de Kanban (cards) */
+.kanban-list {
+  display: flex;
+  flex-direction: column; /* Organiza os cards em coluna */
+  gap: 10px; /* Espaçamento entre os cards */
+  overflow-y: auto; /* Ativa o scroll vertical */
+  max-height: 100%; /* Altura máxima para permitir o crescimento dos cards */
+}
+
+/* Estilo dos cards */
+.kanban-card {
+  margin-bottom: 10px; /* Espaçamento entre os cards */
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  cursor: grab;
+  transition: background-color 0.3s ease;
+}
+
+.kanban-card:hover {
+  background-color: #f7f7f7; /* Cor mais clara ao passar o mouse */
+}
+
+/* Cores para diferentes status de requisito */
+.backlog {
+  border-left: 5px solid #3498db; /* Azul para backlog */
+  background-color: #eaf2f8;
+}
+
+.development {
+  border-left: 5px solid #f39c12; /* Amarelo para desenvolvimento */
+  background-color: #fef9e7;
+}
+
+.test {
+  border-left: 5px solid #2ecc71; /* Verde para teste */
+  background-color: #e9f7ef;
+}
+
+.approval {
+  border-left: 5px solid #e74c3c; /* Vermelho para aprovação */
+  background-color: #fceae6;
+}
+
+.implantation {
+  border-left: 5px solid #8e44ad; /* Roxo para implantação */
+  background-color: #f4e1f2;
+}
+
+/* Estilo do mat-form-field */
+mat-form-field {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Scroll personalizado */
+.kanban-column-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.kanban-column-card::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.mat-form-field {
+  width: 100%; /* Garante que o campo preencha a largura do container */
+  margin-bottom: 10px; /* Espaçamento entre os campos */
+}
+
+.mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.priority {
+  display: flex;
+  align-items: center;
+}
+
+/* Container principal para o esforço e prioridade juntos */
+.effort-priority-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px; /* Espaçamento entre o círculo de esforço e o ícone de prioridade */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+/* Estilo para o círculo de esforço */
+.effort-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e0e0e0; /* Cor de fundo do círculo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #424242;
+  cursor: pointer; /* Mostra que o item é interativo */
+}
+
+/* Estilo para o ícone de prioridade */
+.priority-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ff5722; /* Ajuste a cor conforme necessário */
+}
+
+/* Certifique-se de que o mat-card tenha uma posição relativa */
+.kanban-card mat-card {
+  position: relative;
+  padding-bottom: 40px; /* Para garantir que haja espaço no rodapé do card para esforço e prioridade */
+}
