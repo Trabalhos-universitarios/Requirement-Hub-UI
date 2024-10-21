@@ -26,6 +26,8 @@ import {ProjectsService} from "../../../../services/projects/projects.service";
 import {reloadPage} from "../../../../utils/reload.page";
 import { MatPaginator } from '@angular/material/paginator';
 import {SpinnerService} from "../../../../services/spinner/spinner.service";
+import { Router } from '@angular/router';
+import { KanbanBoardComponent } from 'src/app/components/kanban-board/kanban-board.component';
 
 @Component({
     selector: 'app-projects-table',
@@ -65,7 +67,8 @@ export class ProjectsTableComponent implements AfterViewInit {
         private dialog: MatDialog,
         private alertService: AlertService,
         private projectsService: ProjectsService,
-        private spinnerService: SpinnerService) {
+        private spinnerService: SpinnerService,
+        private router: Router) {
     }
 
     ngAfterViewInit() {
@@ -169,6 +172,11 @@ export class ProjectsTableComponent implements AfterViewInit {
                 break
             case 'Artifacts project':
                 this.dialog.open(ModalDialogArtifactsProjectComponent,{
+                    disableClose: true
+                });
+                break
+            case 'kanban':
+                this.dialog.open(KanbanBoardComponent,{
                     disableClose: true
                 });
                 break

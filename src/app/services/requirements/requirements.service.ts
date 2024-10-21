@@ -214,4 +214,52 @@ export class RequirementsService {
             )
         );
     }
+
+    async updateRequirementStatus(id: number | undefined, status: string): Promise<any> {
+        return firstValueFrom(
+            this.http.patch(`${this.baseUrl}/requirements/status/${id}/${status}`, status ).pipe(
+                catchError((error: HttpErrorResponse) => {
+    
+                    switch (error.status) {
+                        case 409:
+                            return throwError(() => HttpStatusCode.Conflict);
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
+                        case 503:
+                            return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
+                    }
+                })
+            )
+        );
+    }
+
+    async assignDeveloper(id: number | undefined, developerAssigned: number): Promise<any> {
+        return firstValueFrom(
+            this.http.patch(`${this.baseUrl}/requirements/assign-developer/${id}/${developerAssigned}`, { developerAssigned }).pipe(
+                catchError((error: HttpErrorResponse) => {
+                    switch (error.status) {
+                        case 409:
+                            return throwError(() => HttpStatusCode.Conflict);
+                        case 404:
+                            return throwError(() => HttpStatusCode.NotFound);
+                        case 405:
+                            return throwError(() => HttpStatusCode.MethodNotAllowed);
+                        case 500:
+                            return throwError(() => HttpStatusCode.InternalServerError);
+                        case 503:
+                            return throwError(() => HttpStatusCode.ServiceUnavailable);
+                        default:
+                            return throwError(() => new Error(error.message));
+                    }
+                })
+            )
+        );
+    }    
+    
 }

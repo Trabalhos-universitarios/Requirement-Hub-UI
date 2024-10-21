@@ -9,11 +9,12 @@ export interface RequirementsDataModel {
     risk?: string
     type: string;
     version: string;
-    status?: string;
+    status: string;
     description: string;
     stakeholderIds: string[];
     responsibleIds: string[];
     effort: string;
+    developerAssigned: number;
     dependencyIds: number[];
     projectId?: number[];
     artifactIds?: number[];
