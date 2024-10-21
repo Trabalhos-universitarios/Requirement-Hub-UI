@@ -21,22 +21,32 @@ export class ModalDialogInformationRequirementArtifactComponent {
     }   
   }
 
-  getStatusText(status: any): string {
+  protected getStatusText(status: any): string {
     switch (status) {
-      case Status.ACTIVE:
-        return 'Ativo';
-      case Status.DRAFT:
-        return 'Rascunho';
-      case Status.PENDING:
-        return 'Pendente';
-      case Status.APPROVE:
-        return 'Aprovado';
-      case Status.CREATED:
-        return 'Criado';
-      case Status.REFUSE:
-        return 'Recusado';
-      default:
-        return 'Status desconhecido';
+        case Status.ACTIVE:
+            return 'Ativo';
+        case Status.DRAFT:
+            return 'Rascunho';
+        case Status.PENDING:
+            return 'Pendente';
+        case Status.APPROVE:
+            return 'Aprovado';
+        case Status.CREATED:
+            return 'Criado';
+        case Status.REJECTED:
+            return 'Recusado';
+        case Status.BLOCKED:
+            return 'Bloqueado';
+        case Status.IN_PROGRESS:
+            return 'Em Progresso';
+        case Status.IN_TEST:
+            return 'Em Teste';
+        case Status.IN_APPROVAL:
+            return 'Em Aprovação';
+        case Status.DONE:
+            return 'Em Implantação';
+        default:
+            return 'Status desconhecido';
     }
   }
 
