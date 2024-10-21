@@ -281,6 +281,14 @@ export class ModalDialogInformationRequirementComponent implements OnInit {
                 return 'Recusado';
             case Status.BLOCKED:
                 return 'Bloqueado';
+            case Status.IN_PROGRESS:
+                return 'Em Progresso';
+            case Status.IN_TEST:
+                return 'Em Teste';
+            case Status.IN_APPROVAL:
+                return 'Em Aprovação';
+            case Status.DONE:
+                return 'Em Implantação';
             default:
                 return 'Status desconhecido';
         }

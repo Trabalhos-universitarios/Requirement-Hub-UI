@@ -49,7 +49,11 @@
                     <button mat-menu-item (click)="openDialog('information', element)">
                         <mat-icon [ngStyle]="stylesIconColor('info')">info</mat-icon>Informações
                     </button>
-                    <button mat-menu-item [disabled]="isPermitted()|| element.status == 'BLOCKED'" (click)="openDialog('edit', element)">
+                    <button mat-menu-item [disabled]="isPermitted() 
+                    || element.status == 'BLOCKED' 
+                    || element.status == 'IN_PROGRESS'
+                    || element.status == 'IN_TEST'
+                    || element.status == 'IN_APPROVAL'" (click)="openDialog('edit', element)">
                         <mat-icon [ngStyle]="stylesIconColor('border_color')">border_color</mat-icon>Editar
                     </button>
                     <button mat-menu-item [disabled]="isPermitted() || element.status != 'CREATED'" (click)="openDialog('send-approval', element)">
@@ -61,7 +65,12 @@
                     <button mat-menu-item [disabled]="element.version == '1.0'" (click)="openDialog('historic', element)">
                         <mat-icon [ngStyle]="stylesIconColor('add_circle')">history</mat-icon>Histórico requisitos
                     </button>
-                    <button mat-menu-item [disabled]="isPermitted() || element.status == 'BLOCKED'" (click)="blockedRequirement(element.id)">
+                    <button mat-menu-item [disabled]="isPermitted() 
+                    || element.status == 'BLOCKED'
+                    || element.status == 'IN_PROGRESS'
+                    || element.status == 'IN_TEST'
+                    || element.status == 'IN_APPROVAL'
+                    || element.status == 'DONE'" (click)="blockedRequirement(element.id)">
                         <mat-icon [ngStyle]="stylesIconColor('delete_forever')">delete_forever</mat-icon>Deletar
                     </button>
                 </mat-menu>

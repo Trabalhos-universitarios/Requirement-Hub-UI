@@ -116,35 +116,50 @@ export class RequirementHistoryTableComponent{
         return {icon: 'pending', name: 'CREATED'};
       case "BLOCKED":
         return {icon: 'block', name: 'BLOCKED'};
+      case "IN_PROGRESS":
+        return {icon: 'change_circle', name: 'IN_PROGRESS'};
+      case "IN_TEST":
+        return {icon: 'domain_verification', name: 'IN_TEST'};
+      case "IN_APPROVAL":
+        return {icon: 'approval', name: 'IN_APPROVAL'};
+      case "DONE":
+        return {icon: 'task', name: 'DONE'};
       default:
         return {icon: 'help', name: 'UNKNOWN'};
     }
   }
 
   protected stylesIconColor(iconName: string) {
-    let colorIcon: string = '#616161';
+    let colorIcon: string = '#616161';  // Default color for light theme
     if (this.themeService.isDarkMode()) {
-      colorIcon = '#e0e0e0';
+      colorIcon = '#e0e0e0';  // Default color for dark theme
     }
+    
     switch (iconName) {
       case 'verified':
-        return {color: '#4CAF50'};
-      case 'pending_actions':
-        return {color: `${colorIcon}`};
-      case 'schedule':
-        return {color: '#FFD54F'};
-      case 'preliminary':
-        return {color: '#4CAF50'};
-      case 'pending':
-        return {color: '#A5D6A7'};
+        return {color: '#4CAF50'};  // Green for "verified" (ACTIVE)
       case 'do_not_disturb_on':
-        return {color: 'rgba(253,0,0,0.74)'};
+        return {color: 'rgb(220,60,60)'};  // Red for "REJECTED"
+      case 'schedule':
+        return {color: '#FFD54F'};  // Yellow for "PENDING"
+      case 'preliminary':
+        return {color: '#4CAF50'};  // Green for "APPROVE"
+      case 'pending':
+        return {color: '#A5D6A7'};  // Light green for "CREATED"
       case 'block':
-        return {color: 'rgba(253,0,0,0.74)'};
+        return {color: 'rgb(220,60,60)'};  // Red for "BLOCKED"
+      case 'change_circle':
+        return {color: '#03A9F4'};  // Blue for "IN_PROGRESS"
+      case 'domain_verification':
+        return {color: '#FF7043'};  // Orange for "IN_TEST"
+      case 'approval':
+        return {color: '#8E24AA'};  // Purple for "IN_APPROVAL"
+      case 'task':
+        return {color: '#00FFFF'};  // Ciano for "IN_IMPLANTATION"
       default:
-        return {color: `${colorIcon}`};
+        return {color: `${colorIcon}`};  // Default icon color based on theme
     }
-  }
+  }  
 
   protected async openDialog(action: String, value: RequirementsDataModel) {
     switch (action) {

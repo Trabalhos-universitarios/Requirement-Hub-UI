@@ -10,5 +10,8 @@ export enum Status {
     DELETED = "DELETED",
     APPROVING = "APPROVING",
     REJECTED = "REJECTED",
-
+    IN_PROGRESS = "IN_PROGRESS",
+    IN_TEST = "IN_TEST",
+    IN_APPROVAL = "IN_APPROVAL",
+    DONE = "DONE"
 }
