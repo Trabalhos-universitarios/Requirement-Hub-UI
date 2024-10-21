@@ -27,20 +27,30 @@ export class ProjectDashboardComponent implements OnInit {
   // Mapa de cores para os diferentes status
   statusColorMapLight: { [key: string]: string } = {
     'REJECTED': '#F44336',  // Vermelho
-    'PENDING': '#FF9800',  // Laranja
-    'CREATED': '#2196F3',  // Azul
-    'ACTIVE': '#4CAF50',  // Verde
-    'BLOCKED': '#9E9E9E'  // Cinza
+    'PENDING': '#FF9800',   // Laranja
+    'CREATED': '#2196F3',   // Azul
+    'ACTIVE': '#4CAF50',    // Verde
+    'BLOCKED': '#9E9E9E',   // Cinza
+    'IN_PROGRESS': '#03A9F4', // Ciano
+    'IN_TEST': '#FF7043',   // Laranja forte
+    'IN_APPROVAL': '#8E24AA', // Roxo
+    'DONE': '#00FFFF', // Ciano
+    'APPROVE': '#4CAF50'    // Verde
   };
 
   statusColorMapDark: { [key: string]: string } = {
-    'REJECTED': '#D32F2F',  // Vermelho um pouco mais escuro
-    'PENDING': '#F57C00',  // Laranja mais escuro
-    'CREATED': '#1976D2',  // Azul mais profundo
-    'ACTIVE': '#388E3C',  // Verde mais fechado
-    'BLOCKED': '#9E9E9E'  // Cinza
+    'REJECTED': '#D32F2F',  // Vermelho mais escuro
+    'PENDING': '#F57C00',   // Laranja mais escuro
+    'CREATED': '#1976D2',   // Azul mais profundo
+    'ACTIVE': '#388E3C',    // Verde mais fechado
+    'BLOCKED': '#9E9E9E',   // Cinza
+    'IN_PROGRESS': '#0288D1', // Azul ciano mais escuro
+    'IN_TEST': '#D84315',   // Laranja escuro
+    'IN_APPROVAL': '#6A1B9A', // Roxo escuro
+    'DONE': '#00FFFF', // Ciano
+    'APPROVE': '#388E3C'    // Verde mais fechado
   };
-
+  
   // Definimos o esquema de cores com o domínio vazio, pois será preenchido dinamicamente
   colorScheme: Color = {
     name: 'dynamic',
