@@ -30,7 +30,7 @@
 .kanban-board {
   display: flex;
   gap: 20px;
-  padding: 20px;
+  padding: 15px;
   background-color: #f5f6fa;
   overflow-x: auto;
   min-height: 90vh;
@@ -39,7 +39,7 @@
 
 /* Estilo das colunas */
 .kanban-column-card {
-  width: 320px;
+  width: 280px;
   display: flex;
   flex-direction: column;
   height: auto; /* Ajuste de altura conforme o conteúdo */
@@ -62,11 +62,11 @@
 
 /* Estilo dos cards */
 .kanban-card {
-  margin-bottom: 10px; /* Espaçamento entre os cards */
+  margin-bottom: 8px; /* Espaçamento entre os cards */
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 15px;
+  padding: 10px;
   cursor: grab;
   transition: background-color 0.3s ease;
 }
