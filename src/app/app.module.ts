@@ -94,6 +94,9 @@ import { RequirementHistoryTableComponent } from './components/tables/requiremen
 import { ModalDialogInformationRequirementHistoryComponent } from './components/modals/requirements/modal-dialog-information-requirement-history/modal-dialog-information-requirement-history.component';
 import { ApprovalFlowComponent } from './core/approval-flow/approval-flow.component';
 import { ModalDialogInformationRequirementNotificationComponent } from './components/modals/requirements/modal-dialog-information-requirement-notification/modal-dialog-information-requirement-notification.component';
+import { KanbanComponent } from './components/developmentlifecycle/kanban/kanban.component';
+import { BacklogComponent } from './components/developmentlifecycle/backlog/backlog.component';
+import {CdkDropList, CdkDropListGroup, DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
     declarations: [
@@ -146,6 +149,8 @@ import { ModalDialogInformationRequirementNotificationComponent } from './compon
         ApprovalFlowComponent,
         ModalDialogInformationRequirementHistoryComponent,
         ModalDialogInformationRequirementNotificationComponent,
+        KanbanComponent,
+        BacklogComponent,
     ],
     imports: [
         BrowserModule,
@@ -183,7 +188,13 @@ import { ModalDialogInformationRequirementNotificationComponent } from './compon
         MatListModule,
         MatBadgeModule,
         NgxChartsModule,
-        PickerComponent
+        PickerComponent,
+        CdkDropList,
+        CdkDropListGroup,
+        BrowserModule,
+        BrowserAnimationsModule,
+        DragDropModule,
+        MatToolbarModule
     ],
     providers: [
         [CapitalizeFirstPipePipe],

@@ -1,0 +1,60 @@
+<app-header></app-header>
+
+<mat-toolbar class="title-toolbar">
+    <span class="title">Quadro de tarefas</span>
+</mat-toolbar>
+
+<div cdkDropListGroup class="kanban-board">
+    <div class="kanban-column" *ngFor="let column of columns; let i = index">
+
+        <div *ngIf="!column.editing; else editColumn" class="column-header">
+            <button
+                    mat-icon-button
+                    (click)="deleteColumn(i)"
+                    [disabled]="column.tasks.length > 0"
+                    class="delete-button"
+            >
+                <mat-icon>delete_forever</mat-icon>
+            </button>
+
+            <h2 (click)="enableColumnEdit(i)">
+                {{ column.name }}
+            </h2>
+        </div>
+
+        <ng-template #editColumn>
+            <input
+                    [(ngModel)]="column.name"
+                    (blur)="disableColumnEdit(i)"
+                    (keydown.enter)="disableColumnEdit(i)"
+                    class="column-edit-input"
+                    matInput
+            />
+        </ng-template>
+
+        <div
+                cdkDropList
+                [cdkDropListData]="column.tasks"
+                class="example-list"
+                (cdkDropListDropped)="drop($event, i)"
+        >
+            <div
+                    class="example-box"
+                    *ngFor="let task of column.tasks"
+                    cdkDrag
+            >
+                {{ task.title }}
+            </div>
+
+            <div *ngIf="column.tasks.length === 0" class="placeholder">
+                Arraste uma tarefa aqui
+            </div>
+        </div>
+    </div>
+
+    <div class="kanban-column">
+        <button mat-icon-button (click)="addColumn()" class="add-column-button">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</div>

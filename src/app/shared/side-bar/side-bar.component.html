@@ -21,6 +21,11 @@
                 <span class="description">Projetos</span>
             </button>
 
+            <button mat-button (click)="navigateToDevelopmentLifeCycle()">
+                <mat-icon class="icons">developer_board</mat-icon>
+                <span>Quadro kanban</span>
+            </button>
+
             <button mat-button [hidden]="isManager()" (click)="openModalDialogComponent('Create project')">
                 <mat-icon class="icons">format_list_bulleted_add</mat-icon>
                 <span class="description">Criar Projeto</span>

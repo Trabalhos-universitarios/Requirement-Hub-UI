@@ -133,4 +133,8 @@ export class SideBarComponent implements AfterViewInit {
     navigateToApprovalFlow() {
         this.router.navigate(['/approval-flow']);
     }
+
+    navigateToDevelopmentLifeCycle() {
+        this.router.navigate(['/kanban']);
+    }
 }
