@@ -112,7 +112,7 @@ export class ModalDialogCreateRequirementComponent {
         })
 
         if (this.requirementForm && this.requirementForm.valid) {
-            return {
+             return {
                 ...this.requirementForm.value,
                 effort: Number(this.requirementForm.value.effort),
                 projectRelated: {id: this.projectsTableService.getCurrentProjectById()},
